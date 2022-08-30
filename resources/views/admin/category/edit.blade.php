@@ -19,7 +19,7 @@
             </div>
             <div class="form-group mb-4">
                 <label>Tên danh mục(ngoại ngữ)</label>
-                <input type="text" class="form-control" name='name2' value="{{old('name2') ?? $edit->name2}}">
+                <input type="text" class="form-control" name='name2' value="{{old('name2') ?? $edit->name2}}" required>
 
             </div>
             <div class="form-group mb-4">
@@ -93,7 +93,7 @@
                 </div>
                 </div>
 
-                <div class="form-group mb-4">
+                <div class="form-group mb-4" style="display:none;">
                     <label>Banner danh mục trang chủ (<span class="italic">Danh mục cha</span>)</label><br>
                     <div class="px-4 pb-4 flex items-center cursor-pointer relative">
                         <i data-feather="image" class="w-4 h-4 mr-2"></i> <span

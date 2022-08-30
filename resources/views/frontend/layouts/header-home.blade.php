@@ -132,98 +132,50 @@
                         <div class="vertical-menu-content">
                             <nav>
                                 <ul class="menu-cat">
+                                    @foreach($Sidebars  as $Sidebar)
                                     <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                            <span class="icon-right"><i class="far fa-angle-right"></i></span>
+                                        @if($Sidebar->parent_id==0)
+                                        <a href="{!! route('product_cat',  $Sidebar->slug) !!}"><span class="icon-menu">{!! $Sidebar->icon !!}</span>
+                                            {{$Sidebar->name}}
+                                             @if(count($Sidebar->childs))
+                                             <span class="icon-right"><i class="far fa-angle-right"></i></span>
+                                             @endif
                                         </a>
                                         <div class="wp-submenu">
                                             <div class="content-submenu">
+                                                @if(count($Sidebar->childs))
                                                 <div class="submenu">
+                                                    @foreach($Sidebars as $subsidebar)
+                                                    @if($subsidebar->parent_id == $Sidebar->id)
+
                                                     <div class="wp-menu-parent">
-                                                        <span class="title-cat">Laptop</span>
+                                                        <span class="title-cat">{{$subsidebar->name}}</span>
+                                                        @if(count($subsidebar->childs))
                                                         <ul>
+                                                            @foreach($Sidebars as $subsidebar3)
+                                                              @if($subsidebar3->parent_id == $subsidebar->id)
                                                             <li>
-                                                                <a href="" class="cat-child">
-                                                                    <span>Laptop Asus</span>
-                                                                    <span class="next-right"><i class="far fa-angle-right"></i></span>
+                                                                <a href="{!! route('product_cat',  $subsidebar3->slug) !!}" class="cat-child">
+                                                                    <span>{{$subsidebar3->name}}</span>
+                                                                    @if(count($subsidebar3->childs))
+                                                                    <span class="next-right">
+                                                                        <i class="far fa-angle-right"></i>
+                                                                    </span>
+                                                                    @endif
                                                                 </a>
-                                                                <div class="submenu-child">
-                                                                    <ul>
-                                                                        <li><a href="">Laptop Asus 1</a></li>
-                                                                        <li><a href="">Laptop Asus 2</a></li>
-                                                                        <li>
-                                                                            <a href="">Laptop Asus 3
-                                                                                <span class="next-right"><i class="far fa-angle-right"></i></span>
-                                                                            </a>
-                                                                            <div class="submenu-child">
-                                                                                <ul>
-                                                                                    <li><a href="">Laptop Asus 3.1</a></li>
-                                                                                    <li><a href="">Laptop Asus 3.2</a></li>
-                                                                                    <li><a href="">Laptop Asus 3.3</a></li>
-                                                                                    <li>
-                                                                                        <a href="">Laptop Asus 3.4
-                                                                                            <span class="next-right"><i class="far fa-angle-right"></i>
-                                                                                        </a>
-                                                                                        <div class="submenu-child">
-                                                                                            <ul>
-                                                                                                <li><a href="">Laptop Asus 3.4.1</a></li>
-                                                                                                <li><a href="">Laptop Asus 3.4.2</a></li>
-                                                                                                <li><a href="">Laptop Asus 3.4.3</a></li>
-                                                                                                <li><a href="">Laptop Asus 3.4.4</a></li>
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </li>
-                                                                        <li><a href="">Laptop Asus 4</a></li>
-                                                                    </ul>
-                                                                </div>
+                                                                @if(count($subsidebar3->childs))
+                                                                @include('frontend.subsidebar',['childs' => $subsidebar3->childs])
+                                                                @endif
                                                             </li>
-                                                            <li><a href="">Laptop gaming</a></li>
-                                                            <li><a href="">Laptop HP</a></li>
-                                                            <li><a href="">Laptop Dell</a></li>
-                                                            <li><a href="">Laptop MSI</a></li>
-                                                            <li><a href="">Laptop MSI</a></li>
+                                                            @endif
+                                                            @endforeach
                                                         </ul>
+                                                        @endif
                                                     </div>
-                                                    <div class="wp-menu-parent">
-                                                        <span class="title-cat">Laptop</span>
-                                                        <ul>
-                                                            <li><a href="">Laptop Asus</a></li>
-                                                            <li><a href="">Laptop gaming</a></li>
-                                                            <li><a href="">Laptop HP</a></li>
-                                                            <li><a href="">Laptop Dell</a></li>
-                                                            <li><a href="">Laptop MSI</a></li>
-                                                            <li><a href="">Laptop HP</a></li>
-                                                            <li><a href="">Laptop Dell</a></li>
-                                                            <li><a href="">Laptop MSI</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="wp-menu-parent">
-                                                        <span class="title-cat">Laptop</span>
-                                                        <ul>
-                                                            <li><a href="">Laptop Asus</a></li>
-                                                            <li><a href="">Laptop gaming</a></li>
-                                                            <li><a href="">Laptop HP</a></li>
-                                                            <li><a href="">Laptop Dell</a></li>
-                                                            <li><a href="">Laptop MSI</a></li>
-                                                            <li><a href="">Laptop Dell</a></li>
-                                                            <li><a href="">Laptop MSI</a></li>
-                                                        </ul>
-                                                    </div>
-                                                    <div class="wp-menu-parent">
-                                                        <span class="title-cat">Laptop</span>
-                                                        <ul>
-                                                            <li><a href="">Laptop Asus</a></li>
-                                                            <li><a href="">Laptop gaming</a></li>
-                                                            <li><a href="">Laptop HP</a></li>
-                                                            <li><a href="">Laptop Dell</a></li>
-                                                            <li><a href="">Laptop MSI</a></li>
-                                                        </ul>
-                                                    </div>
+                                                    @endif
+                                                    @endforeach
                                                 </div>
+                                                @endif
                                                 <div class="wp-product-banner">
                                                     <div class="wp-product">
                                                         <a href="">
@@ -262,62 +214,10 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                     </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""><span class="icon-menu"><i class="fas fa-laptop"></i></span>
-                                            Laptop, Tablet, Mobile
-                                        </a>
-                                    </li>
+
+                                    @endforeach
                                 </ul>
                             </nav>
                         </div>
