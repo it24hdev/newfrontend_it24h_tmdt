@@ -94,36 +94,18 @@
                 <div class="box-content info-news">
                     <div class="title">Tin tức</div>
                     <ul>
-                        <li>
-                            <a href="">
-                                <div class="thumb">
-                                    <img src="/asset/images/blog-3.jpg" alt="">
-                                </div>
-                                <div class="detail">
-                                    <h4>IT24h -  Nhà cung cấp thiết bị điện tử, máy tính, laptop, PC chất lượng và giá rẻ.</h4>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <div class="thumb">
-                                    <img src="/asset/images/blog-3.jpg" alt="">
-                                </div>
-                                <div class="detail">
-                                    <h4>IT24h -  Nhà cung cấp thiết bị điện tử, máy tính, laptop, PC chất lượng và giá rẻ.</h4>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="">
-                                <div class="thumb">
-                                    <img src="/asset/images/blog-3.jpg" alt="">
-                                </div>
-                                <div class="detail">
-                                    <h4>IT24h -  Nhà cung cấp thiết bị điện tử, máy tính, laptop, PC chất lượng và giá rẻ.</h4>
-                                </div>
-                            </a>
-                        </li>
+                        @foreach ($posts_footer as $item)
+                            <li>
+                                <a href="{{route('singlePost', $item->slug)}}">
+                                    <div class="thumb">
+                                        <img src="{{asset('upload/images/post/thumb/'.$item->thumb)}}" alt="">
+                                    </div>
+                                    <div class="detail">
+                                        <h4>{{$item->title}}</h4>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="box-content info-fanpage">

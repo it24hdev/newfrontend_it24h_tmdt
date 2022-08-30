@@ -534,7 +534,7 @@
 @endsection
 
 @section('footer')
-    @include('frontend.layouts.footer')
+    @include('frontend.layouts.footer', [$posts_footer])
 @endsection
 
 @section('js')

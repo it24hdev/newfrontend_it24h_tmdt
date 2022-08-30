@@ -32,6 +32,7 @@ class HomeController extends Controller
         $Sidebars           = $this->getmenu('sidebar');
         $Menus              = $this->getmenu('menu');
         $Sub_menus          = $this->getmenu('submenu');
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $banner_1   = DB::table('sliders')->where('location',1)->where('status', 1)->inRandomOrder()->first();
         $banner_2   = DB::table('sliders')->where('location',2)->where('status', 1)->inRandomOrder()->first();
@@ -70,6 +71,7 @@ class HomeController extends Controller
         'locale'            => $locale,
         'product_hot_sale' => $product_hot_sale,
         'product_new' => $product_new,
+        'posts_footer' => $posts_footer,
         ]);
     }
     //lay danh muc cho blog tren menu
@@ -124,10 +126,7 @@ class HomeController extends Controller
 
     //trang blog chung
     public function categoryBlogs(Request $request){
-        $this->middleware(function ($request, $next) {
-            \session(['page_active' => 'post']);
-            return $next($request);
-        });
+        $active_menu = "post";
         $locale       = config('app.locale');
         if($request->input('tim-kiem')){
             $search = $request->input('tim-kiem');
@@ -138,6 +137,7 @@ class HomeController extends Controller
         $Menus              = $this->getmenu('menu');
         $Sub_menus          = $this->getmenu('submenu');
         $getcategoryblog    = $this->getcategoryblog();
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $arrCategory = DB::table('categories')->where('status',1)
             ->where('taxonomy',Category::BAI_VIET)
             ->where('parent_id',0)
@@ -159,14 +159,13 @@ class HomeController extends Controller
             'Sub_menus'       => $Sub_menus,
             'getcategoryblog' => $getcategoryblog,
             'locale'          => $locale,
+            'active_menu'   => $active_menu,
+            'posts_footer' => $posts_footer,
         ]);
     }
     // xu ly bai viet duoc tim kiem
     public function categoryBlog(Request $request, $slug){
-        $this->middleware(function ($request, $next) {
-            \session(['page_active' => 'post']);
-            return $next($request);
-        });
+        $active_menu = "post";
         $locale     = config('app.locale');
         if($request->input('tim-kiem')){
             $search = $request->input('tim-kiem');
@@ -177,6 +176,7 @@ class HomeController extends Controller
         $Menus              = $this->getmenu('menu');
         $Sub_menus          = $this->getmenu('submenu');
         $getcategoryblog    = $this->getcategoryblog();
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $blog_category = DB::table('categories')->where('slug',$slug)
             ->where('status',1)->where('taxonomy',Category::BAI_VIET)
             ->first();
@@ -207,17 +207,17 @@ class HomeController extends Controller
                 'Sub_menus'       => $Sub_menus,
                 'getcategoryblog' => $getcategoryblog,
                 'locale'          => $locale,
+                'active_menu'   => $active_menu,
+                'posts_footer' => $posts_footer,
             ]);
         }
         return abort(404);
     }
     //trang chi tiet bai viet
     public function singlePost(Request $request, $slug){
-        $this->middleware(function ($request, $next) {
-            \session(['page_active' => 'post']);
-            return $next($request);
-        });
+        $active_menu = "post";
         $locale       = config('app.locale');
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $post = Post::where('slug',$slug)
             ->where('status',1)->whereNull('deleted_at')->first();
         if (!is_null($post)){
@@ -271,6 +271,8 @@ class HomeController extends Controller
                 'Sub_menus'       => $Sub_menus,
                 'getcategoryblog' => $getcategoryblog,
                 'locale'          => $locale,
+                'acitve_menu'   => $active_menu,
+                'posts_footer' => $posts_footer,
             ]);
         }
         return abort(404);
@@ -278,11 +280,9 @@ class HomeController extends Controller
 
     /* ==== Xử lý dữ liệu trang danh sách sản phẩm */
     public function list_product(Request $request){
-        $this->middleware(function ($request, $next) {
-            \session(['page_active' => 'product']);
-            return $next($request);
-        });
+        $active_menu = "product";
         $locale       = config('app.locale');
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $searchValues = '';
         if($request->query('searchs') !=""){
             $searchValues = preg_split('/\s+/', $request->query('searchs'), -1, PREG_SPLIT_NO_EMPTY);
@@ -314,7 +314,7 @@ class HomeController extends Controller
                     })
                 ->orderBy('name', 'ASC')
                 ->whereBetween('price_onsale', [$min_price, $max_price])
-                ->paginate(12)->withQueryString();
+                ->paginate(20)->withQueryString();
             }elseif($orderby=='Z-A'){
                 $products = Products::where('status', 1)
                 ->where(function ($q) use ($searchValues) {
@@ -325,7 +325,7 @@ class HomeController extends Controller
                     })
                 ->orderBy('name', 'DESC')
                 ->whereBetween('price_onsale', [$min_price, $max_price])
-                ->paginate(12)->withQueryString();;
+                ->paginate(20)->withQueryString();;
             }elseif($orderby=='gia-giam-dan'){
                 $products = Products::where('status', 1)
                 ->where(function ($q) use ($searchValues) {
@@ -336,7 +336,7 @@ class HomeController extends Controller
                     })
                 ->orderBy('price_onsale', 'DESC')
                 ->whereBetween('price_onsale', [$min_price, $max_price])
-                ->paginate(12)->withQueryString();
+                ->paginate(20)->withQueryString();
             }elseif($orderby=='gia-tang-dan'){
                 $products = Products::where('status', 1)
                 ->where(function ($q) use ($searchValues) {
@@ -347,7 +347,7 @@ class HomeController extends Controller
                     })
                 ->orderBy('price_onsale', 'ASC')
                 ->whereBetween('price_onsale', [$min_price, $max_price])
-                ->paginate(12)->withQueryString();
+                ->paginate(20)->withQueryString();
             }else{
                 $products = Products::where('status', 1)
                 ->where(function ($q) use ($searchValues) {
@@ -357,24 +357,22 @@ class HomeController extends Controller
                           }
                     })
                 ->whereBetween('price_onsale', [$min_price, $max_price])
-                ->paginate(12)->withQueryString();
+                ->paginate(20)->withQueryString();
             }
 
         return \view('frontend.product', \compact('products', 'categories',
-        'cat', 'Sidebars', 'Menus','Sub_menus', 'locale'));
+        'cat', 'Sidebars', 'Menus','Sub_menus', 'locale', 'active_menu', 'posts_footer'));
     }
 
     // trang danh sach san pham khi loc
     public function product_cat(Request $request, $slug){
-        $this->middleware(function ($request, $next) {
-            \session(['page_active' => 'product']);
-            return $next($request);
-        });
+        $active_menu = "product";
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+        $cat = Category::where('slug', $slug)->first();
         $categories = Category::where('taxonomy',Category::SAN_PHAM)
-            ->where('parent_id',0)
+            ->where('parent_id',$cat->id)
             ->where('status',1)
             ->get();
-        $cat = Category::where('slug', $slug)->first();
         if (empty($cat)) {
             return abort(404);
         }
@@ -399,22 +397,22 @@ class HomeController extends Controller
             }
             if($orderby=='A-Z'){
                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-                ->orderBy('name', 'ASC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(12)->withQueryString();;
+                ->orderBy('name', 'ASC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }elseif($orderby=='Z-A'){
                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-                ->orderBy('name', 'DESC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(12)->withQueryString();;
+                ->orderBy('name', 'DESC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }elseif($orderby=='gia-giam-dan'){
                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-                ->orderBy('price_onsale', 'DESC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(12)->withQueryString();;
+                ->orderBy('price_onsale', 'DESC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }elseif($orderby=='gia-tang-dan'){
                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-                ->orderBy('price_onsale', 'ASC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(12)->withQueryString();;
+                ->orderBy('price_onsale', 'ASC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }else{
                 $products = Products::where('status', 1)->whereIn('id', $list_id)->orderBy('id', 'DESC')
-                ->whereBetween('price_onsale', [$min_price, $max_price])->paginate(12)->withQueryString();;
+                ->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }
         return \view('frontend.product', \compact('products', 'categories', 'cat','Sidebars',
-        'Menus','Sub_menus','locale'));
+        'Menus','Sub_menus','locale', 'active_menu', 'posts_footer'));
     }
     // xu ly lay comment
     public function commentPost(Request $request){
@@ -471,15 +469,11 @@ class HomeController extends Controller
     }
     //lien he
     public function contact(){
-        $this->middleware(function ($request, $next) {
-            \session(['page_active' => 'contact']);
-            return $next($request);
-        });
+        $active_menu = "contact";
         $locale             = config('app.locale');
         $Sidebars           = $this->getmenu('sidebar');
         $Menus              = $this->getmenu('menu');
-        $getcategoryblog    = $this->getcategoryblog();
-        return \view('frontend.contact', \compact('Sidebars', 'Menus', 'getcategoryblog','locale'));
+        return \view('frontend.contact', \compact('Sidebars', 'Menus','locale', 'active_menu'));
     }
     public function changeLanguage($language)
     {

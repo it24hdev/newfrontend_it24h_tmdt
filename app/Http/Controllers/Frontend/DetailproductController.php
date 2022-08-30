@@ -15,17 +15,12 @@ use Illuminate\Support\Facades\Session;
 
 class DetailproductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(function ($request, $next) {
-            \session(['page_active' => 'product']);
-            return $next($request);
-        });
-    }
+
     public function index($slug)
     {
 
         try{
+        $active_menu = "product";
         $Sidebars           = $this->getmenu('sidebar');
         $Menus              = $this->getmenu('menu');
         $getcategoryblog    = $this->getcategoryblog();
@@ -36,7 +31,7 @@ class DetailproductController extends Controller
         // if(empty($attrs)){$attrs = [];}
         // $colors = Attribute_product::where('attr', 'color')->whereIn('id', $attrs)->orderBy('name', 'ASC')->get();
         // $sizes  = Attribute_product::where('attr', 'size')->whereIn('id', $attrs)->get();
-
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $products_id= array();
         foreach($product->category as $k){
             foreach($k->product as $pro){
@@ -73,6 +68,8 @@ class DetailproductController extends Controller
             'locale'          => $locale,
             'posts' => $posts,
             'product_watched' => $product_watched,
+            'active_menu' => $active_menu,
+            'posts_footer' => $posts_footer,
         ]);
         }
         catch(\Exception $exception){

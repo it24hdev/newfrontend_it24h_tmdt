@@ -327,13 +327,10 @@
                     <div class="horizontal-menu">
                         <nav>
                             <ul class="menu-header">
-                                @php
-                                    $page_active = session('page_active');
-                                @endphp
                                 <li><a href="{{route('user')}}"><span><i class="far fa-home"></i></span> @lang('lang.Home')</a></li>
-                                <li><a href="{{route('list_product')}}" class="{{$page_active == 'product' ? 'active' : ''}}"><span><i class="fal fa-shopping-bag"></i></span> @lang('lang.Shop')</a></li>
-                                <li><a href="{{route('categoryBlogs')}}" class="{{$page_active == 'post' ? 'active' : ''}}"><span><i class="fal fa-newspaper"></i></span> @lang('lang.Blog')</a></li>
-                                <li><a href="{{route('contact')}}" class="{{$page_active == 'contact' ? 'active' : ''}}"><span><i class="far fa-phone-rotary"></i></span> @lang('lang.Contact')</a></li>
+                                <li><a href="{{route('list_product')}}" class="{{$active_menu == 'product' ? 'active' : ''}}"><span><i class="fal fa-shopping-bag"></i></span> @lang('lang.Shop')</a></li>
+                                <li><a href="{{route('categoryBlogs')}}" class="{{$active_menu == 'post' ? 'active' : ''}}"><span><i class="fal fa-newspaper"></i></span> @lang('lang.Blog')</a></li>
+                                <li><a href="{{route('contact')}}" class="{{$active_menu == 'contact' ? 'active' : ''}}"><span><i class="far fa-phone-rotary"></i></span> @lang('lang.Contact')</a></li>
                             </ul>
                         </nav>
                     </div>

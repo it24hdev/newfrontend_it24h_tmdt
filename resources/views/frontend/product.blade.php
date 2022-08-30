@@ -9,7 +9,7 @@
 @endsection
 
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $Menus])
+    @include('frontend.layouts.header-page', [$Sidebars, $Menus, $active_menu])
 @endsection
 
 @section('header-mobile')
@@ -21,8 +21,14 @@
             <div class="wp-breadcrumb-page">
                 <div class="container-page">
                     <div class="breadcrumb-page">
-                        <a href="{{route('user')}}">Trang chủ</a><i class="fas fa-angle-right mx-1"></i>
-                        <a href="{{route('list_product')}}">Sản phẩm</a>
+                        @if (!empty($cat))
+                            <a href="{{route('user')}}">@lang('lang.Home')</a><i class="fas fa-angle-right mx-1"></i>
+                            <a href="{{route('list_product')}}">@lang('lang.Shop')</a><i class="fas fa-angle-right mx-1"></i>
+                            <a href="{{route('product_cat', $cat->slug)}}">{{$cat->name}}</a>
+                        @else
+                            <a href="{{route('user')}}">@lang('lang.Home')</a><i class="fas fa-angle-right mx-1"></i>
+                            <a href="{{route('list_product')}}">@lang('lang.Shop')</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -32,38 +38,20 @@
                     <div class="sidebar">
                         <div class="categories-product-sidebar">
                             <div class="header-sidebar">
-                                <span>Danh mục sản phẩm</span>
+                                <span>@lang('lang.Productcategories')</span>
                             </div>
                             <ul class="list-categories">
-                                <li class="cat-item">
-                                    <a href="">Laptop, Tablet, Mobile</a>
-                                    <span class="count">(20)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="">Laptop, Tablet, Mobile</a>
-                                    <span class="count">(20)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="">Laptop, Tablet, Mobile</a>
-                                    <span class="count">(20)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="">Laptop, Tablet, Mobile</a>
-                                    <span class="count">(20)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="">Laptop, Tablet, Mobile</a>
-                                    <span class="count">(20)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="">Laptop, Tablet, Mobile</a>
-                                    <span class="count">(20)</span>
-                                </li>
+                                @foreach ($categories as $item)
+                                    <li class="cat-item">
+                                        <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                                        <span class="count">({{$item->get_product_by_cat()->count()}})</span>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="filter-price-sidebar">
                             <div class="header-sidebar">
-                                <span>Giá tiền</span>
+                                <span>@lang('lang.Filterbyprice')</span>
                             </div>
                             <div class="form-filter">
                             <form>
@@ -75,7 +63,7 @@
                                 <div class="slider-labels">
                                     <div class="price_label">
 
-                                        Giá: <input type="text" value="10000" class="from" id="slider-range-value1" disabled>VNĐ —
+                                        @lang('lang.Price'): <input type="text" value="10000" class="from" id="slider-range-value1" disabled>VNĐ —
                                         <input type="text" value="100000000" class="to" id="slider-range-value2" disabled>VNĐ
                                     </div>
                                 </div>
@@ -83,7 +71,7 @@
                                     <div class="col-12">
                                             <input type="hidden" id="min-value" name="min-value" value="">
                                             <input type="hidden" id="max-value" name="max-value" value="">
-                                            <button type="submit" class="button btn-filter-price">Tìm kiếm</button>
+                                            <button type="submit" class="button btn-filter-price">@lang('lang.Filter')</button>
                                     </div>
                                 </div>
                             </form>
@@ -328,20 +316,22 @@
                             <a href="javascript:;" class="filter-mobile" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">
                                 <i class="fas fa-sliders-v"></i>
 
-                                <span>Bộ lọc</span>
+                                <span>@lang('lang.Filterby')</span>
                             </a>
                             <div class="dropdown ordering">
                                 <a class="dropdown-toggle text-secondary" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                                Lọc theo
+                                @lang('lang.Filterby')
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <li><a class="dropdown-item" href="">Từ A-Z</a></li>
-                                <li><a class="dropdown-item" href="">Từ Z-A</a></li>
-                                <li><a class="dropdown-item" href="">Giá giảm dần</a></li>
-                                <li><a class="dropdown-item" href="">Giá tăng dần</a></li>
+                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'A-Z']) }}">@lang('lang.From') A-Z</a></li>
+                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'Z-A']) }}">@lang('lang.From') Z-A</a></li>
+                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'gia-giam-dan']) }}">@lang('lang.Sortbypricehightolow')</a></li>
+                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'gia-tang-dan']) }}">@lang('lang.Sortbypricelowtohigh')</a></li>
                                 </ul>
                             </div>
-                            <p class="showing">Hiển thị 1–12 trong số 100 kết quả</p>
+                            <p class="showing">
+                                @lang('lang.Showing') {{$products->firstItem()}}–{{$products->lastItem()}} @lang('lang.Of') {{$products->total()}} @lang('lang.Results')
+                            </p>
                         </div>
                         <div class="wp-list-product">
                             <div class="body_products">
@@ -448,11 +438,269 @@
                 </div>
             </div>
     </div>
+
+    <!-- Sidebar mobile -->
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title HideFilter" id="offcanvasScrollingLabel">Đóng bộ lọc</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="sidebar">
+            <div class="categories-product-sidebar">
+                <div class="header-sidebar">
+
+                    <span>>@lang('lang.Productcategories')</span>
+                </div>
+                <ul class="list-categories">
+                    @foreach ($categories as $item)
+                        <li class="cat-item">
+                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                            <span class="count">({{$item->get_product_by_cat()->count()}})</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="filter-price-sidebar">
+                <div class="header-sidebar"><span>@lang('lang.Filterbyprice')</span></div>
+                <div class="form-filter">
+                    <form>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div id="slider-range1"></div>
+                        </div>
+                    </div>
+                    <div class="slider-labels">
+                        <div class="price_label">
+
+                            @lang('lang.Price'): <input type="text" value="10000" class="from" id="slider-range-value3" disabled>VNĐ —
+                                    <input type="text" value="100000000" class="to" id="slider-range-value4" disabled>VNĐ
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <input type="hidden" id="min-value1" name="min-value" value="">
+                            <input type="hidden" id="max-value2" name="max-value" value="">
+                            <button type="submit" class="button btn-filter-price-1">@lang('lang.Filter')</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="filter-color-sidebar">
+                <div class="header-sidebar">
+                    <span>Màu sắc</span>
+                </div>
+                <ul class="list-color">
+                    <li>
+                        <a rel="nofollow" class="color-type" href="">
+                            <span class="color-label" style="background: #05abde;"></span>
+                            <span class="color-name">Xanh dương</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a rel="nofollow" class="color-type" href="">
+                            <span class="color-label" style="background: #475a8b;"></span>
+                            <span class="color-name">Xanh tím than</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a rel="nofollow" class="color-type" href="">
+                            <span class="color-label" style="background: #7ab052;"></span>
+                            <span class="color-name">Xanh lá cây</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a rel="nofollow" class="color-type" href="">
+                            <span class="color-label" style="background: #d64749;"></span>
+                            <span class="color-name">Đỏ</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a rel="nofollow" class="color-type" href="">
+                            <span class="color-label" style="background: #f7cac9;"></span>
+                            <span class="color-name">Hồng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a rel="nofollow" class="color-type" href="">
+                            <span class="color-label" style="background: #6b5b95;"></span>
+                            <span class="color-name">Tím</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a rel="nofollow" class="color-type" href="">
+                            <span class="color-label" style="background: #ffffff;"></span>
+                            <span class="color-name">Trắng</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- ==== Foreach bộ lọc -->
+            <div class="categories-product-sidebar">
+                <div class="header-sidebar">
+                    <span>Thương hiệu</span>
+                </div>
+                <ul class="list-categories list-categories-brand">
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Apple
+                        </a>
+                        <span class="count">(14)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Asano
+                        </a>
+                        <span class="count">(2)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Digital
+                        </a>
+                        <span class="count">(8)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Digitechno
+                        </a>
+                        <span class="count">(10)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Electronic
+                        </a>
+                        <span class="count">(3)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Hightech
+                        </a>
+                        <span class="count">(16)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Sony
+                        </a>
+                        <span class="count">(2)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Samsung
+                        </a>
+                        <span class="count">(2)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Technolo
+                        </a>
+                        <span class="count">(2)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Oppo
+                        </a>
+                        <span class="count">(0)</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="categories-product-sidebar">
+                <div class="header-sidebar">
+                    <span>CPU</span>
+                </div>
+                <ul class="list-categories">
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i3
+                        </a>
+                        <span class="count">(14)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i5
+                        </a>
+                        <span class="count">(2)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i7
+                        </a>
+                        <span class="count">(8)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i9
+                        </a>
+                        <span class="count">(10)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> AMD Ryzen 5
+                        </a>
+                        <span class="count">(3)</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="categories-product-sidebar">
+                <div class="header-sidebar">
+                    <span>CPU</span>
+                </div>
+                <ul class="list-categories">
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i3
+                        </a>
+                        <span class="count">(14)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i5
+                        </a>
+                        <span class="count">(2)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i7
+                        </a>
+                        <span class="count">(8)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> Intel Core i9
+                        </a>
+                        <span class="count">(10)</span>
+                    </li>
+                    <li class="cat-item">
+                        <a href="#">
+                            <i class="far fa-square"></i> AMD Ryzen 5
+                        </a>
+                        <span class="count">(3)</span>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="product-tag-sidebar">
+                <div class="header-sidebar">
+                    <span>Thẻ tags</span>
+                </div>
+                <div class="tagcloud">
+                    <a href="#">Accessories</a>
+                    <a href="#">Camera & Videos</a>
+                    <a href="#">Computer & Laptop</a>
+                    <a href="#">Gaming</a>
+                    <a href="#">Headphone</a>
+                    <a href="#">Mobile & Tablets</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <p id="message_add_cart" style="display:none;">@lang('lang.Productaddedtocartsuccessfully')</p>
 @endsection
 
 @section('footer')
-    @include('frontend.layouts.footer')
+    @include('frontend.layouts.footer', [$posts_footer])
 @endsection
 
 @section('js')

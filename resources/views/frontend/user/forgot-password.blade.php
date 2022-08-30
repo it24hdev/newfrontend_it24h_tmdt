@@ -1,7 +1,7 @@
 @extends('frontend.layouts.base')
 
 @section('title')
-    <title>@lang('lang.IT24Haccount')</title> 
+    <title>@lang('lang.IT24Haccount')</title>
 @endsection
 
 @section('css')
@@ -96,6 +96,6 @@
 @endsection
 
 @section('footer')
-    @include('frontend.layouts.footer')
+    @include('frontend.layouts.footer', [$posts_footer])
 @endsection
 

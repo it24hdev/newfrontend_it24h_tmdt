@@ -9,7 +9,7 @@
 @endsection
 
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $Menus])
+    @include('frontend.layouts.header-page', [$Sidebars, $Menus, $active_menu])
 @endsection
 
 @section('header-mobile')
@@ -149,5 +149,5 @@
 @endsection
 
 @section('footer')
-    @include('frontend.layouts.footer')
+    @include('frontend.layouts.footer', [$posts_footer])
 @endsection

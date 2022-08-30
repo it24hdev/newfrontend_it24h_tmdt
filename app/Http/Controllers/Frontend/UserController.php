@@ -8,6 +8,7 @@ use App\Mail\ForgotPasswordMail;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Locationmenu;
+use App\Models\Post;
 use App\Models\Social;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,15 +50,16 @@ class UserController extends Controller
             Session::put('user_id', Cookie::get('remember-me'));
         }
         if(Session::has('is_login') && Session::get('is_login') == true){
+            $active_menu = "account";
+            $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
             $locale             = config('app.locale');
             $Sidebars = $this->getmenu('sidebar');
             $Menus = $this->getmenu('menu');
-            $getcategoryblog    = $this->getcategoryblog();
             $id = Session::get('user_id');
             $user = Customer::find($id);
             if(!empty($user)){
                 $orders = $user->order;
-                return \view('frontend.user.account', \compact('user', 'orders', 'Sidebars', 'Menus', 'getcategoryblog','locale'));
+                return \view('frontend.user.account', \compact('user', 'orders', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
             }else{
                 return \redirect()->route('user_login_register');
             }
@@ -68,6 +70,8 @@ class UserController extends Controller
 
     public function login_register(){
         $locale             = config('app.locale');
+        $active_menu = "account";
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
         $Menus = $this->getmenu('menu');
         $locale = config('app.locale');
@@ -75,7 +79,7 @@ class UserController extends Controller
         Session::forget('is_login');
         Session::forget('user_id');
         Cookie::queue(Cookie::forget('remember-me'));
-        return \view('frontend.user.login-register', \compact('Sidebars', 'Menus', 'getcategoryblog','locale'));
+        return \view('frontend.user.login-register', \compact('active_menu', 'posts_footer','Sidebars', 'Menus', 'getcategoryblog','locale'));
     }
 
     public function login(Request $request){
@@ -218,23 +222,24 @@ class UserController extends Controller
 
     public function forgot_password(Request $request){
         $locale             = config('app.locale');
+        $active_menu = "account";
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $reset_token = $request->reset_token;
         $Sidebars = $this->getmenu('sidebar');
         $Menus = $this->getmenu('menu');
         $locale = config('app.locale');
-        $getcategoryblog    = $this->getcategoryblog();
         if(empty($reset_token)){
 
-            return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus', 'getcategoryblog' , 'locale'));
+            return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus' , 'locale', 'active_menu', 'posts_footer'));
 
         }else{
             $customer = Customer::where('reset_password', $reset_token)->first();
             // dd($customer);
             if(empty($customer)){
                 Session::flash('error', 'Yêu cầu lấy lại mật khẩu không hợp lệ!');
-                return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus', 'getcategoryblog','locale'));
+                return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
             }else{
-                return \view('frontend.user.forgot-password', \compact('customer', 'Sidebars', 'Menus', 'getcategoryblog','locale'));
+                return \view('frontend.user.forgot-password', \compact('customer', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
             }
         }
     }
