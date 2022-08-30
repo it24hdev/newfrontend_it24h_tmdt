@@ -470,10 +470,11 @@ class HomeController extends Controller
     //lien he
     public function contact(){
         $active_menu = "contact";
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $Sidebars           = $this->getmenu('sidebar');
         $Menus              = $this->getmenu('menu');
-        return \view('frontend.contact', \compact('Sidebars', 'Menus','locale', 'active_menu'));
+        return \view('frontend.contact', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
     }
     public function changeLanguage($language)
     {
