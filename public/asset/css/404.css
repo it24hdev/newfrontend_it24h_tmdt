@@ -1,0 +1,59 @@
+/* 
+███████▄▄███████████▄
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓█░░trungdung░░░█
+▓dungtdcs@gmail.com░░█
+▓▓▓▓▓▓█░░░░░░░░░░░░░░█
+▓▓▓▓▓▓███░░░░░░░░░░░░█
+██████▀░░░░░░░██████▀
+░░░░░░░░░█░░░░█
+░░░░░░░░░░█░░░█
+░░░░░░░░░░░█░░█
+░░░░░░░░░░░█░░█
+░░░░░░░░░░░░▀▀
+*/
+
+.wp-page404{
+    text-align: center;
+    align-items: center;
+    margin-bottom: 90px;
+}
+.wp-page404 .page-content{
+    flex: 50%;
+    text-align: center;
+}
+.error-img404{
+    flex: 50%;
+}
+.error-img404 img{
+    display: block;
+    max-width: 100%;
+    margin: auto;
+    height: auto;
+}
+.wp-page404 .page-content h2.sub-title {
+    font-size: 36px;
+    font-weight: 500;
+    font-style: normal;
+    margin-bottom: 20px;
+    color: #000;
+    text-transform: capitalize;
+}
+.wp-page404 .page-content .error-text {
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+@media (min-width: 1024px){
+    .wp-page404 .page-content h2.sub-title {
+        font-size: 48px;
+    }
+}
+@media (min-width: 450px){
+    .wp-page404 .page-content .error-text {
+        width: 433px;
+    }
+}

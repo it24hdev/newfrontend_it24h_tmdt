@@ -1,0 +1,454 @@
+.wp-content .sidebar{
+    display: none;
+}
+.offcanvas{
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.offcanvas::-webkit-scrollbar {
+    width: 4px;
+    background-color: #F5F5F5;
+}
+.offcanvas::-webkit-scrollbar-thumb {
+    background-color: #F90;
+    background-image: -webkit-linear-gradient(45deg,rgba(255, 255, 255, .2) 25%,
+                          transparent 25%,
+                          transparent 50%,
+                          rgba(255, 255, 255, .2) 50%,
+                          rgba(255, 255, 255, .2) 75%,
+                          transparent 75%,
+                          transparent)
+  }
+.offcanvas::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+  }
+.offcanvas .sidebar{
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 0 !important;
+}
+.content .sorting{
+    margin-bottom: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 14px;
+    color: #999999;
+}
+.content .sorting .ordering{
+    margin-bottom: 10px;
+}
+.content .sorting a.filter-mobile{
+    display: inline-block;
+    margin-right: 20px;
+    color: #666666;
+    margin-bottom: 10px;
+}
+.content .sorting a.filter-mobile:hover{
+    color: #169fd8;
+}
+.content .sorting select.orderby{
+    border: none;
+    padding: 0 18px 0 0;
+    background-position: 100% center;
+    background-size: 10px 10px;
+    background-color: #169fd8;
+    outline: none;
+    border-radius: 0;
+    color: #fff;
+}
+.content .sorting p.showing{
+    margin-bottom: 0;
+    margin-left: auto;
+}
+.content .wp-list-product{
+    margin-bottom: 30px;
+}
+.content .wp-list-product ul.list-product{
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0px;
+    margin-bottom: 0;
+}
+.content .wp-list-product ul.list-product li.item-pro{
+    width: 100%;
+}
+.wp-content .sidebar, .offcanvas .sidebar{
+    margin-bottom: 50px;
+}
+.wp-content .sidebar .categories-product-sidebar,
+.wp-content .sidebar .filter-price-sidebar,
+.wp-content .sidebar .filter-color-sidebar,
+.wp-content .sidebar .product-tag-sidebar,
+.offcanvas .sidebar{
+    width: 100%;
+    margin-bottom: 30px;
+}
+.categories-product-sidebar .header-sidebar, .filter-price-sidebar .header-sidebar, .filter-color-sidebar .header-sidebar, .product-tag-sidebar .header-sidebar{
+    margin-bottom: 20px;
+}
+
+.categories-product-sidebar .header-sidebar span, .filter-price-sidebar .header-sidebar span, .filter-color-sidebar .header-sidebar span, .product-tag-sidebar .header-sidebar span{
+    display: block;
+    width: 100%;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #169fd8;
+    font-size: 18px;
+    font-weight: 500;
+    color: #222;
+    text-transform: uppercase;
+}
+.categories-product-sidebar ul.list-categories, .filter-color-sidebar ul.list-color{
+    list-style: none;
+    margin-bottom: 0;
+    padding-left: 10px;
+}
+.categories-product-sidebar ul.list-categories li.cat-item{
+    margin-bottom: 1em;
+    line-height: 1.41575em;
+    font-size: 14px;
+}
+ul.list-categories li.cat-item a{
+    color: #222;
+}
+
+ul.list-categories li.cat-item a:hover{
+    color: #169fd8;
+}
+
+.container {
+  margin-top: 125px;
+}
+
+.slider-labels {
+  margin-top: 10px;
+}
+
+
+
+/* Functional styling;
+ * These styles are required for noUiSlider to function.
+ * You don't need to change these rules to apply your design.
+ */
+.noUi-target,.noUi-target * {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -ms-touch-action: none;
+  touch-action: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.noUi-target {
+  position: relative;
+  direction: ltr;
+}
+
+.noUi-base {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+/* Fix 401 */
+}
+
+.noUi-origin {
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.noUi-handle {
+  position: relative;
+  z-index: 1;
+}
+
+.noUi-stacking .noUi-handle {
+/* This class is applied to the lower origin when
+   its values is > 50%. */
+  z-index: 10;
+}
+
+.noUi-state-tap .noUi-origin {
+  -webkit-transition: left 0.3s,top .3s;
+  transition: left 0.3s,top .3s;
+}
+
+.noUi-state-drag * {
+  cursor: inherit !important;
+}
+
+/* Painting and performance;
+ * Browsers can paint handles in their own layer.
+ */
+.noUi-base,.noUi-handle {
+  -webkit-transform: translate3d(0,0,0);
+  transform: translate3d(0,0,0);
+}
+
+/* Slider size and handle placement;
+ */
+.noUi-horizontal {
+  height: 4px;
+}
+
+.noUi-horizontal .noUi-handle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  left: -7px;
+  top: -7px;
+  background-color: #345DBB;
+}
+
+/* Styling;
+ */
+.noUi-background {
+  background: #D6D7D9;
+}
+
+.noUi-connect {
+  background: #345DBB;
+  -webkit-transition: background 450ms;
+  transition: background 450ms;
+}
+
+.noUi-origin {
+  border-radius: 2px;
+}
+
+.noUi-target {
+  border-radius: 2px;
+}
+
+
+/* Handles and cursors;
+ */
+.noUi-draggable {
+  cursor: w-resize;
+}
+
+.noUi-vertical .noUi-draggable {
+  cursor: n-resize;
+}
+
+.noUi-handle {
+  cursor: default;
+  -webkit-box-sizing: content-box !important;
+  -moz-box-sizing: content-box !important;
+  box-sizing: content-box !important;
+}
+
+.noUi-handle:active {
+  border: 8px solid #345DBB;
+  border: 8px solid rgba(53,93,187,0.38);
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  left: -14px;
+  top: -14px;
+}
+
+/* Disabled state;
+ */
+[disabled].noUi-connect,[disabled] .noUi-connect {
+  background: #B8B8B8;
+}
+
+[disabled].noUi-origin,[disabled] .noUi-handle {
+  cursor: not-allowed;
+}
+
+.form-filter .price_label{
+    font-size: 12px;
+    color: #999;
+}
+.form-filter .price_label input{
+    outline: none;
+    border: none;
+    width: 25%;
+}
+.form-filter button{
+    font-size: 14px;
+    font-weight: 400;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    order: 3;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    border: none;
+    display: block;
+    color: #222;
+    border-radius: 4px;
+    text-transform: unset;
+    background-color: #fff;
+    width: 100%;
+    transition: all .3s ease;
+    border: 1px solid #169fd8;
+}
+.form-filter button:hover{
+    background-color: #169fd8;
+    color: #fff;
+}
+.filter-color-sidebar ul.list-color{
+    margin-left: -5px;
+    margin-right: -5px;
+    margin-bottom: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.filter-color-sidebar ul.list-color li{
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.875em;
+}
+.filter-color-sidebar ul.list-color li a.color-type{
+    display: block;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    border-radius: 50%;
+    border: 1px solid #eeee;
+    overflow: hidden;
+}
+ul.list-color li a.color-type .color-label{
+    width: 30px;
+    height: 30px;
+    display: block;
+}
+ul.list-color li a.color-type .color-name{
+    display: none;
+}
+.product-tag-sidebar .tagcloud a{
+    display: inline-block;
+    font-size: 14px !important;
+    font-weight: 400;
+    line-height: 1.7142857143;
+    color: #222;
+    background-color: transparent;
+    border: 1px solid #e1e1e1;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    padding: 4px 10px;
+    border-radius: 5px;
+}
+.product-tag-sidebar .tagcloud a:hover{
+    color: #fff;
+    background-color: #169fd8;
+    border-color: #169fd8;
+    text-decoration: unset;
+}
+
+/**Pagination */
+.pagination{
+    clear: both;
+}
+.pagination .page-numbers{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    flex-wrap: wrap;
+    margin: 0;
+}
+.pagination ul{
+    padding: 0;
+}
+.pagination .page-numbers li{
+    display: inline-block;
+    margin-right: 10px;
+}
+.pagination .page-numbers li .page-numbers.current{
+    background-color: #169fd8;
+    border-color: #169fd8;
+    color: #fff;
+}
+.pagination .page-numbers li .page-numbers{
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    color: #222;
+    background-color: #fff;
+    border: 1px solid #169fd8;
+}
+.pagination .page-numbers li .page-numbers:hover{
+    background-color: #169fd8;
+    border-color: #169fd8;
+    color: #fff;
+}
+.pagination ul.page-numbers::after{
+    clear: both;
+}
+
+.w-100{
+    width: 100%;
+}
+.dropdown-item{
+    font-size: 14px;
+}
+@media (min-width: 375px){
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: 50%;
+    }
+}
+@media (min-width: 600px){
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: calc(100% / 3);
+    }
+}
+@media (min-width: 768px){
+    .content .sorting a.filter-mobile{
+        margin-bottom: 0px;
+    }
+    .content .sorting .ordering{
+        margin-bottom: 0px;
+    }
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: 25%;
+    }
+}
+@media (min-width: 1024px){
+    /* ===== CONTENT ==== */
+    .content .sorting a.filter-mobile{
+        display: none;
+    }
+    .offcanvas{
+        display: none;
+    }
+    .wp-content .sidebar{
+        display: block;
+        float: left;
+        width: 300px;
+    }
+    .wp-content .content{
+        float: right;
+        width: calc(100% - 330px);
+    }
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: calc(100% / 3);
+    }
+}
+@media (min-width: 1290px){
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: calc(100% / 4);
+    }
+}
+@media (min-width: 1650px){
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: calc(100% / 5);
+    }
+}

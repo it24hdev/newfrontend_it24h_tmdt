@@ -1,0 +1,116 @@
+
+body {
+    --primary: #169fd8;
+    --primary_hover: #124fce;
+    --text: #222;
+    --accent: #000000;
+    --lighter: #999999;
+    --highlight: #EF262C;
+    --border: #EFEFEF;
+    font-family: 'Roboto', Arial, Helvetica, sans-serif !important;
+}
+
+
+a{text-decoration: none !important;}
+
+.wp-order-detail{
+    margin-bottom: 50px;
+    color: #222;
+}
+.wp-order-detail p.alert-order-success{
+    display: block;
+    color: #0f834d;
+    background-color: #f8f8f8;
+    font-size: 24px;
+    font-weight: 700;
+    text-align: center;
+    padding: 2.2906835em 1.41575em;
+}
+ul.order-detail{
+    padding-left: 0;
+    list-style: none;
+    font-size: 14px;
+}
+ul.order-detail li{
+    width: 100%;
+    text-align: center;
+    padding: 1em 1.618em;
+}
+ul.order-detail li strong{
+    display: block;
+    margin-top: 5px;
+}
+.wp-order-detail .order-product h2{
+    text-align: center;
+    font-size: 1.618em;
+}
+.wp-order-detail .order-product table{
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+.wp-order-detail .order-product table.table-order-detail{
+    max-width: 1200px;
+    margin: 1.41575em auto 5.9968353111em;
+}
+table.table-order-detail thead th {
+    padding: 1.41575em 0;
+    vertical-align: middle;
+    font-weight: 400;
+    border-bottom: 1px solid var(--border);
+}
+table.table-order-detail thead th.product-total{
+    text-align: right;
+}
+table.table-order-detail tbody{
+    color: var(--text);
+}
+table.table-order-detail tbody tr td, table.table-order-detail tfoot tr td, table.table-order-detail tfoot tr th{
+    padding: 1em 0 1.41575em 0;
+    word-break: break-all;
+    border-top: 1px solid var(--border);
+}
+table.table-order-detail tbody tr td strong{
+    color: var(--accent);
+}
+table.table-order-detail tbody tr td a{
+    color: var(--text);
+}
+table.table-order-detail tbody tr td a:hover{
+    color: var(--global-color-primary);
+}
+table.table-order-detail tbody tr td.product-total{
+    text-align: right;
+}
+table.table-order-detail tfoot tr td{
+    text-align: right;
+}
+table.table-order-detail tfoot tr td span.amount{
+    font-weight: 600;
+    font-size: 16px;
+}
+table.table-order-detail tfoot tr td span.amount-total{
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--primary);
+}
+.wp-order-detail .customer-info{
+    font-size: 14px;
+}
+
+@media (min-width: 768px){
+    ul.order-detail{
+        display: flex;
+        justify-content: center;
+        max-width: 100%;
+        margin: 3.706325903em auto;
+    }
+    ul.order-detail li{
+        width: 20%;
+        border-right: 1px solid var(--border);
+    }
+    ul.order-detail li:last-child{
+        border-right: 0;
+    }
+
+}

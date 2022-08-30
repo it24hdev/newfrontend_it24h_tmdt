@@ -1,0 +1,114 @@
+
+
+body {
+    --primary: #169fd8;
+    --primary_hover: #124fce;
+    --text: #222;
+    --accent: #000000;
+    --lighter: #999999;
+    --highlight: #EF262C;
+    --border: #EFEFEF;
+    font-family: 'Roboto', sans-serif !important;
+} */
+
+
+
+a{text-decoration: none !important;}
+
+.showcoupon{
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+.wp-form{
+    font-size: 14px;
+}
+.wp-form label{
+    margin-bottom: 5px;
+}
+.wp-form input{
+    padding: 15px;
+    font-size: 14px;
+    transition: all 1s;
+}
+.wp-form textarea{
+    font-size: 14px;
+}
+.wp-form input:focus::placeholder, .wp-form textarea:focus::placeholder{
+    color: #fff;
+    transition: all 1s;
+}
+.order-review{
+    background-color: #fff;
+    padding: 30px 30px 40px;
+    position: relative;
+    border-radius: 5px;
+    border: 6px solid var(--border);
+}
+table.checkout-review-order-table th {
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: 500;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+}
+table.checkout-review-order-table .product-name {
+    width: 45%;
+    word-wrap: break-word;
+}
+table.checkout-review-order-table .product-total{
+    text-align: right;
+}
+table.checkout-review-order-table tbody{
+    font-size: 14px;
+}
+table.checkout-review-order-table tbody tr td{
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+}
+table.checkout-review-order-table tfoot tr{
+    border-bottom: 1px solid var(--border);
+}
+table.checkout-review-order-table tfoot tr td{
+    text-align: right;
+    font-size: 14px;
+}
+table.checkout-review-order-table tfoot tr.order-total td .amount{
+    font-size: 24px;
+    color: var(--primary);
+    font-weight: 600;
+}
+.order-review .payment label{
+    cursor: pointer;
+}
+.order-review .payment .form-group{
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+}
+.order-review .payment .payment-box{
+    padding: 10px;
+}
+.order-review .payment .payment-box p{
+    margin-bottom: 0;
+    font-size: 13px;
+    color: var(--text);
+}
+.payment-box-none{
+    display: none;
+}
+.order-review .place-order p{
+    font-size: 14px;
+    color: var(--text);
+}
+.order-review .place-order button{
+    width: 100%;
+    font-size: 14px;
+    padding: 0.929em 2em;
+    font-weight: 700;
+    border-radius: 5px;
+    color: #fff;
+    background-color: var(--primary);
+    border: none;
+}
+.order-review .place-order button:hover{
+    background-color: var(--accent);
+}

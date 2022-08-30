@@ -1,0 +1,369 @@
+
+body {
+    --primary: #169fd8;
+    --primary_hover: #124fce;
+    --text: #222;
+    --accent: #000000;
+    --lighter: #999999;
+    --highlight: #EF262C;
+    --border: #EFEFEF;
+    font-family: 'Roboto', sans-serif !important;
+}
+
+.breadcrumb-wrap {
+            margin-top: 25px !important;
+}
+.wp-cart-table{
+    margin-right: 3.2%;
+    margin-bottom: 30px;
+}
+.wp-cart-table table.table-cart{
+    border-spacing: 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.table-cart thead {
+    border-bottom: 1px solid;
+    border-bottom-color: var(--border);
+}
+table.table-cart thead tr th{
+    padding: 1.618em 1.618em 1.618em 0;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 14px;
+}
+table.table-cart tbody tr{
+    margin-bottom: 1em;
+    border-bottom: 1px solid;
+    border-bottom-color: var(--border);
+}
+table.table-cart tbody tr a{
+    color: var(--accent);
+    display: block;
+}
+
+table.table-cart tbody tr td.product-remove a{
+    color: var(--text);
+}
+table.table-cart tbody tr td.product-remove a:hover{
+    color: red;
+}
+
+table.table-cart tbody tr td.product-thumbnail img{
+    display: block;
+    margin: auto;
+    max-width: 90px;
+    height: auto;
+}
+
+table.table-cart tbody tr td.product-subtotal{
+    font-weight: 500;
+}
+.actions{
+    padding: 30px 0;
+}
+.actions .coupon{
+    display: flex;
+    padding-bottom: 0;
+    margin-bottom: 0;
+    border-bottom: none;
+    float: left;
+}
+.actions .coupon .input-text{
+    min-width: 220px;
+    margin-right: 10px !important;
+    padding: 0.93em 1.25em;
+    background-color: var(--background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--border);
+    font-weight: 400;
+    border-radius: 5px;
+    outline: 0;
+    transition: all ease-in-out .3s;
+    font-size: 14px;
+}
+.actions .coupon .input-text:focus{
+    border-color: var(--primary);
+}
+.actions button {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 0.929em 2em;
+    color: #fff;
+    background-color: var(--primary);
+    border: none;
+}
+.actions button:hover{
+    color: #fff;
+    background-color: var(--primary_hover);
+}
+.actions .btn-update{
+    float: right;
+}
+.wp-cart-table .cart-collaterals{
+    margin-bottom: 30px;
+}
+.cart-collaterals{
+    margin-bottom: 30px;
+}
+.cart-collaterals .cart-total{
+    padding: 30px 30px 40px;
+    position: relative;
+    background-color: #fff;
+    border: 6px solid var(--border);
+    border-radius: 5px;
+}
+.cart-collaterals .cart-total h2{
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+.cart-collaterals .cart-total .subtotal{
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 18px;
+}
+.cart-collaterals .cart-total .total{
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 0;
+    font-size: 18px;
+}
+.cart-collaterals .cart-total .total span.count-total{
+    color: var(--primary);
+    font-size: 24px;
+    font-weight: 600;
+}
+.cart-collaterals .cart-total .checkout{
+    display: block;
+    width: 100%;
+    background-color: var(--primary);
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 5px;
+    padding: 0.929em 2em;
+    color: #fff;
+}
+.cart-collaterals .cart-total .checkout:hover{
+    background-color: var(--accent);
+}
+.cross-sells h2 {
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+.entry-content{
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+.entry-content p.cart-empty{
+    display: block;
+    text-align: center;
+    font-size: 18px;
+}
+.entry-content p.cart-empty i{
+    font-size: 150px;
+    margin-bottom: 50px;
+}
+.entry-content a{
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: var(--primary);
+    color: #fff;
+}
+.entry-content a:hover{
+    background-color: var(--primary_hover);
+}
+table.table-cart .product-quantity .quantity {
+    position: relative;
+    display: inline-flex;
+    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    float: left;
+    width: 120px;
+    height: 40px;
+    border: 1px solid #f4f4f4;
+    border-radius: 5px;
+    overflow: hidden;
+}
+table.table-cart .product-quantity .quantity button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    text-align: center;
+    z-index: 9;
+    top: 0;
+    bottom: 0;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    width: 40px;
+    height: 38px;
+    border-radius: 0;
+    color: #666666;
+    background-color: #fff;
+}
+table.table-cart .product-quantity .quantity button:hover {
+    background-color: var(--primary);
+    outline: none;
+    color: #fff;
+}
+table.table-cart .product-quantity .quantity input.qty{
+    padding: 9px 0;
+    width: 40px;
+    border: none;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: .2px;
+    font-weight: 700;
+    border-radius: 0;
+    color: #000;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+table.table-cart .product-quantity .quantity input:focus.qty{
+    border: none;
+    outline: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+.actions .input-text {
+    margin-bottom: 30px;
+    min-width: 220px;
+    margin-right: 10px;
+    padding: 0.93em 1.25em;
+    background-color: var(--background);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--border);
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    font-weight: 400;
+    border-radius: 5px;
+    outline: 0;
+    transition: all ease-in-out .3s;
+}
+.actions .input-text:focus{
+    outline: 1px solid var(--global-color-primary);
+    border: 1px solid var(--global-color-primary);
+}
+.actions .btn-submit{
+    margin-bottom: 30px;
+}
+.actions .btn-update{margin-top: 5px;}
+
+@media (min-width:768px){
+    table.table-cart tbody tr td{
+        padding: 1.618em 1.618em 1.618em 0;
+        font-size: 14px;
+    }
+    table.table-cart tbody tr td.product-remove{
+        width: 5%;
+    }
+    table.table-cart tbody tr td.product-thumbnail{
+        width: 15%;
+    }
+    table.table-cart tbody tr td.product-name{
+        width: 35%;
+    }
+    table.table-cart tbody tr td.product-price{
+        width: 20%;
+    }
+    table.table-cart tbody tr td.product-subtotal{
+        width: 20%;
+    }
+    .actions .coupon .input-text{
+        display: inline-block;
+        width: auto;
+        margin: 0;
+    }
+    table.table-cart span.title{
+        display: none;
+    }
+    table.table-cart .product-subtotal{
+        text-align: center;
+    }
+    .actions .coupon{
+        width: 60%;
+    }
+}
+@media (max-width: 567px){
+    .actions .coupon{
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .actions button{
+        width: 100%;
+    }
+}
+
+@media (max-width: 767px){
+    table.table-cart thead{
+        display: none;
+    }
+    table.table-cart tbody tr.cart-item{
+        margin-bottom: 1em;
+        border-bottom: 1px solid;
+        border-bottom-color: var(--border);
+        padding-left: 120px;
+        position: relative;
+        display: block;
+    }
+    table.table-cart tr td{
+        display: block;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        font-size: 14px;
+    }
+    table.table-cart tr td:not(:last-child) {
+        border-style: solid;
+        border-width: 0 0 1px;
+    }
+    table.table-cart tr td.product-remove {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        z-index: 1;
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border: none;
+        font-size: 14px;
+    }
+    table.table-cart tr td.product-thumbnail {
+        position: absolute;
+        left: 10px;
+        top: 15px;
+        padding: 0;
+        border: none!important;
+    }
+    table.table-cart tr td.product-name {
+        padding-right: 30px;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        display: block;
+    }
+    table.table-cart tr td.product-price,
+    table.table-cart tr td.product-quantity,
+    table.table-cart tr td.product-subtotal{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        text-transform: uppercase;
+    }
+}
