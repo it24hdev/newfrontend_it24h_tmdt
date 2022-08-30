@@ -13,7 +13,7 @@
 <!-- BEGIN: HTML Table Data -->
 <div class="grid grid-cols-12 gap-6">
 
-    <div class="intro-y box p-5 mt-5 overflow-x-auto col-span-12 md:col-span-6">
+    <div class="intro-y box p-5 mt-5 overflow-x-auto col-span-12 md:col-span-8">
         <table class="table">
             <thead>
                 <tr class="bg-gray-700 dark:bg-dark-1 text-white">

@@ -209,14 +209,30 @@
                         </a>
                     </li>
                 @endcan
-                {{-- @can('create', App\Models\Products::class) --}}
+                @can('create', App\Models\Products::class)
                     <li>
                         <a href="{{ route('products.list_attr') }}" class="side-menu">
                             <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
                             <div class="side-menu__title"> Quản lý thuộc tính sản phẩm </div>
                         </a>
                     </li>
-                {{-- @endcan --}}
+                @endcan
+                @can('create', App\Models\Products::class)
+                    <li>
+                        <a href="{{ route('products.list_brand') }}" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Danh sách thương hiệu</div>
+                        </a>
+                    </li>
+                @endcan
+                @can('create', App\Models\Products::class)
+                    <li>
+                        <a href="{{ route('products.list_tag-event') }}" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Danh sách thẻ Tag ưu đãi</div>
+                        </a>
+                    </li>
+                @endcan
                 @can('viewAny', App\Models\Category::class)
                     <li>
                         <a href="{{ route('category.index') }}" class="side-menu">

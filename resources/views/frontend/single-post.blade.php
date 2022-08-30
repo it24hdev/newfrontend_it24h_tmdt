@@ -17,23 +17,15 @@
 @endsection
 
 @section('content')
-    <div id="content">
-        <div class="breadcrumb-wrap">
-            <section class="breadcrumb">
-                <div class="breadcrumb_default">
-                    <div class="breadcrumb_populated">
-                        <div class="breadcrumb_title"></div>
-                        <nav class="breadcrumb_list">
-                            <a href="{{route('user')}}">@lang('lang.Home')</a>
-                            <i class="fas fa-angle-right"></i>
-                            <a href="{{route('categoryBlogs')}}">@lang('lang.Blog')</a>
-                            <i class="fas fa-angle-right"></i>
-                            {{$post->title}}
-                        </nav>
-                    </div>
-                </div>
-            </section>
+    <div class="wp-breadcrumb-page">
+        <div class="container-page">
+            <div class="breadcrumb-page">
+                <a href="{{route('user')}}">@lang('lang.Home') <i class="fas fa-angle-right mx-1"></i></a>
+                <a>@lang('lang.Blog')</a>
+            </div>
         </div>
+    </div>
+    <div id="content" class="container-page">
         <div class="site-content">
             <div class="content_default">
                 <div id="primary" class="content-area">

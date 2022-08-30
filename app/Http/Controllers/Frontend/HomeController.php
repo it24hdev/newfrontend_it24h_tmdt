@@ -271,7 +271,7 @@ class HomeController extends Controller
                 'Sub_menus'       => $Sub_menus,
                 'getcategoryblog' => $getcategoryblog,
                 'locale'          => $locale,
-                'acitve_menu'   => $active_menu,
+                'active_menu'   => $active_menu,
                 'posts_footer' => $posts_footer,
             ]);
         }
