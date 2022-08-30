@@ -17,21 +17,15 @@
 @endsection
 
 @section('content')
-<div id="content">
-    <div class="breadcrumb-wrap">
-        <section class="breadcrumb">
-            <div class="breadcrumb_default">
-                <div class="breadcrumb_populated">
-                    <div class="breadcrumb_title">@lang('lang.Blog')</div>
-                    <nav class="breadcrumb_list">
-                        <a href="{{route('user')}}">@lang('lang.Home')</a>
-                        <i class="fas fa-angle-right"></i>
-                        @lang('lang.Blog')
-                    </nav>
-                </div>
-            </div>
-        </section>
+<div class="wp-breadcrumb-page">
+    <div class="container-page">
+        <div class="breadcrumb-page">
+            <a href="{{route('user')}}">@lang('lang.Home') <i class="fas fa-angle-right mx-1"></i></a>
+            <a>@lang('lang.Blog')</a>
+        </div>
     </div>
+</div>
+<div id="content" class="container-page">
     <div class="site-content">
         <div class="content_default">
             <div id="primary" class="content-area">
@@ -138,33 +132,7 @@
                         <a href="#">Television</a>
                     </div>
                 </div>
-                <div class="widget_text">
-                    <div class="sidebar_text">
-                        <div class="text_default">
-                            <a href="#" class="text_skin-cover">
-                                <div class="text_bg-wrapper">
-                                    <div class="text_bg" style="background-image: url('{{asset('asset/images/sidebar_bg.jpeg')}}');"></div>
-                                    <div class="text_bg-overlay"></div>
-                                </div>
-                                <div class="text_content">
-                                    <div class="text_content-inner">
-                                        <div class="text_subtitle text_content-item">
-                                            <span>@lang('lang.Topseller')</span>
-                                        </div>
-                                        <h3 class="text_title text_content-item">HUAWEI MatePad</h3>
-                                        <div class="text_description text_content-item">
-                                            Unleash the Power of Exploration.
-                                        </div>
-                                        <div class="text_button-wrapper text_content-item">
-                                            <span class="text_button">@lang('lang.Shopnow') <i class="fas fa-angle-right"></i>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
