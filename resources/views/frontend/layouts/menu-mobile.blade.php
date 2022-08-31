@@ -9,11 +9,11 @@
                     </a>
                 </div>
                 <div class="mobile-logo">
-                    <img src="/asset/images/it24h.png" alt="" style="height: 44px; width: auto;">
+                    <img src="{{asset('asset/images/it24h.png')}}" alt="" style="height: 44px; width: auto;">
                 </div>
                 <div class="mobile-cart">
-                    <a href=""><i class="far fa-shopping-cart"></i>
-                        <span class="count">1</span>
+                    <a href="{{route('list_cart')}}"><i class="far fa-shopping-cart"></i>
+                        <span class="count">{{Cart::count()}}</span>
                     </a>
                 </div>
             </div>
@@ -52,10 +52,10 @@
             <div class="tab-content container-home" id="pills-tabContent">
                 <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
                     <ul class="menu-mobile-site">
-                        <li><a href=""><span class="icon-menu"><i class="far fa-home"></i></span> Trang chủ</a></li>
-                        <li><a href=""><span class="icon-menu"><i class="fal fa-shopping-bag"></i></span> Sản phẩm</a></li>
-                        <li><a href=""><span class="icon-menu"><i class="fas fa-newspaper"></i></span> Tin tức</a></li>
-                        <li><a href=""><span class="icon-menu"><i class="far fa-phone-rotary"></i></span> Liên hệ</a></li>
+                        <li><a href="{{route('user')}}"><span class="icon-menu"><i class="far fa-home"></i></span> Trang chủ</a></li>
+                        <li><a href="{{route('list_product')}}"><span class="icon-menu"><i class="fal fa-shopping-bag"></i></span> Sản phẩm</a></li>
+                        <li><a href="{{route('categoryBlogs')}}"><span class="icon-menu"><i class="fas fa-newspaper"></i></span> Tin tức</a></li>
+                        <li><a href="{{route('contact')}}"><span class="icon-menu"><i class="far fa-phone-rotary"></i></span> Liên hệ</a></li>
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-2-tab">
@@ -109,8 +109,12 @@
                 </div>
                 <div class="tab-pane fade" id="pills-3" role="tabpanel" aria-labelledby="pills-3-tab">
                     <div class="wp-account-user-mobile">
-                        <a href="" class="login-mobile">Đăng nhập</a>
-                        <a href="" class="register-mobile">Đăng ký</a>
+                        @if ((Session::has('is_login') && Session::get('is_login') == true) || !empty(Cookie::get('remember-me')))
+                            <a href="{{route('user_account')}}" class="login-mobile">Quản lý tài khoản</a>
+                        @else
+                            <a href="{{route('user_login_register')}}" class="login-mobile">Đăng nhập</a>
+                            <a href="{{route('user_login_register')}}" class="register-mobile">Đăng ký</a>
+                        @endif
                     </div>
                 </div>
             </div>
