@@ -59,53 +59,34 @@
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-2-tab">
+                     @foreach($Sidebars  as $Sidebar)
                     <ul class="menu-cat-mobile">
                         <li>
-                            <a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span> Laptop, Tablet, Mobile</a>
+                            @if($Sidebar->parent_id==0)
+                            <a href="{!! route('product_cat',  $Sidebar->slug) !!}"><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span> {{$Sidebar->name}}</a>
+                            @if(count($Sidebar->childs))
                             <span class="icon-right"><i class="far fa-angle-right"></i></span>
+                            @endif
                             <div class="submenu-parent-mobile">
+                                @if(count($Sidebar->childs))
                                 <ul style="margin-left: 5px;">
-                                    <span class="title-cat">Laptop</span>
-                                    <li><a href="">- Laptop Asus</a></li>
-                                    <li><a href="">- Laptop HP</a></li>
-                                    <li><a href="">- Laptop Gaming</a>
-                                        <span class="icon-right-child" style="color: #222;"><i class="far fa-angle-right"></i></span>
-                                        <div class="submenu-parent-mobile-1">
-                                            <ul style="margin-left: 15px;">
-                                                <li><a href="">Laptop gaming 1</a></li>
-                                                <li><a href="">Laptop gaming 2</a></li>
-                                                <li><a href="">Laptop gaming 3</a></li>
-                                                <li><a href="">Laptop gaming 4</a>
-                                                    <span class="icon-right-child" style="color: #222;"><i class="far fa-angle-right"></i></span>
-                                                    <div class="submenu-parent-mobile-1">
-                                                        <ul style="margin-left: 20px;">
-                                                            <li><a href="">Laptop gaming 1</a></li>
-                                                            <li><a href="">Laptop gaming 2</a></li>
-                                                            <li><a href="">Laptop gaming 3</a></li>
-                                                            <li><a href="">Laptop gaming 4</a></li>
-                                                            <li><a href="">Laptop gaming 5</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </li>
-                                                <li><a href="">Laptop gaming 5</a></li>
-                                            </ul>
-                                        </div>
+                                    @foreach($Sidebars as $subsidebar)
+                                    @if($subsidebar->parent_id == $Sidebar->id)
+
+                                    <li><a href="{!! route('product_cat',  $subsidebar->slug) !!}">- {{$subsidebar->name}}</a>
+                                        @if(count($subsidebar->childs))
+                                            @include('frontend.subsidebarmenu',['childs' => $subsidebar->childs])
+                                        @endif
                                     </li>
-                                    <li><a href="">- Laptop Dell</a></li>
-                                    <li><a href="">- Laptop MSI</a></li>
+                                    @endif
+                                    @endforeach
                                 </ul>
+                                @endif
                             </div>
+                            @endif
                         </li>
-                        <li><a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span>
-                            Laptop, Tablet, Mobile</a>
-                        </li>
-                        <li><a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span>Laptop, Tablet, Mobile</a></li>
-                        <li><a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span>Laptop, Tablet, Mobile</a></li>
-                        <li><a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span>Laptop, Tablet, Mobile</a></li>
-                        <li><a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span>Laptop, Tablet, Mobile</a></li>
-                        <li><a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span>Laptop, Tablet, Mobile</a></li>
-                        <li><a href=""><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span>Laptop, Tablet, Mobile</a></li>
                     </ul>
+                    @endforeach
                 </div>
                 <div class="tab-pane fade" id="pills-3" role="tabpanel" aria-labelledby="pills-3-tab">
                     <div class="wp-account-user-mobile">

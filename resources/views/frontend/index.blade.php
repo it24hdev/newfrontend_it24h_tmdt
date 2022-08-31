@@ -10,7 +10,7 @@
 @endsection
 
 
-@section('menu-mobile')
+@section('header-mobile')
     @include('frontend.layouts.menu-mobile')
 @endsection
 
