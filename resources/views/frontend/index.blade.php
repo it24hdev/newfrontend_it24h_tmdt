@@ -84,24 +84,24 @@
                     </div>
                     <div class="banner">
                         <ul>
-                            @if (!empty($banner_sidebar_1))
+                            @if (!empty($banner_1))
                                 <li class="banner-image">
-                                    <a href="{{$banner_sidebar_1->link_target}}">
-                                        <img src="{{asset('upload/images/slider/'.$banner_sidebar_1->image)}}" alt="">
+                                    <a href="{{$banner_1->link_target}}">
+                                        <img src="{{asset('upload/images/slider/'.$banner_1->image)}}" alt="">
                                     </a>
                                 </li>
                             @endif
-                            @if (!empty($banner_sidebar_2))
+                            @if (!empty($banner_2))
                                 <li class="banner-image">
-                                    <a href="{{$banner_sidebar_2->link_target}}">
-                                        <img src="{{asset('upload/images/slider/'.$banner_sidebar_2->image)}}" alt="">
+                                    <a href="{{$banner_2->link_target}}">
+                                        <img src="{{asset('upload/images/slider/'.$banner_2->image)}}" alt="">
                                     </a>
                                 </li>
                             @endif
-                            @if (!empty($banner_sidebar_3))
+                            @if (!empty($banner_3))
                                 <li class="banner-image">
-                                    <a href="{{$banner_sidebar_2->link_target}}">
-                                        <img src="{{asset('upload/images/slider/'.$banner_sidebar_3->image)}}" alt="">
+                                    <a href="{{$banner_3->link_target}}">
+                                        <img src="{{asset('upload/images/slider/'.$banner_3->image)}}" alt="">
                                     </a>
                                 </li>
                             @endif
