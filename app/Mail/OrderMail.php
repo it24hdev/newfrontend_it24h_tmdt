@@ -33,7 +33,7 @@ class OrderMail extends Mailable
 
         return $this->view('mails.order')
         ->from('ismart.project.trungdung@gmail.com' , 'IT24H')
-                    ->subject("[IT24H] Thông tin đơn hàng #IT24H{$this->data['orders']['code_order']}")
+                    ->subject("[IT24H] Thông tin đơn hàng #{$this->data['orders']['code_order']}")
                     ->with($this->data);
     }
 }

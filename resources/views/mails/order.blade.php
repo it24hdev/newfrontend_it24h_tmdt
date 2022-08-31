@@ -4,12 +4,12 @@
                 khách {{$info_order['customer_name']}} đã đặt hàng tại IT24H.</strong></p>
         <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 10px;line-height:20px">IT24H rất vui
             được thông báo đơn hàng&nbsp;<strong
-                style="font-family:Arial,sans-serif;text-transform:uppercase">#IT24H{{$orders['code_order']}}</strong> của Quý khách đã được
+                style="font-family:Arial,sans-serif;text-transform:uppercase">#{{$orders['code_order']}}</strong> của Quý khách đã được
             tiếp nhận và đang trong quá trình xử lý. IT24H sẽ thông báo cho Quý khách khi đơn hàng chuẩn bị giao
             hàng.</p>
         <p style="margin:10px 0px;font-size:14px;font-weight:700;text-transform:uppercase">Thông tin đơn hàng:
             <strong><span
-                    style="font-size:14px;font-style:normal;font-weight:700;letter-spacing:normal;text-transform:uppercase;white-space:normal">#IT24H{{$orders['code_order']}}</span></strong>
+                    style="font-size:14px;font-style:normal;font-weight:700;letter-spacing:normal;text-transform:uppercase;white-space:normal">#{{$orders['code_order']}}</span></strong>
         </p>
     </div>
     <div style="margin:15px 0px 25px;clear:both;display:block;width:100%;overflow:hidden;border:1px solid #cccccc">
@@ -94,7 +94,7 @@
     <div style="width:100%;clear:both;display:block;overflow:hidden;margin:30px 0px 0px">
         <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 5px;line-height:20px"><span
                 style="font-family:Arial,sans-serif">Nếu cần hỗ trợ, Quý khách chỉ cần gửi email đến <a
-                    href="mailto:ismart.project.trungdung@gmail.com" target="_blank">ismart.project.trungdung@gmail.com</a> hoặc gọi số <strong>0982659446</strong>.</span></p>
+                    href="mailto:contact@it24h.vn" target="_blank">contact@it24h.vn</a> hoặc gọi số <strong>0886776286</strong>.</span></p>
         <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 5px;line-height:20px">Cảm ơn Quý
             Khách!&nbsp;</p>
     </div>

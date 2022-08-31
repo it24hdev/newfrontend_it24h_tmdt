@@ -21,8 +21,8 @@
     </div>
     <div class="header-bottom">
         <div class="container-page">
-            <form action="">
-                <input type="text" name="" id="" placeholder="Tìm kiếm...">
+            <form action="{{route('list_product')}}">
+                <input type="text" name="search" placeholder="Tìm kiếm...">
                 <button><i class="far fa-search"></i></button>
             </form>
         </div>

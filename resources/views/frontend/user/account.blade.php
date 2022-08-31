@@ -209,7 +209,7 @@
                             <tbody>
                                 @foreach ($orders as $order)
                                 <tr>
-                                    <td scope="row">#IT24H{{$order->id}}</td>
+                                    <td scope="row">#{{$order->id}}</td>
                                     <td>{{ \App\Helpers\CommonHelper::convertDateToDMY($order->created_at) }}</td>
                                     <td>@if ($order->status == 1)
                                         @lang('lang.waitprocessing')
@@ -230,7 +230,7 @@
                                           <div class="modal-content">
                                             <div class="modal-header">
                                               <h5 class="modal-title" id="exampleModalLabel-{{$order->id}}">
-                                                @lang('lang.OrderDetail'): #IT24H{{$order->id}}</h5>
+                                                @lang('lang.OrderDetail'): #{{$order->id}}</h5>
                                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body overflow-auto">

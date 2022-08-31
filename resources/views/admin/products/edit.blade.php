@@ -81,9 +81,6 @@
                             @endforeach
                         @endif
                     </div>
-                        @error('thumb')
-                            <span style="color:red">{{ $message }}</span>
-                        @enderror
                     </div>
                     </div>
                     </div>
