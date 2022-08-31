@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class OrderMail extends Mailable
+class ThongBaoCoDonHangMoi extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -31,9 +31,9 @@ class OrderMail extends Mailable
     public function build()
     {
 
-        return $this->view('mails.order')
+        return $this->view('mails.ThongBaoDonHangMoi')
         ->from(\env('MAIL_USERNAME') , 'IT24H')
-                    ->subject("[IT24H] Thông tin đơn hàng #{$this->data['orders']['code_order']}")
+                    ->subject("[IT24H] Thông báo đơn hàng mới mã: #{$this->data['orders']['code_order']}")
                     ->with($this->data);
     }
 }

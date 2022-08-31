@@ -1,0 +1,129 @@
+.wp-content{
+    padding: 50px 0;
+    max-width: 1050px;
+    margin: 0 auto;
+    color: #222;
+}
+.wp-content h2.title{
+    color: #222;
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+.box-content{
+    margin-bottom: 30px;
+}
+.box-content h4.header-title{
+    color: #222;
+    display: block;
+    position: relative;
+    text-transform: uppercase;
+    margin-bottom: 35px;
+}
+.box-content h4.header-title::after{
+    content: ' ';
+    height: 2px;
+    width: 30%;
+    background-color: #169fd8;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+}
+.gioi-thieu-chung{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.gioi-thieu-chung .content-left{
+    width: 100%;
+    order: 2;
+}
+.gioi-thieu-chung .content-left .name{
+    font-size: 36px;
+    line-height: 45px;
+}
+.gioi-thieu-chung .content-right{
+    width: 100%;
+    padding: 50px;
+    position: relative;
+    order: 1;
+}
+.gioi-thieu-chung .content-right .middle-image{
+    width: 100%;
+}
+.gioi-thieu-chung .content-right .middle-image img{
+    width: 100%;
+    height: auto;
+}
+.gioi-thieu-chung .content-right .pattern{
+    width: 100%;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+}
+.gioi-thieu-chung .content-right .pattern img{
+    width: 100%;
+    height: auto;
+    animation: scale 5s alternate infinite;
+}
+@keyframes scale {
+    0% { scale: 0.9; }  100% { scale: 1.05}
+}
+
+.su-menh{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.su-menh .box-detail{
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    padding: 43px 50px 35px 50px;
+    background-color: #FFFFFF;
+    transition: all 0.5s;
+    box-shadow: 0px 0px 22px 0px rgb(0 0 0 / 14%);
+    font-size: 16px;
+}
+.su-menh .box-detail .header-detail, .linh-vuc-kinh-doanh .box-detail .header-detail{
+    font-size: 20px;
+    font-weight: 500;
+}
+.su-menh .box-detail:hover{
+    background: linear-gradient(to right ,#6cc9ed,#169fd8);
+    color: #fff;
+}
+
+.linh-vuc-kinh-doanh{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.linh-vuc-kinh-doanh .box-detail{
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 43px 50px 35px 50px;
+    background-color: #FFFFFF;
+    transition: all 0.5s;
+    box-shadow: 0px 0px 22px 0px rgb(0 0 0 / 14%);
+    font-size: 16px;
+}
+@media (min-width: 786px){
+    .su-menh .box-detail{
+        width: 48%;
+    }
+    .linh-vuc-kinh-doanh .box-detail{
+        width: 32.5%;
+    }
+    .gioi-thieu-chung .content-left{
+        width: 40%;
+        order: 1;
+    }
+    .gioi-thieu-chung .content-right{
+        width: 60%;
+        order: 2;
+    }
+}

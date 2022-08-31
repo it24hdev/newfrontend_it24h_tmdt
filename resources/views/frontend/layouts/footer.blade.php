@@ -134,7 +134,7 @@
                 <div class="box-content info-company">
                     <div class="title">Giới thiệu it24h</div>
                     <div class="box-detail">
-                        <a href="">Giới thiệu công ty</a>
+                        <a href="{{route('about_us')}}">Giới thiệu công ty</a>
                         <a href="">Liên hệ hợp tác kinh doanh</a>
                         <a href="">Thông tin tuyển dụng</a>
                         <a href="">Tin công nghệ</a>

@@ -296,3 +296,5 @@ Route::get('/callback', [FrontendUserController::class, 'callback_facebook']);
 //Login  google
 Route::get('/login-google', [FrontendUserController::class, 'login_google'])->name('login-google');
 Route::get('/google/callback', [FrontendUserController::class, 'callback_google']);
+
+Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('about_us');

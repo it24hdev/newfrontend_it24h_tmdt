@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OrderMail;
+use App\Mail\ThongBaoCoDonHangMoi;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Locationmenu;
@@ -264,6 +265,7 @@ class CartController extends Controller
         ];
         if (!empty($info_order['email'])) {
             Mail::to($info_order['email'])->send(new OrderMail($data));
+            Mail::to(\env('MAIL_ADMIN'))->send(new ThongBaoCoDonHangMoi($data));
         }
         Cart::destroy();
         Session::put('order_success', $order->id);

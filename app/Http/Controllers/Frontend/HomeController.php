@@ -482,4 +482,13 @@ class HomeController extends Controller
 
         return redirect()->back();
     }
+
+    public function about_us(){
+        $active_menu = "contact";
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+        $locale             = config('app.locale');
+        $Sidebars           = $this->getmenu('sidebar');
+        $Menus              = $this->getmenu('menu');
+        return \view('frontend.page.about-us', compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
+    }
 }
