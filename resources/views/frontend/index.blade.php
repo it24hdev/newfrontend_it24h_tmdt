@@ -611,7 +611,7 @@
                         // console.log(data);
                         $('#data-'+id).append(data);
                         $('.list-product-group').owlCarousel({
-                            autoplay: true,
+                            autoplay: false,
                             autoplayHoverPause: true,
                             loop: false,
                             margin: 10,

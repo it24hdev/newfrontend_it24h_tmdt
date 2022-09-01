@@ -41,12 +41,21 @@
                                 <span>@lang('lang.Productcategories')</span>
                             </div>
                             <ul class="list-categories">
-                                @foreach ($categories as $item)
-                                    <li class="cat-item">
-                                        <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
-                                        <span class="count">({{$item->get_product_by_cat()->count()}})</span>
-                                    </li>
-                                @endforeach
+                                @if (count($categories) > 0)
+                                    @foreach ($categories as $item)
+                                        <li class="cat-item">
+                                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                                            <span class="count">({{$item->get_product_by_cat()->count()}})</span>
+                                        </li>
+                                    @endforeach
+                                @else
+                                    @foreach ($cat_parent as $item)
+                                        <li class="cat-item">
+                                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                                            <span class="count">({{$item->get_product_by_cat()->count()}})</span>
+                                        </li>
+                                    @endforeach
+                                @endif
                             </ul>
                         </div>
                         <div class="filter-price-sidebar">

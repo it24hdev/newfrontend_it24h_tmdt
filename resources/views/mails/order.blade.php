@@ -15,7 +15,7 @@
     <div style="margin:15px 0px 25px;clear:both;display:block;width:100%;overflow:hidden;border:1px solid #cccccc">
         <div style="width:100%;float:left;display:inline-block;min-height:160px">
             <h2
-                style="width:100%;color:#ffffff;font-size:14px;padding:10px;margin:0px;font-weight:500;text-transform:uppercase;background:none 0% 0% repeat scroll #ed1c24">
+                style="width:100%;color:#ffffff;font-size:14px;padding:10px;margin:0px;font-weight:500;text-transform:uppercase;background:none 0% 0% repeat scroll #169fd8">
                 <span>THÔNG TIN GIAO HÀNG</span>
             </h2>
             <p style="text-indent:15px;margin-top:10px">Người nhận hàng: {{$info_order['customer_name']}}</p>
@@ -27,23 +27,37 @@
     </div>
     <div style="width:100%;float:left;display:block">
         <h3 style="display:block;font-size:16px;margin:0px;line-height:24px">Thông tin ghi chú: </h3>
-        <p style="margin:0px 0px 30px"><span style="line-height:1.42857">Phương thức thanh toán:&nbsp;</span><strong
+        <p style="margin:0px"><span style="line-height:1.42857">Phương thức thanh toán:&nbsp;</span><strong
                 style="font-size:12px">{{$info_order['payment_method']}}&nbsp;</strong></p>
+        @if ($info_order['payment_method'] == 'Chuyển khoản')
+        <p style="margin:0px 0px 30px">Quý khách vui lòng thanh toán theo số tài khoản hướng dẫn dưới đây để hoàn tất việc đặt hàng.</p>
+            <div style="width:100%;float:left;display:inline-block;min-height:160px; margin-bottom: 30px;">
+                <h2 style="width:100%;color:#ffffff;font-size:14px;padding:10px;margin:0px;font-weight:500;text-transform:uppercase;background:none 0% 0% repeat scroll #169fd8">
+                    <span>Tài khoản tiếp nhận chuyển khoản</span>
+                </h2>
+                <p style="text-indent:15px;margin-top:10px">Ngân hàng hưởng thụ: {{env('BANK')}}</p>
+                <p style="text-indent:15px">Số tài khoản: {{env('STK')}}</p>
+                <p style="text-indent:15px">Họ tên người nhận: {{env('USER_BANK')}}</p>
+                <p style="text-indent:15px">Nội dung chuyển khoản: <span style="font-style: italic">Họ tên người chuyển khoản</span> <strong>+</strong> thanh toan don hang <strong>+</strong>
+                <span style="font-style: italic">Mã đơn hàng</span></p>
+            </div>
+        @endif
+
     </div>
     <table style="width:100%;border-collapse:collapse;border-spacing:0px">
         <thead>
             <tr style="border:1px solid #001530;background:#001530">
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:40%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:40%;background:none 0% 0% repeat scroll #169fd8">
                     Sản phẩm</th>
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #169fd8">
                     Giá sản phẩm</th>
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #169fd8">
                     Số lượng</th>
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #169fd8">
                     Thành tiền</th>
             </tr>
         </thead>

@@ -12,7 +12,7 @@
                 <div class="intro-x text-xl lg:text-3xl font-medium mt-5">Xin lỗi, chúng tôi không tìm thấy trang mà bạn cần!</div>
                 <div class="intro-x text-lg mt-3">Bạn có thể đã nhập sai địa chỉ hoặc trang có thể đã bị di chuyển.</div>
                 <a href="{{route('user')}}" class="intro-x btn py-3 px-4 text-white border-white dark:border-dark-5 dark:text-gray-300 mt-10 nr-3">Back to Home</a>
-                <a href="tel:88888888" class="intro-x btn py-3 px-4 text-white border-white dark:border-dark-5 dark:text-gray-300 mt-10">Hotline</a>
+                <a href="tel:0886776286" class="intro-x btn py-3 px-4 text-white border-white dark:border-dark-5 dark:text-gray-300 mt-10">Hotline</a>
             </div>
         </div>
         <!-- END: Error Page -->

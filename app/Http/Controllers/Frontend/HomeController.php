@@ -373,6 +373,10 @@ class HomeController extends Controller
             ->where('parent_id',$cat->id)
             ->where('status',1)
             ->get();
+        $cat_parent = Category::where('taxonomy',Category::SAN_PHAM)
+        ->where('parent_id', 0)
+        ->where('status',1)
+        ->get();
         if (empty($cat)) {
             return abort(404);
         }
@@ -412,7 +416,7 @@ class HomeController extends Controller
                 ->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }
         return \view('frontend.product', \compact('products', 'categories', 'cat','Sidebars',
-        'Menus','Sub_menus','locale', 'active_menu', 'posts_footer'));
+        'Menus','Sub_menus','locale', 'active_menu', 'posts_footer', 'cat_parent'));
     }
     // xu ly lay comment
     public function commentPost(Request $request){
@@ -484,7 +488,7 @@ class HomeController extends Controller
     }
 
     public function about_us(){
-        $active_menu = "contact";
+        $active_menu = "about_us";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $Sidebars           = $this->getmenu('sidebar');

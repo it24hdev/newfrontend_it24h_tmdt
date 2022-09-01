@@ -1,7 +1,6 @@
 <div style="width:600px;margin:0px auto;padding:15px;background-color:#ffffff">
     <div style="width:100%;clear:both">
-        <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 10px;line-height:20px">IT24H rất vui
-            được thông báo đơn hàng mới mã:<strong
+        <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 10px;line-height:20px">Thông báo tiếp nhận đơn hàng mới từ IT24H - Mã đơn hàng:<strong
                 style="font-family:Arial,sans-serif;text-transform:uppercase">#{{$orders['code_order']}}</strong></p>
         <p style="margin:10px 0px;font-size:14px;font-weight:700;text-transform:uppercase">Thông tin đơn hàng:
             <strong><span
@@ -11,7 +10,7 @@
     <div style="margin:15px 0px 25px;clear:both;display:block;width:100%;overflow:hidden;border:1px solid #cccccc">
         <div style="width:100%;float:left;display:inline-block;min-height:160px">
             <h2
-                style="width:100%;color:#ffffff;font-size:14px;padding:10px;margin:0px;font-weight:500;text-transform:uppercase;background:none 0% 0% repeat scroll #ed1c24">
+                style="width:100%;color:#ffffff;font-size:14px;padding:10px;margin:0px;font-weight:500;text-transform:uppercase;background:none 0% 0% repeat scroll #169fd8">
                 <span>THÔNG TIN GIAO HÀNG</span>
             </h2>
             <p style="text-indent:15px;margin-top:10px">Người nhận hàng: {{$info_order['customer_name']}}</p>
@@ -30,16 +29,16 @@
         <thead>
             <tr style="border:1px solid #001530;background:#001530">
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:40%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:40%;background:none 0% 0% repeat scroll #169fd8">
                     Sản phẩm</th>
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #169fd8">
                     Giá sản phẩm</th>
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #169fd8">
                     Số lượng</th>
                 <th
-                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #ff0000">
+                    style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #169fd8">
                     Thành tiền</th>
             </tr>
         </thead>

@@ -39,8 +39,8 @@
                 </div>
             </div>
             <div class="box-content">
-                <h4 class="header-title">Sứ mệnh</h4>
-                <div class="detail su-menh">
+                <h4 class="header-title">Giá trị cốt lõi</h4>
+                <div class="detail gia-tri-cot-loi">
                     <div class="box-detail">
                         <p class="header-detail">Đối với khách hàng</p>
                         <p>Luôn đặt lợi ích khách hàng lên hàng đầu. Mỗi giải pháp, dịch vụ đều đáp ứng tối đa nhu cầu của khách hàng.</p>
@@ -56,6 +56,25 @@
                     <div class="box-detail">
                         <p class="header-detail">Đối với xã hội</p>
                         <p>Hài hòa lợi ích doanh nghiệp với lợi ích xã hội; đóng góp tích cực vào các hoạt động hướng về cộng đồng.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="box-content">
+                <h4 class="header-title">Tầm nhìn -sứ mệnh</h4>
+                <div class="detail tam-nhin">
+                    <div class="box-detail">
+                        <p class="header-detail">Tầm nhìn</p>
+                        <p>IT24H với tầm nhìn dài hạn đầu tư, phát triển bền vững lĩnh vực Công nghệ thông tin, với các mảng hoạt động chủ chốt:</p>
+                        <ul>
+                            <li>- Cung cấp các thiết bị tin học</li>
+                            <li>- Cung cấp giải pháp phần mềm của các hãng</li>
+                            <li>- Tư vấn, thiết kế giải pháp tổng thể hệ thống Công nghệ thông tin</li>
+                            <li>- Dịch vụ bảo hành, bảo trì hệ thống, thiết bị tin học</li>
+                        </ul>
+                    </div>
+                    <div class="box-detail">
+                        <p class="header-detail">Sứ mệnh</p>
+                        <p style="line-height: 2rem;">Với sứ mệnh mang đến trải nghiệm tốt nhất cho khách hàng, IT24H không ngừng thay đổi, nâng cấp hiện đại hóa cửa hàng, dịch vụ, cũng như số hóa quy trình vận hành, quản trị, để mang lại sự tiện lợi nhất, tiết kiệm nhất đến với khách hàng.</p>
                     </div>
                 </div>
             </div>
@@ -90,7 +109,13 @@
             </div>
             <div class="box-content">
                 <h4 class="header-title">Đối tác của IT24H</h4>
-                <div class="detail su-menh">
+                <div class="detail doi-tac">
+                    <div class="box-detail">
+                        <img src="{{asset('asset/images/doitac1.jpg')}}" alt="">
+                    </div>
+                    <div class="box-detail">
+                        <img src="{{asset('asset/images/doitac2.jpg')}}" alt="">
+                    </div>
                 </div>
             </div>
         </div>
