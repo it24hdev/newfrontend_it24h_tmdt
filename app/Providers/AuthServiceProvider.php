@@ -19,7 +19,11 @@ use App\Policies\OrderPolicy;
 use App\Models\Products;
 use App\Policies\ProductsPolicy;
 use App\Models\Locationmenu;
+use App\Models\Recruit;
+use App\Models\Recruit_register;
 use App\Policies\LocationmenuPolicy;
+use App\Policies\RecruitPolicy;
+use App\Policies\Recruit_registerPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -40,6 +44,8 @@ class AuthServiceProvider extends ServiceProvider
         Order::class => OrderPolicy::class,
         Products::class => ProductsPolicy::class,
         Locationmenu::class => LocationmenuPolicy::class,
+        Recruit_register::class => Recruit_registerPolicy::class,
+        Recruit::class => RecruitPolicy::class,
 
     ];
 

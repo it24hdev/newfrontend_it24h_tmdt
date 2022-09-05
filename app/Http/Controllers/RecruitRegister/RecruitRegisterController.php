@@ -10,12 +10,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Response;
-use Redirect
+use Redirect;
 
 class RecruitRegisterController extends Controller
 {
-    public function index(Request $request){
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            \session(['module_active' => 'recruit',  'active' => 'Danh sách ứng tuyển']);
+            return $next($request);
+        });
+    }
 
+    public function index(Request $request){
+        $this->authorize('view', Recruit_register::class);
         $limit    =  $request->query('limit');
         $keywords =  $request->query('search');
         $orderby  =  $request->query('orderby');
@@ -33,12 +41,34 @@ class RecruitRegisterController extends Controller
             $orderby  = "id";
         }
         if ($limit == 10 && $keywords == "" && $orderby == "id" && $sort =="asc") {
-            $Recruits = Recruit_register::paginate($limit);
+            $Recruit_register = Recruit_register::paginate($limit);
         } else
-            $Recruits = Recruit_register::where('vitriungtuyen', 'like', '%' . $keywords . '%')->orderby($orderby, $sort)->Paginate($limit);
+            $Recruit_register = Recruit_register::where('vitriungtuyen', 'like', '%' . $keywords . '%')->orderby($orderby, $sort)->Paginate($limit);
         return view('admin.Recruit_register.index', [
-            'recruits' => $Recruits,
+            'Recruit_registers' => $Recruit_register,
             'title'    => 'Tuyên dụng'
         ]);
+    }
+
+     public function update(Request $request)
+    {
+
+        $this->authorize('update', Recruit_register::class);
+        $Recruit_registers = Recruit_register::find($request->id);
+       
+        $Recruit_register  = [
+            'status'  => $request->status,
+        ];
+
+        try {
+            DB::beginTransaction();
+            $Recruit_registers->update($Recruit_register);
+            DB::commit();
+            return \json_encode(array('success'=>true));
+        }
+        catch (\Exception $exception){
+            DB::rollBack();
+            return \json_encode(array('success'=>false));
+        }
     }
 }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('vitriungtuyen');
             $table->string('fileupload');
-            $table->boolean('status');
+            $table->integer('status');
             $table->timestamps();
         });
     }

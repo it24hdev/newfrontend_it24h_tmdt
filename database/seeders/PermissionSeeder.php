@@ -263,5 +263,60 @@ class PermissionSeeder extends Seeder
             'key_code' => 'delete_vote_product',
             'parent_id' => 305,
         ]);
+
+        DB::table('permissions')->insert([
+            'id' => 780,
+            'name' => 'Tuyển dụng',
+            'key_code' => Null,
+            'parent_id' => 0,
+        ]);
+
+        DB::table('permissions')->insert([
+            'id' => 781,
+            'name' => 'Xem',
+            'key_code' => 'view_recruit',
+            'parent_id' => 780,
+        ]);
+        DB::table('permissions')->insert([
+            'id' => 782,
+            'name' => 'Thêm',
+            'key_code' => 'create_recruit',
+            'parent_id' => 780,
+        ]);
+
+        DB::table('permissions')->insert([
+            'id' => 783,
+            'name' => 'Sửa',
+            'key_code' => 'update_recruit',
+            'parent_id' => 780,
+        ]);
+
+        DB::table('permissions')->insert([
+            'id' => 784,
+            'name' => 'Xóa',
+            'key_code' => 'delete_recruit',
+            'parent_id' => 780,
+        ]);
+
+        DB::table('permissions')->insert([
+            'id' => 790,
+            'name' => 'Ứng tuyển',
+            'key_code' => Null,
+            'parent_id' => 0,
+        ]);
+
+        DB::table('permissions')->insert([
+            'id' => 791,
+            'name' => 'Xem',
+            'key_code' => 'view_recruit_register',
+            'parent_id' => 790,
+        ]);
+
+        DB::table('permissions')->insert([
+            'id' => 792,
+            'name' => 'Sửa',
+            'key_code' => 'update_recruit_register',
+            'parent_id' => 790,
+        ]);
     }
 }

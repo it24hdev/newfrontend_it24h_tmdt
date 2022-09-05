@@ -7,9 +7,9 @@
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            {{-- @can('create', App\Models\Products::class) --}}
+            @can('create', App\Models\Recruit::class)
                 <a class="btn btn-primary shadow-md mr-2" href="{{ route('recruit.create') }}">Tạo mới</a>
-            {{-- @endcan --}}
+            @endcan
             <div class="hidden md:block mx-auto text-gray-600"></div>
             <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
                 <form  action="{{ route('recruit.index')}}" method="get" class="flex flex-col sm:flex-row sm:items-end xl:items-start">
@@ -96,18 +96,18 @@
                             </td>
                             <td class="table-report__action w-40" style="padding: 0.25rem 0.25rem !important;">
                                 <div class="flex justify-center items-center">
-                                    {{-- @can('update', App\Models\Products::class) --}}
+                                    @can('update', App\Models\Recruit::class)
                                         <a href="{{ route('recruit.edit', ['id' => $recruit->id]) }}" title="Chỉnh sửa"
                                             class="btn btn-sm btn-primary mr-2">
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
-                                    {{-- @endcan --}}
-                                    {{-- @can('delete', App\Models\Products::class) --}}
+                                    @endcan
+                                    @can('delete', App\Models\Recruit::class)
                                         <a title="Xóa" data-toggle="modal" data-value="{{ $recruit->id }}"
                                             data-target="#delete-confirmation-modal"
                                             class="btn btn-danger py-1 px-2 btn-delete"><i class="fa-solid fa-trash-can" style="padding: 1px"></i>
                                         </a>
-                                    {{-- @endcan --}}
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
