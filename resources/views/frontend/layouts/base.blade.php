@@ -59,6 +59,7 @@
 
 <body>
     <div id="wrapper-page">
+        
         {{-- inclucde header --}}
         @yield('header-home')
 

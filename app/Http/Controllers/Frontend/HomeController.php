@@ -10,7 +10,9 @@ use App\Models\CategoryRelationship;
 use App\Models\Post;
 use App\Models\Vote;
 use App\Models\Locationmenu;
+use App\Models\Recruit;
 use App\Models\Slider;
+use App\Models\Recruit_register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -485,6 +487,72 @@ class HomeController extends Controller
         Session::put('website_language', $language);
 
         return redirect()->back();
+    }
+
+
+    public function recruit()
+    {
+        $list_location = Recruit::where('status',1)->groupBy('location')->get();
+        $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
+        $active_menu = "contact";
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+        $Sidebars           = $this->getmenu('sidebar');
+        $Menus              = $this->getmenu('menu');
+        $Sub_menus          = $this->getmenu('submenu');
+        return view('frontend.recruit', \compact('Sidebars', 'Menus', 'Sub_menus', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ));
+    }
+
+    public function recruit_register(Request $request)
+    {
+        $list_location = Recruit::where('status',1)->groupBy('location')->get();
+        $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
+        $active_menu = "contact";
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+        $Sidebars           = $this->getmenu('sidebar');
+        $Menus              = $this->getmenu('menu');
+        $Sub_menus          = $this->getmenu('submenu');
+
+        if ($request->fileupload == null) {
+            $request->fileupload = "";
+        }
+
+        $recruit_register =[
+            'first_name'    => $request->first_name,
+            'phone_number'  => $request->phone_number,
+            'email'         => $request->email,
+            'vitriungtuyen' => $request->vitriungtuyen,
+            'parent_id'     => $request->parent_id,
+            'fileupload'    => $request->fileupload,
+            'status'        => $request->has('status'),
+        ];
+
+
+        try {
+            DB::beginTransaction();
+            Recruit_register::create($recruit_register);
+            DB::commit();
+            return redirect()->route('recruit',[
+            'Sidebars' => $Sidebars,
+            'Menus' => $Menus,
+            'Sub_menus' => $Sub_menus,
+            'active_menu' => $active_menu,
+            'posts_footer' => $posts_footer,
+            'list_location' => $list_location,
+            'list_vacancies' => $list_vacancies,
+        ])->with('error','Ứng tuyển thành công!');
+        }
+        catch (\Exception $exception){
+            DB::rollBack();
+           return redirect()->route('recruit',[
+            'Sidebars' => $Sidebars,
+            'Menus' => $Menus,
+            'Sub_menus' => $Sub_menus,
+            'active_menu' => $active_menu,
+            'posts_footer' => $posts_footer,
+            'list_location' => $list_location,
+            'list_vacancies' => $list_vacancies,
+        ])->with('error','Đăng kí thất bại!');
+        }
     }
 
     public function about_us(){
