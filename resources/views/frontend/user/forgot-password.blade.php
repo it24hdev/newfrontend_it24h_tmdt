@@ -6,7 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/user/register.css')}}">
-    <link rel="stylesheet" href="asset/css/user/myaccount.css">
+    <link rel="stylesheet" href="{{asset('asset/css/user/myaccount.css')}}">
     <style>
         .breadcrumb-wrap {
             margin-top: 25px !important;
@@ -14,33 +14,26 @@
     </style>
 @endsection
 
-@section('header')
+@section('header-home')
     @include('frontend.layouts.header-page', [$Sidebars, $Menus])
 @endsection
 
-@section('menu-mobile')
+@section('header-mobile')
     @include('frontend.layouts.menu-mobile', [$Sidebars, $Menus])
 @endsection
 
 @section('content')
-    <div class="breadcrumb-wrap container-wp">
-        <section class="breadcrumb">
-            <div class="breadcrumb_default">
-                <div class="breadcrumb_populated">
-                    <div class="breadcrumb_title">@lang('lang.Myaccount')</div>
-                    <nav class="breadcrumb_list">
-                        <a href="{{route('user')}}">@lang('lang.Home')</a>
-                        <i class="fas fa-angle-right"></i>
-                        <a href="{{route('user_account')}}">@lang('lang.Myaccount')</a>
-                        <i class="fas fa-angle-right"></i>
-                        @lang('lang.Forgetpasswordd')
-                    </nav>
-                </div>
+    <div class="wp-breadcrumb-page">
+        <div class="container-page">
+            <div class="breadcrumb-page">
+                <a href="{{route('user')}}">@lang('lang.Home') <i class="fas fa-angle-right mx-1"></i></a>
+                <a href="{{route('user_account')}}">@lang('lang.Myaccount') <i class="fas fa-angle-right mx-1"></i></a>
+                <a>@lang('lang.Forgetpasswordd')</a>
             </div>
-        </section>
+        </div>
     </div>
-    <div id="content">
-        <div class="container-wp wp-my-account">
+    <div id="content" class="container-page">
+        <div class="wp-my-account" style="min-height: 500px">
             @if ($message = Session::get('alert'))
             <div class="alert alert-success align-items-center" role="alert">
                 <div><i class="fal fa-bell me-1"></i> {{ $message }}</div>
