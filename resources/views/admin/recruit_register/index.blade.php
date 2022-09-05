@@ -57,20 +57,25 @@
                                  <div class="font-medium text-center" >{{ $Recruit_register->id }}</div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
+                                <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $Recruit_register->id }}"title="Chi tiết">
                                 <div class="font-medium" style="overflow-y: hidden;overflow-x: clip;width: 120px;text-overflow: ellipsis;max-height: 70px; text-align: center; min-height: 40px; padding-top: 10px;"> {{ $Recruit_register->first_name }}</div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
+                                <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $Recruit_register->id }}"title="Chi tiết">
                                 <div class="font-medium text-center" style="overflow-y: hidden;overflow-x: clip;width: 120px;text-overflow: ellipsis; max-height: 70px; text-align: center; min-height: 40px; padding-top: 10px;"> {{ $Recruit_register->vitriungtuyen }} </div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
+                                <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $Recruit_register->id }}"title="Chi tiết">
                                 <div class="font-medium text-center" style="overflow-y: hidden;overflow-x: clip; width: 120px;text-overflow: ellipsis;max-height: 70px; text-align: center; min-height: 40px; padding-top: 10px;"> {{$Recruit_register->phone_number}}
                                 <div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
+                                <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $Recruit_register->id }}"title="Chi tiết">
                                 <div class="font-medium text-center" style="overflow-y: hidden;overflow-x: clip; width: 120px;text-overflow: ellipsis;max-height: 70px; text-align: center; min-height: 40px; padding-top: 10px;"> {{$Recruit_register->email}}
                                 <div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
+                                <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $Recruit_register->id }}"title="Chi tiết">
                                 <div class="font-medium text-center" style=" white-space: nowrap; width: 100px; overflow: hidden; text-overflow: ellipsis;  text-align: center; min-height: 40px; padding-top: 10px;">
                                  @if($Recruit_register->status == 0) <div class="text-theme-10 text-center">Chờ duyệt</div>
                                  @elseif($Recruit_register->status == 1) <div class="text-theme-12 text-center">Duyệt</div>
@@ -80,7 +85,7 @@
                              </div>
                             </td>
                         </tr>
-                        @include('admin.Recruit_register.view')
+                        @include('admin.recruit_register.view')
                     @endforeach
                 </tbody>
             </table>

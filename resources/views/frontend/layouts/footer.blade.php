@@ -138,6 +138,7 @@
                         <a href="">Liên hệ hợp tác kinh doanh</a>
                         <a href="">Thông tin tuyển dụng</a>
                         <a href="">Tin công nghệ</a>
+                        <a href="{{route('recruit')}}">Tuyên dụng</a>
                     </div>
                 </div>
                 <div class="box-content info-support">

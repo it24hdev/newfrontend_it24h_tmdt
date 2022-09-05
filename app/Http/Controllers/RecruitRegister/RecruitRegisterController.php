@@ -44,7 +44,7 @@ class RecruitRegisterController extends Controller
             $Recruit_register = Recruit_register::paginate($limit);
         } else
             $Recruit_register = Recruit_register::where('vitriungtuyen', 'like', '%' . $keywords . '%')->orderby($orderby, $sort)->Paginate($limit);
-        return view('admin.Recruit_register.index', [
+        return view('admin.recruit_register.index', [
             'Recruit_registers' => $Recruit_register,
             'title'    => 'Tuyên dụng'
         ]);

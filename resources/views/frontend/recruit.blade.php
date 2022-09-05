@@ -105,7 +105,7 @@
       </div>
       <div class="col-4" id="an-di-ban-oi-2">
          @if ($message = Session::get('error'))
-             <div class="alert alert-success alert-dismissible show flex items-center mb-2 text-center" role="alert">
+             <div class="alert alert-primary alert-dismissible show flex items-center mb-2 text-center" role="alert">
                  {{ $message }}
              </div>
          @endif
