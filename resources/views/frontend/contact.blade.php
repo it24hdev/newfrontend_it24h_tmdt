@@ -88,7 +88,13 @@
                             </div>
                         </section>
                         <section class="form-contact w-100">
+
                             <div class="form-contact_container">
+                                @if ($message = Session::get('success'))
+                                    <div class="alert alert-success align-items-center" role="alert">
+                                        <div><i class="fal fa-bell me-1"></i> {{ $message }}</div>
+                                    </div>
+                                @endif
                                 <div class="form_heading">
                                     <div class="form_heading-container">
                                         <h4 class="heading-title">@lang('lang.GotAnyQuestions')</h4>
@@ -100,26 +106,27 @@
                                     </div>
                                 </div>
                                 <div class="contactform w-100">
-                                    <form class="contact_form">
+                                    <form class="contact_form" action="{{route('submit_contact')}}" method="POST">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <span class="form-control-wrap">
-                                                    <input type="text" class="name_user" name="name" placeholder="@lang('lang.Name') *" required>
+                                                    <input type="text" name="name" placeholder="@lang('lang.Name') *" required>
                                                 </span>
                                             </div>
                                             <div class="col-md-6">
                                                 <span class="form-control-wrap">
-                                                    <input type="email" class="email" name="email" placeholder="@lang('lang.Email') *" required>
+                                                    <input type="email" name="email" placeholder="@lang('lang.Email') *" required>
                                                 </span>
                                             </div>
                                             <div class="col-md-12">
                                                 <span class="form-control-wrap">
-                                                    <textarea name="content" class="content" cols="40" rows="3" placeholder="@lang('lang.Message')" required></textarea>
+                                                    <textarea name="content" cols="40" rows="3" placeholder="@lang('lang.Message')" required></textarea>
                                                 </span>
                                             </div>
                                         </div>
                                         <div>
-                                            <a href="javascript:;" class="submit">@lang('lang.SendYourMessage')</a>
+                                            <button type="submit" class="submit">@lang('lang.SendYourMessage')</button>
                                         </div>
                                     </form>
                                 </div>
@@ -142,38 +149,3 @@
     @include('frontend.layouts.footer', [$posts_footer])
 @endsection
 
-@section('js')
-    <script>
-        $(document).ready(function(){
-            $('.submit').click(function(){
-                var name_user = $('.name_user').val();
-                var email_user = $('.email').val();
-                var content_user = $('.content').val();
-                var _token = $('meta[name="csrf-token"]').attr('content');
-                var data = {name_user: name_user, email_user: email_user, content_user: content_user, _token: _token};
-                if ($.trim(name_user) == ''){
-                    alert('Bạn chưa nhập Họ Tên!');
-                    return false;
-                }
-                if ($.trim(email_user) == ''){
-                    alert('Bạn chưa nhập địa chỉ Email!');
-                    return false;
-                }
-                if ($.trim(content_user) == ''){
-                    alert('Bạn chưa nhập nội dung!');
-                    return false;
-                }
-                $(this).html('<div class="spinner-border text-light" style="width: 1rem; height: 1rem;" role="status"><span class="visually-hidden">Loading...</span></div>');
-                $.ajax({
-                    url: "{{route('submit_contact')}}",
-                    method: "POST",
-                    data: data,
-                    success: function(){
-                        alert('Nội dung đã được gửi đi thành công!');
-                        location.href = '{{route('contact')}}';
-                    },
-                });
-            });
-        });
-    </script>
-@endsection

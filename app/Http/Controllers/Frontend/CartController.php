@@ -340,14 +340,28 @@ class CartController extends Controller
     }
 
     public function submit_contact(Request $request){
-        $name = $request->name_user;
-        $email = $request->email_user;
-        $content = $request->content_user;
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'content' => 'required',
+            ],
+            [
+                'required' => 'Quý khách vui lòng điền thông tin :attribute !',
+                'max' => ':attribute có độ dài tối đa :max ký tự!',
+            ],
+            [
+                'name' => 'Họ tên',
+                'email' => 'Địa chỉ email',
+                'content' => 'nội dung liên hệ',
+            ]
+        );
         $data = [
-            'name' => $name,
-            'email' => $email,
-            'content' => $content,
+            'name' => $request->name,
+            'email' => $request->email,
+            'content' => $request->content,
         ];
         Mail::to(\env('MAIL_ADMIN'))->send(new ContactMail($data));
+        return \redirect()->route('contact')->with('success', 'Thông tin liên hệ phải hồi của quý khách đã được gửi thành công!');
     }
 }
