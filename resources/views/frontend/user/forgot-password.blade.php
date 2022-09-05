@@ -7,11 +7,6 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/user/register.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/user/myaccount.css')}}">
-    <style>
-        .breadcrumb-wrap {
-            margin-top: 25px !important;
-        }
-    </style>
 @endsection
 
 @section('header-home')

@@ -185,7 +185,9 @@ section.form-contact .form-contact_container .text-editor_default .text-editor_c
     padding: 0;
     box-sizing: border-box;
 }
-.contactform .contact_form input[type=submit]{
+.contactform .contact_form button.submit{
+    width: 250px;
+    text-align: center;
     background-color: var(--primary);
     display: inline-block;
     font-size: 14px;
@@ -201,7 +203,7 @@ section.form-contact .form-contact_container .text-editor_default .text-editor_c
     text-transform: capitalize;
     color: #fff;
 }
-.contactform .contact_form input[type=submit]:hover{
+.contactform .contact_form button.submit:hover{
     transition: all .3s ease;
     border-color: var(--primary_hover);
     background-color: var(--primary_hover);

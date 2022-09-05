@@ -31,7 +31,9 @@
                                 </div>
                                 <div class="contact_right">
                                     <div class="contact_right-default">
-                                        <div class="editor-text">Velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accu santium olorem que laud antium id est laborum.</div>
+                                        <div class="editor-text">
+                                            <p style="font-size: 16px; text-align:justify">Chúng tôi mong muốn mang lại những giá trị đích thực, những giải pháp và dịch vụ có chất lượng tốt nhất cho khách hàng.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +88,13 @@
                             </div>
                         </section>
                         <section class="form-contact w-100">
+
                             <div class="form-contact_container">
+                                @if ($message = Session::get('success'))
+                                    <div class="alert alert-success align-items-center" role="alert">
+                                        <div><i class="fal fa-bell me-1"></i> {{ $message }}</div>
+                                    </div>
+                                @endif
                                 <div class="form_heading">
                                     <div class="form_heading-container">
                                         <h4 class="heading-title">@lang('lang.GotAnyQuestions')</h4>
@@ -98,38 +106,27 @@
                                     </div>
                                 </div>
                                 <div class="contactform w-100">
-                                    <form class="contact_form">
+                                    <form class="contact_form" action="{{route('submit_contact')}}" method="POST">
+                                        @csrf
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <span class="form-control-wrap">
-                                                    <input type="text" placeholder="@lang('lang.Name') *">
+                                                    <input type="text" name="name" placeholder="@lang('lang.Name') *" required>
                                                 </span>
                                             </div>
                                             <div class="col-md-6">
                                                 <span class="form-control-wrap">
-                                                    <input type="email" placeholder="@lang('lang.Email') *">
+                                                    <input type="email" name="email" placeholder="@lang('lang.Email') *" required>
                                                 </span>
                                             </div>
                                             <div class="col-md-12">
                                                 <span class="form-control-wrap">
-                                                    <textarea cols="40" rows="3" placeholder="@lang('lang.Message')"></textarea>
+                                                    <textarea name="content" cols="40" rows="3" placeholder="@lang('lang.Message')" required></textarea>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p>
-                                            <span class="form-control-wrap">
-                                                <span class="form-checkbox">
-                                                    <span class="form-list-item">
-                                                        <label>
-                                                            <input type="checkbox" value="yes">
-                                                            <span>@lang('lang.SavemynameemailandwebsiteinthisbrowserforthenexttimeIcomment').</span>
-                                                        </label>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </p>
                                         <div>
-                                            <input type="submit" value="@lang('lang.SendYourMessage')">
+                                            <button type="submit" class="submit">@lang('lang.SendYourMessage')</button>
                                         </div>
                                     </form>
                                 </div>
@@ -151,3 +148,4 @@
 @section('footer')
     @include('frontend.layouts.footer', [$posts_footer])
 @endsection
+

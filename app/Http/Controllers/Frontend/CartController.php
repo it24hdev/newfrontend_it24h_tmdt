@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ContactMail;
 use App\Mail\OrderMail;
 use App\Mail\ThongBaoCoDonHangMoi;
 use App\Models\Category;
@@ -336,5 +337,31 @@ class CartController extends Controller
         Cookie::queue('count_wish', $count_product, 1051200);
         $db = ['count_wish' => $count_product];
         echo \json_encode($db);
+    }
+
+    public function submit_contact(Request $request){
+        $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255',
+                'content' => 'required',
+            ],
+            [
+                'required' => 'Quý khách vui lòng điền thông tin :attribute !',
+                'max' => ':attribute có độ dài tối đa :max ký tự!',
+            ],
+            [
+                'name' => 'Họ tên',
+                'email' => 'Địa chỉ email',
+                'content' => 'nội dung liên hệ',
+            ]
+        );
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'content' => $request->content,
+        ];
+        Mail::to(\env('MAIL_ADMIN'))->send(new ContactMail($data));
+        return \redirect()->route('contact')->with('success', 'Thông tin liên hệ phải hồi của quý khách đã được gửi thành công!');
     }
 }
