@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\DetailproductController;
 use App\Http\Controllers\Locationmenu\LocationmenuController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Recruit\RecruitController;
 
 
 Auth::routes();
@@ -233,6 +234,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/sort/{id}',[LocationmenuController::class, 'sort'])->name('locationmenu.sort');
     });
 
+     /* ---------- tuyen dung --------------- */
+    Route::prefix('admin/recruit')->group(function () {
+        Route::get('/', [RecruitController::class, 'index'])->name('recruit.index');
+        Route::get('/create', [RecruitController::class, 'create'])->name('recruit.create');
+        Route::post('/create', [RecruitController::class, 'store'])->name('recruit.store');
+        Route::post('/update/{id}',[RecruitController::class, 'update'])->name('recruit.update');
+        Route::get('/edit/{id}', [RecruitController::class, 'edit'])->name('recruit.edit');
+        Route::post('/delete', [RecruitController::class, 'destroy'])->name('recruit.delete');
+    });
+
 });
 
 /* ========== Change language =========== */
@@ -284,6 +295,8 @@ Route::get('/{slug}.html', [HomeController::class, 'singlePost'])->name('singleP
 Route::post('/comment-blog', [HomeController::class, 'commentPost'])->name('commentPost');
 Route::post('/form-vote', [HomeController::class, 'getFormVote'])->name('getFormVote');
 Route::post('/autotypeahead', [HomeController::class, 'autotypeahead'])->name('autotypeahead');
+Route::get('/tuyen-dung',[HomeController::class, 'recruit'])->name('recruit');
+Route::post('/tuyen-dung',[HomeController::class, 'recruit_register'])->name('recruit_register');
 
 Route::get('/chi-tiet-san-pham/{slug}',[DetailproductController::class,'index'])->name('detailproduct');
 Route::post('/comment-product',[DetailproductController::class,'commentProduct'])->name('commentProduct');

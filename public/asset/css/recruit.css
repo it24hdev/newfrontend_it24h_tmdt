@@ -1,0 +1,306 @@
+ .container-2019 {
+    width: 1200px;
+    max-width: 100%;
+    padding: 0 10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#an-di-ban-oi-1{
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (max-width: 1649px){
+    #an-di-ban-oi-1 {
+    -ms-flex: 0 0 80%;
+    flex: 0 0 80%;
+    max-width: 80%;
+    } 
+}
+
+.address_tuyendung {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+    color: #666;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+}
+
+.address_tuyendung h4 {
+    padding: 10px;
+    cursor: pointer;
+    margin: 2px;
+    line-height: 1.15;
+    font-size: 16px;
+}
+
+.address_tuyendung .active h4 {
+    background: #169fd8;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.blog-ver-2020 {
+    line-height: 1.5;
+    font-size: 1rem;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+.job .list_job {
+    margin-top: 12px;
+}
+
+.tab-content.list_job {
+    display: none;
+}
+
+.tab-content.list_job.current {
+    display: block;
+}
+
+.job ul {
+    margin: 0;
+    padding: 0;
+    border-radius: 5px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 25%);
+}
+
+.first-li-listjob {
+    background: #fbfbfb;
+    padding: 10px 20px!important;
+    border-radius: 6px 6px 0 0;
+}
+
+.job ul li {
+    border-bottom: 1px solid #e3e3e3;
+    padding: 15px 20px;
+    list-style: none;
+}
+
+.listjob {
+    align-items: center;
+}
+
+.listjob-2 {
+    margin-left: 10px;
+    margin-right: 20px;
+    width: 32%;
+}
+
+.listjob-header div {
+    color: #555;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.listjob-3 {
+    display: flex;
+    width: calc(68% - 140px);
+}
+
+.deadline, .quantity, .treatment, .worktype {
+    font-size: .85rem;
+    white-space: nowrap;
+}
+
+.job ul li .btn.jobapply {
+    width: 100px;
+    font-size: .85rem;
+    text-align: center;
+    background: none!important;
+    border: 1px solid red;
+    border-radius: 5px;
+    color: red!important;
+}
+
+.blog-ver-2020 button, .blog-ver-2020 input {
+    overflow: visible;
+}
+
+.blog-ver-2020 button, .blog-ver-2020 select {
+    text-transform: none;
+}
+
+.treatment {
+    width: 50%;
+}
+
+.deadline {
+    width: 30%;
+    margin-left: 50px;
+}
+.quantity {
+    width: 15%;
+}
+.listjob-1{
+    display: contents;
+}
+
+#an-di-ban-oi-2 {
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+@media (max-width: 1649px){
+    #an-di-ban-oi-2 {
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+    }
+}
+
+.ahuhu {
+    padding: 10px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right, #017aad, #169fd8);
+    width: 100%;
+    background-size: 200% auto;
+    background-position: 0 100%;
+    animation: gradient 2s infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+}
+
+.deleteform {
+    display: none;
+}
+
+.jMouwh {
+    margin-top: 16px;
+    margin-bottom: 18px;
+}
+
+.bYSDpc {
+    font-size: .85rem;
+    color: #13314e;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.bYSDpc .required {
+    color: #ed1b24;
+}
+
+.blog-ver-2020 .chosen-container-single .chosen-single, .blog-ver-2020 input:not([type=submit]), .blog-ver-2020 select, .blog-ver-2020 textarea {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    padding: 7px 14px;
+    min-height: 40px;
+    outline: 0;
+    font-size: 14px;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+    -webkit-transition: .25s ease;
+    transition: .25s ease;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.jMouwh input {
+    outline: 0!important;
+}
+
+.eSumex {
+    width: 100%!important;
+    border-radius: 5px!important;
+    border: 1px solid #e3e3e3!important;
+    padding: 8px!important;
+    height: auto!important;
+}
+
+.jMouwh input {
+    outline: 0!important;
+}
+
+.blog-ver-2020 button, .blog-ver-2020 input {
+    overflow: visible;
+}
+
+.gyDNhS {
+    text-align: center;
+}
+
+.kcAUjf {
+    font-size: .85rem;
+    margin-bottom: 1rem;
+    display: block;
+    cursor: pointer;
+    color: #ed1b24;
+    margin-top: 1rem;
+    font-weight: 600;
+}
+
+.progress {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    height: 1rem;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: 0.25rem;
+}
+
+.progress-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    background-color: #007bff;
+    -webkit-transition: width .6s ease;
+    transition: width .6s ease;
+}
+
+.evsriz {
+    display: inline-block;
+    outline: 0;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    color: #fdfdfd;
+    border-radius: 5px;
+    z-index: 1;
+    width: 100%;
+    background: #169fd8;
+}
+
+.job ul li .name-job a {
+    width: 100%;
+    cursor: pointer;
+    font-weight: 700;
+    display: inline-block;
+    height: 1.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.deadline, .quantity, .treatment, .worktype {
+    font-size: .85rem;
+    white-space: nowrap;
+}
