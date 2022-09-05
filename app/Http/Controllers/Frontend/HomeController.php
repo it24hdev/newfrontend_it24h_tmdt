@@ -523,7 +523,7 @@ class HomeController extends Controller
             'vitriungtuyen' => $request->vitriungtuyen,
             'parent_id'     => $request->parent_id,
             'fileupload'    => $request->fileupload,
-            'status'        => $request->has('status'),
+            'status'        => 0,
         ];
 
 

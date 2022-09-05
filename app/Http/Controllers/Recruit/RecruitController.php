@@ -15,8 +15,17 @@ use Redirect;
 
 class RecruitController extends Controller
 {
-    public function index(Request $request){
 
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            \session(['module_active' => 'recruit',  'active' => 'Danh sách tuyển dụng']);
+            return $next($request);
+        });
+    }
+
+    public function index(Request $request){
+        $this->authorize('view', Recruit::class);
         $limit    =  $request->query('limit');
         $keywords =  $request->query('search');
         $orderby  =  $request->query('orderby');
@@ -45,7 +54,7 @@ class RecruitController extends Controller
 
     public function edit(Request $request, $id)
     {
-        // $this->authorize('update', Category::class);
+        $this->authorize('update', Recruit::class);
         $edit = Recruit::find($id);
         if ($edit !== null) {
             return view('admin.recruit.edit',[
@@ -60,6 +69,7 @@ class RecruitController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('update', Recruit::class);
         $request->validate([
             'vacancies'  => 'required|max:255',
         ],
@@ -106,7 +116,7 @@ class RecruitController extends Controller
 
     public function create()
     {
-        // $this->authorize('create', Category::class);
+        $this->authorize('create', Recruit::class);
         return view('admin.recruit.create',[
             'title' => 'Tạo mới',
         ]);
@@ -162,7 +172,7 @@ class RecruitController extends Controller
 
     public function destroy(Request $request)
     {
-        // $this->authorize('delete',Category::class);
+        $this->authorize('delete',Recruit::class);
         $Recruits     = Recruit::find($request->id);
         if (!is_null($Recruits)){
             $Recruits->delete();

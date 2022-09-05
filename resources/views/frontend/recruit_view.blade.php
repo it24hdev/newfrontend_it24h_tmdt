@@ -1,12 +1,7 @@
 <!-- BEGIN: Modal Content -->
 <div id="header-footer-modal-preview{{$listvacancies->id}}"  class="modal fade"  tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style="max-width: 400px;">
         <div class="modal-content">
-            <!-- BEGIN: Modal Header -->
-            <div class="modal-header">
-                
-            </div> <!-- END: Modal Header -->
-            <!-- BEGIN: Modal Body -->
             <div class="modal-body">
                 <div class="intro-y news box">
                     <!-- BEGIN: Blog Layout -->
@@ -31,7 +26,7 @@
                               <label class=" bYSDpc">Vị trí ứng tuyển <span class="required">*</span></label>
                               <input type="text" name="vitriungtuyen" value="" class=" eSumex" required>
                            </div>
-                           <div class=" gyDNhS">
+                           <div class=" gyDNhS" style="display:none;">
                               <label class=" kcAUjf">
                                  <div id="display_file_upload_list">
                                     <!--

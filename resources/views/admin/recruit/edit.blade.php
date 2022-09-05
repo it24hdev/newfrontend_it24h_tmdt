@@ -5,9 +5,9 @@
     {{ $title }}
 </h2>
 <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-    {{-- @can('viewAny', App\Models\Products::class) --}}
+    @can('viewAny', App\Models\Recruit::class)
     <a class="btn btn-primary shadow-md mr-2" href="{{ route('recruit.index') }}">Danh sách tuyển dụng</a>
-    {{-- @endcan --}}
+    @endcan
 </div>
 </div>
 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -19,6 +19,7 @@
                 <div class="form-group mb-4">
                     <label>Khu vực</label>
                     <select name="location"  class="tom-select w-full" id="changeData">
+                        <option value="{{$edit->location}}" selected>{{$edit->location_name}}</option>
                         <option value="AnGiang">An Giang</option>
                         <option value="BaRia">Bà Rịa - Vũng Tàu</option>
                         <option value="BacGiang">Bắc Giang</option>

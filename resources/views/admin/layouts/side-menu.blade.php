@@ -273,6 +273,37 @@
                 @endcan
             </ul>
         </li>
+
+          <li>
+            <a href="javascript:;" class="side-menu {{ $module_active == 'recruit' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"> <i data-feather="clipboard"></i> </div>
+                <div class="side-menu__title">
+                   Tuyển dụng
+                    <div class="side-menu__sub-icon "> <i
+                            data-feather="{{ $module_active == 'recruit' ? 'chevron-up' : 'chevron-down' }}"
+                            class="{{ $module_active == 'recruit' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
+                    </div>
+                </div>
+            </a>
+            <ul class="{{ $module_active == 'recruit' ? 'side-menu__sub-open' : '' }}">
+                @can('view', App\Models\Recruit::class)
+                    <li>
+                        <a href="{{ route('recruit.index') }}" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Danh mục tuyển dụng</div>
+                        </a>
+                    </li>
+                @endcan
+                @can('view', App\Models\Recruit_register::class)
+                    <li>
+                        <a href="{{ route('recruit_register.index') }}" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Danh sách ứng tuyển</div>
+                        </a>
+                    </li>
+                @endcan
+            </ul>
+        </li>
     </ul>
 </nav>
 <!-- END: Side Menu -->

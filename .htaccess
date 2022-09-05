@@ -1,0 +1,1 @@
+Header edit Set-Cookie (?i)^(.*)(;\s*secure)??((\s*;)?(.*)) "$1; SameSite=None$3$4"

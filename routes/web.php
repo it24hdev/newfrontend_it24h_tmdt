@@ -21,6 +21,7 @@ use App\Http\Controllers\Locationmenu\LocationmenuController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Recruit\RecruitController;
+use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 
 
 Auth::routes();
@@ -242,6 +243,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update/{id}',[RecruitController::class, 'update'])->name('recruit.update');
         Route::get('/edit/{id}', [RecruitController::class, 'edit'])->name('recruit.edit');
         Route::post('/delete', [RecruitController::class, 'destroy'])->name('recruit.delete');
+    });
+
+    
+
+    Route::prefix('admin/recruit_register')->group(function () {
+        Route::get('/', [RecruitRegisterController::class, 'index'])->name('recruit_register.index');
+        Route::post('/update', [RecruitRegisterController::class, 'update'])->name('recruit_register.update');
     });
 
 });

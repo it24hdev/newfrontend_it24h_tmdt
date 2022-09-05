@@ -21,7 +21,7 @@
 <div class="bg-white p-3">
       
 <div class="tuyendung_2021">
-<div class=" container-2019">
+<div class="container-page">
    <div class="row">
       <div class="col-8" id="an-di-ban-oi-1">
          <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -39,12 +39,12 @@
                   <ul>
                      <li class="first-li-listjob">
                         <div class="row listjob listjob-header">
-                           <div class="listjob-2">
+                           <div class="listjob-2 col-3">
                               <div class="name-job">
                                   Vị trí
                               </div>
                            </div>
-                           <div class="listjob-3">
+                           <div class="listjob-3 col-6">
                               <div class="treatment">
                                   Thu nhập
                               </div>
@@ -55,7 +55,7 @@
                                   Hạn nộp
                               </div>
                            </div>
-                           <div class="listjob-1">
+                           <div class="listjob-1 col-3">
                            </div>
                         </div>
                      </li>
@@ -63,13 +63,13 @@
                    @if($listvacancies->location == $listlocation->location)
                    <li>
                      <div class="row listjob">
-                        <div class="listjob-2">
+                        <div class="listjob-2 col-3">
                            <div class="name-job">
                               <div class="name-job-text"><a href="" target="_blank">{{$listvacancies->vacancies}}</a></div>
                               <div class="worktype">{{$listvacancies->type}}</div>
                            </div>
                         </div>
-                        <div class="listjob-3">
+                        <div class="listjob-3 col-6">
                            <div class="treatment">
                              <div class="treatment-content">
                               {{$listvacancies->income}}
@@ -86,7 +86,7 @@
                              </div>
                            </div>
                         </div>
-                        <div class="listjob-1">
+                        <div class="listjob-1 col-3">
                            <button type="button" class="b24-web-form-popup-btn-3 btn btn-primary jobapply js_show_form"  data-bs-toggle="modal" data-bs-target="#header-footer-modal-preview{{$listvacancies->id}}">
                             Ứng tuyển
                            </button>
@@ -105,7 +105,7 @@
       </div>
       <div class="col-4" id="an-di-ban-oi-2">
          @if ($message = Session::get('error'))
-             <div class="alert alert-success alert-dismissible show flex items-center mb-2" role="alert">
+             <div class="alert alert-success alert-dismissible show flex items-center mb-2 text-center" role="alert">
                  {{ $message }}
              </div>
          @endif
@@ -130,7 +130,7 @@
                   <label class=" bYSDpc">Vị trí ứng tuyển <span class="required">*</span></label>
                   <input type="text" name="vitriungtuyen" value="" class=" eSumex" required>
                </div>
-               <div class=" gyDNhS">
+               <div class=" gyDNhS" style="display:none;">
                   <label class=" kcAUjf">
                      <div id="display_file_upload_list">
                         <!--
@@ -178,10 +178,6 @@
         id = "sub-"+id;
         $('#'+id).slideToggle();
       });
-      
-       var id =  $('.js-tab .active').attr('data-id');
-       console.log(id);
-     
    });
    </script>
 @endsection

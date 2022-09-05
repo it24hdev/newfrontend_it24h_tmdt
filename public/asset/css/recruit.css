@@ -7,7 +7,7 @@
 }
 #an-di-ban-oi-1{
     position: relative;
-    width: 100%;
+    /*width: 100%;*/
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -87,6 +87,9 @@
 }
 
 .listjob-2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     margin-left: 10px;
     margin-right: 20px;
     width: 32%;
@@ -106,6 +109,12 @@
 .deadline, .quantity, .treatment, .worktype {
     font-size: .85rem;
     white-space: nowrap;
+}
+
+.worktype{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .job ul li .btn.jobapply {
@@ -143,7 +152,7 @@
 
 #an-di-ban-oi-2 {
     position: relative;
-    width: 100%;
+    /*width: 100%;*/
     min-height: 1px;
     padding-right: 15px;
     padding-left: 15px;
@@ -300,7 +309,48 @@
     text-overflow: ellipsis;
 }
 
-.deadline, .quantity, .treatment, .worktype {
-    font-size: .85rem;
-    white-space: nowrap;
+
+@media (max-width: 1024px){
+
+    #an-di-ban-oi-1{
+    flex: 0 0 100%;
+    max-width: 100%;
+    }
+
+    #an-di-ban-oi-2{
+    flex: 0 0 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    max-width: 100%;
+    }
+    .listjob-2{
+        margin: 0;
+        padding: 0;
+    }
+    .listjob-header div,  .job ul li .name-job a{
+        font-size: 10px;
+    }
+    .listjob-1{
+        display: block;
+        width: 100%;
+        padding: 0px;
+    }
+    .listjob-3{
+        width: 60%;
+    }
+    .treatment, .quantity, .deadline{
+        width: 30%;
+        margin: 0px;
+        text-align: center;
+        overflow: hidden;
+    }
+    .deadline, .quantity, .treatment, .worktype{
+        font-size: 10px;
+    }
+
+    .job ul li{
+        padding: 5px px 5px 20px !important;
+    }
+
 }

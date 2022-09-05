@@ -5,9 +5,9 @@
     {{ $title }}
 </h2>
 <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-    {{-- @can('viewAny', App\Models\Products::class) --}}
+    @can('view', App\Models\Recruit::class)
     <a class="btn btn-primary shadow-md mr-2" href="{{ route('recruit.index') }}">Danh sách tuyển dụng</a>
-    {{-- @endcan --}}
+    @endcan
 </div>
 </div>
 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -110,7 +110,7 @@
                 </div>
                 <div class="form-group mb-4">
                     <label>Trạng thái</label><br>
-                    <input type="checkbox" class="form-check-switch" name='status' checked>
+                    <input type="checkbox" class="form-check-switch" name='status' checked="checked">
                 </div>
                 <input type="text" name="location_name" id="locationname" style="display:none;">
                 <div class="modal-footer">
