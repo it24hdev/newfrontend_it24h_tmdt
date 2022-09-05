@@ -31,7 +31,7 @@ class ForgotPasswordMail extends Mailable
     public function build()
     {
         return $this->view('mails.forgot-password')
-        ->from('ismart.project.trungdung@gmail.com' , 'IT24H')
+        ->from(\env('MAIL_USERNAME') , 'IT24H')
                     ->subject("[IT24H] Khôi phục mật khẩu.")
                     ->with($this->data);
     }

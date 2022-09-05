@@ -28,9 +28,11 @@
     <div class="container-page">
         <div class="container-wp">
             <div class="wp-order-detail">
-                <p class="alert-order-success">@lang('lang.Thankyoureceived')</p>
+                <p class="alert-order-success">@lang('lang.Thankyoureceived')
+                    <span style="display: block; text-align:center; font-size:16px; color:#222; font-weight:400;">Nhân viên kinh doanh sẽ liên hệ với bạn sớm nhất. <br> Vui lòng kiểm tra <a href="https://mail.google.com/" target="_blank">Email</a> để xác nhận đơn hàng!</span>
+                </p>
                 <ul class="order-detail">
-                    <li class="code-order">@lang('lang.Ordernumber'): <strong>IT24H{{$order->id}}</strong></li>
+                    <li class="code-order">@lang('lang.Ordernumber'): <strong>#{{$order->id}}</strong></li>
                     <li class="date">@lang('lang.Date'): <strong>{{ \App\Helpers\CommonHelper::convertDateToDMY($order->created_at) }}</strong></li>
                     <li class="email">@lang('lang.Email'): <strong>{{$order->email}}</strong></li>
                     <li class="total">@lang('lang.Total'): <strong>{{ number_format($order->total, 0, '', '.') }} @lang('lang.Currencyunit')</strong></li>

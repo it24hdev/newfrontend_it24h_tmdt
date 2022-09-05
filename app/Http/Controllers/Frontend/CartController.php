@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OrderMail;
+use App\Mail\ThongBaoCoDonHangMoi;
 use App\Models\Category;
 use App\Models\Customer;
 use App\Models\Locationmenu;
@@ -203,7 +204,7 @@ class CartController extends Controller
         $request->validate(
             [
                 'name' => 'required|string|max:225',
-                'email' => 'nullable|email|max:225',
+                'email' => 'required|email|max:225',
                 'address' => 'required|string',
                 'phone_number' => ['required', 'regex:/^(0[5|7|8|9])([0-9]{8})$/'],
                 'payment_method' => 'required',
@@ -264,6 +265,7 @@ class CartController extends Controller
         ];
         if (!empty($info_order['email'])) {
             Mail::to($info_order['email'])->send(new OrderMail($data));
+            Mail::to(\env('MAIL_ADMIN'))->send(new ThongBaoCoDonHangMoi($data));
         }
         Cart::destroy();
         Session::put('order_success', $order->id);

@@ -97,7 +97,7 @@ return[
 	'Carttotals' => 'Tổng giỏ hàng',
 	'Currencyunit' => 'VNĐ',
 	'Proceedtocheckout' => 'Tiến hành thanh toán',
-	'Youmaybeinterestedin' => 'Có thể bạn quan tâm..',
+	'Youmaybeinterestedin' => 'Có thể bạn quan tâm...',
 	'Addtocart' => 'Thêm vào giỏ hàng',
 	'Yourcartiscurrentlyempty' => 'Giỏ hàng của bạn hiện đang trống',
 	'Returntoshop' => 'Quay lại cửa hàng',

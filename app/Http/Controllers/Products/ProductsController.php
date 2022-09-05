@@ -89,14 +89,12 @@ class ProductsController extends Controller
             [
                 'name'          => 'required|max:300|unique:products',
                 'thumb'         => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
-                'image'         => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
                 'name.required' => 'Tên sản phẩm không được để bỏ trống.',
                 'name.max'      => 'Tên sản phẩm có độ dài tối đa :max ký tự.',
                 'name.unique'   => 'Tên sản phẩm đã tồn tại trong hệ thống',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
-                'image.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             ]
         );
 
@@ -228,7 +226,7 @@ class ProductsController extends Controller
         $request->validate(
             [
                 'name'  => 'required|max:300|unique:products,name,' . $id . ',id',
-                'thumb' => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:5048',
+                'thumb' => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
                 'name.required' => 'Tên sản phẩm không được để bỏ trống.',
@@ -259,7 +257,7 @@ class ProductsController extends Controller
 
             // xu ly anh abum
             $oldimage = $Products->image;
-            if ($request->image == null){
+            if ($request->images == null){
                 $imgs = $oldimage;
             } else{
                 $imgs = $this->saveimg($request, $oldimage);

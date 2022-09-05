@@ -358,7 +358,7 @@ ul{
     height: 662px;
     overflow: hidden;
 }
-.vertical-menu-content ul.menu-cat li a{
+.vertical-menu-content ul.menu-cat>li>a{
     display: block;
     padding: 12.5px 0;
     margin: 0 18px;
@@ -371,7 +371,7 @@ ul{
 .vertical-menu-content ul.menu-cat li:last-child a{
     border-bottom: none;
 }
-.vertical-menu-content ul.menu-cat li:hover a{
+.vertical-menu-content ul.menu-cat li:hover>a{
     color: #169fd8;
 }
 .vertical-menu-content ul.menu-cat li a span.icon-right{
@@ -420,9 +420,13 @@ ul li .wp-submenu .content-submenu .wp-product-banner{
     width: 49%;
     margin-bottom: 18px;
 }
-.wp-menu-parent span.title-cat{
+.wp-menu-parent a.title-cat{
     color: #222;
     font-weight: 600;
+    margin: 0;
+}
+.wp-menu-parent a.title-cat:hover{
+    color: #169fd8;
 }
 .wp-menu-parent ul{
     margin: 0;

@@ -149,7 +149,7 @@
                                                     @if($subsidebar->parent_id == $Sidebar->id)
 
                                                     <div class="wp-menu-parent">
-                                                        <span class="title-cat">{{$subsidebar->name}}</span>
+                                                        <a href="{!! route('product_cat',  $subsidebar->slug) !!}" class="title-cat">{{$subsidebar->name}}</a>
                                                         @if(count($subsidebar->childs))
                                                         <ul>
                                                             @foreach($Sidebars as $subsidebar3)

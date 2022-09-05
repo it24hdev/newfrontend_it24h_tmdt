@@ -150,7 +150,7 @@ $(document).ready(function () {
         callbacks: false,
     });
     $('.list-product-group').owlCarousel({
-        autoplay: true,
+        autoplay: false,
         autoplayHoverPause: true,
         loop: false,
         margin: 10,

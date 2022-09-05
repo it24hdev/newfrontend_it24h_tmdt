@@ -1,12 +1,7 @@
 <div style="width:600px;margin:0px auto;padding:15px;background-color:#ffffff">
     <div style="width:100%;clear:both">
-        <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 15px;line-height:20px"><strong>Cảm ơn Quý
-                khách {{$info_order['customer_name']}} đã đặt hàng tại IT24H.</strong></p>
-        <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 10px;line-height:20px">IT24H rất vui
-            được thông báo đơn hàng&nbsp;<strong
-                style="font-family:Arial,sans-serif;text-transform:uppercase">#{{$orders['code_order']}}</strong> của Quý khách đã được
-            tiếp nhận và đang trong quá trình xử lý. IT24H sẽ thông báo cho Quý khách khi đơn hàng chuẩn bị giao
-            hàng.</p>
+        <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 10px;line-height:20px">Thông báo tiếp nhận đơn hàng mới từ IT24H - Mã đơn hàng:<strong
+                style="font-family:Arial,sans-serif;text-transform:uppercase">#{{$orders['code_order']}}</strong></p>
         <p style="margin:10px 0px;font-size:14px;font-weight:700;text-transform:uppercase">Thông tin đơn hàng:
             <strong><span
                     style="font-size:14px;font-style:normal;font-weight:700;letter-spacing:normal;text-transform:uppercase;white-space:normal">#{{$orders['code_order']}}</span></strong>
@@ -27,22 +22,8 @@
     </div>
     <div style="width:100%;float:left;display:block">
         <h3 style="display:block;font-size:16px;margin:0px;line-height:24px">Thông tin ghi chú: </h3>
-        <p style="margin:0px"><span style="line-height:1.42857">Phương thức thanh toán:&nbsp;</span><strong
+        <p style="margin:0px 0px 30px"><span style="line-height:1.42857">Phương thức thanh toán:&nbsp;</span><strong
                 style="font-size:12px">{{$info_order['payment_method']}}&nbsp;</strong></p>
-        @if ($info_order['payment_method'] == 'Chuyển khoản')
-        <p style="margin:0px 0px 30px">Quý khách vui lòng thanh toán theo số tài khoản hướng dẫn dưới đây để hoàn tất việc đặt hàng.</p>
-            <div style="width:100%;float:left;display:inline-block;min-height:160px; margin-bottom: 30px;">
-                <h2 style="width:100%;color:#ffffff;font-size:14px;padding:10px;margin:0px;font-weight:500;text-transform:uppercase;background:none 0% 0% repeat scroll #169fd8">
-                    <span>Tài khoản tiếp nhận chuyển khoản</span>
-                </h2>
-                <p style="text-indent:15px;margin-top:10px">Ngân hàng hưởng thụ: {{env('BANK')}}</p>
-                <p style="text-indent:15px">Số tài khoản: {{env('STK')}}</p>
-                <p style="text-indent:15px">Họ tên người nhận: {{env('USER_BANK')}}</p>
-                <p style="text-indent:15px">Nội dung chuyển khoản: <span style="font-style: italic">Họ tên người chuyển khoản</span> <strong>+</strong> thanh toan don hang <strong>+</strong>
-                <span style="font-style: italic">Mã đơn hàng</span></p>
-            </div>
-        @endif
-
     </div>
     <table style="width:100%;border-collapse:collapse;border-spacing:0px">
         <thead>
@@ -105,11 +86,4 @@
             </tr>
         </tfoot>
     </table>
-    <div style="width:100%;clear:both;display:block;overflow:hidden;margin:30px 0px 0px">
-        <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 5px;line-height:20px"><span
-                style="font-family:Arial,sans-serif">Nếu cần hỗ trợ, Quý khách chỉ cần gửi email đến <a
-                    href="mailto:contact@it24h.vn" target="_blank">contact@it24h.vn</a> hoặc gọi số <strong>0886776286</strong>.</span></p>
-        <p style="display:block;font-size:14px;color:#333333;margin:0px 0px 5px;line-height:20px">Cảm ơn Quý
-            Khách!&nbsp;</p>
-    </div>
 </div>

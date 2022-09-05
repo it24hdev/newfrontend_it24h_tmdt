@@ -15,7 +15,7 @@
                 <a href="{{route('dashboard')}}" class="intro-x btn py-3 px-4 text-white border-white dark:border-dark-5 dark:text-gray-300 mt-10">Back to Home</a>
                 @else
                 <a href="{{route('user')}}" class="intro-x btn py-3 px-4 text-white border-white dark:border-dark-5 dark:text-gray-300 mt-10 nr-3">Back to Home</a>
-                <a href="tel:88888888" class="intro-x btn py-3 px-4 text-white border-white dark:border-dark-5 dark:text-gray-300 mt-10">Hotline</a>
+                <a href="tel:0886776286" class="intro-x btn py-3 px-4 text-white border-white dark:border-dark-5 dark:text-gray-300 mt-10">Hotline</a>
                 @endif
             </div>
         </div>

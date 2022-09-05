@@ -66,9 +66,9 @@
                                         @enderror
                                     </div>
                                     <div class="form-group mb-3">
-                                        <label for="email">@lang('lang.Email')</label>
+                                        <label for="email">@lang('lang.Email') <span class="text-danger">*</span></label>
                                         <input type="email" name="email" value="{{(old('email')) ?? (!empty($customer) ? $customer->email : '')}}"
-                                        id="email" class="form-control @error('email') is-invalid @enderror" placeholder="@lang('lang.Enteryouremail')">
+                                        id="email" class="form-control @error('email') is-invalid @enderror" placeholder="@lang('lang.Enteryouremail')" required>
                                         @error('email')
                                             <span role="alert">
                                                 <p class="text-danger fst-italic mt-2" style="font-size: 14px;">{{ $message }}</p>
@@ -136,13 +136,13 @@
                                                     .</p>
                                                 </div>
                                             </div>
-                                            <div class="form-group pt-3">
+                                            {{-- <div class="form-group pt-3">
                                                 <input type="radio" value="@lang('lang.Paydirectlyatthestore')" name="payment_method" id="payment_method_cheque" class="form-check-input me-2 payment-check">
                                                 <label for="payment_method_cheque" class="payment-check"><strong>@lang('lang.Checkpayments')</strong></label>
                                                 <div class="payment-box payment-box-none">
                                                     <p>@lang('lang.checktoStore').</p>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="form-group pt-3">
                                                 <input type="radio" value="@lang('lang.Paymentondelivery')" name="payment_method" id="payment_method_cod" class="form-check-input me-2 payment-check">
                                                 <label for="payment_method_cod" class="payment-check"><strong>@lang('lang.Cashondelivery')</strong></label>
