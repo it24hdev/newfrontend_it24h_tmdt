@@ -31,7 +31,9 @@
                                 </div>
                                 <div class="contact_right">
                                     <div class="contact_right-default">
-                                        <div class="editor-text">Velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accu santium olorem que laud antium id est laborum.</div>
+                                        <div class="editor-text">
+                                            <p style="font-size: 16px; text-align:justify">Chúng tôi mong muốn mang lại những giá trị đích thực, những giải pháp và dịch vụ có chất lượng tốt nhất cho khách hàng.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -102,34 +104,22 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <span class="form-control-wrap">
-                                                    <input type="text" placeholder="@lang('lang.Name') *">
+                                                    <input type="text" class="name_user" name="name" placeholder="@lang('lang.Name') *" required>
                                                 </span>
                                             </div>
                                             <div class="col-md-6">
                                                 <span class="form-control-wrap">
-                                                    <input type="email" placeholder="@lang('lang.Email') *">
+                                                    <input type="email" class="email" name="email" placeholder="@lang('lang.Email') *" required>
                                                 </span>
                                             </div>
                                             <div class="col-md-12">
                                                 <span class="form-control-wrap">
-                                                    <textarea cols="40" rows="3" placeholder="@lang('lang.Message')"></textarea>
+                                                    <textarea name="content" class="content" cols="40" rows="3" placeholder="@lang('lang.Message')" required></textarea>
                                                 </span>
                                             </div>
                                         </div>
-                                        <p>
-                                            <span class="form-control-wrap">
-                                                <span class="form-checkbox">
-                                                    <span class="form-list-item">
-                                                        <label>
-                                                            <input type="checkbox" value="yes">
-                                                            <span>@lang('lang.SavemynameemailandwebsiteinthisbrowserforthenexttimeIcomment').</span>
-                                                        </label>
-                                                    </span>
-                                                </span>
-                                            </span>
-                                        </p>
                                         <div>
-                                            <input type="submit" value="@lang('lang.SendYourMessage')">
+                                            <a href="javascript:;" class="submit">@lang('lang.SendYourMessage')</a>
                                         </div>
                                     </form>
                                 </div>
@@ -150,4 +140,40 @@
 
 @section('footer')
     @include('frontend.layouts.footer', [$posts_footer])
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            $('.submit').click(function(){
+                var name_user = $('.name_user').val();
+                var email_user = $('.email').val();
+                var content_user = $('.content').val();
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {name_user: name_user, email_user: email_user, content_user: content_user, _token: _token};
+                if ($.trim(name_user) == ''){
+                    alert('Bạn chưa nhập Họ Tên!');
+                    return false;
+                }
+                if ($.trim(email_user) == ''){
+                    alert('Bạn chưa nhập địa chỉ Email!');
+                    return false;
+                }
+                if ($.trim(content_user) == ''){
+                    alert('Bạn chưa nhập nội dung!');
+                    return false;
+                }
+                $(this).html('<div class="spinner-border text-light" style="width: 1rem; height: 1rem;" role="status"><span class="visually-hidden">Loading...</span></div>');
+                $.ajax({
+                    url: "{{route('submit_contact')}}",
+                    method: "POST",
+                    data: data,
+                    success: function(){
+                        alert('Nội dung đã được gửi đi thành công!');
+                        location.href = '{{route('contact')}}';
+                    },
+                });
+            });
+        });
+    </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ContactMail;
 use App\Mail\OrderMail;
 use App\Mail\ThongBaoCoDonHangMoi;
 use App\Models\Category;
@@ -336,5 +337,17 @@ class CartController extends Controller
         Cookie::queue('count_wish', $count_product, 1051200);
         $db = ['count_wish' => $count_product];
         echo \json_encode($db);
+    }
+
+    public function submit_contact(Request $request){
+        $name = $request->name_user;
+        $email = $request->email_user;
+        $content = $request->content_user;
+        $data = [
+            'name' => $name,
+            'email' => $email,
+            'content' => $content,
+        ];
+        Mail::to(\env('MAIL_ADMIN'))->send(new ContactMail($data));
     }
 }

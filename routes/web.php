@@ -283,6 +283,8 @@ Route::get('/yeu-thich', [CartController::class, 'list_wish'])->name('list_wish'
 Route::post('/add-wish', [CartController::class, 'add_wish'])->name('add_wish');
 Route::post('/delete-wish', [CartController::class, 'remove_product_wish'])->name('remove_product_wish');
 
+Route::post('/submit-contact', [CartController::class, 'submit_contact'])->name('submit_contact');
+
 /** Frontend */
 Route::get('/', [HomeController::class, 'index'])->name('user');
 Route::post('/', [HomeController::class, 'getProducts'])->name('getProducts');
