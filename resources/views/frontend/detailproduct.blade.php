@@ -238,41 +238,19 @@
                                         <td style="text-align: center;"><strong>Chi tiết</strong></td>
                                         <td style="text-align: center;"><strong>Bảo hành</strong></td>
                                     </tr>
+
+
+                                    @if($property !=null)
+                                    @foreach($property as $key => $val)
                                     <tr>
-                                        <td style="text-align: center;">CPU</td>
-                                        <td style="text-align: center;">CPU Intel Core i3-10100F (3.6GHz up to 4.3GHz, 4 Cores 8 Threads, 6MB Cache, Socket Intel LGA 1200)</td>
+                                        <td style="text-align: center;">{{ $key }}</td>
+                                        <td style="text-align: center;">{{ $val }}</td>
                                         <td style="text-align: center;">36T</td>
                                     </tr>
-                                    <tr>
-                                        <td style="text-align: center;">Mainboard</td>
-                                        <td style="text-align: center;">Mainboard H510M</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">RAM</td>
-                                        <td style="text-align: center;">8GB</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">SSD</td>
-                                        <td style="text-align: center;">240GB</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">VGA</td>
-                                        <td style="text-align: center;">GeForce GTX 1650 4G GDDR6</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">PSU</td>
-                                        <td style="text-align: center;">Cooler Master PC400</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">CASE</td>
-                                        <td style="text-align: center;">Vỏ Case Gaming</td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
+                                    @endif
+
+                                   
                                 </tbody>
                             </table>
                         </div>
@@ -446,41 +424,16 @@
                                         <td style="text-align: center;"><strong>Chi tiết</strong></td>
                                         <td style="text-align: center;"><strong>Bảo hành</strong></td>
                                     </tr>
+                                    @if($property !=null)
+                                    @foreach($property as $key => $val)
                                     <tr>
-                                        <td style="text-align: center;">CPU</td>
-                                        <td style="text-align: center;">CPU Intel Core i3-10100F (3.6GHz up to 4.3GHz, 4 Cores 8 Threads, 6MB Cache, Socket Intel LGA 1200)</td>
+                                        <td style="text-align: center;">{{$key}}</td>
+                                        <td style="text-align: center;">{{$val}}</td>
                                         <td style="text-align: center;">36T</td>
                                     </tr>
-                                    <tr>
-                                        <td style="text-align: center;">Mainboard</td>
-                                        <td style="text-align: center;">Mainboard H510M</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">RAM</td>
-                                        <td style="text-align: center;">8GB</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">SSD</td>
-                                        <td style="text-align: center;">240GB</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">VGA</td>
-                                        <td style="text-align: center;">GeForce GTX 1650 4G GDDR6</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">PSU</td>
-                                        <td style="text-align: center;">Cooler Master PC400</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: center;">CASE</td>
-                                        <td style="text-align: center;">Vỏ Case Gaming</td>
-                                        <td></td>
-                                    </tr>
+                                    @endforeach
+                                    @endif
+                                    
                                 </tbody>
                             </table>
                         </div>

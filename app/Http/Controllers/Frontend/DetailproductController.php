@@ -46,7 +46,7 @@ class DetailproductController extends Controller
 
         $imgs        = json_decode($product->image);
         $property   = $this->xulychuoi_thongsosanpham($product->property);
-
+        
         /* XỬ LÝ LƯU SP ĐÃ XEM */
         $id = $product->id;
         $get_cookie = Session::get('list_watched');
