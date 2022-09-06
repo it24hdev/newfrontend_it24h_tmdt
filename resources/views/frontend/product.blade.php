@@ -458,7 +458,7 @@
             <div class="categories-product-sidebar">
                 <div class="header-sidebar">
 
-                    <span>>@lang('lang.Productcategories')</span>
+                    <span>@lang('lang.Productcategories')</span>
                 </div>
                 <ul class="list-categories">
                     @foreach ($categories as $item)

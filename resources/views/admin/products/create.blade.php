@@ -197,8 +197,7 @@
                         <label>Thuộc tính sản phẩm</label>
                         <p><i>( Màu sắc: đen, trắng; Chiều cao: 15 inch; )</i></p>
                         <div class="mt-2">
-                       <textarea class="form-control" name="property" rows="7">{{ old('property') }}
-                       </textarea>
+                       <textarea class="form-control" name="property" rows="7">{{ old('property') }}</textarea>
                    </div>
                     </div>
                      <div class="mt-3">
@@ -229,7 +228,7 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <label>Thương hiệu</label>
+                        <label>Thẻ tag ưu đãi</label>
                         <div class="mt-2">
                             <select name="event"  class="tom-select w-full">
                                 <option value="0">Chọn Tag ưu đãi</option>

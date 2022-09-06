@@ -262,7 +262,7 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <label>Thương hiệu</label>
+                        <label>Thẻ tag ưu đãi</label>
                         <div class="mt-2">
                             <select name="event"  class="tom-select w-full">
                                 <option value="0">Chọn Tag ưu đãi</option>
