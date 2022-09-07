@@ -29,6 +29,7 @@ class Products extends Model
         'brand',
         'unit',
         'property',
+        'property_short',
         'onsale',
         'price_onsale',
         'new',

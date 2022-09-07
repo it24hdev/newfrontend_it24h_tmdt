@@ -39,7 +39,8 @@ return new class extends Migration
             $table->string('year')->nullable();
             $table->longText('gift')->nullable();
             $table->integer('sold')->nullable();
-            $table->string('property')->nullable();
+            $table->longtext('property')->nullable();
+            $table->longtext('property_short')->nullable();
             $table->text('attr')->nullable();
             $table->string('still_stock')->nullable();
             $table->string('youtube')->nullable();
