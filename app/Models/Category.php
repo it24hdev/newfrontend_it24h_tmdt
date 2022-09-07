@@ -73,12 +73,17 @@ class Category extends Model
         }
         return $list_id;
     }
+    // public function get_list_product_by_cat(){
+    //     $db = \collect();
+    //     $list_id = \collect();
+    //     $db[] = $this->product;
+    //     $this->get_product_recursive($this, $db);
+    //     $products = $db->collapse()->unique('id');
+    //     return $products;
+    // }
     public function get_list_product_by_cat(){
-        $db = \collect();
-        $list_id = \collect();
-        $db[] = $this->product;
-        $this->get_product_recursive($this, $db);
-        $products = $db->collapse()->unique('id');
+        $list_id = $this->get_product_by_cat();
+        $products = Products::where('status', 1)->whereIn('id', $list_id)->orderBy('id', 'DESC')->limit(10)->get();
         return $products;
     }
 
