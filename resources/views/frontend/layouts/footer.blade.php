@@ -120,8 +120,9 @@
                 <div class="box-content info-youtube">
                     <div class="title">Youtube</div>
                     <div class="youtube-content">
-                        <div class="ratio ratio-16x9">
-                            <iframe src="https://www.youtube.com/embed/vlDzYIIOYmM" title="YouTube video" allowfullscreen></iframe>
+                        <div>
+                            <a href="https://www.youtube.com/embed/vlDzYIIOYmM" style="display: block"><img class="lazy" data-src="upload/images/youtubevideo.png" style="width: 100%; height: auto"></a>
+                            {{-- <iframe src="" title="YouTube video" allowfullscreen></iframe> --}}
                         </div>
                     </div>
                 </div>
