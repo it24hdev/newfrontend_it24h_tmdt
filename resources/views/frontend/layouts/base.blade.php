@@ -61,10 +61,13 @@
     <div id="wrapper-page">
         
         {{-- inclucde header --}}
+        @if($agent == "desktop")
         @yield('header-home')
 
         {{-- include menu mobile --}}
+        @else
         @yield('header-mobile')
+        @endif
         <!-- backup top -->
         <a id="scroll_up" class="top-visible"><i class="fal fa-angle-up"></i></a>
         @yield('content')

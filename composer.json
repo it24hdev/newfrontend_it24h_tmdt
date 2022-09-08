@@ -12,6 +12,7 @@
         "hardevine/shoppingcart": "^3.1",
         "http-interop/http-factory-guzzle": "^1.2",
         "intervention/image": "^2.7",
+        "jenssegers/agent": "^2.6",
         "laravel/framework": "^9.11",
         "laravel/sanctum": "^2.14.1",
         "laravel/scout": "^9.4",

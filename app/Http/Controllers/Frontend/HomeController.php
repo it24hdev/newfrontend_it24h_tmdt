@@ -16,10 +16,19 @@ use App\Models\Recruit_register;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Jenssegers\Agent\Agent;
 
 class HomeController extends Controller
 {
     public function index(){
+
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
+
         //lay danh muc cha len trang chu
         $get_cat_parents = Category::where('taxonomy', 0)
         ->where('parent_id', 0)
@@ -74,6 +83,7 @@ class HomeController extends Controller
         'product_hot_sale' => $product_hot_sale,
         'product_new' => $product_new,
         'posts_footer' => $posts_footer,
+        'agent' => $ag,
         ]);
     }
     //lay danh muc cho blog tren menu
@@ -128,6 +138,12 @@ class HomeController extends Controller
 
     //trang blog chung
     public function categoryBlogs(Request $request){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "post";
         $locale       = config('app.locale');
         if($request->input('tim-kiem')){
@@ -163,10 +179,19 @@ class HomeController extends Controller
             'locale'          => $locale,
             'active_menu'   => $active_menu,
             'posts_footer' => $posts_footer,
+            'agent' => $ag,
+
         ]);
     }
     // xu ly bai viet duoc tim kiem
     public function categoryBlog(Request $request, $slug){
+
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "post";
         $locale     = config('app.locale');
         if($request->input('tim-kiem')){
@@ -211,12 +236,19 @@ class HomeController extends Controller
                 'locale'          => $locale,
                 'active_menu'   => $active_menu,
                 'posts_footer' => $posts_footer,
+                'agent' => $ag,
             ]);
         }
         return abort(404);
     }
     //trang chi tiet bai viet
     public function singlePost(Request $request, $slug){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "post";
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
@@ -275,6 +307,7 @@ class HomeController extends Controller
                 'locale'          => $locale,
                 'active_menu'   => $active_menu,
                 'posts_footer' => $posts_footer,
+                'agent' => $ag,
             ]);
         }
         return abort(404);
@@ -282,6 +315,12 @@ class HomeController extends Controller
 
     /* ==== Xử lý dữ liệu trang danh sách sản phẩm */
     public function list_product(Request $request){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "product";
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
@@ -363,11 +402,17 @@ class HomeController extends Controller
             }
 
         return \view('frontend.product', \compact('products', 'categories',
-        'cat', 'Sidebars', 'Menus','Sub_menus', 'locale', 'active_menu', 'posts_footer'));
+        'cat', 'Sidebars', 'Menus','Sub_menus', 'locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
     }
 
     // trang danh sach san pham khi loc
     public function product_cat(Request $request, $slug){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "product";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $cat = Category::where('slug', $slug)->first();
@@ -418,7 +463,7 @@ class HomeController extends Controller
                 ->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }
         return \view('frontend.product', \compact('products', 'categories', 'cat','Sidebars',
-        'Menus','Sub_menus','locale', 'active_menu', 'posts_footer', 'cat_parent'));
+        'Menus','Sub_menus','locale', 'active_menu', 'posts_footer', 'cat_parent'))->with('agent', $ag);
     }
     // xu ly lay comment
     public function commentPost(Request $request){
@@ -475,12 +520,18 @@ class HomeController extends Controller
     }
     //lien he
     public function contact(){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "contact";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $Sidebars           = $this->getmenu('sidebar');
         $Menus              = $this->getmenu('menu');
-        return \view('frontend.contact', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
+        return \view('frontend.contact', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
     }
     public function changeLanguage($language)
     {
@@ -492,6 +543,12 @@ class HomeController extends Controller
 
     public function recruit()
     {
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $list_location = Recruit::where('status',1)->groupBy('location')->get();
         $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
         $active_menu = "contact";
@@ -499,11 +556,17 @@ class HomeController extends Controller
         $Sidebars           = $this->getmenu('sidebar');
         $Menus              = $this->getmenu('menu');
         $Sub_menus          = $this->getmenu('submenu');
-        return view('frontend.recruit', \compact('Sidebars', 'Menus', 'Sub_menus', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ));
+        return view('frontend.recruit', \compact('Sidebars', 'Menus', 'Sub_menus', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ))->with('agent',$ag);
     }
 
     public function recruit_register(Request $request)
     {
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $list_location = Recruit::where('status',1)->groupBy('location')->get();
         $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
         $active_menu = "contact";
@@ -539,6 +602,7 @@ class HomeController extends Controller
             'posts_footer' => $posts_footer,
             'list_location' => $list_location,
             'list_vacancies' => $list_vacancies,
+            'agent' => $ag,
         ])->with('error','Ứng tuyển thành công!');
         }
         catch (\Exception $exception){
@@ -551,16 +615,23 @@ class HomeController extends Controller
             'posts_footer' => $posts_footer,
             'list_location' => $list_location,
             'list_vacancies' => $list_vacancies,
+            'agent' => $ag,
         ])->with('error','Đăng kí thất bại!');
         }
     }
 
     public function about_us(){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "about_us";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $Sidebars           = $this->getmenu('sidebar');
         $Menus              = $this->getmenu('menu');
-        return \view('frontend.page.about-us', compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
+        return \view('frontend.page.about-us', compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
 }

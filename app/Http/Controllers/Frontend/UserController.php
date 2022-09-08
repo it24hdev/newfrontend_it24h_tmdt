@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
+use Jenssegers\Agent\Agent;
 
 class UserController extends Controller
 {
@@ -44,6 +45,12 @@ class UserController extends Controller
     }
 
     public function account(){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $locale = config('app.locale');
         if(!empty(Cookie::get('remember-me'))){
             Session::put('is_login', true);
@@ -59,7 +66,7 @@ class UserController extends Controller
             $user = Customer::find($id);
             if(!empty($user)){
                 $orders = $user->order;
-                return \view('frontend.user.account', \compact('user', 'orders', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
+                return \view('frontend.user.account', \compact('user', 'orders', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
             }else{
                 return \redirect()->route('user_login_register');
             }
@@ -69,7 +76,13 @@ class UserController extends Controller
     }
 
     public function login_register(){
-        $locale             = config('app.locale');
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
+        $locale = config('app.locale');
         $active_menu = "account";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
@@ -79,7 +92,7 @@ class UserController extends Controller
         Session::forget('is_login');
         Session::forget('user_id');
         Cookie::queue(Cookie::forget('remember-me'));
-        return \view('frontend.user.login-register', \compact('active_menu', 'posts_footer','Sidebars', 'Menus', 'getcategoryblog','locale'));
+        return \view('frontend.user.login-register', \compact('active_menu', 'posts_footer','Sidebars', 'Menus', 'getcategoryblog','locale'))->with('agent', $ag);
     }
 
     public function login(Request $request){
@@ -221,6 +234,12 @@ class UserController extends Controller
     }
 
     public function forgot_password(Request $request){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $locale             = config('app.locale');
         $active_menu = "account";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
@@ -230,16 +249,16 @@ class UserController extends Controller
         $locale = config('app.locale');
         if(empty($reset_token)){
 
-            return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus' , 'locale', 'active_menu', 'posts_footer'));
+            return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus' , 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
 
         }else{
             $customer = Customer::where('reset_password', $reset_token)->first();
             // dd($customer);
             if(empty($customer)){
                 Session::flash('error', 'Yêu cầu lấy lại mật khẩu không hợp lệ!');
-                return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
+                return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);;
             }else{
-                return \view('frontend.user.forgot-password', \compact('customer', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'));
+                return \view('frontend.user.forgot-password', \compact('customer', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);;
             }
         }
     }

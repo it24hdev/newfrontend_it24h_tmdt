@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Jenssegers\Agent\Agent;
 
 class CartController extends Controller
 {
@@ -38,6 +39,13 @@ class CartController extends Controller
     }
 
      public function index(){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
+
         $active_menu = "cart";
         if(Cart::count()>0){
             $products_id = array();
@@ -63,7 +71,7 @@ class CartController extends Controller
             $product_carts[] = Products::find($item->id);
         }
 
-        return \view('frontend.cart', \compact('products', 'Sidebars', 'Menus', 'product_carts','Sub_menus','locale', 'active_menu', 'posts_footer'));
+        return \view('frontend.cart', \compact('products', 'Sidebars', 'Menus', 'product_carts','Sub_menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
     public function getcategoryblog(){
         $categoryblog = Category::select('*')
@@ -187,6 +195,12 @@ class CartController extends Controller
     }
 
     public function checkout(){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "cart";
         if(Session::has('is_login') && Session::get('is_login') == true){
             $customer_id = Session::get('user_id');
@@ -198,7 +212,7 @@ class CartController extends Controller
         $Sidebars = $this->getmenu('sidebar');
         $Menus = $this->getmenu('menu');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        return \view('frontend.checkout', \compact('customer', 'Sidebars', 'Menus', 'locale', 'active_menu', 'posts_footer'));
+        return \view('frontend.checkout', \compact('customer', 'Sidebars', 'Menus', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
 
     public function sendmail(Request $request){
@@ -274,6 +288,12 @@ class CartController extends Controller
     }
 
     public function thanks(){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         $active_menu = "cart";
         if(Session::has('order_success')){
             $locale           = config('app.locale');
@@ -282,13 +302,19 @@ class CartController extends Controller
             $order_id         = Session::get('order_success');
             $order            = Order::find($order_id);
             $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-            return \view('frontend.thankyou', \compact('order', 'Sidebars', 'Menus', 'active_menu', 'locale', 'posts_footer'));
+            return \view('frontend.thankyou', \compact('order', 'Sidebars', 'Menus', 'active_menu', 'locale', 'posts_footer'))->with('agent',$ag);
         }else{
             return \redirect()->route('list_cart');
         }
     }
 
     public function list_wish(){
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         // Cookie::queue(Cookie::forget('list_wish'));
         $active_menu = "cart";
         $get_cookie = Cookie::get('list_wish');
@@ -299,7 +325,7 @@ class CartController extends Controller
         $Menus = $this->getmenu('menu');
         $locale = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        return \view('frontend.wish-list', \compact('Sidebars', 'Menus', 'active_menu', 'locale', 'products', 'posts_footer'));
+        return \view('frontend.wish-list', \compact('Sidebars', 'Menus', 'active_menu', 'locale', 'products', 'posts_footer'))->with('agent',$ag);
     }
 
     public function add_wish(Request $request){

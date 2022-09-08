@@ -200,7 +200,7 @@ return [
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         // Darryldecode\Cart\CartServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-
+        Jenssegers\Agent\AgentServiceProvider::class,
     ],
 
     /*
@@ -220,6 +220,7 @@ return [
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         // 'Cart' => Darryldecode\Cart\Facades\CartFacade::class
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ])->toArray(),
 
 ];

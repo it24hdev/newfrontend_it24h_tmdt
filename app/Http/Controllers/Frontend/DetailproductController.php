@@ -12,13 +12,19 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
+use Jenssegers\Agent\Agent;
 
 class DetailproductController extends Controller
 {
 
     public function index($slug)
     {
-
+        $agent = new Agent();
+        $ag = "";
+        if($agent->isMobile()){
+            $ag = "mobile";
+        }
+        else $ag = "desktop";
         try{
         $active_menu = "product";
         $Sidebars           = $this->getmenu('sidebar');
@@ -70,6 +76,7 @@ class DetailproductController extends Controller
             'product_watched' => $product_watched,
             'active_menu' => $active_menu,
             'posts_footer' => $posts_footer,
+            'agent' => $ag,
         ]);
         }
         catch(\Exception $exception){
