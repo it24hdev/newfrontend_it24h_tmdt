@@ -27,14 +27,14 @@
 </div>
 </div>
 <div class="block-content">
-<div class="slider-content list-product-group2" >
+<div class="slider-content" >
     <div class="owl-carousel owl-theme owl-loaded owl-drag" id="slider-deal-supper">
         
         @foreach ($dealProduct as $item)
             <div class="wp-product">
                 <div class="thumb">
                     <a href="{{ route('detailproduct', $item->slug)}}">
-                        <img {{-- class="owl-lazy lazy" data- --}}src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
+                        <img class="owl-lazy lazy" data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
                         @if (!empty($item->brand))
                             <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
                         @endif

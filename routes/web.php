@@ -265,6 +265,9 @@ Route::post('/submit-contact', [CartController::class, 'submit_contact'])->name(
 Route::get('/', [HomeController::class, 'index'])->name('user');
 Route::post('/', [HomeController::class, 'getProducts'])->name('getProducts');
 Route::post('/deal', [HomeController::class, 'getdealProduct'])->name('getdealProduct');
+Route::post('/new', [HomeController::class, 'getnewProduct'])->name('getnewProduct');
+Route::post('/footer', [HomeController::class, 'loadfooter'])->name('loadfooter');
+Route::post('/loadsliderbottom', [HomeController::class, 'loadsliderbottom'])->name('loadsliderbottom');
 
 Route::get('/san-pham', [HomeController::class, 'list_product'])->name('list_product');
 Route::get('/san-pham/{slug}', [HomeController::class, 'product_cat'])->name('product_cat');

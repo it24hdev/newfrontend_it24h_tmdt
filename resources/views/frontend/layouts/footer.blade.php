@@ -80,14 +80,14 @@
                         <div class="box-left">
                             <p><strong>Đối tác dịch vụ bảo hành</strong>Điện Thoại - Máy tính</p>
                         </div>
-                        <div class="box-right"><img class="lazy" data-src="{{asset('asset/images/dv-footer.png')}}" alt=""></div>
+                        <div class="box-right"><img src="{{asset('asset/images/dv-footer.png')}}" alt=""></div>
                     </a>
                     <a class="warranty-logo-dtv dtv-asp">
                         <div class="box-left">
                             <p><strong class="font-10">Trung tâm bảo hành ủy quyền Apple</strong></p>
                         </div>
                         <div class="box-right">
-                            <img class="lazy" data-src="{{asset('asset/images/logo_dtv-asp.png')}}" alt="">
+                            <img src="{{asset('asset/images/logo_dtv-asp.png')}}" alt="">
                         </div>
                     </a>
                 </div>
@@ -98,7 +98,7 @@
                             <li>
                                 <a href="{{route('singlePost', $item->slug)}}">
                                     <div class="thumb">
-                                        <img class="lazy" data-src="{{asset('upload/images/post/thumb/'.$item->thumb)}}" alt="">
+                                        <img src="{{asset('upload/images/post/thumb/'.$item->thumb)}}" alt="">
                                     </div>
                                     <div class="detail">
                                         <h4>{{$item->title}}</h4>
@@ -112,7 +112,7 @@
                     <div class="title">Fanpage</div>
                     <div class="fanpage-fb">
                         <a href="https://www.facebook.com/it24h.vnn">
-                            <img class="lazy" data-src="{{asset('/asset/images/fanpage-it24h.jpg')}}" alt="">
+                            <img src="{{asset('/asset/images/fanpage-it24h.jpg')}}" alt="">
                         </a>
                         <!-- <div class="fb-page" data-href="https://www.facebook.com/it24h.vnn" data-tabs="timeline" data-width="" data-height="260" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/it24h.vnn" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/it24h.vnn">IT24H - Cửa Hàng Máy Tính</a></blockquote></div> -->
                     </div>
@@ -121,7 +121,7 @@
                     <div class="title">Youtube</div>
                     <div class="youtube-content">
                         <div>
-                            <a href="https://www.youtube.com/embed/vlDzYIIOYmM" style="display: block"><img class="lazy" data-src="upload/images/youtubevideo.png" style="width: 100%; height: auto"></a>
+                            <a href="https://www.youtube.com/embed/vlDzYIIOYmM" style="display: block"><img src="upload/images/youtubevideo.png" style="width: 100%; height: auto"></a>
                             {{-- <iframe src="" title="YouTube video" allowfullscreen></iframe> --}}
                         </div>
                     </div>

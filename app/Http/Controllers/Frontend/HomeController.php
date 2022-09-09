@@ -41,41 +41,28 @@ class HomeController extends Controller
         }
         $list_cat = \implode(' ', $list_cat_id);
         $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
-        // $Sub_menus          = $this->getmenu('submenu');
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $banner_1   = DB::table('sliders')->where('location',1)->where('status', 1)->inRandomOrder()->first();
         $banner_2   = DB::table('sliders')->where('location',2)->where('status', 1)->inRandomOrder()->first();
         $banner_3   = DB::table('sliders')->where('location',3)->where('status', 1)->inRandomOrder()->first();
         $banner_sidebar   = DB::table('sliders')->where('location',4)->where('status', 1)->inRandomOrder()->first();
         $sliders = DB::table('sliders')->where('location',9)->where('status', 1)->orderBy('position', 'ASC')->get();
-        $product_hot_sale    = Products::where('status',1)->where('hot_sale', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
-        $product_new    = Products::where('status',1)->where('new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
-
-        
         $list_post = DB::table('posts')->where('status',1)->whereNull('deleted_at')->limit(3)->get();
-        $list_brand = Brand::get();
+        // $list_brand = Brand::get();
+        
         return view('frontend.index',[
         'get_cat_parents' =>  $get_cat_parents,
-        // 'time_deal' => $time_deal,
-        'Sidebars'          => $Sidebars,
-        // 'Menus'             => $Menus,
-        // 'Sub_menus'         => $Sub_menus,
-        'banner_1'  => $banner_1,
-        'banner_2'  => $banner_2,
-        'banner_3'  => $banner_3,
+        'Sidebars'        => $Sidebars,
+        'banner_1'        => $banner_1,
+        'banner_2'        => $banner_2,
+        'banner_3'        => $banner_3,
         'banner_sidebar'  => $banner_sidebar,
-        'sliders'           => $sliders,
-        // 'dealProduct'       => $dealProduct,
-        'list_post' => $list_post,
-        'list_cat'          => $list_cat,
-        'list_brand' => $list_brand,
-        'locale'            => $locale,
-        'product_hot_sale' => $product_hot_sale,
-        'product_new' => $product_new,
-        'posts_footer' => $posts_footer,
-        'agent' => $ag,
+        'sliders'         => $sliders,
+        'list_post'       => $list_post,
+        'list_cat'        => $list_cat,
+        'locale'          => $locale,
+        // 'list_brand'      => $list_brand,
+        'agent'           => $ag,
         ]);
     }
     //lay danh muc cho blog tren menu
@@ -147,6 +134,37 @@ class HomeController extends Controller
             ])->render();
         return response()->json($view2);
     }
+    // lay san pham moi
+    public function getnewProduct(Request $request){
+        $product_hot_sale    = Products::where('status',1)->where('hot_sale', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
+        $product_new    = Products::where('status',1)->where('new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
+
+        $view2     = view('frontend.get-newproducts', [
+                'product_new' => $product_new,
+                'product_hot_sale' => $product_hot_sale,
+            ])->render();
+        return response()->json($view2);
+    }
+
+    public function loadfooter(Request $request){
+       
+        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+
+        $view2     = view('frontend.layouts.footer', [
+                'posts_footer' => $posts_footer, 
+            ])->render();
+        return response()->json($view2);
+    }
+
+    public function loadsliderbottom(Request $request){
+       
+        $list_brand = Brand::get();
+
+        $view2  = view('frontend.slider-bottom', [
+                'list_brand' => $list_brand, 
+            ])->render();
+        return response()->json($view2);
+    }
 
     //trang blog chung
     public function categoryBlogs(Request $request){
@@ -164,8 +182,6 @@ class HomeController extends Controller
             $search = '';
         }
         $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
-        // $Sub_menus          = $this->getmenu('submenu');
         $getcategoryblog    = $this->getcategoryblog();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $arrCategory = DB::table('categories')->where('status',1)
@@ -242,8 +258,6 @@ class HomeController extends Controller
                 'blogs'           =>$blogs,
                 'latest_blog'     => $latest_blog,
                 'Sidebars'        => $Sidebars,
-                // 'Menus'           => $Menus,
-                // 'Sub_menus'       => $Sub_menus,
                 'getcategoryblog' => $getcategoryblog,
                 'locale'          => $locale,
                 'active_menu'   => $active_menu,
@@ -313,13 +327,11 @@ class HomeController extends Controller
                 'post_pre'        => $post_pre,
                 'post_next'       => $post_next,
                 'Sidebars'        => $Sidebars,
-                // 'Menus'           => $Menus,
-                // 'Sub_menus'       => $Sub_menus,
                 'getcategoryblog' => $getcategoryblog,
                 'locale'          => $locale,
-                'active_menu'   => $active_menu,
-                'posts_footer' => $posts_footer,
-                'agent' => $ag,
+                'active_menu'     => $active_menu,
+                'posts_footer'    => $posts_footer,
+                'agent'           => $ag,
             ]);
         }
         return abort(404);
@@ -442,9 +454,6 @@ class HomeController extends Controller
         ->get();
         
         $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
-        // $Sub_menus          = $this->getmenu('submenu');
-
         $locale             = config('app.locale');
         $banner_1 = DB::table('sliders')->where('location',6)->first();
         $banner_2 = DB::table('sliders')->where('location',7)->first();
