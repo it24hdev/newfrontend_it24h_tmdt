@@ -9,11 +9,11 @@
 @endsection
 
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $Menus])
+    @include('frontend.layouts.header-page', [$Sidebars])
 @endsection
 
 @section('header-mobile')
-    @include('frontend.layouts.menu-mobile', [$Sidebars, $Menus])
+    @include('frontend.layouts.menu-mobile', [$Sidebars])
 @endsection
 
 @section('content')

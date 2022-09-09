@@ -28,7 +28,7 @@ class DetailproductController extends Controller
         try{
         $active_menu = "product";
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
+        // $Menus              = $this->getmenu('menu');
         $getcategoryblog    = $this->getcategoryblog();
         $product           = Products::where('slug','=',$slug)->first();
         $locale             = config('app.locale');
@@ -65,7 +65,7 @@ class DetailproductController extends Controller
         $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
         return view('frontend.detailproduct',[
             'Sidebars'        => $Sidebars,
-            'Menus'           => $Menus,
+            // 'Menus'           => $Menus,
             'product'        => $product,
             'imgs'             => $imgs,
             'property'        => $property,

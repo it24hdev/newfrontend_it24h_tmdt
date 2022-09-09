@@ -63,15 +63,15 @@ class CartController extends Controller
         }
         $locale           = config('app.locale');
         $Sidebars         = $this->getmenu('sidebar');
-        $Menus            = $this->getmenu('menu');
-        $Sub_menus        = $this->getmenu('submenu');
+        // $Menus            = $this->getmenu('menu');
+        // $Sub_menus        = $this->getmenu('submenu');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $product_carts    = \collect();
         foreach(Cart::content() as $item){
             $product_carts[] = Products::find($item->id);
         }
 
-        return \view('frontend.cart', \compact('products', 'Sidebars', 'Menus', 'product_carts','Sub_menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        return \view('frontend.cart', \compact('products', 'Sidebars',  'product_carts', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
     public function getcategoryblog(){
         $categoryblog = Category::select('*')
@@ -210,9 +210,9 @@ class CartController extends Controller
         }
         $locale           = config('app.locale');
         $Sidebars = $this->getmenu('sidebar');
-        $Menus = $this->getmenu('menu');
+        // $Menus = $this->getmenu('menu');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        return \view('frontend.checkout', \compact('customer', 'Sidebars', 'Menus', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        return \view('frontend.checkout', \compact('customer', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
 
     public function sendmail(Request $request){
@@ -298,11 +298,11 @@ class CartController extends Controller
         if(Session::has('order_success')){
             $locale           = config('app.locale');
             $Sidebars         = $this->getmenu('sidebar');
-            $Menus            = $this->getmenu('menu');
+            // $Menus            = $this->getmenu('menu');
             $order_id         = Session::get('order_success');
             $order            = Order::find($order_id);
             $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-            return \view('frontend.thankyou', \compact('order', 'Sidebars', 'Menus', 'active_menu', 'locale', 'posts_footer'))->with('agent',$ag);
+            return \view('frontend.thankyou', \compact('order', 'Sidebars', 'active_menu', 'locale', 'posts_footer'))->with('agent',$ag);
         }else{
             return \redirect()->route('list_cart');
         }
@@ -322,10 +322,10 @@ class CartController extends Controller
         $products = Products::whereIn('id', $list_id_wish)->where('status', 1)->get();
         Cookie::queue('count_wish', $products->count(), 1051200);
         $Sidebars = $this->getmenu('sidebar');
-        $Menus = $this->getmenu('menu');
+        // $Menus = $this->getmenu('menu');
         $locale = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        return \view('frontend.wish-list', \compact('Sidebars', 'Menus', 'active_menu', 'locale', 'products', 'posts_footer'))->with('agent',$ag);
+        return \view('frontend.wish-list', \compact('Sidebars', 'active_menu', 'locale', 'products', 'posts_footer'))->with('agent',$ag);
     }
 
     public function add_wish(Request $request){

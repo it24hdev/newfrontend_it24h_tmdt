@@ -133,8 +133,9 @@
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
+                                    @if($Sidebar->parent_id==0)
                                     <li>
-                                        @if($Sidebar->parent_id==0)
+                                        
                                         <a href="{!! route('product_cat',  $Sidebar->slug) !!}"><span class="icon-menu">{!! $Sidebar->icon !!}</span>
                                             {{$Sidebar->name}}
                                              @if(count($Sidebar->childs))
@@ -214,9 +215,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        @endif
                                     </li>
-
+                                    @endif
                                     @endforeach
                                 </ul>
                             </nav>

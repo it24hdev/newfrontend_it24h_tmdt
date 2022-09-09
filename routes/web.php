@@ -25,47 +25,15 @@ use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 
 
 Auth::routes();
-
-
-// Route::get('/linkstorage', function () {
-//     Artisan::call('storage:link');
-// });
-// //Clear Cache facade value:
-// Route::get('/clear-cache', function() {
-//     $exitCode = Artisan::call('cache:clear');
-//     return '<h1>Cache facade value cleared</h1>';
-// });
-
-// //Reoptimized class loader:
-// Route::get('/optimize', function() {
-//     $exitCode = Artisan::call('optimize');
-//     return '<h1>Reoptimized class loader</h1>';
-// });
-
-// //Route cache:
-// Route::get('/route-cache', function() {
-//     $exitCode = Artisan::call('route:cache');
-//     return '<h1>Routes cached</h1>';
-// });
-
-// //Clear Route cache:
-// Route::get('/route-clear', function() {
-//     $exitCode = Artisan::call('route:clear');
-//     return '<h1>Route cache cleared</h1>';
-// });
-
-// //Clear View cache:
-// Route::get('/view-clear', function() {
-//     $exitCode = Artisan::call('view:clear');
-//     return '<h1>View cache cleared</h1>';
-// });
-
-// //Clear Config cache:
-// Route::get('/config-cache', function() {
-//     $exitCode = Artisan::call('config:cache');
-//     return '<h1>Clear Config cleared</h1>';
-// });
-
+Route::get('/clear', function() {
+Artisan::call('route:clear');
+Artisan::call('route:cache');
+Artisan::call('cache:clear');
+Artisan::call('config:clear');
+Artisan::call('config:cache');
+Artisan::call('view:clear');
+return "Cleared!";
+});
 /* ========== ADMIN =========== */
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
@@ -296,6 +264,7 @@ Route::post('/submit-contact', [CartController::class, 'submit_contact'])->name(
 /** Frontend */
 Route::get('/', [HomeController::class, 'index'])->name('user');
 Route::post('/', [HomeController::class, 'getProducts'])->name('getProducts');
+Route::post('/deal', [HomeController::class, 'getdealProduct'])->name('getdealProduct');
 
 Route::get('/san-pham', [HomeController::class, 'list_product'])->name('list_product');
 Route::get('/san-pham/{slug}', [HomeController::class, 'product_cat'])->name('product_cat');
@@ -306,7 +275,7 @@ Route::post('/comment-blog', [HomeController::class, 'commentPost'])->name('comm
 Route::post('/form-vote', [HomeController::class, 'getFormVote'])->name('getFormVote');
 Route::post('/autotypeahead', [HomeController::class, 'autotypeahead'])->name('autotypeahead');
 Route::get('/tuyen-dung',[HomeController::class, 'recruit'])->name('recruit');
-Route::post('/tuyen-dung',[HomeController::class, 'recruit_register'])->name('recruit_register');
+Route::post('/tuyen-dung',[HomeController::class, 'recruit_register'])->name('recruit_register'); 
 
 Route::get('/chi-tiet-san-pham/{slug}',[DetailproductController::class,'index'])->name('detailproduct');
 Route::post('/comment-product',[DetailproductController::class,'commentProduct'])->name('commentProduct');

@@ -101,13 +101,24 @@ class SliderController extends Controller
             'status'=> $status
         ];
 
+
+
         try {
             DB::beginTransaction();
             Slider::create($input);
             DB::commit();
             if ($request->image != null){
                 $folder = 'upload/images/slider/';
-                CommonHelper::uploadImage($request->image,$nameFile,$folder);
+                if($request->location  == 1 || $request->location  == 2 || $request->location == 3){
+                    CommonHelper::cropImage($request->image,$nameFile,310,135,$folder);
+                }
+                elseif ($request->location  == 9){
+                     CommonHelper::cropImage($request->image,$nameFile,988,432,$folder);
+                }
+                else{
+                    CommonHelper::cropImage($request->image,$nameFile,270,455,$folder);
+                }
+                    
             }
             return redirect()->route('slider.index')->with('success','Tạo Slider mới thành công.');
         }catch (\Exception $exception){
@@ -199,9 +210,20 @@ class SliderController extends Controller
                 $slider->update($input);
                 DB::commit();
                 if ($request->image != null){
+
+
                     /** Lưu ảnh mới vào folder */
                     $folder = 'upload/images/slider/';
-                    CommonHelper::uploadImage($request->image,$nameFile,$folder);
+                    if($request->location  == 1 || $request->location  == 2 || $request->location == 3){
+                        CommonHelper::cropImage($request->image,$nameFile,310,135,$folder);
+                    }
+                    elseif ($request->location  == 9){
+
+                        CommonHelper::cropImage($request->image,$nameFile,988,432,$folder);
+                    }
+                    else{
+                        CommonHelper::cropImage($request->image,$nameFile,270,455,$folder);
+                    }
 
                     /** Xoá ảnh cũ khi có upload ảnh mới  */
                     if ($nameFileOld != Slider::IMAGE){

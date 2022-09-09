@@ -59,10 +59,10 @@
                     </ul>
                 </div>
                 <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-2-tab">
-                     @foreach($Sidebars  as $Sidebar)
+                    @foreach($Sidebars  as $Sidebar)
                     <ul class="menu-cat-mobile">
+                        @if($Sidebar->parent_id==0)
                         <li>
-                            @if($Sidebar->parent_id==0)
                             <a href="{!! route('product_cat',  $Sidebar->slug) !!}"><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span> {{$Sidebar->name}}</a>
                             @if(count($Sidebar->childs))
                             <span class="icon-right"><i class="far fa-angle-right"></i></span>
@@ -82,9 +82,9 @@
                                     @endforeach
                                 </ul>
                                 @endif
-                            </div>
-                            @endif
+                            </div> 
                         </li>
+                         @endif
                     </ul>
                     @endforeach
                 </div>

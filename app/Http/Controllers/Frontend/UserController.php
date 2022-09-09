@@ -61,12 +61,12 @@ class UserController extends Controller
             $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
             $locale             = config('app.locale');
             $Sidebars = $this->getmenu('sidebar');
-            $Menus = $this->getmenu('menu');
+            // $Menus = $this->getmenu('menu');
             $id = Session::get('user_id');
             $user = Customer::find($id);
             if(!empty($user)){
                 $orders = $user->order;
-                return \view('frontend.user.account', \compact('user', 'orders', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+                return \view('frontend.user.account', \compact('user', 'orders', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
             }else{
                 return \redirect()->route('user_login_register');
             }
@@ -86,13 +86,13 @@ class UserController extends Controller
         $active_menu = "account";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
-        $Menus = $this->getmenu('menu');
+        // $Menus = $this->getmenu('menu');
         $locale = config('app.locale');
         $getcategoryblog    = $this->getcategoryblog();
         Session::forget('is_login');
         Session::forget('user_id');
         Cookie::queue(Cookie::forget('remember-me'));
-        return \view('frontend.user.login-register', \compact('active_menu', 'posts_footer','Sidebars', 'Menus', 'getcategoryblog','locale'))->with('agent', $ag);
+        return \view('frontend.user.login-register', \compact('active_menu', 'posts_footer','Sidebars', 'getcategoryblog','locale'))->with('agent', $ag);
     }
 
     public function login(Request $request){
@@ -245,20 +245,20 @@ class UserController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $reset_token = $request->reset_token;
         $Sidebars = $this->getmenu('sidebar');
-        $Menus = $this->getmenu('menu');
+        // $Menus = $this->getmenu('menu');
         $locale = config('app.locale');
         if(empty($reset_token)){
 
-            return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus' , 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+            return \view('frontend.user.forgot-password', \compact('Sidebars' , 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
 
         }else{
             $customer = Customer::where('reset_password', $reset_token)->first();
             // dd($customer);
             if(empty($customer)){
                 Session::flash('error', 'Yêu cầu lấy lại mật khẩu không hợp lệ!');
-                return \view('frontend.user.forgot-password', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);;
+                return \view('frontend.user.forgot-password', \compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);;
             }else{
-                return \view('frontend.user.forgot-password', \compact('customer', 'Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);;
+                return \view('frontend.user.forgot-password', \compact('customer', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);;
             }
         }
     }

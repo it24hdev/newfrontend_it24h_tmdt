@@ -41,8 +41,8 @@ class HomeController extends Controller
         }
         $list_cat = \implode(' ', $list_cat_id);
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        $Sub_menus          = $this->getmenu('submenu');
+        // $Menus              = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $banner_1   = DB::table('sliders')->where('location',1)->where('status', 1)->inRandomOrder()->first();
@@ -52,30 +52,22 @@ class HomeController extends Controller
         $sliders = DB::table('sliders')->where('location',9)->where('status', 1)->orderBy('position', 'ASC')->get();
         $product_hot_sale    = Products::where('status',1)->where('hot_sale', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
         $product_new    = Products::where('status',1)->where('new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
-        $dealProduct = Products::where('status',1)
-            ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d').' 23:59:59')
-            ->orderBy('time_deal', 'desc')->inRandomOrder()->limit(8)->get();
-        $time_deal = NULL;
-         $t=0;
-        foreach($dealProduct as $k){
-            $t++;
-            $time_deal = $k->time_deal;
-            if($t==1){ \false;}
-        }
+
+        
         $list_post = DB::table('posts')->where('status',1)->whereNull('deleted_at')->limit(3)->get();
         $list_brand = Brand::get();
         return view('frontend.index',[
         'get_cat_parents' =>  $get_cat_parents,
-        'time_deal' => $time_deal,
+        // 'time_deal' => $time_deal,
         'Sidebars'          => $Sidebars,
-        'Menus'             => $Menus,
-        'Sub_menus'         => $Sub_menus,
+        // 'Menus'             => $Menus,
+        // 'Sub_menus'         => $Sub_menus,
         'banner_1'  => $banner_1,
         'banner_2'  => $banner_2,
         'banner_3'  => $banner_3,
         'banner_sidebar'  => $banner_sidebar,
         'sliders'           => $sliders,
-        'dealProduct'       => $dealProduct,
+        // 'dealProduct'       => $dealProduct,
         'list_post' => $list_post,
         'list_cat'          => $list_cat,
         'list_brand' => $list_brand,
@@ -135,6 +127,26 @@ class HomeController extends Controller
         }
         return response()->json($view);
     }
+    //lay san pham deal
+    public function getdealProduct(Request $request){
+        $dealProduct = Products::where('status',1)
+            ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d').' 23:59:59')
+            ->orderBy('time_deal', 'desc')->inRandomOrder()->limit(8)->get();
+        $time_deal = NULL;
+         $t=0;
+
+        foreach($dealProduct as $k){
+            $t++;
+            $time_deal = $k->time_deal;
+            if($t==1){ \false;}
+        }
+
+        $view2     = view('frontend.get-dealsproducts', [
+                'dealProduct' => $dealProduct,
+                'time_deal' => $time_deal,
+            ])->render();
+        return response()->json($view2);
+    }
 
     //trang blog chung
     public function categoryBlogs(Request $request){
@@ -152,8 +164,8 @@ class HomeController extends Controller
             $search = '';
         }
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        $Sub_menus          = $this->getmenu('submenu');
+        // $Menus              = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
         $getcategoryblog    = $this->getcategoryblog();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $arrCategory = DB::table('categories')->where('status',1)
@@ -173,8 +185,8 @@ class HomeController extends Controller
             'blogs'           => $blogs,
             'latest_blog'     => $latest_blog,
             'Sidebars'        => $Sidebars,
-            'Menus'           => $Menus,
-            'Sub_menus'       => $Sub_menus,
+            // 'Menus'           => $Menus,
+            // 'Sub_menus'       => $Sub_menus,
             'getcategoryblog' => $getcategoryblog,
             'locale'          => $locale,
             'active_menu'   => $active_menu,
@@ -200,8 +212,8 @@ class HomeController extends Controller
             $search = '';
         }
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        $Sub_menus          = $this->getmenu('submenu');
+        // $Menus              = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
         $getcategoryblog    = $this->getcategoryblog();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $blog_category = DB::table('categories')->where('slug',$slug)
@@ -230,8 +242,8 @@ class HomeController extends Controller
                 'blogs'           =>$blogs,
                 'latest_blog'     => $latest_blog,
                 'Sidebars'        => $Sidebars,
-                'Menus'           => $Menus,
-                'Sub_menus'       => $Sub_menus,
+                // 'Menus'           => $Menus,
+                // 'Sub_menus'       => $Sub_menus,
                 'getcategoryblog' => $getcategoryblog,
                 'locale'          => $locale,
                 'active_menu'   => $active_menu,
@@ -289,8 +301,8 @@ class HomeController extends Controller
                 ->where('post_id',$post->id)
                 ->where('parent_id',0)->whereNull(['deleted_at','product_id'])->get();
             $Sidebars           = $this->getmenu('sidebar');
-            $Menus              = $this->getmenu('menu');
-            $Sub_menus          = $this->getmenu('submenu');
+            // $Menus              = $this->getmenu('menu');
+            // $Sub_menus          = $this->getmenu('submenu');
             $getcategoryblog    = $this->getcategoryblog();
             return view('frontend.single-post',[
                 'arrCategory'     => $arrCategory,
@@ -301,8 +313,8 @@ class HomeController extends Controller
                 'post_pre'        => $post_pre,
                 'post_next'       => $post_next,
                 'Sidebars'        => $Sidebars,
-                'Menus'           => $Menus,
-                'Sub_menus'       => $Sub_menus,
+                // 'Menus'           => $Menus,
+                // 'Sub_menus'       => $Sub_menus,
                 'getcategoryblog' => $getcategoryblog,
                 'locale'          => $locale,
                 'active_menu'   => $active_menu,
@@ -330,8 +342,8 @@ class HomeController extends Controller
         }
 
         $Sidebars = $this->getmenu('sidebar');
-        $Menus    = $this->getmenu('menu');
-        $Sub_menus          = $this->getmenu('submenu');
+        // $Menus    = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
         $categories = Category::where('taxonomy',Category::SAN_PHAM)
             ->where('parent_id',0)
             ->where('status',1)
@@ -402,7 +414,7 @@ class HomeController extends Controller
             }
 
         return \view('frontend.product', \compact('products', 'categories',
-        'cat', 'Sidebars', 'Menus','Sub_menus', 'locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
+        'cat', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
     }
 
     // trang danh sach san pham khi loc
@@ -416,6 +428,10 @@ class HomeController extends Controller
         $active_menu = "product";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $cat = Category::where('slug', $slug)->first();
+
+        if (empty($cat)) {
+            return abort(404);
+        }
         $categories = Category::where('taxonomy',Category::SAN_PHAM)
             ->where('parent_id',$cat->id)
             ->where('status',1)
@@ -424,12 +440,10 @@ class HomeController extends Controller
         ->where('parent_id', 0)
         ->where('status',1)
         ->get();
-        if (empty($cat)) {
-            return abort(404);
-        }
+        
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        $Sub_menus          = $this->getmenu('submenu');
+        // $Menus              = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
 
         $locale             = config('app.locale');
         $banner_1 = DB::table('sliders')->where('location',6)->first();
@@ -463,7 +477,7 @@ class HomeController extends Controller
                 ->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();;
             }
         return \view('frontend.product', \compact('products', 'categories', 'cat','Sidebars',
-        'Menus','Sub_menus','locale', 'active_menu', 'posts_footer', 'cat_parent'))->with('agent', $ag);
+       'locale', 'active_menu', 'posts_footer', 'cat_parent'))->with('agent', $ag);
     }
     // xu ly lay comment
     public function commentPost(Request $request){
@@ -530,8 +544,8 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        return \view('frontend.contact', \compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
+        // $Menus              = $this->getmenu('menu');
+        return \view('frontend.contact', \compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
     }
     public function changeLanguage($language)
     {
@@ -554,9 +568,9 @@ class HomeController extends Controller
         $active_menu = "contact";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        $Sub_menus          = $this->getmenu('submenu');
-        return view('frontend.recruit', \compact('Sidebars', 'Menus', 'Sub_menus', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ))->with('agent',$ag);
+        // $Menus              = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
+        return view('frontend.recruit', \compact('Sidebars',  'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ))->with('agent',$ag);
     }
 
     public function recruit_register(Request $request)
@@ -572,8 +586,8 @@ class HomeController extends Controller
         $active_menu = "contact";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        $Sub_menus          = $this->getmenu('submenu');
+        // $Menus              = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
 
         if ($request->fileupload == null) {
             $request->fileupload = "";
@@ -596,8 +610,8 @@ class HomeController extends Controller
             DB::commit();
             return redirect()->route('recruit',[
             'Sidebars' => $Sidebars,
-            'Menus' => $Menus,
-            'Sub_menus' => $Sub_menus,
+            // 'Menus' => $Menus,
+            // 'Sub_menus' => $Sub_menus,
             'active_menu' => $active_menu,
             'posts_footer' => $posts_footer,
             'list_location' => $list_location,
@@ -609,8 +623,8 @@ class HomeController extends Controller
             DB::rollBack();
            return redirect()->route('recruit',[
             'Sidebars' => $Sidebars,
-            'Menus' => $Menus,
-            'Sub_menus' => $Sub_menus,
+            // 'Menus' => $Menus,
+            // 'Sub_menus' => $Sub_menus,
             'active_menu' => $active_menu,
             'posts_footer' => $posts_footer,
             'list_location' => $list_location,
@@ -631,7 +645,7 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale             = config('app.locale');
         $Sidebars           = $this->getmenu('sidebar');
-        $Menus              = $this->getmenu('menu');
-        return \view('frontend.page.about-us', compact('Sidebars', 'Menus','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        // $Menus              = $this->getmenu('menu');
+        return \view('frontend.page.about-us', compact('Sidebars' ,'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
 }
