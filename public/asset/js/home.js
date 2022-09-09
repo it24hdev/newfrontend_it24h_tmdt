@@ -139,15 +139,14 @@ $(document).ready(function () {
 
 
     $('.sub_cat_title_slider').owlCarousel({
-        autoplay: false,
-        autoplayHoverPause: true,
+        autoplay: true,
+        autoplayHoverPause: false,
         loop: false,
         margin: 10,
         nav: false,
         dots: false,
         autoWidth: true,
-        autoplayTimeout: 6000,
-        callbacks: false,
+        callbacks: true,
     });
     $('.list-product-group').owlCarousel({
         autoplay: false,

@@ -47,7 +47,7 @@ class Category extends Model
     }
 
     public function childs() {
-        return $this->hasMany('App\Models\Category','parent_id','id') ;
+        return $this->hasMany('App\Models\Category','parent_id','id');
     }
 
     public function product(){
@@ -55,7 +55,7 @@ class Category extends Model
     }
 
     public function cat_child(){
-        return $this->hasMany(Category::class, 'parent_id');
+        return $this->hasMany(Category::class, 'parent_id')->where('status', 1);
     }
 
     public function cat_parent(){
