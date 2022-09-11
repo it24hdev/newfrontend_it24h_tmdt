@@ -55,6 +55,7 @@
       window.addEventListener("orientationchange", lazyLoad);
     });
     </script>
+     
 </head>
 
 <body>
@@ -154,6 +155,51 @@
             },200));
             $("#select_cat").on("change", function(){
                 location.replace('/san-pham/'+this.value);
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#menucontent').hover(function() {
+                if(($("#menucontent").hasClass("loaded") == false)){
+
+                    $('.ajaxsubmenu').each(function() {
+                        var id = $(this).attr('get-id');
+                        var _token = $('meta[name="csrf-token"]').attr('content');
+                        var data = {
+                            id: id,
+                            _token: _token
+                        };
+                        $.ajax({
+                            url:"{{route('menucontent')}}",
+                            type:"post",
+                            dataType:"json",
+                            data: data,
+                            success: function (data) {
+                               $("#subid-"+ id).append(data); 
+                            },
+                        })
+                    });
+                    $("#menucontent").addClass("loaded");
+                }
+            });
+            $("#pills-2-tab").on("click", function() {
+                if(($("#pills-2").hasClass("loaded") == false)){
+                    var _token = $('meta[name="csrf-token"]').attr('content');
+                    var data = {
+                        _token: _token
+                    };
+                    $.ajax({
+                        url:"{{route('menucontent')}}",
+                        type:"post",
+                        dataType:"json",
+                        data: data,
+                        success: function (data) {
+                           $("#pills-2").append(data); 
+                        },
+                    })
+                    $("#pills-2").addClass("loaded");
+                }
             });
         });
     </script>

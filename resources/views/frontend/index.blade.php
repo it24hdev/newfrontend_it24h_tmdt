@@ -75,7 +75,11 @@
                             <div class="owl-carousel owl-theme owl-loaded owl-drag" id="slider-show">
                                 @foreach ($sliders as $item)
                                     <a href="{{$item->link_target}}">
+                                        @if($isMobile=='phone')
+                                        <img class="owl-lazy" data-src="{{asset('upload/images/slider/thumb/'.$item->image)}}" alt="" width="100%" height="100%">
+                                        @else
                                         <img class="owl-lazy" data-src="{{asset('upload/images/slider/'.$item->image)}}" alt="" width="100%" height="100%">
+                                        @endif
                                     </a>
                                 @endforeach
                             </div>

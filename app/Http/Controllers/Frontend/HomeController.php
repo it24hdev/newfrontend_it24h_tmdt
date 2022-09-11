@@ -24,10 +24,16 @@ class HomeController extends Controller
 
         $agent = new Agent();
         $ag = "";
+        $isMobile = "";
         if($agent->isMobile()){
             $ag = "mobile";
         }
         else $ag = "desktop";
+
+        if($agent->isPhone())
+        {
+            $isMobile = "phone";
+        }
 
         //lay danh muc cha len trang chu
         $get_cat_parents = Category::where('taxonomy', 0)
@@ -48,7 +54,6 @@ class HomeController extends Controller
         $banner_sidebar   = DB::table('sliders')->where('location',4)->where('status', 1)->inRandomOrder()->first();
         $sliders = DB::table('sliders')->where('location',9)->where('status', 1)->orderBy('position', 'ASC')->get();
         $list_post = DB::table('posts')->where('status',1)->whereNull('deleted_at')->limit(3)->get();
-        // $list_brand = Brand::get();
         
         return view('frontend.index',[
         'get_cat_parents' =>  $get_cat_parents,
@@ -61,8 +66,8 @@ class HomeController extends Controller
         'list_post'       => $list_post,
         'list_cat'        => $list_cat,
         'locale'          => $locale,
-        // 'list_brand'      => $list_brand,
         'agent'           => $ag,
+        'isMobile'        => $isMobile,
         ]);
     }
     //lay danh muc cho blog tren menu
@@ -656,5 +661,25 @@ class HomeController extends Controller
         $Sidebars           = $this->getmenu('sidebar');
         // $Menus              = $this->getmenu('menu');
         return \view('frontend.page.about-us', compact('Sidebars' ,'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+    }
+
+    public function menucontent(Request $request){
+        $Sidebars  = $this->getmenu('sidebar');
+        $Sidebarid  = $request->id;
+        $agent = new Agent();
+        if($agent->isMobile()){
+             $view2     = view('frontend.contentmenumobile', [
+                'Sidebars'  => $Sidebars, 
+            ])->render();
+        }
+        else{
+            $view2     = view('frontend.contentmenu', [
+                'Sidebars'  => $Sidebars, 
+                'Sidebarid' => $Sidebarid, 
+            ])->render();
+        }
+
+       
+        return response()->json($view2);
     }
 }

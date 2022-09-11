@@ -293,3 +293,4 @@ Route::get('/login-google', [FrontendUserController::class, 'login_google'])->na
 Route::get('/google/callback', [FrontendUserController::class, 'callback_google']);
 
 Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('about_us');
+Route::post('/menucontent', [HomeController::class, 'menucontent'])->name('menucontent');

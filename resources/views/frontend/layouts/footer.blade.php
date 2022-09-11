@@ -114,14 +114,13 @@
                         <a href="https://www.facebook.com/it24h.vnn">
                             <img src="{{asset('/asset/images/fanpage-it24h.jpg')}}" alt="">
                         </a>
-                        <!-- <div class="fb-page" data-href="https://www.facebook.com/it24h.vnn" data-tabs="timeline" data-width="" data-height="260" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/it24h.vnn" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/it24h.vnn">IT24H - Cửa Hàng Máy Tính</a></blockquote></div> -->
                     </div>
                 </div>
                 <div class="box-content info-youtube">
                     <div class="title">Youtube</div>
                     <div class="youtube-content">
                         <div>
-                            <a href="https://www.youtube.com/embed/vlDzYIIOYmM" style="display: block"><img src="upload/images/youtubevideo.png" style="width: 100%; height: auto"></a>
+                            <a href="https://www.youtube.com/embed/vlDzYIIOYmM" style="display: block"><img src="{{asset('/upload/images/youtubevideo.png')}}" style="width: 100%; height: auto"></a>
                             {{-- <iframe src="" title="YouTube video" allowfullscreen></iframe> --}}
                         </div>
                     </div>

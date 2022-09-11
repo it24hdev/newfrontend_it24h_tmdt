@@ -109,11 +109,13 @@ class SliderController extends Controller
             DB::commit();
             if ($request->image != null){
                 $folder = 'upload/images/slider/';
+                $folder2 = 'upload/images/slider/thumb/';
                 if($request->location  == 1 || $request->location  == 2 || $request->location == 3){
                     CommonHelper::cropImage($request->image,$nameFile,310,135,$folder);
                 }
                 elseif ($request->location  == 9){
                      CommonHelper::cropImage($request->image,$nameFile,988,432,$folder);
+                     CommonHelper::cropImage($request->image,$nameFile,380,166,$folder2);
                 }
                 else{
                     CommonHelper::cropImage($request->image,$nameFile,270,455,$folder);
@@ -214,12 +216,14 @@ class SliderController extends Controller
 
                     /** Lưu ảnh mới vào folder */
                     $folder = 'upload/images/slider/';
+                    $folder2 = 'upload/images/slider/thumb/';
                     if($request->location  == 1 || $request->location  == 2 || $request->location == 3){
                         CommonHelper::cropImage($request->image,$nameFile,310,135,$folder);
                     }
                     elseif ($request->location  == 9){
 
                         CommonHelper::cropImage($request->image,$nameFile,988,432,$folder);
+                        CommonHelper::cropImage($request->image,$nameFile,380,166,$folder2);
                     }
                     else{
                         CommonHelper::cropImage($request->image,$nameFile,270,455,$folder);
