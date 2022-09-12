@@ -35,7 +35,7 @@
              </div>
             <div class="form-group mb-4">
                 <label>Danh mục cha</label>
-                <select name="parent_id"  class="tom-select w-full">
+                <select name="parent_id"  class="form-control w-full">
                     <option value="0">Mặc định</option>
                     @foreach ($categorieslv as $val)
                     <option value="{{$val->id}}" class="form-control">

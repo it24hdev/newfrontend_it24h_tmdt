@@ -66,7 +66,7 @@ class CategoryController extends Controller
     {
         $slug = Str::slug($request->slug, '-');
         $request->validate([
-            'name' => 'required|max:255|unique:categories,name',
+            'name' => 'required|max:255',
             'slug' => 'required|max:255|unique:categories,slug,'.$slug,
             'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
@@ -74,7 +74,7 @@ class CategoryController extends Controller
             [
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
                 'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-                'name.unique'   => 'Tên danh mục đã tồn tại',
+                // 'name.unique'   => 'Tên danh mục đã tồn tại',
                 'slug.unique'   => 'Tên slug đã tồn tại',
                 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
@@ -164,7 +164,7 @@ class CategoryController extends Controller
     {
         $request->slug = Str::slug($request->slug, '-');
         $request->validate([
-            'name'  => 'required|max:255|unique:categories,name,'.$id.',id',
+            'name'  => 'required|max:255',
             'slug'  => 'required|max:255|unique:categories,slug,'.$id.',id',
             'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
@@ -172,7 +172,7 @@ class CategoryController extends Controller
             [
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
                 'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-                'name.unique'   => 'Tên danh mục đã tồn tại',
+                // 'name.unique'   => 'Tên danh mục đã tồn tại',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
                 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
                 'slug.unique'   => 'Tên slug đã tồn tại',
