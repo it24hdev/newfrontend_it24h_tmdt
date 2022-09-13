@@ -22,7 +22,6 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Recruit\RecruitController;
 use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
-use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
 
 
 Auth::routes();
@@ -43,18 +42,6 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
-
-    
-    Route::prefix('admin/menu')->group(function () {
-    Route::get('/', [MenuController::class, 'index'])->name('menu');
-    Route::post('/addcustommenu', [MenuController::class, 'addcustommenu'])->name('haddcustommenu');
-    Route::post('/addcustommenu2', [MenuController::class, 'addcustommenu2'])->name('haddcustommenu2');
-    Route::post('/deleteitemmenu', [MenuController::class, 'deleteitemmenu'])->name('hdeleteitemmenu');
-    Route::post('/deletemenug', [MenuController::class, 'deletemenug'])->name('hdeletemenug');
-    Route::post('/createnewmenu', [MenuController::class, 'createnewmenu'])->name('hcreatenewmenu');
-    Route::post('/generatemenucontrol', [MenuController::class, 'generatemenucontrol'])->name('hgeneratemenucontrol');
-    Route::post('/updateitem', [MenuController::class, 'updateitem'])->name('hupdateitem');
-    });
 
     /*----------- USER ----------*/
     Route::prefix('admin/user')->group(function () {
@@ -307,6 +294,3 @@ Route::get('/google/callback', [FrontendUserController::class, 'callback_google'
 
 Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('about_us');
 Route::post('/menucontent', [HomeController::class, 'menucontent'])->name('menucontent');
-
-
-

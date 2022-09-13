@@ -394,7 +394,7 @@ ul{
     min-height: 100%;
     opacity: 0;
     visibility: hidden;
-    width: 710px;
+    width: 1000px;
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
 }
 .vertical-menu-content ul.menu-cat li:hover .wp-submenu{
@@ -407,17 +407,17 @@ ul{
     flex-wrap: wrap;
 }
 ul li .wp-submenu .content-submenu .submenu{
-    width: 65%;
+    width: 75%;
     display: flex;
     flex-wrap: wrap;
 }
 ul li .wp-submenu .content-submenu .wp-product-banner{
-    width: 35%;
+    width: 25%;
     padding: 25px 15px;
 }
 .wp-submenu .content-submenu .submenu .wp-menu-parent{
     padding: 0 15px;
-    width: 49%;
+    width: 33%;
     margin-bottom: 18px;
 }
 .wp-menu-parent a.title-cat{
