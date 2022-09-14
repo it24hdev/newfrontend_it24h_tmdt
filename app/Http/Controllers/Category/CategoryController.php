@@ -45,8 +45,18 @@ class CategoryController extends Controller
                 ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
         }
 
+        $data = Category::where('taxonomy', '=', 0)
+        ->where('taxonomy', '=', 0)
+        ->where('name', 'like', '%' . $keywords . '%')
+        ->orderby($orderby,$sort)
+        ->Paginate($limit);
+
+        $listcategory = [];
+        Category::recursive($data, $parents = 0, $level = 1, $listcategory);
+
+
         return view('admin.category.index',[
-            'Category' => $Category,
+            'Category' => $listcategory,
             'title'    => 'Danh mục sản phẩm',
         ]);
     }

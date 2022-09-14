@@ -270,28 +270,7 @@
                 @endcan
             </ul>
         </li>
-         <li>
-            <a href="javascript:;" class="menu {{ $module_active == 'locationmenu' ? 'menu--active' : '' }}">
-                <div class="menu__icon"> <i data-feather="clipboard"></i> </div>
-                <div class="menu__title">
-                    Vị trí menu
-                    <div class="menu__sub-icon "> <i
-                            data-feather="{{ $module_active == 'locationmenu' ? 'chevron-up' : 'chevron-down' }}"
-                            class="{{ $module_active == 'locationmenu' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
-                    </div>
-                </div>
-            </a>
-            <ul class="{{ $module_active == 'locationmenu' ? 'menu__sub-open' : '' }}">
-                @can('viewAny', App\Models\Locationmenu::class)
-                    <li>
-                        <a href="{{ route('locationmenu.index') }}" class="menu">
-                            <div class="menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="menu__title">Danh mục vị trí menu</div>
-                        </a>
-                    </li>
-                @endcan
-            </ul>
-        </li>
+         
 
         <li>
             <a href="javascript:;" class="menu {{ $module_active == 'recruit' ? 'menu--active' : '' }}">
@@ -321,6 +300,36 @@
                         </a>
                     </li>
                 @endcan
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript:;" class="menu {{ $module_active == 'setting' ? 'menu--active' : '' }}">
+                <div class="menu__icon"> <i data-feather="settings"></i> </div>
+                <div class="menu__title">
+                    Cài đặt
+                    <div class="menu__sub-icon "> <i
+                            data-feather="{{ $module_active == 'settings' ? 'chevron-up' : 'chevron-down' }}"
+                            class="{{ $module_active == 'settings' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
+                    </div>
+                </div>
+            </a>
+            <ul class="{{ $module_active == 'locationmenu' ? 'menu__sub-open' : '' }}">
+                <li>
+                    <a href="{{ route('menu') }}" class="menu">
+                        <div class="menu__icon"> <i data-feather="menu"></i> </div>
+                        <div class="menu__title">Menu</div>
+                    </a>
+                </li>
+                @can('viewAny', App\Models\Locationmenu::class)
+                    <li>
+                        <a href="{{ route('locationmenu.index') }}" class="menu">
+                            <div class="menu__icon"> <i data-feather="grid"></i> </div>
+                            <div class="menu__title">Vị trí menu</div>
+                        </a>
+                    </li>
+                @endcan
+                
             </ul>
         </li>
     </ul>
