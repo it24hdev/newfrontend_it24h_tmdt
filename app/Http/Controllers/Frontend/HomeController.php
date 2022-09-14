@@ -86,8 +86,8 @@ class HomeController extends Controller
     // lay memu sidebar
     public function getmenu($location){
         if($location == 'sidebar')  {$location = "sidebar_location"; }
-        // if($location == 'menu')  {$taxonomy = 3; }
-        // if($location == 'submenu')  {$taxonomy = 3; $location = 'menu';}
+        if($location == 'menu')  {$location = "menu_location"; }
+        if($location == 'footer')  {$location = "footer_location"; }
         $getmenu = MenuItems::select('admin_menu_items.*')
         ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
         ->where('locationmenus.'.$location,'<>','0')
@@ -95,8 +95,7 @@ class HomeController extends Controller
         ->get();
         return $getmenu;
     }
-
-
+    
     public function arrcategory(){
         $arrCategory = DB::table('categories')->select('id','name','name2','slug', 'thumb', 'banner')
         ->where('taxonomy',Category::SAN_PHAM)

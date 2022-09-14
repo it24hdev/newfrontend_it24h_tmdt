@@ -56,8 +56,8 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @foreach($Sidebars as $Sidebar)
-                                                @if($Sidebar->parent_id==0)
-                                                    <li><a class="dropdown-item" href="{{route('product_cat', $Sidebar->slug)}}">{{$Sidebar->name}}</a></li>
+                                                @if($Sidebar->parent==0)
+                                                    <li><a class="dropdown-item" href="{{route('product_cat', $Sidebar->link)}}">{{$Sidebar->label}}</a></li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -129,15 +129,15 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content" style="visibility: hidden; transform: translateY(10px); opacity: 0;">
+                        <div class="vertical-menu-content " id="menucontent" style="visibility: hidden; transform: translateY(10px); opacity: 0;">
                             <nav>
-                                <ul class="menu-cat">
+                                {{-- <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
-                                    @if($Sidebar->parent_id==0)
+                                    @if($Sidebar->parent==0)
                                     <li>
                                         
-                                        <a href="{!! route('product_cat',  $Sidebar->slug) !!}"><span class="icon-menu">{!! $Sidebar->icon !!}</span>
-                                            {{$Sidebar->name}}
+                                        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu">{!! $Sidebar->icon !!}</span>
+                                            {{$Sidebar->label}}
                                              @if(count($Sidebar->childs))
                                              <span class="icon-right"><i class="far fa-angle-right"></i></span>
                                              @endif
@@ -147,14 +147,14 @@
                                                 @if(count($Sidebar->childs))
                                                 <div class="submenu">
                                                     @foreach($Sidebars as $subsidebar)
-                                                    @if($subsidebar->parent_id == $Sidebar->id)
+                                                    @if($subsidebar->parent == $Sidebar->id)
 
                                                     <div class="wp-menu-parent">
-                                                        <span class="title-cat">{{$subsidebar->name}}</span>
+                                                        <span class="title-cat">{{$subsidebar->label}}</span>
                                                         @if(count($subsidebar->childs))
                                                         <ul>
                                                             @foreach($Sidebars as $subsidebar3)
-                                                              @if($subsidebar3->parent_id == $subsidebar->id)
+                                                              @if($subsidebar3->parent == $subsidebar->id)
                                                             <li>
                                                                 <a href="{!! route('product_cat',  $subsidebar3->slug) !!}" class="cat-child">
                                                                     <span>{{$subsidebar3->name}}</span>
@@ -216,6 +216,33 @@
                                             </div>
                                         </div>
                                         
+                                    </li>
+                                    @endif
+                                    @endforeach
+                                </ul> --}}
+
+                                <ul class="menu-cat">
+                                    @foreach($Sidebars  as $Sidebar)
+                                    @if($Sidebar->parent==0)
+                                    <li>
+                                        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
+                                            {{$Sidebar->label}}
+                                             @if(count($Sidebar->childs))
+                                             <span class="icon-right"><i class="far fa-angle-right"></i></span>
+                                             @endif
+                                        </a>
+                                        <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}">
+                                            
+                                                <div class="wp-submenu">
+                                                    <div class="content-submenu">
+                                                        @if(count($Sidebar->childs))
+                                                        <div id="subid-{{$Sidebar->id}}" class="full_sub">
+                                                        </div>
+
+                                                        @endif
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                     @endif
                                     @endforeach

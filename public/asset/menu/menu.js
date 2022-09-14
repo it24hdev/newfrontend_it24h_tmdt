@@ -198,7 +198,7 @@ function actualizarmenu() {
       $('#spincustomu2').show();
     },
     success: function(response) {
-      console.log('aqu llega');
+      console.log('Hoàn thành!');
     },
     complete: function() {
       $('#spincustomu2').hide();
@@ -220,7 +220,7 @@ function deleteitem(id) {
 }
 
 function deletemenu() {
-  var r = confirm('Do you want to delete this menu ?');
+  var r = confirm('Bạn chắc chắn muốn xóa menu này?');
   if (r == true) {
     $.ajax({
       dataType: 'json',
@@ -252,7 +252,7 @@ function deletemenu() {
 }
 
 $('#save_menu_header').click(function() {
-  console.log(1);
+  
   if (!!$('#menu-name').val()) {
     $.ajax({
       dataType: 'json',
@@ -268,10 +268,14 @@ $('#save_menu_header').click(function() {
       }
     });
   } else {
-    alert('Enter menu name!');
+    alert('Bạn chưa nhập tên menu!');
     $('#menu-name').focus();
     return false;
   }
+});
+
+$('#save_menu_header2').click(function() {
+    alert('Hoàn thành');
 });
 
 function insertParam(key, value) {

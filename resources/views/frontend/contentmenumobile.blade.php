@@ -2,7 +2,8 @@
 @foreach($Sidebars  as $Sidebar)
     @if($Sidebar->parent==0)
     <li>
-        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span> {{$Sidebar->label}}</a>
+        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu me-1">
+        {!! $Sidebar->class !!} {{$Sidebar->label}}</a>
         @if(count($Sidebar->childs))
         <span class="icon-right"><i class="far fa-angle-right"></i></span>
         @endif

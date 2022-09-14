@@ -18,39 +18,15 @@ class MenuController extends Controller
         $menu = new Menus();
         $menuitems = new MenuItems();
         $menulist = $menu->select(['id', 'name'])->get();
-        $menulist = $menulist->pluck('name', 'id')->prepend('Select menu', 0)->all();
+        $menulist = $menulist->pluck('name', 'id')->prepend('Chọn menu', 0)->all();
         $category = Category::select('id', 'name')
                     ->where('status',1)
-                    ->where('taxonomy', 2)
-                    ->whereNotIn('name',function($query) {
-                                $query->select('label')->from('admin_menu_items');
-                            })
+                    ->where('taxonomy', 0)
                     ->get();
-        $category_lastes =  Category::select('id', 'name')
-                            ->where('status',1)->where('taxonomy', 2)
-                            // ->whereNotIn('name',function($query) {
-                            //     $query->select('label')->from('admin_menu_items');
-                            // })
-                            ->orderby('created_at','asc')
-                            ->limit(7)
-                            ->get();
-
         $categorypost = Category::select('id', 'name')
                         ->where('status',1)
                         ->where('taxonomy', 1)
-                        // ->whereNotIn('name',function($query) {
-                        //         $query->select('label')->from('admin_menu_items');
-                        //     })
                         ->get();
-        $categorypost_lastes =  Category::select('id', 'name')
-                                ->where('status',1)
-                                ->where('taxonomy', 1)
-                                // ->whereNotIn('name',function($query) {
-                                // $query->select('label')->from('admin_menu_items');
-                                // })
-                                ->orderby('created_at','asc')
-                                ->limit(7)
-                                ->get();
 
 
         if ((request()->has("action") && empty(request()->input("menu"))) || request()->input("menu") == '0') {
@@ -66,7 +42,8 @@ class MenuController extends Controller
                 $data['role_pk'] = config('menu.roles_pk');
                 $data['role_title_field'] = config('menu.roles_title_field');
             }
-            return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost)->with('category_lastes', $category_lastes)->with('categorypost_lastes', $categorypost_lastes);
+            return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost);
+            // ->with('category_lastes', $category_lastes)->with('categorypost_lastes', $categorypost_lastes);
         }
     }
 
@@ -156,9 +133,9 @@ class MenuController extends Controller
             $menudelete = Menus::find(request()->input("id"));
             $menudelete->delete();
 
-            return json_encode(array("resp" => "you delete this item"));
+            return json_encode(array("resp" => "Xóa thành công mục này"));
         } else {
-            return json_encode(array("resp" => "You have to delete all items first", "error" => 1));
+            return json_encode(array("resp" => "Bạn cần xóa tất cả các mục trong menu trước.", "error" => 1));
 
         }
     }
@@ -214,6 +191,7 @@ class MenuController extends Controller
         $menuitem   = new MenuItems();
         $menuitem->label = $categories->name;
         $menuitem->link  = $categories->slug;
+        $menuitem->class  = $categories->icon;
         $menuitem->menu = request()->input("idmenu");
         $menuitem->sort = MenuItems::getNextSortRoot(request()->input("idmenu"));
         $menuitem->save();
