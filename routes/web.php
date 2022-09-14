@@ -205,15 +205,11 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     /* ---------- Danh muc vi tri menu --------------- */
+     /* ---------- Danh muc vi tri menu --------------- */
     Route::prefix('admin/locationmenu')->group(function () {
         Route::get('/', [LocationmenuController::class, 'index'])->name('locationmenu.index');
-        Route::get('/create', [LocationmenuController::class, 'create'])->name('locationmenu.create');
-        Route::post('/create', [LocationmenuController::class, 'store'])->name('locationmenu.store');
-        Route::post('/update/{id}',[LocationmenuController::class, 'update'])->name('locationmenu.update');
-        Route::get('/edit/{id}', [LocationmenuController::class, 'edit'])->name('locationmenu.edit');
-        Route::post('/delete', [LocationmenuController::class, 'destroy'])->name('locationmenu.delete');
-        Route::post('/resofting_category', [LocationmenuController::class, 'resofting_category'])->name('resofting_category');
-        Route::get('/sort/{id}',[LocationmenuController::class, 'sort'])->name('locationmenu.sort');
+        Route::post('/update',[LocationmenuController::class, 'update'])->name('locationmenu.update');
+        Route::get('/edit', [LocationmenuController::class, 'edit2'])->name('locationmenu.edit');
     });
 
      /* ---------- tuyen dung --------------- */

@@ -17,7 +17,7 @@ $currentUrl = url()->current();
 
                             <nav class="nav-tab-wrapper wp-clearfix" aria-label="Menu thứ hai">
                                 <a href="{{route('menu')}}" class="nav-tab nav-tab-active" aria-current="page">Sửa menu</a>
-                                <a href="#" class="nav-tab">Quản lý vị trí menu</a>
+                                <a href="{{route('locationmenu.edit')}}" class="nav-tab">Quản lý vị trí menu</a>
                             </nav>
                             <div class="manage-menus">
                                 <form method="get" action="{{ $currentUrl }}">
@@ -361,7 +361,7 @@ $currentUrl = url()->current();
 
 @endsection
 @section('js')
-    <script>
+<script>
     var menus = {
         "oneThemeLocationNoMenus" : "",
         "moveUp" : "Move up",
@@ -392,7 +392,7 @@ $currentUrl = url()->current();
     });
 
 </script>
-<script type="text/javascript" src="{{asset('asset/menu/scripts.js')}}"></script>
-<script type="text/javascript" src="{{asset('asset/menu/scripts2.js')}}"></script>
-<script type="text/javascript" src="{{asset('asset/menu/menu.js')}}"></script>
+<script src="{{asset('asset/menu/scripts.js')}}"></script>
+<script src="{{asset('asset/menu/scripts2.js')}}"></script>
+<script src="{{asset('asset/menu/menu.js')}}"></script>
 @endsection

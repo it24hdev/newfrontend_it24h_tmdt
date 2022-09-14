@@ -1,17 +1,17 @@
 
 <div class="submenu" style="float: left;">
     @foreach($Sidebars as $subsidebar)
-    @if($subsidebar->parent == $Sidebarid)
+    @if($subsidebar->parent_id == $Sidebarid)
 
     <div class="wp-menu-parent">
-        <a href="{!! route('product_cat',  $subsidebar->link) !!}" class="title-cat">{{$subsidebar->label}}</a>
+        <a href="{!! route('product_cat',  $subsidebar->slug) !!}" class="title-cat">{{$subsidebar->name}}</a>
         @if(count($subsidebar->childs))
         <ul>
             @foreach($Sidebars as $subsidebar3)
-            @if($subsidebar3->parent == $subsidebar->id)
+            @if($subsidebar3->parent_id == $subsidebar->id)
             <li>
-                <a href="{!! route('product_cat',  $subsidebar3->link) !!}" class="cat-child">
-                    <span>{{$subsidebar3->label}}</span>
+                <a href="{!! route('product_cat',  $subsidebar3->slug) !!}" class="cat-child">
+                    <span>{{$subsidebar3->name}}</span>
                     @if(count($subsidebar3->childs))
                     <span class="next-right">
                         <i class="far fa-angle-right"></i>
@@ -30,7 +30,6 @@
     @endif
     @endforeach
 </div>
-
 <div class="wp-product-banner" style="float: left;">
     <div class="wp-product">
         <a href="">

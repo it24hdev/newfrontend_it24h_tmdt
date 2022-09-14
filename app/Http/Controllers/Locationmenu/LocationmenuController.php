@@ -5,6 +5,8 @@ use App\Models\Locationmenu;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\laravelmenu\src\Models\Menus;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 
 class LocationmenuController extends Controller
 {
@@ -18,83 +20,61 @@ class LocationmenuController extends Controller
     }
 
 
-    public function index(Request $request)
-    {
-        $this->authorize('viewAny', Locationmenu::class);
-        $limit    =  $request->query('limit');
-        $keywords =  $request->query('keywords');
-        $orderby  =  $request->query('orderby');
-        $sort     =  $request->query('sort');
-        if($limit   ==null){$limit   =1000;} 
-        if($sort    ==null){$sort    ='asc';}
-        if($keywords==null){$keywords="";}
-        if($orderby ==null){$orderby ="position";}
-
-        if($limit == 10 && $keywords=="" && $orderby== "position" && $sort =="asc"){
-            $Locationmenu = Locationmenu::where('parent_id','=',0)->paginate($limit);
-        }
-        else
-        {
-            $Locationmenu = Locationmenu::where('name', 'like', '%' . $keywords . '%')
-            ->where('parent_id','=',0)
-            ->orderby($orderby,$sort)->Paginate($limit);
-        }
-        return view('admin.locationmenu.index',[
-            'Locationmenu' => $Locationmenu,
-            'title'    => 'Danh mục vị trí menu',
-        ]);
-    }
-
-    public function edit($id)
+    public function index(Request $request){}
+    public function edit2()
     {
         $this->authorize('update', Locationmenu::class);
-        $edit = Locationmenu::find($id);
-        if ($edit !== null) {
-            return view('admin.locationmenu.edit',[
-                'title' => 'Sửa vị trí danh mục',
-                'edit'  => $edit,
+            $Menus =  Menus::get();
+            $menu_locations = Locationmenu::find(1);
+            $sidebar_locations = Locationmenu::find(2);
+            $footer_locations = Locationmenu::find(3);
+            $rightmenu_locations = Locationmenu::find(4);
+
+            return view('admin.locationmenu.edit2',[
+                'title' => 'Sửa vị trí menu',
+                'Menus' => $Menus,
+                'menu_locations' => $menu_locations->menu_location,
+                'sidebar_locations' => $sidebar_locations->sidebar_location,
+                'footer_locations' => $footer_locations->footer_location,
+                'rightmenu_locations' => $rightmenu_locations->rightmenu_location,
             ]);
-        } else {
-            \abort(404);
-        }
     }
-    public function update(Request $request, $id)
+
+    public function update(Request $request)
     {   
         $this->authorize('update', Locationmenu::class);
-        $Locationmenus  = Locationmenu::find($id);
-        $Locationmenu   = [
-            'sidebar'   => $request->has('sidebar'),
-            'footer'    => $request->has('footer'),
-            'menu'      => $request->has('menu'),
-            'rightmenu' => $request->has('rightmenu'),
+
+        $menu_locations  = Locationmenu::find(1);
+        $menu_location   = [
+            'menu_location'      => $request->menu_location,
+        ];
+
+        $sidebar_locations  = Locationmenu::find(2);
+        $sidebar_location   = [
+            'sidebar_location'      => $request->sidebar_location,
+        ];
+
+        $footer_locations  = Locationmenu::find(3);
+        $footer_location   = [
+            'footer_location'      => $request->footer_location,
+        ];
+
+        $rightmenu_locations  = Locationmenu::find(4);
+        $rightmenu_location   = [
+            'rightmenu_location'      => $request->rightmenu_location,
         ];
         try {
-            DB::beginTransaction();
-            $Locationmenus->update($Locationmenu);
+             DB::beginTransaction();
+            $menu_locations->update($menu_location);
+            $sidebar_locations->update($sidebar_location);
+            $footer_locations->update($footer_location);
+            $rightmenu_locations->update($rightmenu_location);
             DB::commit();
-            return redirect()->route('locationmenu.index')->with('success','Cập nhật vị trí danh mục thành công.');
+            return redirect()->route('locationmenu.edit')->with('success','Cập nhật vị trí menu thành công.');
         }
         catch (\Exception $exception){
             DB::rollBack();
-            return redirect()->route('locationmenu.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
+            return redirect()->route('locationmenu.edit')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
         }
-    }
-    public function resofting_category(Request $request)
-    {
-        $data = $request->all();
-        foreach($data['array_id'] as $key => $value){
-            $Locationmenu  = Locationmenu::find($value);
-            $Locationmenu->position = $key;
-            $Locationmenu->save();
-        }
-    }
-
-    public function sort($id)
-    {
-        $Locationmenu = Locationmenu::where('parent_id','=',$id)->orderby('position','asc')->paginate();
-        return view('admin.locationmenu.index',[
-            'Locationmenu' => $Locationmenu,
-            'title'        => 'ID menu cha: '.$id,
-        ]);
     }
 }

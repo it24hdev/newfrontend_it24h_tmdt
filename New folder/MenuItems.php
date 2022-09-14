@@ -36,7 +36,7 @@ class MenuItems extends Model
         return $this->belongsTo('App\Http\Controllers\laravelmenu\src\Models\Menus', 'menu');
     }
 
-    public function childs()
+    public function child()
     {
         return $this->hasMany('App\Http\Controllers\laravelmenu\src\Models\MenuItems', 'parent', 'id')->orderBy('sort', 'ASC');
     }

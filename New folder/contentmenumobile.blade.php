@@ -1,8 +1,8 @@
 <ul class="menu-cat-mobile">
 @foreach($Sidebars  as $Sidebar)
-    @if($Sidebar->parent==0)
+    @if($Sidebar->parent_id==0)
     <li>
-        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span> {{$Sidebar->label}}</a>
+        <a href="{!! route('product_cat',  $Sidebar->slug) !!}"><span class="icon-menu me-1"><i class="fas fa-laptop"></i></span> {{$Sidebar->name}}</a>
         @if(count($Sidebar->childs))
         <span class="icon-right"><i class="far fa-angle-right"></i></span>
         @endif
@@ -11,9 +11,9 @@
             @if(count($Sidebar->childs))
             <ul style="margin-left: 5px;">
                 @foreach($Sidebars as $subsidebar)
-                @if($subsidebar->parent == $Sidebar->id)
+                @if($subsidebar->parent_id == $Sidebar->id)
 
-                <li><a href="{!! route('product_cat',  $subsidebar->link) !!}">- {{$subsidebar->label}}</a>
+                <li><a href="{!! route('product_cat',  $subsidebar->slug) !!}">- {{$subsidebar->name}}</a>
                     @if(count($subsidebar->childs))
                         @include('frontend.subsidebarmenu',['childs' => $subsidebar->childs])
                     @endif

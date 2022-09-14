@@ -182,6 +182,8 @@ class MenuController extends Controller
             
         } else {
             $menuitem = MenuItems::find(request()->input("id"));
+
+
             $menuitem->label = request()->input("label");
             $menuitem->link = request()->input("url");
             $menuitem->class = request()->input("clases");

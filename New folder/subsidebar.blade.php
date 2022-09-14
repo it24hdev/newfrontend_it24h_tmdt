@@ -3,9 +3,9 @@
     <ul>
     @foreach($childs as $child)
         <li>
-        <a href="{!! route('product_cat', $child->link) !!}">
+        <a href="{!! route('product_cat', $child->slug) !!}">
             {{-- @if($locale == 'vi') --}}
-            {{$child->label}}
+            {{$child->name}}
             {{-- @else {{$child->name2}} --}}
             {{-- @endif --}}
             @if(count($child->childs))
