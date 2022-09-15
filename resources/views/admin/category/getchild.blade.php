@@ -6,12 +6,20 @@
             $str ='';
             for ($i=0; $i < $category_child->level; $i++) {
                 echo $str;
-                $str.='-';
+                $str.='&nbsp';
             }
         @endphp
        {{$sub_id}}.{{$key+1}}
         </td>
-        <td class="category_child_name">{{$category_child->name}} </td>
+        <td class="category_child_name">
+            @php
+            $str ='';
+            for ($i=0; $i < $category_child->level; $i++) {
+                echo $str;
+                $str.='━';
+            }
+            @endphp
+            {{$category_child->name}} </td>
         <td class="text-center">
             @if ($category_child->cat_parent)
              {{$category_child->cat_parent->name}}

@@ -80,12 +80,21 @@
                                             $str ='';
                                             for ($i=0; $i < $list->level; $i++) {
                                                 echo $str;
-                                                $str.='-';
+                                                $str.='&nbsp';
                                             }
                                         @endphp
                                         {{ $list->id }}
                                     </td>
-                                    <td class="">{{$list->name}} </td>
+                                    <td class="">
+                                         @php
+                                            $str ='';
+                                            for ($i=0; $i < $list->level; $i++) {
+                                                echo $str;
+                                                $str.='━';
+                                            }
+                                        @endphp
+                                        {{$list->name}} 
+                                    </td>
                                     <td class="overflow-hidden ">{{$list->slug}}</td>
                                     <td class="text-center">
                                         @if ($list->cat_parent)

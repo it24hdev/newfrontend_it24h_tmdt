@@ -77,12 +77,20 @@
                                 $str ='';
                                 for ($i=0; $i < $category->level; $i++) {
                                     echo $str;
-                                    $str.='-';
+                                    $str.='&nbsp';
                                 }
                             @endphp
                             {{ $category->id }}
                             </td>
-                            <td class="category_name">{{$category->name}} </td>
+                            <td class="category_name">
+                                 @php
+                                $str ='';
+                                for ($i=0; $i < $category->level; $i++) {
+                                    echo $str;
+                                    $str.='━';
+                                }
+                            @endphp
+                                {{$category->name}} </td>
                             <td class="text-center">
                                 @if ($category->cat_parent)
                                  {{$category->cat_parent->name}}
