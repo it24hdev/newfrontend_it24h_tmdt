@@ -14,7 +14,7 @@ class LocationmenuController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            \session(['module_active' => 'locationmenu', 'active' => 'Vị trí menu']);
+            \session(['module_active' => 'menu', 'active' => 'Vị trí menu']);
             return $next($request);
         });
     }

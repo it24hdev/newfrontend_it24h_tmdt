@@ -183,7 +183,7 @@
         @endcan
         <li>
             <a href="javascript:;" class="side-menu {{ $module_active == 'products' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="clipboard"></i> </div>
+                <div class="side-menu__icon"> <i data-feather="archive"></i> </div>
                 <div class="side-menu__title">
                     Sản phẩm
                     <div class="side-menu__sub-icon "> <i
@@ -304,7 +304,7 @@
                 </li>
                 @can('viewAny', App\Models\Locationmenu::class)
                     <li>
-                        <a href="{{ route('locationmenu.index') }}" class="side-menu">
+                        <a href="{{ route('locationmenu.edit') }}" class="side-menu">
                             <div class="side-menu__icon"> <i data-feather="grid"></i> </div>
                             <div class="side-menu__title"> Vị trí menu</div>
                         </a>

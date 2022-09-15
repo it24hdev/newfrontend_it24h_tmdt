@@ -51,12 +51,12 @@ class CategoryController extends Controller
         ->orderby($orderby,$sort)
         ->Paginate($limit);
 
-        $listcategory = [];
-        Category::recursive($data, $parents = 0, $level = 1, $listcategory);
+        $listcategories = [];
+        Category::recursive($data, $parents = 0, $level = 1, $listcategories);
 
 
         return view('admin.category.index',[
-            'Category' => $listcategory,
+            'Categories' => $listcategories,
             'title'    => 'Danh mục sản phẩm',
         ]);
     }
@@ -131,17 +131,6 @@ class CategoryController extends Controller
             $file_banner = CommonHelper::uploadImage($request->banner, $nameFileBanner, $folder);
             CommonHelper::cropImage2($file_banner, $nameFileBanner, 180, 324, $folder_thumb);
         }
-        $Locationmenu = new Locationmenu();
-        $Locationmenu->name        =  $request->name;
-        $Locationmenu->name2       =  $request->name2;
-        $Locationmenu->Category_id = $Category->id;
-        $Locationmenu->parent_id   = $Category->parent_id;
-        $Locationmenu->slug        = $Category->slug;
-        $Locationmenu->sidebar     = 1;
-        $Locationmenu->footer      = 1;
-        $Locationmenu->menu        = 1;
-        $Locationmenu->rightmenu   = 1;
-        $Locationmenu->save();
 
         return redirect()->route('category.index')->with('success','Thêm danh mục mới thành công.');
     }
@@ -254,27 +243,6 @@ class CategoryController extends Controller
                         CommonHelper::deleteImage($nameBannerOld, $path_thumb);
                     }
             }
-               $Locationmenu = Locationmenu::where('category_id', '=' ,$id)->first();
-               if($Locationmenu !=null){
-                $Locationmenu->update([
-                    'name'      => $request->name,
-                    'parent_id' => $request->parent_id,
-                ]);
-               }
-               else
-               {
-                $Locationmenu  = new Locationmenu();
-                $Locationmenu->name        = $request->name;
-                $Locationmenu->name2       = $request->name2;
-                $Locationmenu->Category_id = $request->id;
-                $Locationmenu->parent_id   = $request->parent_id;
-                $Locationmenu->slug        = $request->slug;
-                $Locationmenu->sidebar     = 1;
-                $Locationmenu->footer      = 1;
-                $Locationmenu->menu        = 1;
-                $Locationmenu->rightmenu   = 1;
-                $Locationmenu->save();
-                }
             DB::commit();
             return redirect()->route('category.index')->with('success','Cập nhật danh mục thành công.');
         }
@@ -294,5 +262,18 @@ class CategoryController extends Controller
             return \json_encode(array('success'=>true));
         }
         return \json_encode(array('success'=>false));
+    }
+
+    public function getchild(Request $request){
+        $id = $request->id;
+        $data = Category::where('taxonomy', '=', 0)->get();
+
+        $listcategories = [];
+        Category::recursive_child($data, $id, 2, $listcategories);
+         $view2     = view('admin.category.getchild', [
+                'listcategories' => $listcategories,
+                'sub_id' => $id,
+            ])->render();
+        return response()->json(['html'=>$view2]);
     }
 }

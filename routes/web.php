@@ -191,6 +191,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/delete', [CategoryController::class, 'destroy'])->name('category.delete');
+        Route::post('/getchild', [CategoryController::class, 'getchild'])->name('category.getchild');
     });
     /* ---------- Danh muc bai viet --------------- */
     Route::prefix('admin/categorypost')->group(function () {
@@ -201,10 +202,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update/{id}', [CategorypostController::class, 'update'])->name('categorypost.update');
         Route::get('/edit/{id}', [CategorypostController::class, 'edit'])->name('categorypost.edit');
         Route::post('/delete', [CategorypostController::class, 'destroy'])->name('categorypost.delete');
-
+        Route::post('/getchildpost', [CategorypostController::class, 'getchild'])->name('category.getchildpost');
     });
 
-    /* ---------- Danh muc vi tri menu --------------- */
      /* ---------- Danh muc vi tri menu --------------- */
     Route::prefix('admin/locationmenu')->group(function () {
         Route::get('/', [LocationmenuController::class, 'index'])->name('locationmenu.index');

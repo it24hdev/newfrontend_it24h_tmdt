@@ -176,4 +176,17 @@ class CategorypostController extends Controller
         }
         return \json_encode(array('success'=>false));
     }
+
+    public function getchild(Request $request){
+        $id = $request->id;
+        $data = Category::where('taxonomy', '=', 1)->get();
+
+        $listcategories = [];
+        Category::recursive_child($data, $id, 2, $listcategories);
+         $view2     = view('admin.categorypost.getchild', [
+                'Category' => $listcategories,
+                'sub_id' => $id,
+            ])->render();
+        return response()->json(['html'=>$view2]);
+    }
 }

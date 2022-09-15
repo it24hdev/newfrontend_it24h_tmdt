@@ -203,7 +203,7 @@
         @endcan
         <li>
             <a href="javascript:;" class="menu {{ $module_active == 'products' ? 'menu--active' : '' }}">
-                <div class="menu__icon"> <i data-feather="clipboard"></i> </div>
+                <div class="menu__icon"> <i data-feather="archive"></i> </div>
                 <div class="menu__title">
                     Sản phẩm
                     <div class="menu__sub-icon "> <i
@@ -314,7 +314,7 @@
                     </div>
                 </div>
             </a>
-            <ul class="{{ $module_active == 'locationmenu' ? 'menu__sub-open' : '' }}">
+            <ul class="{{ $module_active == 'menu' ? 'menu__sub-open' : '' }}">
                 <li>
                     <a href="{{ route('menu') }}" class="menu">
                         <div class="menu__icon"> <i data-feather="menu"></i> </div>
@@ -323,7 +323,7 @@
                 </li>
                 @can('viewAny', App\Models\Locationmenu::class)
                     <li>
-                        <a href="{{ route('locationmenu.index') }}" class="menu">
+                        <a href="{{ route('locationmenu.edit') }}" class="menu">
                             <div class="menu__icon"> <i data-feather="grid"></i> </div>
                             <div class="menu__title">Vị trí menu</div>
                         </a>
