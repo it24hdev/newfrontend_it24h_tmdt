@@ -2,6 +2,14 @@
   color: #424242;
 }
 
+.customlinkdiv p{
+  margin-bottom: 13px;
+}
+
+p.button-controls.topitem {
+  margin-top: 13px !important;
+}
+
 #hwpwrap a{
     color: #2ea2cc;
 }
@@ -2019,8 +2027,13 @@
   font-weight: 400;
   margin-left: 4px;
 }
+
+.top_w {
+  margin-top: 20px;
+}
+
 #hwpwrap .manage-menus {
-  margin-top: 23px;
+  /*margin-top: 23px;*/
   padding: 10px;
   overflow: hidden;
   background: #fbfbfb;

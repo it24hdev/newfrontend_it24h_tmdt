@@ -17,8 +17,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
-use App\Http\Controllers\laravelmenu\src\Models\Menus;
-use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 
 class HomeController extends Controller
 {
@@ -85,17 +83,21 @@ class HomeController extends Controller
     }
     // lay memu sidebar
     public function getmenu($location){
-        if($location == 'sidebar')  {$location = "sidebar_location"; }
-        if($location == 'menu')  {$location = "menu_location"; }
-        if($location == 'footer')  {$location = "footer_location"; }
-        $getmenu = MenuItems::select('admin_menu_items.*')
-        ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
-        ->where('locationmenus.'.$location,'<>','0')
-        ->where('locationmenus.'.$location,'<>',null)
-        ->get();
+        // if($location == 'sidebar')  {$taxonomy = 0; }
+        // if($location == 'menu')  {$taxonomy = 3; }
+        // if($location == 'submenu')  {$taxonomy = 3; $location = 'menu';}
+        // $getmenu = Locationmenu::select('locationmenus.*','categories.*')
+        // ->leftJoin('categories', 'categories.id', '=', 'locationmenus.category_id')
+        // ->where('categories.taxonomy','=', $taxonomy)
+        // ->where('categories.status','=',1)
+        // ->where('locationmenus.'.$location,'=',1)
+        // ->orderby('position','asc')
+        // ->get();
+        $getmenu = Category::where('status',1)->where('taxonomy',0)->whereNull('deleted_at')->get();
         return $getmenu;
     }
-    
+
+
     public function arrcategory(){
         $arrCategory = DB::table('categories')->select('id','name','name2','slug', 'thumb', 'banner')
         ->where('taxonomy',Category::SAN_PHAM)

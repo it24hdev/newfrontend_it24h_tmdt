@@ -12,25 +12,23 @@ $currentUrl = url()->current();
             <div id="wpcontent">
                 <div id="wpbody">
                     <div id="wpbody-content">
-
                         <div class="wrap">
-
-                            <nav class="nav-tab-wrapper wp-clearfix" aria-label="Menu thứ hai">
+                            <nav class="nav-tab-wrapper wp-clearfix top_w" aria-label="Menu thứ hai">
                                 <a href="{{route('menu')}}" class="nav-tab nav-tab-active" aria-current="page">Sửa menu</a>
-                                <a href="#" class="nav-tab">Quản lý vị trí menu</a>
+                                <a href="{{route('locationmenu.edit')}}" class="nav-tab">Quản lý vị trí menu</a>
                             </nav>
                             <div class="manage-menus">
                                 <form method="get" action="{{ $currentUrl }}">
-                                    <label for="menu" class="selected-menu">Select the menu you want to edit:</label>
+                                    <label for="menu" class="selected-menu">Chọn menu bạn muốn chỉnh sửa:</label>
                                     <select name="menu">
                                     @foreach($menulist as $key => $val)
                                    <option value="{{$key}}" @if(request()->input('menu') == $key) selected="selected" @endif>{{ $val }}</option>
                                     @endforeach
                                     </select>
                                     <span class="submit-btn">
-                                        <input type="submit" class="button-secondary" value="Choose">
+                                        <input type="submit" class="button-secondary" value="Chọn">
                                     </span>
-                                    <span class="add-new-menu-action"> or <a href="{{ $currentUrl }}?action=edit&menu=0">Create new menu</a>. </span>
+                                    <span class="add-new-menu-action"> hoặc <a href="{{ $currentUrl }}?action=edit&menu=0">Tạo mới menu</a>. </span>
                                 </form>
                             </div>
                             <div id="nav-menus-frame">
@@ -44,19 +42,19 @@ $currentUrl = url()->current();
                                         <div id="side-sortables" class="accordion-container">
                                             <ul class="outer-border">
                                                 <li class="control-section accordion-section open add-page" id="add-page">
-                                                    <h3 class="accordion-section-title hndle" tabindex="0"> Custom Link <span class="screen-reader-text">Press return or enter to expand</span></h3>
+                                                    <h3 class="accordion-section-title hndle" tabindex="0"> Liên kết tự tạo <span class="screen-reader-text">Press return or enter to expand</span></h3>
                                                     <div class="accordion-section-content ">
                                                         <div class="inside">
                                                             <div class="customlinkdiv" id="customlinkdiv">
                                                                 <p id="menu-item-url-wrap">
                                                                     <label class="howto" for="custom-menu-item-url"> <span>URL</span>&nbsp;&nbsp;&nbsp;
-                                                                        <input id="custom-menu-item-url" name="url" type="text" class="menu-item-textbox " placeholder="url">
+                                                                        <input id="custom-menu-item-url" name="url" type="text" class="menu-item-textbox " placeholder="http://">
                                                                     </label>
                                                                 </p>
 
                                                                 <p id="menu-item-name-wrap">
-                                                                    <label class="howto" for="custom-menu-item-name"> <span>Label</span>&nbsp;
-                                                                        <input id="custom-menu-item-name" name="label" type="text" class="regular-text menu-item-textbox input-with-default-title" title="Label menu">
+                                                                    <label class="howto" for="custom-menu-item-name"> <span>Tên đường dẫn</span>&nbsp;
+                                                                        <input id="custom-menu-item-name" name="label" type="text" class="regular-text menu-item-textbox input-with-default-title" title="">
                                                                     </label>
                                                                 </p>
 
@@ -73,9 +71,9 @@ $currentUrl = url()->current();
                                                                 </p>
                                                                 @endif
 
-                                                                <p class="button-controls">
+                                                                <p class="button-controls topitem">
 
-                                                                    <a  href="#" onclick="addcustommenu()"  class="button-secondary submit-add-to-menu right"  >Add menu item</a>
+                                                                    <a  href="#" onclick="addcustommenu()"  class="button-secondary submit-add-to-menu right"  >Thêm</a>
                                                                     <span class="spinner" id="spincustomu"></span>
                                                                 </p>
 
@@ -92,30 +90,18 @@ $currentUrl = url()->current();
                                                                 <ul id="posttype-page-tabs" class="posttype-tabs add-menu-item-tabs">
                                                                     <li class="tabs">
                                                                         <a class="nav-tab-link" data-type="tabs-panel-posttype-page-most-recent" href="/wp-admin/nav-menus.php?page-tab=most-recent#tabs-panel-posttype-page-most-recent">
-                                                                            Mới nhất                </a>
+                                                                            Tất cả                </a>
                                                                     </li>
-                                                                    <li>
+                                                                    {{-- <li>
                                                                         <a class="nav-tab-link" data-type="page-all" href="/wp-admin/nav-menus.php?page-tab=all#page-all">
                                                                             Xem tất cả              </a>
-                                                                    </li>
+                                                                    </li> --}}
                                                                     
                                                                 </ul>   
 
                                                                 <div id="tabs-panel-posttype-page-most-recent" class="tabs-panel tabs-panel-active" role="region" aria-label="Mới nhất" tabindex="0">
                                                                     <ul id="pagechecklist-most-recent" class="categorychecklist form-no-clear">
-                                                                        @foreach($category_lastes as $cate_lastes)
-                                                                        <li>
-                                                                            <label class="menu-item-title">
-                                                                                <input type="checkbox" class="menu-item-checkbox" name="{{$cate_lastes->id}}" value="">{{$cate_lastes->name}}
-                                                                            </label>
-                                                                        </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                </div>
-
-                                                                <div id="page-all" class="tabs-panel tabs-panel-inactive" role="region" aria-label="Tất cả" tabindex="1">
-                                                                    <ul id="pagechecklist-all-recent" class="categorychecklist form-no-clear">
-                                                                        @foreach($category as $cate2)
+                                                                        @foreach($categorypost as $cate2)
                                                                         <li>
                                                                             <label class="menu-item-title">
                                                                                 <input type="checkbox" class="menu-item-checkbox" name="{{$cate2->id}}" value="">{{$cate2->name}}
@@ -125,10 +111,22 @@ $currentUrl = url()->current();
                                                                     </ul>
                                                                 </div>
 
+                                                               {{--  <div id="page-all" class="tabs-panel tabs-panel-inactive" role="region" aria-label="Tất cả" tabindex="1">
+                                                                    <ul id="pagechecklist-all-recent" class="categorychecklist form-no-clear">
+                                                                        @foreach($category as $cate2)
+                                                                        <li>
+                                                                            <label class="menu-item-title">
+                                                                                <input type="checkbox" class="menu-item-checkbox" name="{{$cate2->id}}" value="">{{$cate2->name}}
+                                                                            </label>
+                                                                        </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div> --}}
 
-                                                                <p class="button-controls">
 
-                                                                    <a  href="#" onclick="addcustommenu2()"  class="button-secondary submit-add-to-menu right">Add menu item</a>
+                                                                <p class="button-controls topitem">
+
+                                                                    <a  href="#" onclick="addcustommenu2()"  class="button-secondary submit-add-to-menu right">Thêm</a>
                                                                     <span class="spinner" id="spincustomu2"></span>
                                                                 </p>
 
@@ -146,30 +144,18 @@ $currentUrl = url()->current();
                                                                 <ul id="posttype-page-tabs3" class="posttype-tabs add-menu-item-tabs">
                                                                     <li class="tabs">
                                                                         <a class="nav-tab-link" data-type="tabs-panel-posttype-page-most-recent3" href="/wp-admin/nav-menus.php?page-tab=most-recent#tabs-panel-posttype-page-most-recent3">
-                                                                            Mới nhất                </a>
+                                                                            Tất cả               </a>
                                                                     </li>
-                                                                    <li>
+                                                                    {{-- <li>
                                                                         <a class="nav-tab-link" data-type="page-all3" href="/wp-admin/nav-menus.php?page-tab=all#page-all3">
                                                                             Xem tất cả              </a>
-                                                                    </li>
+                                                                    </li> --}}
                                                                    
                                                                 </ul>   
 
                                                                 <div id="tabs-panel-posttype-page-most-recent3" class="tabs-panel tabs-panel-active" role="region" aria-label="Mới nhất" tabindex="0">
                                                                     <ul id="pagechecklist-most-recent3" class="categorychecklist form-no-clear">
-                                                                        @foreach($categorypost_lastes as $cate_lastes3)
-                                                                        <li>
-                                                                            <label class="menu-item-title">
-                                                                                <input type="checkbox" class="menu-item-checkbox" name="{{$cate_lastes3->id}}" value="">{{$cate_lastes3->name}}
-                                                                            </label>
-                                                                        </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                </div>
-
-                                                                <div id="page-all3" class="tabs-panel tabs-panel-inactive" role="region" aria-label="Tất cả" tabindex="1">
-                                                                    <ul id="pagechecklist-all-recent3" class="categorychecklist form-no-clear">
-                                                                        @foreach($categorypost as $cate3)
+                                                                        @foreach($category as $cate3)
                                                                         <li>
                                                                             <label class="menu-item-title">
                                                                                 <input type="checkbox" class="menu-item-checkbox" name="{{$cate3->id}}" value="">{{$cate3->name}}
@@ -179,10 +165,22 @@ $currentUrl = url()->current();
                                                                     </ul>
                                                                 </div>
 
+                                                               {{--  <div id="page-all3" class="tabs-panel tabs-panel-inactive" role="region" aria-label="Tất cả" tabindex="1">
+                                                                    <ul id="pagechecklist-all-recent3" class="categorychecklist form-no-clear">
+                                                                        @foreach($categorypost as $cate3)
+                                                                        <li>
+                                                                            <label class="menu-item-title">
+                                                                                <input type="checkbox" class="menu-item-checkbox" name="{{$cate3->id}}" value="">{{$cate3->name}}
+                                                                            </label>
+                                                                        </li>
+                                                                        @endforeach
+                                                                    </ul>
+                                                                </div> --}}
 
-                                                                <p class="button-controls">
+ 
+                                                                <p class="button-controls topitem">
 
-                                                                    <a  href="#" onclick="addcustommenu3()"  class="button-secondary submit-add-to-menu right">Add menu item</a>
+                                                                    <a  href="#" onclick="addcustommenu3()"  class="button-secondary submit-add-to-menu right">Thêm</a>
                                                                     <span class="spinner" id="spincustomu3"></span>
                                                                 </p>
 
@@ -202,24 +200,24 @@ $currentUrl = url()->current();
                                             <div class="menu-edit ">
                                                 <div id="nav-menu-header">
                                                     <div class="major-publishing-actions">
-                                                        <label class="menu-name-label howto open-label" for="menu-name"> <span>Name</span>
+                                                        <label class="menu-name-label howto open-label" for="menu-name"> <span>Tên menu</span>
                                                             <input name="menu-name" id="menu-name" type="text" class="menu-name regular-text menu-item-textbox" title="Enter menu name" value="@if(isset($indmenu)){{$indmenu->name}}@endif">
                                                             <input type="hidden" id="idmenu" value="@if(isset($indmenu)){{$indmenu->id}}@endif" />
                                                         </label>
 
                                                         @if(request()->has('action'))
                                                         <div class="publishing-action">
-                                                            <a  name="save_menu" id="save_menu_header" class="button button-primary menu-save">Create menu</a>
+                                                            <a  name="save_menu" id="save_menu_header" class="button button-primary menu-save">Tạo mới</a>
                                                         </div>
                                                         @elseif(request()->has("menu"))
                                                         <div class="publishing-action">
-                                                            <a onclick="getmenus()" name="save_menu" id="save_menu_header" class="button button-primary menu-save">Save menu</a>
+                                                            <a onclick="getmenus()" name="save_menu" id="save_menu_header" class="button button-primary menu-save">Lưu tên menu</a>
                                                             <span class="spinner" id="spincustomu2"></span>
                                                         </div>
 
                                                         @else
                                                         <div class="publishing-action">
-                                                            <a  name="save_menu" id="save_menu_header" class="button button-primary menu-save">Create menu</a>
+                                                            <a  name="save_menu" id="save_menu_header" class="button button-primary menu-save">Tạo mới menu</a>
                                                         </div>
                                                         @endif
                                                     </div>
@@ -228,18 +226,18 @@ $currentUrl = url()->current();
                                                     <div id="post-body-content">
 
                                                         @if(request()->has("menu"))
-                                                        <h3>Menu Structure</h3>
+                                                        <h3>Cấu trúc menu</h3>
                                                         <div class="drag-instructions post-body-plain" style="">
                                                             <p>
-                                                                Place each item in the order you prefer. Click on the arrow to the right of the item to display more configuration options.
+                                                               Kéo thả tùy theo ý muốn của bạn. Nhấp vào mũi tên bên phải để tùy chọn cấu hình
                                                             </p>
                                                         </div>
 
                                                         @else
-                                                        <h3>Menu Creation</h3>
+                                                        <h3>Tạo mới menu</h3>
                                                         <div class="drag-instructions post-body-plain" style="">
                                                             <p>
-                                                                Please enter the name and select "Create menu" button
+                                                                Nhập tên và nhấn "Tạo mới menu"
                                                             </p>
                                                         </div>
                                                         @endif
@@ -258,21 +256,21 @@ $currentUrl = url()->current();
                                                                 <div class="menu-item-settings" id="menu-item-settings-{{$m->id}}">
                                                                     <input type="hidden" class="edit-menu-item-id" name="menuid_{{$m->id}}" value="{{$m->id}}" />
                                                                     <p class="description description-thin">
-                                                                        <label for="edit-menu-item-title-{{$m->id}}"> Label
+                                                                        <label for="edit-menu-item-title-{{$m->id}}"> Tên hiển thị
                                                                             <br>
                                                                             <input type="text" id="idlabelmenu_{{$m->id}}" class="widefat edit-menu-item-title" name="idlabelmenu_{{$m->id}}" value="{{$m->label}}">
                                                                         </label>
                                                                     </p>
 
                                                                     <p class="field-css-classes description description-thin">
-                                                                        <label for="edit-menu-item-classes-{{$m->id}}"> Class CSS (optional)
+                                                                        <label for="edit-menu-item-classes-{{$m->id}}"> Icon
                                                                             <br>
                                                                             <input type="text" id="clases_menu_{{$m->id}}" class="widefat code edit-menu-item-classes" name="clases_menu_{{$m->id}}" value="{{$m->class}}">
                                                                         </label>
                                                                     </p>
 
                                                                     <p class="field-css-url description description-wide">
-                                                                        <label for="edit-menu-item-url-{{$m->id}}"> Url
+                                                                        <label for="edit-menu-item-url-{{$m->id}}"> Đường dẫn url
                                                                             <br>
                                                                             <input type="text" id="url_menu_{{$m->id}}" class="widefat code edit-menu-item-url" id="url_menu_{{$m->id}}" value="{{$m->link}}">
                                                                         </label>
@@ -293,7 +291,7 @@ $currentUrl = url()->current();
                                                                     @endif
 
                                                                     <p class="field-move hide-if-no-js description description-wide">
-                                                                        <label> <span>Move</span> <a href="{{ $currentUrl }}" class="menus-move-up" style="display: none;">Move up</a> <a href="{{ $currentUrl }}" class="menus-move-down" title="Mover uno abajo" style="display: inline;">Move Down</a> <a href="{{ $currentUrl }}" class="menus-move-left" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-right" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-top" style="display: none;">Top</a> </label>
+                                                                        <label> <span>Di chuyển</span> <a href="{{ $currentUrl }}" class="menus-move-up" style="display: none;">Lên trên</a> <a href="{{ $currentUrl }}" class="menus-move-down" title="Mover uno abajo" style="display: inline;">Xuống dưới</a> <a href="{{ $currentUrl }}" class="menus-move-left" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-right" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-top" style="display: none;">Lên đầu</a> </label>
                                                                     </p>
 
                                                                     <div class="menu-item-actions description-wide submitbox">
@@ -302,10 +300,10 @@ $currentUrl = url()->current();
                                                                         <span class="meta-sep hide-if-no-js"> | </span>
                                                                         <a class="item-cancel submitcancel hide-if-no-js button-secondary" id="cancel-{{$m->id}}" href="{{ $currentUrl }}?edit-menu-item={{$m->id}}&cancel=1424297719#menu-item-settings-{{$m->id}}">Cancel</a>
                                                                         <span class="meta-sep hide-if-no-js"> | </span>
-                                                                        <a onclick="getmenus()" class="button button-primary updatemenu" id="update-{{$m->id}}" href="javascript:void(0)">Update item</a>
+                                                                        <a onclick="getmenus()" class="button button-primary updatemenu" id="update-{{$m->id}}" href="javascript:void(0)">Cập nhật</a>
+                                                                        <a class="button button-primary updatemenu"  href="https://fontawesome.com/v5/search" target="_blank">Lấy icon</a>
 
                                                                     </div>
-
                                                                 </div>
                                                                 <ul class="menu-item-transport"></ul>
                                                             </li>
@@ -322,19 +320,19 @@ $currentUrl = url()->current();
 
                                                         @if(request()->has('action'))
                                                         <div class="publishing-action">
-                                                            <a name="save_menu" id="save_menu_header" class="button button-primary menu-save">Create menu</a>
+                                                            <a name="save_menu" id="save_menu_header" class="button button-primary menu-save">Tạo mới menu</a>
                                                         </div>
                                                         @elseif(request()->has("menu"))
-                                                        <span class="delete-action"> <a class="submitdelete deletion menu-delete" onclick="deletemenu()" href="javascript:void(9)">Delete menu</a> </span>
+                                                        <span class="delete-action"> <a class="submitdelete deletion menu-delete" onclick="deletemenu()" href="javascript:void(9)">Xóa menu</a> </span>
                                                         <div class="publishing-action">
 
-                                                            <a onclick="getmenus()" name="save_menu" id="save_menu_header" class="button button-primary menu-save">Save menu</a>
+                                                            <a onclick="getmenus()" name="save_menu" id="save_menu_header2" class="button button-primary menu-save">Lưu menu</a>
                                                             <span class="spinner" id="spincustomu2"></span>
                                                         </div>
 
                                                         @else
                                                         <div class="publishing-action">
-                                                            <a  name="save_menu" id="save_menu_header" class="button button-primary menu-save">Create menu</a>
+                                                            <a  name="save_menu" id="save_menu_header" class="button button-primary menu-save">Tạo mới menu</a>
                                                         </div>
                                                         @endif
                                                     </div>
@@ -361,7 +359,7 @@ $currentUrl = url()->current();
 
 @endsection
 @section('js')
-    <script>
+<script>
     var menus = {
         "oneThemeLocationNoMenus" : "",
         "moveUp" : "Move up",
@@ -392,7 +390,7 @@ $currentUrl = url()->current();
     });
 
 </script>
-<script type="text/javascript" src="{{asset('asset/menu/scripts.js')}}"></script>
-<script type="text/javascript" src="{{asset('asset/menu/scripts2.js')}}"></script>
-<script type="text/javascript" src="{{asset('asset/menu/menu.js')}}"></script>
+<script src="{{asset('asset/menu/scripts.js')}}"></script>
+<script src="{{asset('asset/menu/scripts2.js')}}"></script>
+<script src="{{asset('asset/menu/menu.js')}}"></script>
 @endsection

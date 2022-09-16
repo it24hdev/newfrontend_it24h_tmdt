@@ -18,10 +18,11 @@ return new class extends Migration
             $table->string('name');
             $table->string('name2');
             $table->unsignedBigInteger('category_id')->nullable();
-            $table->boolean('sidebar')->default(1);
-            $table->boolean('footer')->default(1);
-            $table->boolean('menu')->default(1);
-            $table->boolean('rightmenu')->default(1);
+            $table->unsignedBigInteger('menu_id')->nullable();
+            $table->integer('sidebar_location')->nullable();
+            $table->integer('footer_location')->nullable();
+            $table->integer('menu_location')->nullable();
+            $table->integer('rightmenu_location')->nullable();
             $table->integer('position')->nullable();
             $table->string('slug')->nullable();
             $table->unsignedBigInteger('parent_id')->nullable();
