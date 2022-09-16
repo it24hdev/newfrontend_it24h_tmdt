@@ -183,7 +183,7 @@
         @endcan
         <li>
             <a href="javascript:;" class="side-menu {{ $module_active == 'products' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="clipboard"></i> </div>
+                <div class="side-menu__icon"> <i data-feather="archive"></i> </div>
                 <div class="side-menu__title">
                     Sản phẩm
                     <div class="side-menu__sub-icon "> <i
@@ -251,28 +251,7 @@
             </ul>
         </li>
 
-        <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'locationmenu' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="clipboard"></i> </div>
-                <div class="side-menu__title">
-                   Vị trí menu
-                    <div class="side-menu__sub-icon "> <i
-                            data-feather="{{ $module_active == 'locationmenu' ? 'chevron-up' : 'chevron-down' }}"
-                            class="{{ $module_active == 'locationmenu' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
-                    </div>
-                </div>
-            </a>
-            <ul class="{{ $module_active == 'locationmenu' ? 'side-menu__sub-open' : '' }}">
-                @can('viewAny', App\Models\Locationmenu::class)
-                    <li>
-                        <a href="{{ route('locationmenu.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Danh mục vị trí menu</div>
-                        </a>
-                    </li>
-                @endcan
-            </ul>
-        </li>
+        
 
           <li>
             <a href="javascript:;" class="side-menu {{ $module_active == 'recruit' ? 'side-menu--active' : '' }}">
@@ -302,6 +281,37 @@
                         </a>
                     </li>
                 @endcan
+            </ul>
+        </li>
+
+        <li>
+            <a href="javascript:;" class="side-menu {{ $module_active == 'setting' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"> <i data-feather="settings"></i> </div>
+                <div class="side-menu__title">
+                   Cài đặt
+                    <div class="side-menu__sub-icon "> <i
+                            data-feather="{{ $module_active == 'setting' ? 'chevron-up' : 'chevron-down' }}"
+                            class="{{ $module_active == 'setting' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
+                    </div>
+                </div>
+            </a>
+            <ul class="{{ $module_active == 'menu' ? 'side-menu__sub-open' : '' }}">
+                <li>
+                    <a href="{{ route('menu') }}" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="menu"></i> </div>
+                        <div class="side-menu__title"> Menu</div>
+                    </a>
+                </li>
+                @can('viewAny', App\Models\Locationmenu::class)
+                    <li>
+                        <a href="{{ route('locationmenu.edit') }}" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="grid"></i> </div>
+                            <div class="side-menu__title"> Vị trí menu</div>
+                        </a>
+                    </li>
+                @endcan
+
+
             </ul>
         </li>
     </ul>

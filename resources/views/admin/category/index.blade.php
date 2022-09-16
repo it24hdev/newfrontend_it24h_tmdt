@@ -52,10 +52,10 @@
         </div>
 
         <div>
-            <!-- BEGIN: Data List -->
+            <!-- BEGIN: Data category -->
 
             <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
-                <table class="table table-report -mt-2">
+                <table class="table table-report -mt-2" id="table_categories">
                     <thead>
                     <tr >
                         <th class="whitespace-nowrap text-center">STT</th>
@@ -69,23 +69,41 @@
                     </tr>
                     </thead>
                     <tbody class="col-span-12 " id="table1" >
-                    @foreach($Category as $key => $list)
-                        <tr class=" overflow-x-auto scrollbar-hidden" id="{{ $list->id }}">
-                            <td class="text-center font-medium ">{{$list->id}}</td>
-                            <td class="">{{$list->name}} </td>
+                    @foreach($Categories as $key => $category)
+                    @if($category->parent_id == 0)
+                        <tr class=" overflow-x-auto scrollbar-hidden get_child" id="{{ $category->id }}">
+                            <td class="text-left font-medium ">
+                            @php
+                                $str ='';
+                                for ($i=0; $i < $category->level; $i++) {
+                                    echo $str;
+                                    $str.='&nbsp';
+                                }
+                            @endphp
+                            {{ $category->id }}
+                            </td>
+                            <td class="category_name">
+                                 @php
+                                $str ='';
+                                for ($i=0; $i < $category->level; $i++) {
+                                    echo $str;
+                                    $str.='━';
+                                }
+                            @endphp
+                                {{$category->name}} </td>
                             <td class="text-center">
-                                @if ($list->cat_parent)
-                                {{$list->cat_parent->name}}
+                                @if ($category->cat_parent)
+                                 {{$category->cat_parent->name}}
                                 @endif
                             </td>
                             <td>
-                                @if($list->show_push_product == '1')
+                                @if($category->show_push_product == '1')
                                     <div class="flex items-center justify-center text-theme-9 mr-3" data-bs-toggle="tooltip" title="Kích hoạt"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
                                 @else
                                     <div class="flex items-center justify-center text-theme-6 mr-3"data-bs-toggle="tooltip" title="Vô hiệu hóa"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
                                 @endif
                             </td>
-                            <td style="display:none;">{{$status = $list->status}}</td>
+                            <td style="display:none;">{{$status = $category->status}}</td>
                             <td>
                                 @if($status == '1')
                                     <div class="flex items-center justify-center text-theme-9 mr-3" data-bs-toggle="tooltip" title="Kích hoạt"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
@@ -97,35 +115,67 @@
                                 <div class="flex justify-center items-center">
                                     @can('update',App\Models\Category::class)
                                         <a class="btn btn-sm btn-primary mr-2"
-                                           href="{{route('category.edit',['id'=>$list->id])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
-                                            {{-- <i data-feather="check-square" class="w-4 h-4 mr-1"></i></a> --}}
-                                            @endcan
-                                            @can('delete',App\Models\Category::class)
-                                                <a title="Xóa" data-toggle="modal"
-                                                   data-value="{{$list->id}}"
-                                                   data-target="#delete-confirmation-modal"
-                                                   class="btn btn-danger py-1 px-2 btn-delete"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
-                                                </a>
+                                           href="{{route('category.edit',['id'=>$category->id])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
+                                 
+                                        </a>
                                     @endcan
-
+                                    @can('delete',App\Models\Category::class)
+                                    <a title="Xóa" data-toggle="modal"
+                                       data-value="{{$category->id}}"
+                                       data-target="#delete-confirmation-modal"
+                                       class="btn btn-danger py-1 px-2 btn-delete"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
+                                    </a>
+                                    @endcan
                                 </div>
                             </td>
-
                         </tr>
+                        @endif
                     @endforeach
                     </tbody>
                 </table>
             </div>
         @include('admin.category.delete')
-        <!-- END: Data List -->
+        <!-- END: Data category -->
             <!-- BEGIN: Pagination -->
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center"  >
 
                 <ul class="pagination" >
 
-                    <li> {{ $Category->withQueryString()->onEachSide(1)->links('admin.layouts.pagination') }}</li>
+                    {{-- <li> {{ $Category->withQueryString()->onEachSide(1)->links('admin.layouts.pagination') }}</li> --}}
                 </ul>
             </div>
             <!-- END: Pagination -->
         </div>
+@endsection
+@section('js2')
+ <script>
+        $(document).ready(function() {
+           $('tbody').on('click', 'tr.get_child', function () {
+
+            var tr_id = $(this).attr('id');
+            // console.log(tr);
+            var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    id: tr_id,
+                    _token: _token
+                };
+                $.ajax({
+                    url: "{{ route('category.getchild') }}",
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function(data) {
+                        if( $("#"+tr_id).hasClass('active')){
+                        $(".subid"+tr_id).remove();
+                        $("#"+tr_id).removeClass('active');
+                        }
+                        else{
+                        $("#"+tr_id).after(data.html);
+                        $("#"+tr_id).addClass('active');
+                        }
+                    }
+                });
+        });
+       });
+    </script>
 @endsection

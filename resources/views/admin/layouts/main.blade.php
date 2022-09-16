@@ -64,5 +64,6 @@
         
         <!-- END: JS Assets-->
         @yield('js')
+        @yield('js2')
     </body>
 @endsection

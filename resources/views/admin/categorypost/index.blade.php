@@ -73,9 +73,28 @@
                             </thead>
                             <tbody class="col-span-12 " id="table1" >
                                 @foreach($Category as $key => $list)
-                                <tr class=" overflow-x-auto scrollbar-hidden" id="{{ $list->id }}">
-                                    <td class="text-center font-medium ">{{$list->id}}</td>
-                                    <td class="">{{$list->name}} </td>
+                                @if($list->parent_id == 0)
+                                <tr class=" overflow-x-auto scrollbar-hidden get_child" id="{{ $list->id }}">
+                                    <td class="text-center font-medium ">
+                                        @php
+                                            $str ='';
+                                            for ($i=0; $i < $list->level; $i++) {
+                                                echo $str;
+                                                $str.='&nbsp';
+                                            }
+                                        @endphp
+                                        {{ $list->id }}
+                                    </td>
+                                    <td class="">
+                                         @php
+                                            $str ='';
+                                            for ($i=0; $i < $list->level; $i++) {
+                                                echo $str;
+                                                $str.='━';
+                                            }
+                                        @endphp
+                                        {{$list->name}} 
+                                    </td>
                                     <td class="overflow-hidden ">{{$list->slug}}</td>
                                     <td class="text-center">
                                         @if ($list->cat_parent)
@@ -108,8 +127,8 @@
 
                                         </div>
                                     </td>
-
                                 </tr>
+                               @endif
                                @endforeach
                             </tbody>
                         </table>
@@ -121,11 +140,43 @@
 
                         <ul class="pagination" >
 
-                            <li> {{ $Category->withQueryString()->onEachSide(1)->links('admin.layouts.pagination') }}</li>
+                           {{--  <li> {{ $Category->withQueryString()->onEachSide(1)->links('admin.layouts.pagination') }}</li> --}}
                         </ul>
                     </div>
                     <!-- END: Pagination -->
                 </div>
             </div>
             <!-- END: Content -->
+@endsection
+@section('js2')
+ <script>
+        $(document).ready(function() {
+           $('tbody').on('click', 'tr.get_child', function () {
+
+            var tr_id = $(this).attr('id');
+            // console.log(tr);
+            var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    id: tr_id,
+                    _token: _token
+                };
+                $.ajax({
+                    url: "{{ route('category.getchildpost') }}",
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function(data) {
+                        if( $("#"+tr_id).hasClass('active')){
+                        $(".subid"+tr_id).remove();
+                        $("#"+tr_id).removeClass('active');
+                        }
+                        else{
+                        $("#"+tr_id).after(data.html);
+                        $("#"+tr_id).addClass('active');
+                        }
+                    }
+                });
+        });
+       });
+    </script>
 @endsection

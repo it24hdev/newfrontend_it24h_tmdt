@@ -12,6 +12,14 @@ use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 
 class MenuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            \session(['module_active' => 'menu', 'active' => 'Menu']);
+            return $next($request);
+        });
+    }
+
 
     public function index(Request $request)
     {
