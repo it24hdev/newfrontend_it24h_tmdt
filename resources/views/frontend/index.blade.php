@@ -244,7 +244,7 @@
             // if(width < 1024)
             // top = $elem.offset().top-5000
             // console.log(top);
-           
+
 
             var height = $elem.height()
             var bottom = top + height + 1000
@@ -328,7 +328,7 @@
                     success: function (data) {
                         // console.log(data);
                         $('#slider-deal').append(data);
-                        
+
                     },
                 })
             }
@@ -340,6 +340,9 @@
                     _token: _token
                 };
                 $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url:"{{route('getnewProduct')}}",
                     type:"post",
                     dataType:"json",
@@ -347,7 +350,7 @@
                     success: function (data) {
                         // console.log(data);
                         $('#slider-new').append(data);
-                        
+
                     },
                 })
             }
@@ -358,6 +361,9 @@
                     _token: _token
                 };
                 $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url:"{{route('loadfooter')}}",
                     type:"post",
                     dataType:"json",
@@ -365,7 +371,7 @@
                     success: function (data) {
                         // console.log(data);
                         $('#loadfooter').append(data);
-                        
+
                     },
                 })
             }
@@ -388,7 +394,7 @@
 
             function runOnScroll() {
                 list_product.forEach(function(category_id) {
-                if (isOnScreen($("#category-"+ category_id)) && ($("#category-"+ category_id).hasClass("loaded") == false)) 
+                if (isOnScreen($("#category-"+ category_id)) && ($("#category-"+ category_id).hasClass("loaded") == false))
                     {
                         laySp(category_id);
                         $("#category-"+ category_id).addClass("loaded");

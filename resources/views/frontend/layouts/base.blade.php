@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{asset('asset/lib/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="/asset/lib/fontawesomePro5/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('asset/lib/fontawesomePro5/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/header-home.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/content-home.css')}}">
     @yield('css')
@@ -55,12 +55,12 @@
       window.addEventListener("orientationchange", lazyLoad);
     });
     </script>
-     
+
 </head>
 
 <body>
     <div id="wrapper-page">
-        
+
         {{-- inclucde header --}}
         @if($agent == "desktop")
         @yield('header-home')
@@ -81,6 +81,7 @@
         <div id="messenger"><a href="https://m.me/106139498237028/" target="_blank"><i class="fab fa-facebook-messenger"></i></a></div>
     </div>
     <!-- javascript -->
+
     <script src="{{ asset('lib/jquery360.min.js') }}"></script>
     <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
@@ -103,6 +104,9 @@
                     return false;
                 }
                 $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
                     url: "{{route('user_login_ajax')}}",
                     data: data,
                     method: "POST",
@@ -138,6 +142,9 @@
                 var keyword =  document.getElementById('searchs').value;
                 console.log(keyword);
                 $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         url:"{{route('autotypeahead')}}",
                         type:"post",
                         dataType:"json",
@@ -171,12 +178,15 @@
                             _token: _token
                         };
                         $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
                             url:"{{route('menucontent')}}",
                             type:"post",
                             dataType:"json",
                             data: data,
                             success: function (data) {
-                               $("#subid-"+ id).append(data); 
+                               $("#subid-"+ id).append(data);
                             },
                         })
                     });
@@ -190,12 +200,15 @@
                         _token: _token
                     };
                     $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
                         url:"{{route('menucontent')}}",
                         type:"post",
                         dataType:"json",
                         data: data,
                         success: function (data) {
-                           $("#pills-2").append(data); 
+                           $("#pills-2").append(data);
                         },
                     })
                     $("#pills-2").addClass("loaded");
