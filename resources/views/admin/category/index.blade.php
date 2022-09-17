@@ -20,8 +20,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="hidden md:block mx-auto text-gray-600"></div>
-                <div class="hidden md:block mx-auto text-gray-600"></div>
+                <div class="hidden md:block mx-auto text-gray-600">
+                <form action="{{ route('category.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="fileimport" class="form-control">
+                <br>
+                <button type="submit" class="btn btn-success">Import Data</button>
+                </form>
+                </div>
+                <div class="hidden md:block mx-auto text-gray-600">
+                     <a class="btn btn-warning" href="{{ route('category.export') }}">Export Data</a>
+                </div>
                 <form  action="{{ route('category.index')}}" method="get" class="flex flex-col sm:flex-row sm:items-end xl:items-start">
                     <select id="limit" name="limit" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3"
                             onchange="this.form.submit()"

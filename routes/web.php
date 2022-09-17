@@ -192,6 +192,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/delete', [CategoryController::class, 'destroy'])->name('category.delete');
         Route::post('/getchild', [CategoryController::class, 'getchild'])->name('category.getchild');
+        Route::get('/categoryexport',[CategoryController::class, 'export'])->name('category.export');
+        Route::post('/categoryimport', [CategoryController::class, 'import'])->name('category.import');
     });
     /* ---------- Danh muc bai viet --------------- */
     Route::prefix('admin/categorypost')->group(function () {

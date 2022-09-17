@@ -10,6 +10,9 @@ use App\Models\Locationmenu;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CategoryExport;
+use App\Imports\CategoryImport;
 use Validator;
 use Response;
 use Redirect;
@@ -270,10 +273,22 @@ class CategoryController extends Controller
 
         $listcategories = [];
         Category::recursive_child($data, $id, 2, $listcategories);
-         $view2     = view('admin.category.getchild', [
+        $view2     = view('admin.category.getchild', [
                 'listcategories' => $listcategories,
                 'sub_id' => $id,
             ])->render();
         return response()->json(['html'=>$view2]);
+    }
+
+    public function export() 
+    {
+        return Excel::download(new CategoryExport, 'Categories.xlsx');
+    }
+
+    public function import() 
+    {
+        Excel::import(new CategoryExport,request()->file('fileimport'));
+               
+        return back();
     }
 }
