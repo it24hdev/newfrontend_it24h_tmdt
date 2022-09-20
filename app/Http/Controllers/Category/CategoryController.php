@@ -10,12 +10,14 @@ use App\Models\Locationmenu;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Maatwebsite\Excel\Facades\Excel;
+// use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CategoryExport;
 use App\Imports\CategoryImport;
 use Validator;
 use Response;
 use Redirect;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class CategoryController extends Controller
 {
@@ -287,8 +289,7 @@ class CategoryController extends Controller
 
     public function import() 
     {
-        Excel::import(new CategoryExport,request()->file('fileimport'));
-               
+        Excel::import(new CategoryImport,request()->file('file')); 
         return back();
     }
 }

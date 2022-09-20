@@ -154,6 +154,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/store-tag-event',  [ProductsController::class, 'store_tag_event'])->name('products.store_tag-event');
         Route::post('/update-tag-event',  [ProductsController::class, 'update_tag_event'])->name('products.update_tag-event');
         Route::post('/delete-tag-event',  [ProductsController::class, 'delete_tag_event'])->name('products.delete_tag-event');
+        Route::get('/productsexport',[ProductsController::class, 'export'])->name('products.export');
+        Route::post('/productsimport', [ProductsController::class, 'import'])->name('products.import');
     });
 
 
@@ -205,6 +207,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/{id}', [CategorypostController::class, 'edit'])->name('categorypost.edit');
         Route::post('/delete', [CategorypostController::class, 'destroy'])->name('categorypost.delete');
         Route::post('/getchildpost', [CategorypostController::class, 'getchild'])->name('category.getchildpost');
+        Route::get('/categorypostexport',[CategorypostController::class, 'export'])->name('categorypost.export');
+        Route::post('/categorypostimport', [CategorypostController::class, 'import'])->name('categorypost.import');
     });
 
      /* ---------- Danh muc vi tri menu --------------- */

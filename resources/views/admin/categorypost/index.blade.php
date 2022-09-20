@@ -53,6 +53,15 @@
                                 </form>
                         </div>
                     </div>
+                    <div style=" margin-top: 20px;">
+                    <form action="{{ route('categorypost.import') }}" method="POST" enctype="multipart/form-data" style="
+                display: contents;">
+                        @csrf
+                        <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
+                        <button type="submit" class="btn btn-success" >Import Data</button>
+                    </form>
+                    <a class="btn btn-warning" href="{{ route('categorypost.export') }}">Export Data</a>
+                    </div>
 
                 <div id="searchs">
                     <!-- BEGIN: Data List -->

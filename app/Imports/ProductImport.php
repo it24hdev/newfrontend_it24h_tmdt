@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Models\Category;
+use App\Models\Products;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Str;
 
-class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithValidation
+class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithValidation
 {
     use Importable;
   
@@ -31,11 +31,18 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
         foreach ($rows as $row) {
             $data = [
               'name'      =>   $row[0],
-              'name2'     =>   $row[1],
+              'price'     =>   $row[1],
+              'quantity'  =>   $row[2],
+              'unit'      =>   $row[3],
+              'brand'     =>   $row[4],
+              'property'  =>   $row[5],
+              'still_stock'     =>   $row[6],
+              'short_content'   =>   $row[7],
+              'gift'      =>   $row[8],
+              'content'   =>   $row[9],
               'slug'      =>   Str::slug( $row[0], '-'),
-              'taxonomy'  =>   0,
             ];
-         Category::create($data);
+         Products::create($data);
          }
     }
 
@@ -47,7 +54,7 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
     public function rules(): array
     {
       return [
-          '*.0' => 'unique:categories,name',
+          '*.0' => 'unique:products,name',
       ];
     }
 

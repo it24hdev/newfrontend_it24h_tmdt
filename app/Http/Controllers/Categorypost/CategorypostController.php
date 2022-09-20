@@ -8,6 +8,9 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\CategorypostExport;
+use App\Imports\CategorypostImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Response;
 use Redirect;
@@ -188,5 +191,16 @@ class CategorypostController extends Controller
                 'sub_id' => $id,
             ])->render();
         return response()->json(['html'=>$view2]);
+    }
+
+    public function export() 
+    {
+        return Excel::download(new CategorypostExport, 'Categoriespost.xlsx');
+    }
+
+    public function import() 
+    {
+        Excel::import(new CategorypostImport,request()->file('file')); 
+        return back();
     }
 }

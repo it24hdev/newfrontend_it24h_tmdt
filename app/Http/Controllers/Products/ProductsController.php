@@ -15,6 +15,9 @@ use App\Models\Attribute_product;
 use App\Models\Brand;
 use App\Models\Tag_event;
 use Illuminate\Support\Facades\Session;
+use App\Exports\ProductExport;
+use App\Imports\ProductImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsController extends Controller
 {
@@ -84,7 +87,6 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $this->authorize('update', Products::class);
         $request->validate(
             [
@@ -702,5 +704,16 @@ class ProductsController extends Controller
         CommonHelper::deleteImage($nameFile, $path);
         CommonHelper::deleteImage($nameFile, $path_thumb);
         Tag_event::find($id)->delete();
+    }
+
+    public function export() 
+    {
+        return Excel::download(new ProductExport, 'Products.xlsx');
+    }
+
+    public function import() 
+    {
+        Excel::import(new ProductImport,request()->file('file')); 
+        return back();
     }
 }

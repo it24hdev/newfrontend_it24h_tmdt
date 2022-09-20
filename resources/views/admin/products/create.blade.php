@@ -36,7 +36,7 @@
                                 <div class="px-4 pb-4 flex items-center cursor-pointer relative">
                                     <i data-feather="image" class="w-4 h-4 mr-2"></i>
                                     <span class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
-                                    <input name='thumb' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0" id="fileupload2" required/>
+                                    <input name='thumb' type="file" class="top-0 left-0 absolute opacity-0" id="fileupload2" />
 
                                 </div>
                                 <div class="border-2 border-dashed dark:border-dark-5 rounded-md p-2">
@@ -249,7 +249,7 @@
                         <div class="mt-3">
                             <label for="" class="form-label">Tình trạng sản phẩm</label>
                             <input type="text" name="still_stock" class="form-control w-56 block mx-auto"
-                                id="year" value="{{ old('still_stock') }}" placeholder="VD: Còn hàng" required>
+                                id="year" value="{{ old('still_stock') }}" placeholder="VD: Còn hàng">
                         </div>
                     </div>
                 </div>

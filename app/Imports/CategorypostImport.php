@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Str;
 
-class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithValidation
+class CategorypostImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithValidation
 {
     use Importable;
   
@@ -33,7 +33,7 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
               'name'      =>   $row[0],
               'name2'     =>   $row[1],
               'slug'      =>   Str::slug( $row[0], '-'),
-              'taxonomy'  =>   0,
+              'taxonomy'  =>   1,
             ];
          Category::create($data);
          }

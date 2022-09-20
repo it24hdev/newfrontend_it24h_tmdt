@@ -3,6 +3,17 @@
         <h2 class="intro-y text-lg font-medium mt-10">
             <a href="{{ route('category.index')}}">{{ $title}}</a>
         </h2>
+        @if ($errors->any())
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-1">
+                      <div class="alert alert-danger alert-dismissible show">
+                          @foreach($errors->all() as $error)
+                          {{ $error }} <br>
+                          @endforeach      
+                      </div>
+                    </div>
+                </div>
+                @endif
         <div class="grid grid-cols-12 gap-6 mt-5">
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
                 @can('create',App\Models\Category::class)
@@ -21,15 +32,10 @@
                     </div>
                 </div>
                 <div class="hidden md:block mx-auto text-gray-600">
-                <form action="{{ route('category.import') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <input type="file" name="fileimport" class="form-control">
-                <br>
-                <button type="submit" class="btn btn-success">Import Data</button>
-                </form>
+                
                 </div>
                 <div class="hidden md:block mx-auto text-gray-600">
-                     <a class="btn btn-warning" href="{{ route('category.export') }}">Export Data</a>
+                     
                 </div>
                 <form  action="{{ route('category.index')}}" method="get" class="flex flex-col sm:flex-row sm:items-end xl:items-start">
                     <select id="limit" name="limit" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3"
@@ -59,7 +65,15 @@
                 </form>
             </div>
         </div>
-
+        <div style=" margin-top: 20px;">
+        <form action="{{ route('category.import') }}" method="POST" enctype="multipart/form-data" style="
+    display: contents;">
+            @csrf
+            <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
+            <button type="submit" class="btn btn-success" >Import Data</button>
+        </form>
+        <a class="btn btn-warning" href="{{ route('category.export') }}">Export Data</a>
+        </div>
         <div>
             <!-- BEGIN: Data category -->
 
