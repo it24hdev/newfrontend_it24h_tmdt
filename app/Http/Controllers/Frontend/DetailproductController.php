@@ -19,8 +19,10 @@ class DetailproductController extends Controller
 
     public function index($slug)
     {
+
         $agent = new Agent();
         $ag = "";
+
         if($agent->isMobile()){
             $ag = "mobile";
         }
@@ -28,6 +30,7 @@ class DetailproductController extends Controller
         try{
         $active_menu = "product";
         $Sidebars           = $this->getmenu('sidebar');
+
         // $Menus              = $this->getmenu('menu');
         $getcategoryblog    = $this->getcategoryblog();
         $product           = Products::where('slug','=',$slug)->first();
@@ -39,6 +42,8 @@ class DetailproductController extends Controller
         // $sizes  = Attribute_product::where('attr', 'size')->whereIn('id', $attrs)->get();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $products_id= array();
+
+
         foreach($product->category as $k){
             foreach($k->product as $pro){
                 $products_id[]= $pro->id;
@@ -51,6 +56,7 @@ class DetailproductController extends Controller
         }
 
         $imgs        = json_decode($product->image);
+
         $property   = $this->xulychuoi_thongsosanpham($product->property);
         
         /* XỬ LÝ LƯU SP ĐÃ XEM */
@@ -119,9 +125,11 @@ class DetailproductController extends Controller
     }
     // xu ly lay menu
     public function getmenu($location){
-        if($location == 'sidebar')  {$taxonomy = 0; }
+        if($location == 'sidebar')  {$taxonomy = 0; $location = "sidebar_location";}
         if($location == 'menu')  {$taxonomy = 3; }
         if($location == 'submenu')  {$taxonomy = 3; $location = 'menu';}
+
+
         $getmenu = Locationmenu::select('locationmenus.*','categories.*')
         ->leftJoin('categories', 'categories.id', '=', 'locationmenus.category_id')
         ->where('categories.taxonomy','=', $taxonomy)
