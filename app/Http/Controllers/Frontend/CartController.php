@@ -20,20 +20,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
+use App\Http\Controllers\laravelmenu\src\Models\Menus;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 
 class CartController extends Controller
 {
 
     public function getmenu($location){
-        if($location == 'sidebar')  {$taxonomy = 0; }
-        if($location == 'menu')  {$taxonomy = 3; }
-        if($location == 'submenu')  {$taxonomy = 3; $location = 'menu';}
-        $getmenu = Locationmenu::select('locationmenus.*','categories.*')
-        ->leftJoin('categories', 'categories.id', '=', 'locationmenus.category_id')
-        ->where('categories.taxonomy','=',$taxonomy)
-        ->where('categories.status','=',1)
-        ->where('locationmenus.'.$location,'=',1)
-        ->orderby('position','asc')
+        if($location == 'sidebar')  {$location = "sidebar_location"; }
+        if($location == 'menu')  {$location = "menu_location"; }
+        if($location == 'footer')  {$location = "footer_location"; }
+        $getmenu = MenuItems::select('admin_menu_items.*')
+        ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+        ->where('locationmenus.'.$location,'<>','0')
+        ->where('locationmenus.'.$location,'<>',null)
         ->get();
         return $getmenu;
     }
