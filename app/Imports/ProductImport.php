@@ -30,17 +30,18 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
       // )->validate();
         foreach ($rows as $row) {
             $data = [
-              'name'      =>   $row[0],
-              'price'     =>   $row[1],
-              'quantity'  =>   $row[2],
-              'unit'      =>   $row[3],
-              'brand'     =>   $row[4],
-              'property'  =>   $row[5],
-              'still_stock'     =>   $row[6],
-              'short_content'   =>   $row[7],
-              'gift'      =>   $row[8],
-              'content'   =>   $row[9],
-              'slug'      =>   Str::slug( $row[0], '-'),
+              'ma'      =>   $row[0],
+              'name'      =>   $row[1],
+              'price'     =>   $row[2],
+              'quantity'  =>   $row[3],
+              'unit'      =>   $row[4],
+              'brand'     =>   $row[5],
+              'property'  =>   $row[6],
+              'still_stock'     =>   $row[7],
+              'short_content'   =>   $row[8],
+              'gift'      =>   $row[9],
+              'content'   =>   $row[10],
+              'slug'      =>   Str::slug( $row[1], '-'),
             ];
             // dd($data);
          Products::create($data);
@@ -55,7 +56,7 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
     public function rules(): array
     {
       return [
-          '*.0' => 'unique:products,name',
+          '*.0' => 'unique:products,ma',
       ];
     }
 

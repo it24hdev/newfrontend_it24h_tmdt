@@ -90,13 +90,13 @@ class ProductsController extends Controller
         $this->authorize('update', Products::class);
         $request->validate(
             [
-                'name'          => 'required|max:300|unique:products',
+                'ma'          => 'required|max:300|unique:products',
                 'thumb'         => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
-                'name.required' => 'Tên sản phẩm không được để bỏ trống.',
-                'name.max'      => 'Tên sản phẩm có độ dài tối đa :max ký tự.',
-                'name.unique'   => 'Tên sản phẩm đã tồn tại trong hệ thống',
+                'ma.required' => 'Mã sản phẩm không được để bỏ trống.',
+                'ma.max'      => 'Mã sản phẩm có độ dài tối đa :max ký tự.',
+                'ma.unique'   => 'Mã sản phẩm đã tồn tại trong hệ thống',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             ]
         );
@@ -128,6 +128,7 @@ class ProductsController extends Controller
         }
 
         $Product  = [
+            'ma'           => $request->ma,
             'name'         => $request->name,
             'slug'         => CommonHelper::convertTitleToSlug($request->name, '-'),
             'price'        => $request->price,
@@ -228,18 +229,17 @@ class ProductsController extends Controller
         $this->authorize('update', Products::class);
         $request->validate(
             [
-                'name'  => 'required|max:300|unique:products,name,' . $id . ',id',
+                'ma'  => 'required|max:300|unique:products,ma,' . $id . ',id',
                 'thumb' => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
-                'name.required' => 'Tên sản phẩm không được để bỏ trống.',
-                'name.max'      => 'Tên sản phẩm có độ dài tối đa :max ký tự.',
-                'name.unique'   => 'Tên sản phẩm đã tồn tại trong hệ thống',
+                'ma.required' => 'Mã sản phẩm không được để bỏ trống.',
+                'ma.max'      => 'Mã sản phẩm có độ dài tối đa :max ký tự.',
+                'ma.unique'   => 'Mã sản phẩm đã tồn tại trong hệ thống',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             ]
         );
         $Products = Products::find($id);
-
         if (!is_null($Products)) {
             $status        = Products::ACTIVE;
             $nameFile      = Products::IMAGE;
@@ -274,6 +274,7 @@ class ProductsController extends Controller
                 $specifications = NULL;
             }
             $Product  = [
+                'ma'           => $request->ma,
                 'name'         => $request->name,
                 'slug'         => CommonHelper::convertTitleToSlug($request->name, '-'),
                 'price'        => $request->price,

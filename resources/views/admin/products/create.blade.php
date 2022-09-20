@@ -19,11 +19,15 @@
             <form action="{{route('products.store')}}" method="post" enctype="multipart/form-data" id="form-post">
                 <div class="intro-y box p-5">
                     <div>
-                        <label for="crud-form-1" class="form-label">Tên sản phẩm(<span class="text-red-600">*</span>)</label>
-                        <input id="crud-form-1" type="text" name="name" value="{{old('name')}}" class="form-control w-full" required>
-                        @error('name')
+                        <label for="crud-form-z" class="form-label">Mã(<span class="text-red-600">*</span>)</label>
+                        <input id="crud-form-z" type="text" name="ma" value="{{old('ma')}}" class="form-control w-full" required>
+                        @error('ma')
                         <span style="color:red">{{$message}}</span>
                         @enderror
+                    </div>
+                    <div>
+                        <label for="crud-form-1" class="form-label">Tên sản phẩm(<span class="text-red-600">*</span>)</label>
+                        <input id="crud-form-1" type="text" name="name" value="{{old('name')}}" class="form-control w-full" required>
                     </div>
                     <div class="form-group mb-4">
                      <label>Trạng thái</label> <br>

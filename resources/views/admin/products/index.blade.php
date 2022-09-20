@@ -20,7 +20,7 @@
                         <option value="50" {{request()->input('limit') =='50' ? 'selected' : ''}}>50</option>
                     </select>
                     <select id="orderby" name="orderby" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3" onchange="this.form.submit()">
-                        <option value="id" {{request()->input('orderby') =='id' ? 'selected' : ''}} >Mã</option>
+                        <option value="ma" {{request()->input('orderby') =='ma' ? 'selected' : ''}} >Mã</option>
                         <option value="name" {{request()->input('orderby') =='name' ? 'selected' : ''}} >Tên SP</option>
                         <option value="category_id" {{request()->input('orderby') =='category_id' ? 'selected' : ''}}>Danh mục</option>
                         <option value="brand" {{request()->input('orderby') =='brand' ? 'selected' : ''}}>Nhãn</option>
@@ -88,7 +88,7 @@
                                  @can('viewAny', \App\Models\Products::class)
                                 <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $product->id }}"title="Chi tiết sản phẩm">
                                 @endcan
-                                 <div class="font-medium text-center" >{{ $product->id }}</div>
+                                 <div class="font-medium text-center" >{{ $product->ma }}</div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
                                  @can('viewAny', \App\Models\Products::class)

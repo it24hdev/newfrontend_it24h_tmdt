@@ -37,7 +37,7 @@
                                 @else
                                     <p class="event" style="min-height: 20px;"></p>
                                 @endif
-                                <p class="code">Mã: {{$item->id}}</p>
+                                <p class="code">Mã: {{$item->ma}}</p>
                             </div>
                             <div class="name">
                                 <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>

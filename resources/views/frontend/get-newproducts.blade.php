@@ -51,7 +51,7 @@
                                                 @else
                                                     <p class="event" style="min-height: 20px;"></p>
                                                 @endif
-                                                <p class="code">Mã: {{$item->id}}</p>
+                                                <p class="code">Mã: {{$item->ma}}</p>
                                             </div>
                                             @if (!empty($item->specifications))
                                                 <ul class="product-attributes">
@@ -152,7 +152,7 @@
                                                 @else
                                                     <p class="event" style="min-height: 20px;"></p>
                                                 @endif
-                                                <p class="code">Mã: {{$item->id}}</p>
+                                                <p class="code">Mã: {{$item->ma}}</p>
                                             </div>
                                             @if (!empty($item->specifications))
                                                 <ul class="product-attributes">

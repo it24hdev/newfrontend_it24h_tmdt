@@ -69,7 +69,7 @@
                     </div>
                     <div class="product-detail-info">
                             <div class="product-detail-meta">
-                                <div class="code">Mã: {{$product->id}}</div> <span class="icon-meta">|</span>
+                                <div class="code">Mã: {{$product->ma}}</div> <span class="icon-meta">|</span>
                                 <div class="review">
                                     <div class="rating2">
                                         <div class="rating-upper" style="width: {{$product->count_vote()}}%">
@@ -503,7 +503,7 @@
                                                 @else
                                                     <p class="event" style="min-height: 20px;"></p>
                                                 @endif
-                                                <p class="code">Mã: {{$item->id}}</p>
+                                                <p class="code">Mã: {{$item->ma}}</p>
                                             </div>
                                             <div class="name">
                                                 <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>
@@ -596,7 +596,7 @@
                                                 @else
                                                     <p class="event" style="min-height: 20px;"></p>
                                                 @endif
-                                                <p class="code">Mã: {{$item->id}}</p>
+                                                <p class="code">Mã: {{$item->ma}}</p>
                                             </div>
                                             <div class="name">
                                                 <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>

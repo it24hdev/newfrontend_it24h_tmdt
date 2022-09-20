@@ -10,11 +10,11 @@ class ProductExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
-        return Products::select("name", "price", "quantity", "unit", "brand", "property", "still_stock", "short_content", "gift", "content")->where('status',1)->whereNull('deleted_at')->get();
+        return Products::select("ma", "name", "price", "quantity", "unit", "brand", "property", "still_stock", "short_content", "gift", "content")->where('status',1)->whereNull('deleted_at')->get();
     }
 
     public function headings(): array
     {
-        return ["Tên sản phẩm", "Giá bán", "Số lượng", "Đơn vị tính", "Thương hiệu", "Thuộc tính sản phẩm", "Tình trạng sản phẩm", "Mô tả ngắn", "Nội dung quà tặng ưu đãi", "Nội dung"];
+        return ["Mã", "Tên sản phẩm", "Giá bán", "Số lượng", "Đơn vị tính", "Thương hiệu", "Thuộc tính sản phẩm", "Tình trạng sản phẩm", "Mô tả ngắn", "Nội dung quà tặng ưu đãi", "Nội dung"];
     }
 }
