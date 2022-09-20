@@ -200,6 +200,7 @@ class CategorypostController extends Controller
 
     public function import() 
     {
+        if(!empty(request()->file('file')))
         Excel::import(new CategorypostImport,request()->file('file')); 
         return back();
     }

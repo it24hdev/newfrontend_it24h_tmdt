@@ -713,6 +713,7 @@ class ProductsController extends Controller
 
     public function import() 
     {
+        if(!empty(request()->file('file')))
         Excel::import(new ProductImport,request()->file('file')); 
         return back();
     }

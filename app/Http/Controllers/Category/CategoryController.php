@@ -289,6 +289,7 @@ class CategoryController extends Controller
 
     public function import() 
     {
+        if(!empty(request()->file('file')))
         Excel::import(new CategoryImport,request()->file('file')); 
         return back();
     }
