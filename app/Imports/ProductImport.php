@@ -16,8 +16,12 @@ use Illuminate\Support\Str;
 class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithValidation
 {
     use Importable;
-  
-     public function collection(Collection $rows)
+
+    public function __construct()
+    {
+        ini_set('max_execution_time', 1800);
+    }
+         public function collection(Collection $rows)
     {
       // $data = $rows->toArray();
       //   $validate = Validator::make($data , [

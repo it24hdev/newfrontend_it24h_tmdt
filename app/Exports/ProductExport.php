@@ -8,6 +8,10 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ProductExport implements FromCollection, WithHeadings
 {
+    public function __construct()
+    {
+        ini_set('max_execution_time', 1800);
+    }
     public function collection()
     {
         return Products::select("ma", "name", "price", "quantity", "unit", "brand", "property", "still_stock", "short_content", "gift", "content")->where('status',1)->whereNull('deleted_at')->get();

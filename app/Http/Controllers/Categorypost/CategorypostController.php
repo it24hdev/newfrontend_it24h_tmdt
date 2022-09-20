@@ -20,6 +20,7 @@ class CategorypostController extends Controller
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1800);
         $this->middleware(function ($request, $next) {
             \session(['module_active' => 'post', 'active' => 'Bài viết']);
             return $next($request);

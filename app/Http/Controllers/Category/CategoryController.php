@@ -24,6 +24,7 @@ class CategoryController extends Controller
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1800);
         $this->middleware(function ($request, $next) {
             \session(['module_active' => 'products', 'active' => 'Sản phẩm']);
             return $next($request);

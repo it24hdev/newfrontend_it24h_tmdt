@@ -29,6 +29,7 @@ class ProductsController extends Controller
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1800);
         $this->middleware(function ($request, $next) {
             \session(['module_active' => 'products',  'active' => 'Sản phẩm']);
             return $next($request);
@@ -714,8 +715,11 @@ class ProductsController extends Controller
 
     public function import() 
     {
-        if(!empty(request()->file('file')))
-        Excel::import(new ProductImport,request()->file('file')); 
+        if(!empty(request()->file('file'))){
+            ini_set('max_execution_time', 1800);
+            Excel::import(new ProductImport,request()->file('file')); 
+        }
+        
         return back();
     }
 }

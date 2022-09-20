@@ -16,6 +16,11 @@ use Illuminate\Support\Str;
 class CategorypostImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithValidation
 {
     use Importable;
+
+    public function __construct()
+    {
+        ini_set('max_execution_time', 1800);
+    }
   
      public function collection(Collection $rows)
     {

@@ -8,6 +8,10 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class CategorypostExport implements FromCollection, WithHeadings
 {
+    public function __construct()
+    {
+        ini_set('max_execution_time', 1800);
+    }
     public function collection()
     {
         return Category::select("ma","name","name2")->where('taxonomy',1)->whereNull('deleted_at')->get();
