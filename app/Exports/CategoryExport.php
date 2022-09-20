@@ -7,7 +7,7 @@ use App\Models\Category;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class CategoryExport implements FromCollection, WithHeadings
-{ 
+{  
     public function __construct()
     {
         ini_set('max_execution_time', 1800);
