@@ -716,7 +716,7 @@ class ProductsController extends Controller
     public function import() 
     {
         if(!empty(request()->file('file'))){
-            ini_set('max_execution_time', 1800);
+            ini_set('max_execution_time', 1800); 
             Excel::import(new ProductImport,request()->file('file')); 
         }
         
