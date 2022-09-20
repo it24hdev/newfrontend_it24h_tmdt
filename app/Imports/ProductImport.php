@@ -42,6 +42,7 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
               'content'   =>   $row[9],
               'slug'      =>   Str::slug( $row[0], '-'),
             ];
+            // dd($data);
          Products::create($data);
          }
     }

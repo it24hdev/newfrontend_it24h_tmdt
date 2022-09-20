@@ -44,6 +44,7 @@ class Products extends Model
         'time_deal',
         'youtube',
         'attr',
+        'quantity',
     ];
     const IMAGE = 'no-images.jpg';
     const ACTIVE = 1;
