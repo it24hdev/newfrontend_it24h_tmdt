@@ -12,6 +12,11 @@
             <div class="grid grid-cols-12 gap-x-5">
             <div class="col-span-12 xl:col-span-6">
             <div class="form-group mb-4">
+                <label>Mã</label>
+                <input type="text" class="form-control" name='ma' value="{{old('ma') ?? $edit->ma}}">
+               @error('ma')<span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group mb-4">
                 <label>Tên danh mục</label>
                 <input type="text" class="form-control" name='name' value="{{old('name') ?? $edit->name}}"  id="typinginput">
                @error('name')<span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror

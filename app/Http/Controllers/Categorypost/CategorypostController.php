@@ -36,9 +36,9 @@ class CategorypostController extends Controller
         if($limit   ==null){$limit   =10;}
         if($sort    ==null){$sort    ='asc';}
         if($keywords==null){$keywords="";}
-        if($orderby ==null){$orderby ="id";}
+        if($orderby ==null){$orderby ="ma";}
 
-        if($limit == 10 && $keywords=="" && $orderby== "id" && $sort =="asc"){
+        if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
             $Category = Category::where('taxonomy', '=', 1)->paginate($limit);}
         else
         {
@@ -67,15 +67,18 @@ class CategorypostController extends Controller
         $name = $request->name;
         $slug = Str::slug($request->slug, '-');
         $request->validate([
-                'name' => 'required|max:255',
-                'slug' => 'required|max:255|unique:categories,slug,'.$slug,
+                'ma'   => 'required|max:255|unique:categories,ma',
+                'name' => 'required',
+                'slug' => 'required',
             ],
             [
+                'ma.required' => 'Mã danh mục không được phép bỏ trống',
+                'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
+                'ma.unique'   => 'Mã danh mục đã tồn tại trong hệ thống',
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
-                'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
                 // 'name.unique'   => 'Tên danh mục đã tồn tại',
-                'slug.unique'   => 'Tên slug đã tồn tại',
-                'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
+                // 'slug.unique'   => 'Tên slug đã tồn tại',
+                // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
             ]);
         if (empty($request->slug))      {$request->slug      = '';}
@@ -83,8 +86,9 @@ class CategorypostController extends Controller
         // if (empty($request->user_id))   {$request->user_id   = 0;}
 
         $Category = [
+            'ma'        => $request->ma,
             'name'      => $request->name,
-            'name2'      => $request->name2,
+            'name2'     => $request->name2,
             'slug'      => $slug,
             'taxonomy'  => 1,
             'parent_id' => $request->parent_id,
@@ -131,16 +135,19 @@ class CategorypostController extends Controller
     {
         $request->slug = Str::slug($request->slug, '-');
         $request->validate([
-                'name' => 'required|max:255',
-                'slug' => 'required|max:255|unique:categories,slug,'.$id.',id',
+                'ma'   => 'required|max:255|unique:categories,ma'.$id.',id',
+                'name' => 'required',
+                'slug' => 'required',
             ],
             [
+                'ma.required' => 'Mã danh mục không được phép bỏ trống',
+                'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
+                'ma.unique'   => 'Mã danh mục đã tồn tại trong hệ thống',
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
-                'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
                 // 'name.unique'   => 'Tên danh mục đã tồn tại',
+                // 'slug.unique'   => 'Tên slug đã tồn tại',
+                // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
-                'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
-                'slug.unique'   => 'Tên slug đã tồn tại',
             ]);
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
@@ -149,6 +156,7 @@ class CategorypostController extends Controller
 
         $Categorys = Category::find($id);
         $Category  = [
+            'ma'        => $request->ma,
             'name'      => $request->name,
             'name2'     => $request->name2,
             'slug'      => $slug,

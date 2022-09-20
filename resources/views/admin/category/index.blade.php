@@ -47,7 +47,7 @@
                         <option value="50" {{request()->input('limit') =='50' ? 'selected' : ''}}>50</option>
                     </select>
                     <select id="orderby" name="orderby" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3" onchange="this.form.submit()">
-                        <option value="id" {{request()->input('orderby') =='id' ? 'selected' : ''}} >STT</option>
+                        <option value="ma" {{request()->input('orderby') =='ma' ? 'selected' : ''}} >STT</option>
                         <option value="name" {{request()->input('orderby') =='name' ? 'selected' : ''}} >Tên danh mục</option>
                         <option value="parent_id" {{request()->input('orderby') =='parent_id' ? 'selected' : ''}}>Danh mục cha</option>
                         <option value="user_id" {{request()->input('orderby') =='user_id' ? 'selected' : ''}}>Người dùng</option>
@@ -81,7 +81,7 @@
                 <table class="table table-report -mt-2" id="table_categories">
                     <thead>
                     <tr >
-                        <th class="whitespace-nowrap text-center">STT</th>
+                        <th class="whitespace-nowrap text-center">MÃ</th>
                         <th class="whitespace-nowrap">TÊN DANH MỤC</th>
                         <th class="text-center whitespace-nowrap ">DANH MỤC CHA</th>
                         {{-- <th class="text-center whitespace-nowrap w-30">NGƯỜI DÙNG</th> --}}
@@ -103,7 +103,7 @@
                                     $str.='&nbsp';
                                 }
                             @endphp
-                            {{ $category->id }}
+                            {{ $category->ma }}
                             </td>
                             <td class="category_name">
                                  @php

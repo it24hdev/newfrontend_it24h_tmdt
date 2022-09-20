@@ -10,11 +10,11 @@ class CategoryExport implements FromCollection, WithHeadings
 {
     public function collection()
     {
-        return Category::select("name","name2")->where('taxonomy',0)->whereNull('deleted_at')->get();
+        return Category::select("ma","name","name2")->where('taxonomy',0)->whereNull('deleted_at')->get();
     }
 
     public function headings(): array
     {
-        return ["Tên danh mục", "Tên danh mục (ngoại ngữ)"];
+        return ["Mã" , "Tên danh mục", "Tên danh mục (ngoại ngữ)"];
     }
 }

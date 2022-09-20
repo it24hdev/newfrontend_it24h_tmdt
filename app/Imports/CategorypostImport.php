@@ -30,9 +30,10 @@ class CategorypostImport implements ToCollection, SkipsEmptyRows, WithStartRow, 
       // )->validate();
         foreach ($rows as $row) {
             $data = [
-              'name'      =>   $row[0],
-              'name2'     =>   $row[1],
-              'slug'      =>   Str::slug( $row[0], '-'),
+              'ma'      =>   $row[0],
+              'name'      =>   $row[1],
+              'name2'     =>   $row[2],
+              'slug'      =>   Str::slug( $row[1], '-'),
               'taxonomy'  =>   1,
             ];
          Category::create($data);

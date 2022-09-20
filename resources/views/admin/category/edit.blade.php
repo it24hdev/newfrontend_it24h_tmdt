@@ -1,7 +1,6 @@
 @extends('admin.layouts.main')
 @section('category')
  <div class="content">
-
                 <h2 class="intro-y text-lg font-medium mt-10">
                    {{ $title}}
                 </h2>
@@ -13,14 +12,18 @@
             <div class="grid grid-cols-12 gap-x-5">
             <div class="col-span-12 md:col-span-6">
             <div class="form-group mb-4">
-                <label>Tên danh mục</label>
-                <input type="text" class="form-control" name='name' value="{{old('name') ?? $edit->name}}"  id="typinginput">
-               @error('name')<span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
+            <label>Mã</label>
+            <input type="text" class="form-control" name='ma' value="{{old('ma') ?? $edit->ma}}">
+               @error('ma')<span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group mb-4">
+            <label>Tên danh mục</label>
+            <input type="text" class="form-control" name='name' value="{{old('name') ?? $edit->name}}"  id="typinginput">
+            @error('name') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
             <div class="form-group mb-4">
                 <label>Tên danh mục(ngoại ngữ)</label>
                 <input type="text" class="form-control" name='name2' value="{{old('name2') ?? $edit->name2}}" required>
-
             </div>
             <div class="form-group mb-4">
                 <label>SLUG</label>

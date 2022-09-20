@@ -40,9 +40,9 @@ class CategoryController extends Controller
         if($limit   ==null) {$limit   =10;}
         if($sort    ==null) {$sort    ='asc';}
         if($keywords==null) {$keywords="";}
-        if($orderby ==null) {$orderby ="id";}
+        if($orderby ==null) {$orderby ="ma";}
 
-        if($limit == 10 && $keywords=="" && $orderby== "id" && $sort =="asc"){
+        if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
             $Category = Category::where('taxonomy', '=', 0)->paginate($limit);}
         else
         {
@@ -81,21 +81,24 @@ class CategoryController extends Controller
     {
         $slug = Str::slug($request->slug, '-');
         $request->validate([
-            'name' => 'required|max:255',
-            'slug' => 'required|max:255|unique:categories,slug,'.$slug,
-            'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+            'ma'     => 'required|max:255|unique:categories,ma',
+            'slug'   => 'required',
+            'name'   => 'required',
+            // |max:255|unique:categories,slug,'.$slug,
+            'thumb'  => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
         ],
-            [
-                'name.required' => 'Tên danh mục không được phép bỏ trống',
-                'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-                // 'name.unique'   => 'Tên danh mục đã tồn tại',
-                'slug.unique'   => 'Tên slug đã tồn tại',
-                'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
-                'slug.required' => 'Tên slug không được phép bỏ trống',
-                'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
-                'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
-            ]);
+        [
+            'ma.required' => 'Mã danh mục không được phép bỏ trống',
+            'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
+            'ma.unique'   => 'Mã danh mục đã tồn tại',
+            'name.required' => 'Tên danh mục không được phép bỏ trống',
+            // 'slug.unique'   => 'Tên slug đã tồn tại',
+            // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
+            'slug.required' => 'Tên slug không được phép bỏ trống',
+            'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
+            'banner.image'  => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
+        ]);
         $nameFile   = Category::IMAGE;
         $nameFileBanner   = Category::IMAGE;
         if ($request->hasFile('thumb')) {
@@ -110,6 +113,7 @@ class CategoryController extends Controller
         if (empty($request->parent_id)) {$request->parent_id = 0;}
 
         $Category = new Category();
+        $Category->ma        = $request->ma;
         $Category->name      = $request->name;
         $Category->name2     = $request->name2;
         $Category->slug      = $request->slug;
@@ -168,18 +172,20 @@ class CategoryController extends Controller
     {
         $request->slug = Str::slug($request->slug, '-');
         $request->validate([
-            'name'  => 'required|max:255',
-            'slug'  => 'required|max:255|unique:categories,slug,'.$id.',id',
+            'ma'    => 'required|max:255|unique:categories,ma,'.$id.',id',
+            'slug'  => 'required',
+            'name'  => 'required',
             'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
         ],
             [
-                'name.required' => 'Tên danh mục không được phép bỏ trống',
-                'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-                // 'name.unique'   => 'Tên danh mục đã tồn tại',
+                'ma.required' => 'Tên danh mục không được phép bỏ trống',
+                'ma.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
+                'ma.unique'   => 'Mã danh mục đã tồn tại',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
-                'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
-                'slug.unique'   => 'Tên slug đã tồn tại',
+                'name.required' => 'Tên danh mục không được phép bỏ trống',
+                // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
+                // 'slug.unique'   => 'Tên slug đã tồn tại',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
                 'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
             ]); 
@@ -206,6 +212,7 @@ class CategoryController extends Controller
             $nameFileBanner = $nameBannerOld;
         }
         $Category  = [
+            'ma'        => $request->ma,
             'name'      => $request->name,
             'name2'     => $request->name2,
             'slug'      => $slug,

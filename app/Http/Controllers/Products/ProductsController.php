@@ -53,9 +53,9 @@ class ProductsController extends Controller
             $keywords = "";
         }
         if ($orderby  == null) {
-            $orderby  = "id";
+            $orderby  = "ma";
         }
-        if ($limit == 10 && $keywords == "" && $orderby == "id" && $sort =="asc") {
+        if ($limit == 10 && $keywords == "" && $orderby == "ma" && $sort =="asc") {
             $Products = Products::paginate($limit);
         } else
             $Products = Products::where('name', 'like', '%' . $keywords . '%')->orderby($orderby, $sort)->Paginate($limit);
