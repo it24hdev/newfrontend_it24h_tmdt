@@ -191,13 +191,15 @@ class CategorypostController extends Controller
 
     public function getchild(Request $request){
         $id = $request->id;
+        $ma = Category::where('id',$id)->first();
         $data = Category::where('taxonomy', '=', 1)->get();
 
         $listcategories = [];
         Category::recursive_child($data, $id, 2, $listcategories);
          $view2     = view('admin.categorypost.getchild', [
                 'Category' => $listcategories,
-                'sub_id' => $id,
+                'sub_id'   => $id,
+                'ma'       => $ma,
             ])->render();
         return response()->json(['html'=>$view2]);
     }

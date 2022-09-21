@@ -14,7 +14,16 @@ class CategorypostExport implements FromCollection, WithHeadings
     }
     public function collection()
     {
-        return Category::select("ma","name","name2")->where('taxonomy',1)->whereNull('deleted_at')->get();
+         $categories = Category::select("ma","name","name2","parent_id")->where('taxonomy',1)->whereNull('deleted_at')->get();
+
+        foreach($categories as $category){
+
+            if($category->parent_id != null){
+                 $category_code  = Category::where('taxonomy',1)->where('id',$category->parent_id)->first();
+                 $category->parent_id = $category_code->ma;
+            }
+        }
+        return $categories;
     }
 
     public function headings(): array

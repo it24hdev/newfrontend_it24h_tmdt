@@ -185,6 +185,12 @@
                         }
                     }
                 });
+            });
+        $(document).on('click',".btn-delete2",function (e) {
+            e.preventDefault();
+            var id = $(this).attr('data-value');
+            console.log(id);
+            $('#delete_id').val(id);
         });
        });
     </script>

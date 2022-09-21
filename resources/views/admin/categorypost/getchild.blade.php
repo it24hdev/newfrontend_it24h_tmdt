@@ -8,7 +8,7 @@
                     $str.='-';
                 }
             @endphp
-           {{$sub_id}}.{{$key+1}}
+           {{$ma}}.{{$key+1}}
         </td>
         <td class="">{{$list->name}} </td>
         <td class="overflow-hidden ">{{$list->slug}}</td>
@@ -37,7 +37,7 @@
                  <a title="Xóa" data-toggle="modal"
                data-value="{{$list->id}}"
                data-target="#delete-confirmation-modal"
-               class="btn btn-danger py-1 px-2 btn-delete"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
+               class="btn btn-danger py-1 px-2 btn-delete2"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
             </a>
                 @endcan
 

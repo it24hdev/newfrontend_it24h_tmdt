@@ -268,10 +268,10 @@ class CategoryController extends Controller
     {
         $this->authorize('delete',Category::class);
         $Category     = Category::find($request->id);
-        $Locationmenu = db::table('locationmenus')->where('category_id','=',$request->id);
+        // $Locationmenu = db::table('locationmenus')->where('category_id','=',$request->id);
         if (!is_null($Category)){
             $Category->delete();
-            $Locationmenu->delete();
+            // $Locationmenu->delete();
             return \json_encode(array('success'=>true));
         }
         return \json_encode(array('success'=>false));
@@ -279,6 +279,7 @@ class CategoryController extends Controller
 
     public function getchild(Request $request){
         $id = $request->id;
+        $ma = Category::where('id',$id)->first();
         $data = Category::where('taxonomy', '=', 0)->get();
 
         $listcategories = [];
@@ -286,6 +287,7 @@ class CategoryController extends Controller
         $view2     = view('admin.category.getchild', [
                 'listcategories' => $listcategories,
                 'sub_id' => $id,
+                'ma' => $ma->ma,
             ])->render();
         return response()->json(['html'=>$view2]);
     }

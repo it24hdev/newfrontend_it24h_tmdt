@@ -12,6 +12,7 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithValidation
 {
@@ -22,27 +23,46 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
         ini_set('max_execution_time', 1800);
     }
   
-     public function collection(Collection $rows)
+    public function collection(Collection $rows)
     {
-      // $data = $rows->toArray();
-      //   $validate = Validator::make($data , [
-      //        '*.0' => 'unique:categories,name|required',
-      //    ],
-      //    [
-      //       '*.0.unique' => 'Tên danh mục đã tồn tại. ',
-      //       '*.0.required' => 'Tên danh mục trống ',
-      //    ]
-      // )->validate();
-        foreach ($rows as $row) {
-            $data = [
-              'ma'      =>   $row[0],
-              'name'      =>   $row[1],
-              'name2'     =>   $row[2],
-              'slug'      =>   Str::slug( $row[1], '-'),
-              'taxonomy'  =>   0,
-            ];
-         Category::create($data);
-         }
+      foreach ($rows as $row) {
+        $exists = db::table('categories')->where('ma',$row[0])->first();
+        if(!empty($exists)){
+          $parent_id = "";
+          if($row[3] !== ""){
+            $code  = $row[3];
+            $cate  = Category::where("ma" , $code)->first();
+            if(!empty($cate)){
+              $parent_id = $cate->id;
+            }
+          }
+          DB::table('categories')->where('id', $exists->id)
+          ->update([
+            'name' => $row[1],
+            'name2'=> $row[2],
+            'slug' => Str::slug( $row[1], '-'),
+            'taxonomy' => 0,
+            'deleted_at' => null,
+            'parent_id' => $parent_id,
+          ]);
+        }
+        else{
+        $Category = new Category();
+        $Category->ma       = $row[0];
+        $Category->name     = $row[1];
+        $Category->name2    = $row[2];
+        $Category->slug     = Str::slug( $row[1], '-');
+        $Category->taxonomy = 0;
+        if($row[3] !== ""){
+          $code  = $row[3];
+          $cate  = Category::where("ma" , $code)->first();
+          if(!empty($cate)){
+            $Category->parent_id = $cate->id;
+          }
+        }
+        $Category->save();
+        }  
+      }
     }
 
     public function startRow(): int
@@ -53,7 +73,7 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
     public function rules(): array
     {
       return [
-          '*.0' => 'unique:categories,ma',
+          // '*.0' => 'unique:categories,ma,NULL, deleted_at',
       ];
     }
 

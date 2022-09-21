@@ -174,9 +174,7 @@
  <script>
         $(document).ready(function() {
            $('tbody').on('click', 'tr.get_child', function () {
-
             var tr_id = $(this).attr('id');
-            // console.log(tr);
             var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
                     id: tr_id,
@@ -199,6 +197,13 @@
                     }
                 });
         });
+
+        $(document).on('click',".btn-delete2",function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data-value');
+                console.log(id);
+                $('#delete_id').val(id);
+            });
        });
     </script>
 @endsection
