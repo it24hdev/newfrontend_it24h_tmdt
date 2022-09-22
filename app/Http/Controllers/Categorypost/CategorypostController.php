@@ -39,15 +39,25 @@ class CategorypostController extends Controller
         if($keywords==null){$keywords="";}
         if($orderby ==null){$orderby ="ma";}
 
-        if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
-            $Category = Category::where('taxonomy', '=', 1)->paginate($limit);}
-        else
-        {
-            $Category = Category::where('taxonomy', '=', 1)
-            ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
-        }
+        // if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
+        //     $Category = Category::where('taxonomy', '=', 1)->paginate($limit);}
+        // else
+        // {
+        //     $Category = Category::where('taxonomy', '=', 1)
+        //     ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
+        // }
+
+        $data = Category::where('taxonomy', '=', 1)
+        ->where('taxonomy', '=', 1)
+        ->where('name', 'like', '%' . $keywords . '%')
+        ->orderby($orderby,$sort)
+        ->Paginate($limit);
+
+        $listcategories = [];
+        Category::recursive($data, $parents = 0, $level = 1, $listcategories);
+
         return view('admin.categorypost.index',[
-                'Category' => $Category,
+                'Category' => $listcategories,
                 'title'    => 'Danh mục bài viết',
             ]);
     }
@@ -197,9 +207,9 @@ class CategorypostController extends Controller
         $listcategories = [];
         Category::recursive_child($data, $id, 2, $listcategories);
          $view2     = view('admin.categorypost.getchild', [
-                'Category' => $listcategories,
+                'listcategories' => $listcategories,
                 'sub_id'   => $id,
-                'ma'       => $ma,
+                'ma'       => $ma->ma,
             ])->render();
         return response()->json(['html'=>$view2]);
     }

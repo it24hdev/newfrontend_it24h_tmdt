@@ -84,33 +84,18 @@
                                 @foreach($Category as $key => $list)
                                 @if($list->parent_id == 0)
                                 <tr class=" overflow-x-auto scrollbar-hidden get_child" id="{{ $list->id }}">
-                                    <td class="text-center font-medium ">
-                                        @php
-                                            $str ='';
-                                            for ($i=0; $i < $list->level; $i++) {
-                                                echo $str;
-                                                $str.='&nbsp';
-                                            }
-                                        @endphp
+                                    <td class="text-left font-medium ">
                                         {{ $list->ma }}
                                     </td>
-                                    <td class="">
-                                         @php
-                                            $str ='';
-                                            for ($i=0; $i < $list->level; $i++) {
-                                                echo $str;
-                                                $str.='━';
-                                            }
-                                        @endphp
-                                        {{$list->name}} 
+                                    <td class="category_name">
+                                            {{$list->name}}
                                     </td>
                                     <td class="overflow-hidden ">{{$list->slug}}</td>
                                     <td class="text-center">
                                         @if ($list->cat_parent)
-                                        {{$list->cat_parent->name}}
+                                            {{$list->cat_parent->name}}
                                         @endif
                                     </td>
-                                    {{-- <td class="w-30 text-center">{{$list->user_id}}</td> --}}
                                     <td style="display:none;">{{$status = $list->status}}</td>
                                     <td>
                                         @if($status == '1')

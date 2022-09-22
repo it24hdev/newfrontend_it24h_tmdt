@@ -43,13 +43,13 @@ class CategoryController extends Controller
         if($keywords==null) {$keywords="";}
         if($orderby ==null) {$orderby ="ma";}
 
-        if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
-            $Category = Category::where('taxonomy', '=', 0)->paginate($limit);}
-        else
-        {
-            $Category = Category::where('taxonomy', '=', 0)
-                ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
-        }
+        // if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
+        //     $Category = Category::where('taxonomy', '=', 0)->paginate($limit);}
+        // else
+        // {
+        //     $Category = Category::where('taxonomy', '=', 0)
+        //         ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
+        // }
 
         $data = Category::where('taxonomy', '=', 0)
         ->where('taxonomy', '=', 0)

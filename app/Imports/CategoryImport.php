@@ -26,21 +26,21 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
     public function collection(Collection $rows)
     {
       foreach ($rows as $row) {
-        $exists = db::table('categories')->where('ma',$row[0])->first();
+        $exists = db::table('categories')->where('ma',$row[0])->where('taxonomy',0)->first();
         if(!empty($exists)){
           $parent_id = "";
-          if($row[3] !== ""){
-            $code  = $row[3];
-            $cate  = Category::where("ma" , $code)->first();
+          if($row[1] !== ""){
+            $code  = $row[1];
+            $cate  = Category::where("ma" , $code)->where('taxonomy',0)->first();
             if(!empty($cate)){
               $parent_id = $cate->id;
             }
           }
           DB::table('categories')->where('id', $exists->id)
           ->update([
-            'name' => $row[1],
-            'name2'=> $row[2],
-            'slug' => Str::slug( $row[1], '-'),
+            'name' => $row[2],
+            'name2'=> $row[3],
+            'slug' => Str::slug( $row[2], '-'),
             'taxonomy' => 0,
             'deleted_at' => null,
             'parent_id' => $parent_id,
@@ -49,13 +49,13 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
         else{
         $Category = new Category();
         $Category->ma       = $row[0];
-        $Category->name     = $row[1];
-        $Category->name2    = $row[2];
-        $Category->slug     = Str::slug( $row[1], '-');
+        $Category->name     = $row[2];
+        $Category->name2    = $row[3];
+        $Category->slug     = Str::slug( $row[2], '-');
         $Category->taxonomy = 0;
-        if($row[3] !== ""){
-          $code  = $row[3];
-          $cate  = Category::where("ma" , $code)->first();
+        if($row[1] !== ""){
+          $code  = $row[1];
+          $cate  = Category::where("ma" , $code)->where('taxonomy',0)->first();
           if(!empty($cate)){
             $Category->parent_id = $cate->id;
           }

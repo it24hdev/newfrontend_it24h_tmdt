@@ -19,7 +19,8 @@
                 $str.='━';
             }
             @endphp
-            {{$category_child->name}} </td>
+            {{$category_child->name}} 
+        </td>
         <td class="text-center">
             @if ($category_child->cat_parent)
              {{$category_child->cat_parent->name}}
