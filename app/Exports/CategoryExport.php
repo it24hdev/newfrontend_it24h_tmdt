@@ -12,7 +12,8 @@ class CategoryExport implements FromCollection, WithHeadings
     {
         ini_set('max_execution_time', 1800);
     }
-    public function collection()
+
+    public function collection() 
     {
         // return
 
