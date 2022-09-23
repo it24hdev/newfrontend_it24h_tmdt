@@ -10,9 +10,9 @@ use App\Models\Locationmenu;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-// use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CategoryExport;
 use App\Imports\CategoryImport;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use Validator;
 use Response;
 use Redirect;
@@ -42,15 +42,6 @@ class CategoryController extends Controller
         if($sort    ==null) {$sort    ='asc';}
         if($keywords==null) {$keywords="";}
         if($orderby ==null) {$orderby ="ma";}
-
-        // if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
-        //     $Category = Category::where('taxonomy', '=', 0)->paginate($limit);}
-        // else
-        // {
-        //     $Category = Category::where('taxonomy', '=', 0)
-        //         ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
-        // }
-
         $data = Category::where('taxonomy', '=', 0)
         ->where('taxonomy', '=', 0)
         ->where('name', 'like', '%' . $keywords . '%')
@@ -113,36 +104,44 @@ class CategoryController extends Controller
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
 
-        $Category = new Category();
-        $Category->ma        = $request->ma;
-        $Category->name      = $request->name;
-        $Category->name2     = $request->name2;
-        $Category->slug      = $request->slug;
-        $Category->icon      = $request->icon;
-        $Category->taxonomy  = 0;
-        $Category->parent_id = $request->parent_id;
-        $Category->user_id   = Auth::user()->id;
-        $Category->thumb     = $nameFile;
-        $Category->banner    = $nameFileBanner;
-        $Category->status    = $request->has('status');
-        $Category->show_push_product    = $request->has('show_push_product');
-        $Category->save();
+        $Category  = [
+            'ma'        => $request->ma,
+            'name'      => $request->name,
+            'name2'     => $request->name2,
+            'slug'      => $slug,
+            'icon'      => $request->icon,
+            'taxonomy'  => 0,
+            'parent_id' => $request->parent_id,
+            'user_id'   => Auth::user()->id,
+            'thumb'     => $nameFile,
+            'banner'    => $nameFileBanner,
+            'status'    => $request->has('status'),
+            'show_push_product'    => $request->has('show_push_product'),
+        ];
 
-        //xu ly hinh anh danh muc sau khi luu
-        $folder = 'upload/images/products/';
-        $folder_thumb    = 'upload/images/products/thumb/';
-        if ($request->hasFile('thumb')) {
-            $file = CommonHelper::uploadImage($request->thumb, $nameFile, $folder);
-            CommonHelper::cropImage2($file, $nameFile, 300, 300, $folder_thumb);
-        }
+        try {
+            DB::beginTransaction();
+            Category::create($Category);
 
-        //xu ly luu vi tri danh muc sau khi luu danh muc
-        if ($request->hasFile('banner')) {
+            DB::commit();
+            //xu ly hinh anh danh muc sau khi luu
+            $folder = 'upload/images/products/';
+            $folder_thumb    = 'upload/images/products/thumb/';
+            if ($request->hasFile('thumb')) {
+                $file = CommonHelper::uploadImage($request->thumb, $nameFile, $folder);
+                CommonHelper::cropImage2($file, $nameFile, 300, 300, $folder_thumb);
+            }
+            //xu ly luu vi tri danh muc sau khi luu danh muc
+            if ($request->hasFile('banner')) {
             $file_banner = CommonHelper::uploadImage($request->banner, $nameFileBanner, $folder);
             CommonHelper::cropImage2($file_banner, $nameFileBanner, 180, 324, $folder_thumb);
+            }
+            return redirect()->route('category.index')->with('success','Thêm danh mục mới thành công.');
         }
-
-        return redirect()->route('category.index')->with('success','Thêm danh mục mới thành công.');
+        catch (\Exception $exception){
+            DB::rollBack();
+            return redirect()->route('category.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
+        }  
     }
 
     public function categorylevel()
@@ -179,17 +178,17 @@ class CategoryController extends Controller
             'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
         ],
-            [
-                'ma.required' => 'Tên danh mục không được phép bỏ trống',
-                'ma.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-                'ma.unique'   => 'Mã danh mục đã tồn tại',
-                'slug.required' => 'Tên slug không được phép bỏ trống',
-                'name.required' => 'Tên danh mục không được phép bỏ trống',
-                // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
-                // 'slug.unique'   => 'Tên slug đã tồn tại',
-                'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
-                'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
-            ]); 
+        [
+            'ma.required' => 'Tên danh mục không được phép bỏ trống',
+            'ma.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
+            'ma.unique'   => 'Mã danh mục đã tồn tại',
+            'slug.required' => 'Tên slug không được phép bỏ trống',
+            'name.required' => 'Tên danh mục không được phép bỏ trống',
+            // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
+            // 'slug.unique'   => 'Tên slug đã tồn tại',
+            'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
+            'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
+        ]); 
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
@@ -230,6 +229,12 @@ class CategoryController extends Controller
         try {
             DB::beginTransaction();
             $Categorys->update($Category);
+            DB::table('admin_menu_items')->where('category_id', $request->id)
+            ->update([
+            'ma' => $request->ma,
+            'label' => $request->name,
+            'link' => $request->slug
+            ]);
             $folder_thumb  = 'upload/images/products/thumb/';
             $folder = 'upload/images/products';
             if ($request->thumb != null) {
@@ -268,10 +273,12 @@ class CategoryController extends Controller
     {
         $this->authorize('delete',Category::class);
         $Category     = Category::find($request->id);
-        // $Locationmenu = db::table('locationmenus')->where('category_id','=',$request->id);
+        $menu = DB::table('admin_menu_items')->where('category_id', $request->id);
         if (!is_null($Category)){
             $Category->delete();
-            // $Locationmenu->delete();
+            if (!is_null($menu)){
+            $menu->delete();
+            }
             return \json_encode(array('success'=>true));
         }
         return \json_encode(array('success'=>false));

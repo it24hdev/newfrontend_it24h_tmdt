@@ -16,6 +16,16 @@ $currentUrl = url()->current();
                             <nav class="nav-tab-wrapper wp-clearfix top_w" aria-label="Menu thứ hai">
                                 <a href="{{route('menu')}}" class="nav-tab nav-tab-active" aria-current="page">Sửa menu</a>
                                 <a href="{{route('locationmenu.edit')}}" class="nav-tab">Quản lý vị trí menu</a>
+
+                                @if(request()->has('menu')  && !empty(request()->input("menu")))
+                                <form action="{{ route('menu.import',request()->input("menu")) }}" method="POST" enctype="multipart/form-data" style="display: contents;">
+                                @csrf
+                                <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
+                                <button type="submit" class="button button-primary" >Import Data</button>
+                                </form>
+                                <a class="button button-primary" href="{{ route('menu.export',request()->input("menu")) }}">Export Data</a>
+
+                                @endif
                             </nav>
                             <div class="manage-menus">
                                 <form method="get" action="{{ $currentUrl }}">

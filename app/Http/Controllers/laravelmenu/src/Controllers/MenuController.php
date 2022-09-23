@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Http\Controllers\laravelmenu\src\Models\Menus;
 use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MenuExport;
+use App\Imports\MenuImport;
 
 class MenuController extends Controller
 {
@@ -35,15 +38,11 @@ class MenuController extends Controller
                         ->where('status',1)
                         ->where('taxonomy', 1)
                         ->get();
-
-
         if ((request()->has("action") && empty(request()->input("menu"))) || request()->input("menu") == '0') {
             return view('admin.menu.menu')->with("menulist" , $menulist)->with("category",$category);
         } else {
-
             $menu = Menus::find(request()->input("menu"));
             $menus = $menuitems->getall(request()->input("menu"));
-
             $data = ['menus' => $menus, 'indmenu' => $menu, 'menulist' => $menulist];
             if( config('menu.use_roles')) {
                 $data['roles'] = DB::table(config('menu.roles_table'))->select([config('menu.roles_pk'),config('menu.roles_title_field')])->get();
@@ -51,11 +50,8 @@ class MenuController extends Controller
                 $data['role_title_field'] = config('menu.roles_title_field');
             }
             return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost);
-            // ->with('category_lastes', $category_lastes)->with('categorypost_lastes', $categorypost_lastes);
         }
     }
-
-
     public function select($name = "menu", $menulist = array())
     {
         $html = '<select name="' . $name . '">';
@@ -71,14 +67,6 @@ class MenuController extends Controller
         return $html;
     }
 
-
-    /**
-     * Returns empty array if menu not found now.
-     * Thanks @sovichet
-     *
-     * @param $name
-     * @return array
-     */
     public static function getByName($name)
     {
         $menu = Menus::byName($name);
@@ -153,9 +141,7 @@ class MenuController extends Controller
         $arraydata = request()->input("arraydata");
         if (is_array($arraydata)) {
             foreach ($arraydata as $value) {
-               
                 $menuitem = MenuItems::find($value['id']);
-
                 $menuitem->label = $value['label'];
                 $menuitem->link  = $value['link'];
                 $menuitem->class = $value['class'];
@@ -164,11 +150,8 @@ class MenuController extends Controller
                 }
                 $menuitem->save();
             }
-            
         } else {
             $menuitem = MenuItems::find(request()->input("id"));
-
-
             $menuitem->label = request()->input("label");
             $menuitem->link = request()->input("url");
             $menuitem->class = request()->input("clases");
@@ -200,6 +183,8 @@ class MenuController extends Controller
         $menuitem->label = $categories->name;
         $menuitem->link  = $categories->slug;
         $menuitem->class  = $categories->icon;
+        $menuitem->category_id  = $categories->id;
+        $menuitem->ma  = $categories->ma;
         $menuitem->menu = request()->input("idmenu");
         $menuitem->sort = MenuItems::getNextSortRoot(request()->input("idmenu"));
         $menuitem->save();
@@ -226,5 +211,17 @@ class MenuController extends Controller
         }
         echo json_encode(array("resp" => 1));
 
+    }
+
+    public function export($menu) 
+    {
+        return Excel::download(new MenuExport($menu), 'Menu.xlsx');
+    }
+
+    public function import($menu) 
+    {
+        if(!empty(request()->file('file')))
+        Excel::import(new MenuImport($menu),request()->file('file')); 
+        return back();
     }
 }

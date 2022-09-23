@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Categorypost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -38,15 +39,6 @@ class CategorypostController extends Controller
         if($sort    ==null){$sort    ='asc';}
         if($keywords==null){$keywords="";}
         if($orderby ==null){$orderby ="ma";}
-
-        // if($limit == 10 && $keywords=="" && $orderby== "ma" && $sort =="asc"){
-        //     $Category = Category::where('taxonomy', '=', 1)->paginate($limit);}
-        // else
-        // {
-        //     $Category = Category::where('taxonomy', '=', 1)
-        //     ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
-        // }
-
         $data = Category::where('taxonomy', '=', 1)
         ->where('taxonomy', '=', 1)
         ->where('name', 'like', '%' . $keywords . '%')
@@ -87,14 +79,10 @@ class CategorypostController extends Controller
                 'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
                 'ma.unique'   => 'Mã danh mục đã tồn tại trong hệ thống',
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
-                // 'name.unique'   => 'Tên danh mục đã tồn tại',
-                // 'slug.unique'   => 'Tên slug đã tồn tại',
-                // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
             ]);
         if (empty($request->slug))      {$request->slug      = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
-        // if (empty($request->user_id))   {$request->user_id   = 0;}
 
         $Category = [
             'ma'        => $request->ma,
@@ -144,9 +132,10 @@ class CategorypostController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $request->slug = Str::slug($request->slug, '-');
         $request->validate([
-                'ma'   => 'required|max:255|unique:categories,ma'.$id.',id',
+                'ma'   => 'required|max:255|unique:categories,ma,'.$id.',id',
                 'name' => 'required',
                 'slug' => 'required',
             ],
@@ -155,15 +144,11 @@ class CategorypostController extends Controller
                 'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
                 'ma.unique'   => 'Mã danh mục đã tồn tại trong hệ thống',
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
-                // 'name.unique'   => 'Tên danh mục đã tồn tại',
-                // 'slug.unique'   => 'Tên slug đã tồn tại',
-                // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
             ]);
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
-        // if (empty($request->user_id)) {$request->user_id = 0;}
 
         $Categorys = Category::find($id);
         $Category  = [
@@ -180,6 +165,12 @@ class CategorypostController extends Controller
         try {
             DB::beginTransaction();
             $Categorys->update($Category);
+            DB::table('admin_menu_items')->where('category_id', $request->id)
+            ->update([
+            'ma' => $request->ma,
+            'label' => $request->name,
+            'link' => $request->slug
+            ]);
             DB::commit();
             return redirect()->route('categorypost.index')->with('success','Cập nhật danh mục thành công.');
             }
@@ -192,8 +183,12 @@ class CategorypostController extends Controller
     {
         $this->authorize('deletepost',Category::class);
         $Category = Category::find($request->id);
+        $menu = DB::table('admin_menu_items')->where('category_id', $request->id);
         if (!is_null($Category)){
         $Category->delete();
+        if (!is_null($menu)){
+            $menu->delete();
+            }
         return \json_encode(array('success'=>true));
         }
         return \json_encode(array('success'=>false));

@@ -15,6 +15,8 @@ class CreateMenuItemsWpTable extends Migration
     {
         Schema::create( config('menu.table_prefix') . config('menu.table_name_items') , function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('ma');
+            $table->string('category_id');
             $table->string('label');
             $table->string('link');
             $table->unsignedBigInteger('parent')->default(0);

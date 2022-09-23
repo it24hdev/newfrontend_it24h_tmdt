@@ -54,6 +54,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/createnewmenu', [MenuController::class, 'createnewmenu'])->name('hcreatenewmenu');
     Route::post('/generatemenucontrol', [MenuController::class, 'generatemenucontrol'])->name('hgeneratemenucontrol');
     Route::post('/updateitem', [MenuController::class, 'updateitem'])->name('hupdateitem');
+
+    Route::get('/menu_export/{menu}',[MenuController::class, 'export'])->name('menu.export');
+    Route::post('/menu_import/{menu}', [MenuController::class, 'import'])->name('menu.import');
     });
 
     /*----------- USER ----------*/
