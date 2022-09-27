@@ -200,7 +200,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/getchild', [CategoryController::class, 'getchild'])->name('category.getchild');
         Route::get('/categoryexport',[CategoryController::class, 'export'])->name('category.export');
         Route::post('/categoryimport', [CategoryController::class, 'import'])->name('category.import');
+        Route::post('/addproperty', [CategoryController::class, 'addproperty'])->name('category.addproperty');
+        Route::post('/deleteproperty', [CategoryController::class, 'destroyproperty'])->name('categorypropertymanages.delete');
     });
+
     /* ---------- Danh muc bai viet --------------- */
     Route::prefix('admin/categorypost')->group(function () {
         Route::get('/', [CategorypostController::class, 'index'])->name('categorypost.index');

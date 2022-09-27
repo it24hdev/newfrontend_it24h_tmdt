@@ -20,9 +20,9 @@
                 <input type="text" class=" form-control" name='name' id="typinginput" value="{{old('name')}}">
                 @error('name') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
-            <div class="form-group mb-4">
+            <div class="form-group mb-4" style="display:none;">
                 <label>Tên danh mục(ngoại ngữ)</label>
-                <input type="text" class=" form-control" name='name2' value="{{old('name2')}}" required>
+                <input type="text" class=" form-control" name='name2' value="{{old('name2')}}">
             </div>
             <div class="form-group mb-4">
                 <label>SLUG</label>

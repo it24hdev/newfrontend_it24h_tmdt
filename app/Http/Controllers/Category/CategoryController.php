@@ -2,21 +2,26 @@
 
 namespace App\Http\Controllers\Category;
 
-use App\Helpers\CommonHelper;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Category;
-use App\Models\Locationmenu;
+
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Helpers\CommonHelper;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Locationmenu;
+use App\Models\Categoryproperty;
+use App\Models\Categoryproperties_manages;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use App\Exports\CategoryExport;
 use App\Imports\CategoryImport;
-use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
+use Maatwebsite\Excel\Facades\Excel;
+
 use Validator;
 use Response;
 use Redirect;
-use Maatwebsite\Excel\Facades\Excel;
+
 
 
 class CategoryController extends Controller
@@ -155,13 +160,24 @@ class CategoryController extends Controller
     public function edit(Request $request, $id)
     {
         $this->authorize('update', Category::class);
+        $categoryproperties_manages = Categoryproperties_manages::where('category_id',$id)->get();
+        $listproperty = [];
+        foreach ($categoryproperties_manages as $key => $value) {
+            $listproperty[] = $value->id;
+        }
+        $arr = implode(',', $listproperty);
+        $categoryproperty = Categoryproperty::where('status',1)->whereNotIn('id',[$arr])->get();
         $edit = Category::find($id);
         if ($edit !== null) {
             $categorieslv = $this->categorylevel();
+
+
             return view('admin.category.edit',[
-                'categorieslv' => $categorieslv,
                 'title'        => 'Sửa danh mục',
+                'categorieslv' => $categorieslv,
                 'edit'         => $edit,
+                'categoryproperties_manages' => $categoryproperties_manages,
+                'categoryproperty'           => $categoryproperty,
             ]);
         } else {
             \abort(404);
@@ -309,5 +325,42 @@ class CategoryController extends Controller
         if(!empty(request()->file('file')))
         Excel::import(new CategoryImport,request()->file('file')); 
         return back();
+    }
+
+    public function addproperty(Request $request)
+    {
+        $properties_id =  $request->properties_id;
+        $category_id   =  $request->category_id;
+
+        $properties    =  Categoryproperty::where('id', $properties_id)->first();
+
+        $Categoryproperties_manages =  new Categoryproperties_manages();
+
+        $Categoryproperties_manages->category_id = $category_id;
+        $Categoryproperties_manages->categoryproperties_id = $properties_id;
+        $Categoryproperties_manages->name = $properties->name;
+        $Categoryproperties_manages->ma = $properties->ma;
+        $Categoryproperties_manages->save();
+
+        // $view     = view('admin.category.addproperty', [
+        //         'value' => $properties,
+        //     ])->render();
+
+
+        // return response()->json(['html'=>$view]);
+
+        return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
+    }
+
+     public function destroyproperty(Request $request)
+    {
+        $this->authorize('delete',Category::class);
+        $Categoryproperties_manages     = Categoryproperties_manages::find($request->id);
+        if (!is_null($Categoryproperties_manages)){
+            $Categoryproperties_manages->delete();
+            return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
+        }
+        else
+        return redirect()->route('category.edit',$category_id)->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
     }
 }
