@@ -8,8 +8,6 @@
     <div class="form-group">
         <form action="{{ route('category.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="form-heade">
-            </div>
             <div class="grid grid-cols-12 gap-x-5">
             <div class="col-span-12 xl:col-span-6">
             <div class="form-group mb-4">
@@ -65,13 +63,6 @@
                 <label>Hiện danh sách sản phẩm lên trang chủ</label> <br>
                  <input type="checkbox" name='show_push_product' checked="checked" class="form-check-switch">
             </div>
-            <div class="modal-footer">
-
-                <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
-
-            <input type="submit" class="btn btn-primary " value="Create">
-
-        </div>
             </div>
             <div class="col-span-12 xl:col-span-6">
             <div class="form-group mb-4">
@@ -108,10 +99,12 @@
                     </div>
                 </div>
             </div>
-
             </div>
         </div>
-
+        <div class="modal-footer">
+            <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
+        <input type="submit" class="btn btn-primary " value="Create">
+        </div>
     </form>
 </div>
 </div>

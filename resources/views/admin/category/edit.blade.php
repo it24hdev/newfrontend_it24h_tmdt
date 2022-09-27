@@ -69,12 +69,6 @@
                 <label>Hiện danh sách sản phẩm lên trang chủ</label><br>
                  <input type="checkbox" class="form-check-switch" name='show_push_product' value="{{$edit->show_push_product == true ? '1' : '0'}}" {{$edit->show_push_product == true ? 'checked' : ' '}}>
             </div>
-            <div class="modal-footer">
-
-                <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
-
-                <input type="submit" class="btn btn-primary " value="Cập nhật">
-            </div>
             </div>
             <div class="col-span-12 md:col-span-6">
                 <label>Ảnh đại diện danh mục (<span class="italic">Danh mục cha</span>)</label><br>
@@ -116,9 +110,11 @@
                     </div>
                     </div>
                 </div>
-
             </div>
-
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
+                <input type="submit" class="btn btn-primary " value="Cập nhật">
             </div>
     </form>
 </div>

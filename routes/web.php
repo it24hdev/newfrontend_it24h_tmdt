@@ -23,6 +23,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Recruit\RecruitController;
 use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
+use App\Http\Controllers\Categoryproperty\Category_propertyController;
 
 
 Auth::routes();
@@ -231,11 +232,29 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/delete', [RecruitController::class, 'destroy'])->name('recruit.delete');
     });
 
-    
-
     Route::prefix('admin/recruit_register')->group(function () {
         Route::get('/', [RecruitRegisterController::class, 'index'])->name('recruit_register.index');
         Route::post('/update', [RecruitRegisterController::class, 'update'])->name('recruit_register.update');
+    });
+
+     /* ---------- Danh muc thuoc tinh --------------- */
+    Route::prefix('admin/category_property')->group(function () {
+        Route::get('/', [Category_propertyController::class, 'index'])->name('category_property.index');
+        Route::get('/create', [Category_propertyController::class, 'create'])->name('category_property.create');
+        Route::post('/create', [Category_propertyController::class, 'store'])->name('category_property.store');
+        Route::post('/update/{id}',[Category_propertyController::class, 'update'])->name('category_property.update');
+        Route::get('/edit/{id}', [Category_propertyController::class, 'edit'])->name('category_property.edit');
+        Route::post('/delete', [Category_propertyController::class, 'destroy'])->name('category_property.delete');
+
+        Route::get('/createdetail/{id}', [Category_propertyController::class, 'createdetail'])->name('detailproperty.create');
+
+        Route::post('/createdetail/{id}', [Category_propertyController::class, 'storedetail'])->name('detailproperty.store');
+
+        Route::get('/editdetail/{id}/{id_categoryproperty}', [Category_propertyController::class, 'editdetail'])->name('detailproperty.edit');
+
+        Route::post('/updatedetail/{id}',[Category_propertyController::class, 'updatedetail'])->name('detailproperty.update');
+
+        Route::post('/deletedetail', [Category_propertyController::class, 'destroydetail'])->name('detailproperty.delete');
     });
 
 });

@@ -248,6 +248,12 @@
                         </a>
                     </li>
                 @endcan
+                    <li>
+                        <a href="{{ route('category_property.index') }}" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Danh mục thuộc tính</div>
+                        </a>
+                    </li>
             </ul>
         </li>
 
