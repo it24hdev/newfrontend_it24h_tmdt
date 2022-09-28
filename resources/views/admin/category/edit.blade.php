@@ -145,8 +145,7 @@
                         <td class="text-center">{{$key+1}}</td>
                         <td class="text-center">{{$value->ma}}</td>
                         <td class="text-center">{{$value->name}}</td>
-                        <td class="text-center"><a href="#">Quản lý giá trị</a></td>
-                        {{-- <td class="text-center">{{$value->stt}}</td> --}}
+                        <td class="text-center"><a href="{{route('category_property.edit',$value->categoryproperties_id)}}">Quản lý giá trị</a></td>
                         <td class="w-20">
                             <div class="flex justify-center items-center">
                                 <a title="Xóa" data-toggle="modal"
@@ -188,10 +187,16 @@
                     data: data,
                     dataType: "json",
                     success: function(data) {
-                        $("#addrowproperty").after(data.html);
+                        $("#addrowproperty").append(data.html);
                     }
                 });
             }
+        });
+
+        $(document).on('click',".btn-delete2",function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data-value');
+                $('#delete_id').val(id);
         });
     });
 </script>

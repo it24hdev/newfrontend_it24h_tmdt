@@ -17,6 +17,7 @@ use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use App\Exports\CategoryExport;
 use App\Imports\CategoryImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 
 use Validator;
 use Response;
@@ -163,15 +164,13 @@ class CategoryController extends Controller
         $categoryproperties_manages = Categoryproperties_manages::where('category_id',$id)->get();
         $listproperty = [];
         foreach ($categoryproperties_manages as $key => $value) {
-            $listproperty[] = $value->id;
+            $listproperty[] = $value->categoryproperties_id;
         }
         $arr = implode(',', $listproperty);
-        $categoryproperty = Categoryproperty::where('status',1)->whereNotIn('id',[$arr])->get();
+        $categoryproperty = Categoryproperty::where('status',1)->whereIn('id',[$arr])->get();
         $edit = Category::find($id);
         if ($edit !== null) {
             $categorieslv = $this->categorylevel();
-
-
             return view('admin.category.edit',[
                 'title'        => 'Sửa danh mục',
                 'categorieslv' => $categorieslv,
@@ -200,8 +199,6 @@ class CategoryController extends Controller
             'ma.unique'   => 'Mã danh mục đã tồn tại',
             'slug.required' => 'Tên slug không được phép bỏ trống',
             'name.required' => 'Tên danh mục không được phép bỏ trống',
-            // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
-            // 'slug.unique'   => 'Tên slug đã tồn tại',
             'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
         ]); 
@@ -342,25 +339,24 @@ class CategoryController extends Controller
         $Categoryproperties_manages->ma = $properties->ma;
         $Categoryproperties_manages->save();
 
-        // $view     = view('admin.category.addproperty', [
-        //         'value' => $properties,
-        //     ])->render();
+        $value =  Categoryproperties_manages::latest()->first();
 
+        $view     = view('admin.category.addproperty', [
+                'value' => $value,
+            ])->render();
+        return response()->json(['html'=>$view]);
 
-        // return response()->json(['html'=>$view]);
-
-        return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
+        // return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
     }
 
-     public function destroyproperty(Request $request)
+    public function destroyproperty(Request $request)
     {
         $this->authorize('delete',Category::class);
         $Categoryproperties_manages     = Categoryproperties_manages::find($request->id);
         if (!is_null($Categoryproperties_manages)){
             $Categoryproperties_manages->delete();
-            return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
+            return \json_encode(array('success'=>true));
         }
-        else
-        return redirect()->route('category.edit',$category_id)->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
+        return \json_encode(array('success'=>false));
     }
 }

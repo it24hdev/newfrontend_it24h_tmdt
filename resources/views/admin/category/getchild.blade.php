@@ -9,7 +9,7 @@
                 $str.='&nbsp';
             }
         @endphp
-       {{$ma}}.{{$key+1}}
+        {{$ma}}.{{$key+1}}
         </td>
         <td class="category_child_name">
             @php
@@ -56,9 +56,3 @@
         </td>
     </tr>
 @endforeach
-{{-- @section('js')
- <script>
-        $(document).ready(function() {
-       
-    </script>
-@endsection --}}

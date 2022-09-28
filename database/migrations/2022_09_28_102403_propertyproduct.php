@@ -6,27 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
     public function up()
     {
-        Schema::create('categoryproperties_manages', function (Blueprint $table) {
+        Schema::create('propertyproducts', function (Blueprint $table) {
             $table->id();
             $table->string('ma')->nullable();
             $table->string('name')->nullable();
-            $table->integer('stt')->nullable();
-            $table->integer('category_id')->nullable();
-            $table->integer('categoryproperties_id')->nullable();
+            $table->integer('products_id')->nullable();
+            $table->integer('detailproperties_id')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('categoryproperties_manages');
+        Schema::dropIfExists('propertyproducts');
     }
 };

@@ -25,12 +25,7 @@
  <script>
         $(document).ready(function() {
             $('.delete').click(function() {
-
-        //         var id = $(this).attr('data-value');
-        // console.log(id);
-        // $('#delete_id').val(id);
                 var id = $("#delete_id").val();
-                // console.log(id);
                 var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
                     id: id,

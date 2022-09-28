@@ -116,6 +116,7 @@ class Category_propertyController extends Controller
 
     public function edit(Request $request, $id)
     {
+
         $category_property = Categoryproperty::find($id);
         $detailproperties  = Detailproperties::where('categoryproperties_id',$category_property->id)->get();
         if ($category_property !== null) {
@@ -229,6 +230,8 @@ class Category_propertyController extends Controller
 
     public function destroydetail(Request $request)
     {
+
+        dd($request->all());
         $Detailproperty     = Detailproperties::find($request->id);
         if (!is_null($Detailproperty)){
             $Detailproperty->delete();

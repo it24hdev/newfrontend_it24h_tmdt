@@ -37,7 +37,7 @@
                     data: data,
                     dataType: "json",
                     success: function(data) {
-                        // $('#' + id).remove();
+                        $('#' + id).remove();
                     }
                 });
             });
