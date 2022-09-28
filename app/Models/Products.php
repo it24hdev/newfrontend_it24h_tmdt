@@ -46,6 +46,7 @@ class Products extends Model
         'youtube',
         'attr',
         'quantity',
+        'detailproperty',
     ];
     const IMAGE = 'no-images.jpg';
     const ACTIVE = 1;

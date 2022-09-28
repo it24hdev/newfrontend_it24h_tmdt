@@ -160,6 +160,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/delete-tag-event',  [ProductsController::class, 'delete_tag_event'])->name('products.delete_tag-event');
         Route::get('/productsexport',[ProductsController::class, 'export'])->name('products.export');
         Route::post('/productsimport', [ProductsController::class, 'import'])->name('products.import');
+        Route::get('/productsproperties/{id}', [ProductsController::class, 'productsproperties'])->name('productsproperties.edit');
+        Route::post('/saveproductsproperties/{id}', [ProductsController::class, 'saveproductsproperties'])->name('saveproductsproperties');
     });
 
 

@@ -188,6 +188,10 @@
                     dataType: "json",
                     success: function(data) {
                         $("#addrowproperty").append(data.html);
+                        var id = data.id;
+                        var url = "{{ route('category.edit', "id") }}";
+                        url = url.replace('id', id);
+                        window.location.href=url;
                     }
                 });
             }

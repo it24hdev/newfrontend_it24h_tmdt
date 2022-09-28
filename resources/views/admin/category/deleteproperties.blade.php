@@ -29,6 +29,7 @@
                 var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
                     id: id,
+                    category_id: {{$edit->id}},
                     _token: _token
                 };
                 $.ajax({
@@ -38,6 +39,11 @@
                     dataType: "json",
                     success: function(data) {
                         $('#' + id).remove();
+                        var id = data.id;
+                        console.log(id);
+                        var url = "{{ route('category.edit', "id") }}";
+                        url = url.replace('id', id);
+                        window.location.href=url;
                     }
                 });
             });

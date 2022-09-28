@@ -45,6 +45,7 @@ return new class extends Migration
             $table->text('attr')->nullable();
             $table->string('still_stock')->nullable();
             $table->string('youtube')->nullable();
+            $table->string('detailproperty')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

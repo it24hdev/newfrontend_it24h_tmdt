@@ -8,6 +8,7 @@
     {{ $title }}
 </h2>
 <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+    <a class="btn btn-primary shadow-md mr-2" href="{{ route('productsproperties.edit',$edit->id) }}">Thuộc tính sản phẩm</a>
     @can('viewAny', App\Models\Products::class)
     <a class="btn btn-primary shadow-md mr-2" href="{{ route('products.index') }}">Danh sách sản phẩm</a>
     @endcan

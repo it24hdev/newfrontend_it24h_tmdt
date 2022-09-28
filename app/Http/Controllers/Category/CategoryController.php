@@ -162,12 +162,15 @@ class CategoryController extends Controller
     {
         $this->authorize('update', Category::class);
         $categoryproperties_manages = Categoryproperties_manages::where('category_id',$id)->get();
-        $listproperty = [];
-        foreach ($categoryproperties_manages as $key => $value) {
-            $listproperty[] = $value->categoryproperties_id;
-        }
-        $arr = implode(',', $listproperty);
-        $categoryproperty = Categoryproperty::where('status',1)->whereIn('id',[$arr])->get();
+        // $listproperty = [];
+        // foreach ($categoryproperties_manages as $key => $value) {
+        //     $listproperty[] = $value->categoryproperties_id;
+        // }
+        // $arr = implode(',', $listproperty);
+        $categoryproperty = Categoryproperty::where('status',1)->whereNotIn('id', function($query) use ($id) {
+            $query->select('categoryproperties_id')->from('categoryproperties_manages')
+            ->where('category_id',$id);
+        })->get();
         $edit = Category::find($id);
         if ($edit !== null) {
             $categorieslv = $this->categorylevel();
@@ -344,7 +347,7 @@ class CategoryController extends Controller
         $view     = view('admin.category.addproperty', [
                 'value' => $value,
             ])->render();
-        return response()->json(['html'=>$view]);
+        return response()->json(['html'=>$view,'id' => $category_id]);
 
         // return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
     }
@@ -355,8 +358,14 @@ class CategoryController extends Controller
         $Categoryproperties_manages     = Categoryproperties_manages::find($request->id);
         if (!is_null($Categoryproperties_manages)){
             $Categoryproperties_manages->delete();
-            return \json_encode(array('success'=>true));
+            return \json_encode(([
+                'success'=>true,
+                'id'=>$request->category_id,
+            ]));
         }
-        return \json_encode(array('success'=>false));
+        return \json_encode(([
+            'success'=>false,
+            'id'=>$request->category_id,
+        ]));
     }
 }

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Products;
 use App\Models\Category;
 use App\Models\CategoryRelationship;
+use App\Models\Detailproperties;
+use App\Models\Propertyproducts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -721,5 +723,45 @@ class ProductsController extends Controller
         }
         
         return back();
+    }
+
+    public function productsproperties(Request $request, $id){
+
+        $product = Products::find($id);
+        $categoryproperties  =  DB::table('categoryproperties')->select('categoryproperties.*')
+        ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
+        ->leftjoin('categories','categories.id', '=', 'categoryproperties_manages.category_id')
+        ->leftjoin('category_relationships','category_relationships.cat_id', '=', 'categories.id')
+        ->leftjoin('products','products.id', '=', 'category_relationships.product_id')
+        ->where('products.id', $id)
+        ->get();
+
+        $detailproperty = Detailproperties::get();
+
+
+        return view('admin.products.properties',[
+            'detailproperty' => $detailproperty,
+            'categoryproperties' => $categoryproperties,
+            'product_id' => $id,
+            'title' => 'Sản phẩm :'.$product->name,
+            'list_checkbox_property' => json_decode($product->detailproperty),
+        ]);
+    }
+
+    public function saveproductsproperties(Request $request, $id){
+        Propertyproducts::where('products_id', $id)->delete();
+        foreach ($request->property_product as $key => $value) {
+           $Propertyproducts =  new Propertyproducts();
+           $Propertyproducts->products_id = $id;
+           $Propertyproducts->detailproperties_id = $value;
+           $Propertyproducts->save();
+        }
+        $list_checkbox_property = Products::find($id);
+
+        if(!empty($list_checkbox_property)){
+        $list_checkbox_property->detailproperty = $request->property_product;
+        $list_checkbox_property->save();
+        }
+        return redirect()->route('products.edit',$id)->with('success', 'Cập nhật thuộc tính thành công.');
     }
 }
