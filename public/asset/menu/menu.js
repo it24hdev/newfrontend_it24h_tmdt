@@ -5,14 +5,18 @@ function getmenus() {
   var cont = 0;
   $('#menu-to-edit li').each(function(index) {
     var dept = 0;
+    var id_item = "";
+
     for (var i = 0; i < $('#menu-to-edit li').length; i++) {
       var n = $(this)
         .attr('class')
         .indexOf('menu-item-depth-' + i);
+
       if (n != -1) {
         dept = i;
       }
     }
+    var listcate = $(this).find('.listcate').val();
     var textoiner = $(this).find('.item-edit').text();
     var id = this.id.split('-');
     var textoexplotado = textoiner.split('|');
@@ -25,7 +29,9 @@ function getmenus() {
       depth: dept,
       id: id[2],
       parent: padre,
-      sort: cont
+      sort: cont,
+      property: listcate,
+
     });
     cont++;
   });

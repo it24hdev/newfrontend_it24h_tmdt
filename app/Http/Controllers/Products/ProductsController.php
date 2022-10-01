@@ -737,8 +737,6 @@ class ProductsController extends Controller
         ->get();
 
         $detailproperty = Detailproperties::get();
-
-
         return view('admin.products.properties',[
             'detailproperty' => $detailproperty,
             'categoryproperties' => $categoryproperties,
@@ -750,14 +748,15 @@ class ProductsController extends Controller
 
     public function saveproductsproperties(Request $request, $id){
         Propertyproducts::where('products_id', $id)->delete();
-        foreach ($request->property_product as $key => $value) {
+        if(!empty($request->property_product)){
+            foreach ($request->property_product as $key => $value) {
            $Propertyproducts =  new Propertyproducts();
            $Propertyproducts->products_id = $id;
            $Propertyproducts->detailproperties_id = $value;
            $Propertyproducts->save();
+            }
         }
         $list_checkbox_property = Products::find($id);
-
         if(!empty($list_checkbox_property)){
         $list_checkbox_property->detailproperty = $request->property_product;
         $list_checkbox_property->save();

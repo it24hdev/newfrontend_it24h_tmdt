@@ -12,6 +12,7 @@ use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MenuExport;
 use App\Imports\MenuImport;
+use Illuminate\Support\Facades\DB;
 
 class MenuController extends Controller
 {
@@ -49,7 +50,13 @@ class MenuController extends Controller
                 $data['role_pk'] = config('menu.roles_pk');
                 $data['role_title_field'] = config('menu.roles_title_field');
             }
-            return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost);
+        $list_property  =  DB::table('detailproperties')->select('detailproperties.*','categories.id as cate_id')
+        ->leftjoin('categoryproperties', 'categoryproperties.id', '=', 'detailproperties.categoryproperties_id')
+        ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
+        ->leftjoin('categories','categories.id', '=', 'categoryproperties_manages.category_id')
+        ->get();
+
+        return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost)->with('list_property',$list_property);
         }
     }
     public function select($name = "menu", $menulist = array())
@@ -199,18 +206,20 @@ class MenuController extends Controller
         $menu->save();
         if (is_array(request()->input("arraydata"))) {
             foreach (request()->input("arraydata") as $value) {
-                $menuitem = MenuItems::find($value["id"]);
-                $menuitem->parent = $value["parent"];
-                $menuitem->sort = $value["sort"];
-                $menuitem->depth = $value["depth"];
-                if (config('menu.use_roles')) {
-                    $menuitem->role_id = request()->input("role_id");
-                }
-                $menuitem->save();
+                if(!empty($value["id"])){
+                    $menuitem = MenuItems::find($value["id"]);
+                    $menuitem->parent = $value["parent"];
+                    $menuitem->sort = $value["sort"];
+                    $menuitem->depth = $value["depth"];
+                    $menuitem->property = $value["property"]; 
+                    if (config('menu.use_roles')) {
+                        $menuitem->role_id = request()->input("role_id");
+                    }
+                    $menuitem->save();
+                }                
             }
         }
         echo json_encode(array("resp" => 1));
-
     }
 
     public function export($menu) 
@@ -224,4 +233,5 @@ class MenuController extends Controller
         Excel::import(new MenuImport($menu),request()->file('file')); 
         return back();
     }
+
 }
