@@ -15,6 +15,7 @@ use App\Models\Slider;
 use App\Models\Recruit_register;
 use App\Models\Detailproperties;
 use App\Models\Categoryproperty;
+use App\Models\Propertyproducts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -90,8 +91,10 @@ class HomeController extends Controller
         if($location == 'sidebar')  {$location = "sidebar_location"; }
         if($location == 'menu')  {$location = "menu_location"; }
         if($location == 'footer')  {$location = "footer_location"; }
-        $getmenu = MenuItems::select('admin_menu_items.*')
+        $getmenu = MenuItems::select('admin_menu_items.*','detailproperties.ma as code_property','categoryproperties.name as name_categories_property')
         ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+        ->leftjoin('detailproperties','detailproperties.id','admin_menu_items.property')
+        ->leftjoin('categoryproperties','categoryproperties.id','detailproperties.categoryproperties_id')
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
         ->get();
@@ -341,8 +344,20 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    public function list_product(Request $request){
-         $agent = new Agent();
+
+    public function product_cat(Request $request){
+
+
+
+
+       
+        ///////////////Tham so dau vao//////////////////]
+        $val=  array_values($request->all());
+            // $val=  ['ram' => '8g','16g'];
+
+
+        // dd($request->all());
+        $agent = new Agent();
         $ag = "";
         if($agent->isMobile()){
             $ag = "mobile";
@@ -351,9 +366,106 @@ class HomeController extends Controller
         $active_menu = "product";
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+        $Sidebars = $this->getmenu('sidebar');
+
+
+
+         $cat = Category::where('slug', $request->slug)->first();
+                if (empty($cat)) {
+                    return abort(404);
+                }
+
+        $categories = Category::where('taxonomy',Category::SAN_PHAM)
+            ->where('parent_id',$cat->id)
+            ->where('status',1)
+            ->get();
+        $cat_parent = Category::where('taxonomy',Category::SAN_PHAM)
+        ->where('parent_id', 0)
+        ->where('status',1)
+        ->get();
+
+
+
+        //////////////Dieu Kien loc//////////////////
+
+
+    $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
+        ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
+        ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
+        ->get();
+
+
+        $url = $request->fullUrl();
+        foreach ($attributes as $key => $attr) {
+            $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
+            foreach ($detailproperties as $key => $attr_detail) {
+                $Propertyproducts = Propertyproducts::select('propertyproducts.*','detailproperties.ma as ma')
+                ->leftjoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
+                ->leftjoin('products','products.id','propertyproducts.products_id')
+                ->where('propertyproducts.detailproperties_id',$attr_detail->id)
+                ->where('products.deleted_at',null)
+                ->count();
+                $attr_detail->setAttribute('count_product',$Propertyproducts);
+                if(in_array($attr_detail->ma,$val)){
+                    $attr_detail->setAttribute('attr_checked',1);
+                }
+                else {
+                    $attr_detail->setAttribute('attr_checked',0);
+                }
+                if(!$request->all()){
+                    $origin_url = $url.'?'.$attr->name.'='.$attr_detail->ma;
+                    $attr_detail->setAttribute('fullurl',$origin_url);
+                }
+                else{
+
+
+                    // $arr_url =[$attr->name => $attr_detail->ma];
+
+
+
+                     $url_filter = $url.'&'.$attr->name.'='.$attr_detail->ma;
+
+
+                     $attr_detail->setAttribute('fullurl',$url_filter);
+                }
+                
+            }
+
+
+            $attr->setAttribute('detailproperty', $detailproperties);
+        }
+
+
+
+        //////////////Cau Lenh Truy Van DL//////////////////
+        $exists_property ="";
+
         
+        // if(!empty($val)){
+
+        $exists_property =  MenuItems::where('link',$request->slug)->whereIn('property',$val)->get();
+
+        
+        $products = Products::distinct()->select('products.*','detailproperties.ma as matt','categories.slug as url')
+        ->leftjoin('category_relationships','category_relationships.product_id','products.id')
+        ->leftjoin('categories','categories.id','category_relationships.cat_id')
+        ->leftjoin('propertyproducts','propertyproducts.products_id','products.id')
+        ->leftJoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
+        ->whereIn('detailproperties.ma',$val)
+        ->where('categories.slug',$request->slug)
+        ->where('products.status',1)
+        ->groupBy('products.id')
+        ->paginate(20)->withQueryString();
+
+        $slug = $request->slug;
+
+        //////////////Tra ve//////////////////
+       
+
         return \view('frontend.product', \compact('products', 'categories',
-        'cat', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
+        'cat', 'Sidebars','locale', 'active_menu', 'posts_footer','cat_parent','attributes','slug'))->with('agent',$ag);
+
+
     }
 
     // /* ==== Xử lý dữ liệu trang danh sách sản phẩm */

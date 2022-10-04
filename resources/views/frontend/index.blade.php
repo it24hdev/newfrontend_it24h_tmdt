@@ -120,7 +120,7 @@
                             @foreach ($get_cat_parents as $item)
                                 <div class="wp-category">
                                     <div class="cat-thumb">
-                                        <a href="{{route('product_cat', $item->slug)}}">
+                                        <a href="{{route('product_cat', ['slug' =>  $item->slug])}}">
                                             @if ($item->thumb == 'no-image-product.jpg' || empty($item->thumb))
                                                 <img class="owl-lazy" data-src="{{asset('upload/images/common_img/no-image-product.jpg')}}" />
                                             @else
@@ -130,14 +130,14 @@
                                     </div>
                                     <div class="child-cat">
                                         <div class="cat-title">
-                                            <a href="{{route('product_cat', $item->slug)}}">{{$item->name}}</a>
+                                            <a href="{{route('product_cat',['slug' =>  $item->slug])}}">{{$item->name}}</a>
                                         </div>
                                         <ul class="sub-cats">
                                             @foreach ($item->cat_child as $cat_child)
-                                                <li><a href="{{route('product_cat', $cat_child->slug)}}">{{$cat_child->name}} <span class="count">({{$cat_child->get_product_by_cat()->count()}})</span></a></li>
+                                                <li><a href="{{route('product_cat',['slug' =>  $cat_child->slug])}}">{{$cat_child->name}} <span class="count">({{$cat_child->get_product_by_cat()->count()}})</span></a></li>
                                             @endforeach
                                         </ul>
-                                        <a href="{{route('product_cat', $item->slug)}}" class="view-all">Xem tất cả</a>
+                                        <a href="{{route('product_cat', ['slug' => $item->slug])}}" class="view-all">Xem tất cả</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -176,7 +176,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <a href="{{route('product_cat', $cat_parent->slug)}}" class="show-all">Xem tất cả <i class="far fa-angle-right"></i></a>
+                            <a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all">Xem tất cả <i class="far fa-angle-right"></i></a>
                         </div>
                         <div id="data-{{$cat_parent->id}}" class="wp-slider-pro">
 

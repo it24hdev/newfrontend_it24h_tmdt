@@ -24,7 +24,7 @@
                         @if (!empty($cat))
                             <a href="{{route('user')}}">@lang('lang.Home')</a><i class="fas fa-angle-right mx-1"></i>
                             <a href="{{route('list_product')}}">@lang('lang.Shop')</a><i class="fas fa-angle-right mx-1"></i>
-                            <a href="{{route('product_cat', $cat->slug)}}">{{$cat->name}}</a>
+                            <a href="{{route('product_cat',[ 'slug' => $cat->slug])}}">{{$cat->name}}</a>
                         @else
                             <a href="{{route('user')}}">@lang('lang.Home')</a><i class="fas fa-angle-right mx-1"></i>
                             <a href="{{route('list_product')}}">@lang('lang.Shop')</a>
@@ -44,14 +44,14 @@
                                 @if (count($categories) > 0)
                                     @foreach ($categories as $item)
                                         <li class="cat-item">
-                                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                                            <a href="{{route('product_cat', ['slug' => $item->slug])}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
                                             <span class="count">({{$item->get_product_by_cat()->count()}})</span>
                                         </li>
                                     @endforeach
                                 @else
                                     @foreach ($cat_parent as $item)
                                         <li class="cat-item">
-                                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                                            <a href="{{route('product_cat', ['slug' => $item->slug])}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
                                             <span class="count">({{$item->get_product_by_cat()->count()}})</span>
                                         </li>
                                     @endforeach
@@ -137,24 +137,40 @@
                         </div>
 
                         <!-- ==== Foreach bộ lọc -->
-                        @foreach($categoryproperties as $key => $value)
+                      
+                        @foreach($attributes as $key => $value)
                         <div class="categories-product-sidebar">
                             <div class="header-sidebar">
                                 <span>{{$value->name}}</span>
                             </div>
                             <ul class="list-categories list-categories-brand">
-                                @foreach($detailproperty as $property)
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> {{$property->name}}
+                                @foreach($value->detailproperty as $property)
+                                <li class="cat-item" onclick="">
+                                     <a href="{{$property->fullurl}}">
+                                    <input type="checkbox" name="{{$value->ma}}[]" class="checkfilter" value="{{$property->ma}}" 
+                                        @if($property->attr_checked == 1)
+                                        checked ="checked"
+                                        @endif>
+                                        {{$property->name}}
+                                    
+                                        
                                     </a>
-                                    <span class="count">(14)</span>
+                                    </input>
+
+                                   {{--  <a href="{{Request::url().'?'.$value->name.'='.$property->ma}}">
+                                        @if($property->attr_checked == 1)
+                                        <i class="far fa-check-square"></i>
+                                        @else
+                                         <i class="far fa-square"></i> 
+                                        @endif
+                                        {{$property->name}}
+                                    </a>
+                                    <span class="count">{{$property->count_product}}</span> --}}
                                 </li>
                                 @endforeach
                             </ul>
                         </div>
                         @endforeach
-
                         <div class="product-tag-sidebar">
                             <div class="header-sidebar">
 
@@ -314,7 +330,7 @@
                 <ul class="list-categories">
                     @foreach ($categories as $item)
                         <li class="cat-item">
-                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                            <a href="{{route('product_cat',['slug' =>  $item->slug])}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
                             <span class="count">({{$item->get_product_by_cat()->count()}})</span>
                         </li>
                     @endforeach
@@ -439,6 +455,14 @@
 <script>
     $(document).ready(function(){
             //Add to Cart
+
+            console.log(window.location.search);
+
+            $(".checkfilter").click(function(){
+                console.log(1);
+            })
+
+            const myArray = text.split(" ", 3);
 
             var mess = document.getElementById('message_add_cart').innerHTML;
             add_cart = function(id){

@@ -259,30 +259,17 @@ $currentUrl = url()->current();
                                         </ul>
                                         <div class="tab-content" id="myTabContent{{$m->id}}">
                                             <div class="tab-pane fade show active p-4" id="properties{{$m->id}}" role="tabpanel" aria-labelledby="property_tab{{$m->id}}">
-                                            {{-- <select name="list_categoryproperty" id="list_categoryproperty{{$m->id}}" class="listcate">
-                                                @foreach ($list_property as $val)
-                                                @if($val->cate_id == $m->category_id)
-                                                <option value="{{ $val->id}}" 
-                                                    {{$m->property == $val->categoryproperties_id ? 'selected':false}}>
-                                                    {{ $val->name}}
-                                                </option>
-                                                @endif
-                                                @endforeach
-                                                <option value="{{$m->property }}" selected> Chọn danh mục</option
-                                            </select> --}}
-
                                             <select name="list_property" id="list_property{{$m->id}}" class="listcate">
                                             @if($m->property ==null || $m->property ==0)
-                                            <option value="0">Chọn thuộc tính</option>
-                                            @endif
-                                            @foreach ($list_property as $val)
-                                            <option value="{{ $val->id}}" {{$m->property == $val->id ? 'selected':false}}>
-                                                {{ $val->name}}
-                                            </option>
-                                            @endforeach
+                                                <option value="0">Chọn thuộc tính</option>
+                                                @endif
+                                                @foreach ($list_property as $val)
+                                                @if($val->cate_id == $m->category_id)
+                                                <option value="{{ $val->id}}" {{$m->property == $val->id ? 'selected':false}}>
+                                                    {{ $val->name}}
+                                                @endif
+                                                @endforeach
                                         </select>
-                                            <select name="list_property" id="sub_list_categoryproperty{{$m->id}}">
-                                            </select>
                                             </div>
                                             <div class="tab-pane fade p-4" id="price{{$m->id}}" role="tabpanel" aria-labelledby="price_tab{{$m->id}}">2</div>
                                         </div>
@@ -379,14 +366,3 @@ $currentUrl = url()->current();
 <script src="{{asset('asset/menu/menu.js')}}"></script>
 <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
 @endsection
-
-{{--   <select name="list_property" id="list_property{{$m->id}}">
-                                                @if($m->property ==null || $m->property ==0)
-                                                <option value="0">Chọn thuộc tính</option>
-                                                @endif
-                                                @foreach ($list_property as $val)
-                                                <option value="{{ $val->id}}" {{$m->property == $val->id ? 'selected':false}}>
-                                                    {{ $val->name}}
-                                                </option>
-                                                @endforeach
-                                            </select> --}}

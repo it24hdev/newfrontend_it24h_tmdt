@@ -88,6 +88,7 @@ class Category_propertyController extends Controller
     {
         $detailproperty  = [
             'name'  => $request->name,
+            'ma'  => $request->ma,
             'stt'   => $request->stt,
             'explain'   => $request->explain,
             'categoryproperties_id' => $id,
@@ -196,6 +197,7 @@ class Category_propertyController extends Controller
         $Detailproperties = Detailproperties::find($id);
         $detailproperty  = [
             'name'  => $request->name,
+            'ma'  => $request->ma,
             'stt'   => $request->stt,
             'explain'   => $request->explain,
         ];

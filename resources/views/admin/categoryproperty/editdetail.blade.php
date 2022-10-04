@@ -14,6 +14,11 @@
                 @error('name') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
             <div class="form-group mb-4">
+                <label>Mã nhận dạng cho quản trị</label>
+                <input type="text" class=" form-control" name='ma' value="{{old('ma') ?? $detail_property->ma}}">
+                @error('ma') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group mb-4">
                 <label>Mô tả tóm tắt</label>
                 <textarea type="text" class="form-control" rows="2" name='explain'>{{old('explain') ?? $detail_property->explain}}</textarea>
             </div>
