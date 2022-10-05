@@ -61,18 +61,18 @@ class HomeController extends Controller
         $list_post = DB::table('posts')->where('status',1)->whereNull('deleted_at')->limit(3)->get();
         
         return view('frontend.index',[
-        'get_cat_parents' =>  $get_cat_parents,
-        'Sidebars'        => $Sidebars,
-        'banner_1'        => $banner_1,
-        'banner_2'        => $banner_2,
-        'banner_3'        => $banner_3,
-        'banner_sidebar'  => $banner_sidebar,
-        'sliders'         => $sliders,
-        'list_post'       => $list_post,
-        'list_cat'        => $list_cat,
-        'locale'          => $locale,
-        'agent'           => $ag,
-        'isMobile'        => $isMobile,
+            'get_cat_parents' =>  $get_cat_parents,
+            'Sidebars'        => $Sidebars,
+            'banner_1'        => $banner_1,
+            'banner_2'        => $banner_2,
+            'banner_3'        => $banner_3,
+            'banner_sidebar'  => $banner_sidebar,
+            'sliders'         => $sliders,
+            'list_post'       => $list_post,
+            'list_cat'        => $list_cat,
+            'locale'          => $locale,
+            'agent'           => $ag,
+            'isMobile'        => $isMobile,
         ]);
     }
     //lay danh muc cho blog tren menu
@@ -126,10 +126,10 @@ class HomeController extends Controller
     //lay san pham deal
     public function getdealProduct(Request $request){
         $dealProduct = Products::where('status',1)
-            ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d').' 23:59:59')
-            ->orderBy('time_deal', 'desc')->inRandomOrder()->limit(8)->get();
+        ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d').' 23:59:59')
+        ->orderBy('time_deal', 'desc')->inRandomOrder()->limit(8)->get();
         $time_deal = NULL;
-         $t=0;
+        $t=0;
 
         foreach($dealProduct as $k){
             $t++;
@@ -138,9 +138,9 @@ class HomeController extends Controller
         }
 
         $view2     = view('frontend.get-dealsproducts', [
-                'dealProduct' => $dealProduct,
-                'time_deal' => $time_deal,
-            ])->render();
+            'dealProduct' => $dealProduct,
+            'time_deal' => $time_deal,
+        ])->render();
         return response()->json($view2);
     }
     // lay san pham moi
@@ -149,29 +149,29 @@ class HomeController extends Controller
         $product_new    = Products::where('status',1)->where('new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
 
         $view2     = view('frontend.get-newproducts', [
-                'product_new' => $product_new,
-                'product_hot_sale' => $product_hot_sale,
-            ])->render();
+            'product_new' => $product_new,
+            'product_hot_sale' => $product_hot_sale,
+        ])->render();
         return response()->json($view2);
     }
 
     public function loadfooter(Request $request){
-       
+
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
 
         $view2     = view('frontend.layouts.footer', [
-                'posts_footer' => $posts_footer, 
-            ])->render();
+            'posts_footer' => $posts_footer, 
+        ])->render();
         return response()->json($view2);
     }
 
     public function loadsliderbottom(Request $request){
-       
+
         $list_brand = Brand::get();
 
         $view2  = view('frontend.slider-bottom', [
-                'list_brand' => $list_brand, 
-            ])->render();
+            'list_brand' => $list_brand, 
+        ])->render();
         return response()->json($view2);
     }
 
@@ -194,17 +194,17 @@ class HomeController extends Controller
         $getcategoryblog    = $this->getcategoryblog();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $arrCategory = DB::table('categories')->where('status',1)
-            ->where('taxonomy',Category::BAI_VIET)
-            ->where('parent_id',0)
-            ->whereNull('deleted_at')
-            ->get();
+        ->where('taxonomy',Category::BAI_VIET)
+        ->where('parent_id',0)
+        ->whereNull('deleted_at')
+        ->get();
 
         $blogs = Post::where('status',1)
-            ->where('title', 'LIKE', "%$search%")
-            ->paginate(8)->withQueryString();
+        ->where('title', 'LIKE', "%$search%")
+        ->paginate(8)->withQueryString();
 
         $latest_blog = DB::table('posts')->where('status',1)
-            ->whereNull('deleted_at')->limit(5)->get();
+        ->whereNull('deleted_at')->limit(5)->get();
         return view('frontend.category-blog',[
             'arrCategory'     => $arrCategory,
             'blogs'           => $blogs,
@@ -242,26 +242,26 @@ class HomeController extends Controller
         $getcategoryblog    = $this->getcategoryblog();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $blog_category = DB::table('categories')->where('slug',$slug)
-            ->where('status',1)->where('taxonomy',Category::BAI_VIET)
-            ->first();
+        ->where('status',1)->where('taxonomy',Category::BAI_VIET)
+        ->first();
         if (!is_null($blog_category)){
             $arrCategory   = DB::table('categories')->where('status',1)
-                ->where('taxonomy',Category::BAI_VIET)
-                ->where('parent_id',0)
-                ->whereNull('deleted_at')
-                ->get();
+            ->where('taxonomy',Category::BAI_VIET)
+            ->where('parent_id',0)
+            ->whereNull('deleted_at')
+            ->get();
             $category_rela = CategoryRelationship::where('cat_id',$blog_category->id)
-                ->whereNull('product_id')->get();
+            ->whereNull('product_id')->get();
             $arrPost = [];
             foreach ($category_rela as $category){
                 $arrPost[] = $category->post_id;
             }
             $blogs = Post::whereIn('id',$arrPost)
-                ->where('status',1)
-                ->where('title', 'LIKE', "%$search%")
-                ->paginate(8)->withQueryString();
+            ->where('status',1)
+            ->where('title', 'LIKE', "%$search%")
+            ->paginate(8)->withQueryString();
             $latest_blog = DB::table('posts')->where('status',1)
-                ->whereNull('deleted_at')->limit(5)->get();
+            ->whereNull('deleted_at')->limit(5)->get();
             return view('frontend.category-blog',[
                 'arrCategory'     => $arrCategory,
                 'blogs'           =>$blogs,
@@ -288,41 +288,41 @@ class HomeController extends Controller
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $post = Post::where('slug',$slug)
-            ->where('status',1)->whereNull('deleted_at')->first();
+        ->where('status',1)->whereNull('deleted_at')->first();
         if (!is_null($post)){
             $arrCategory = DB::table('categories')->where('status',1)
-                ->where('taxonomy',Category::BAI_VIET)
-                ->where('parent_id',0)
-                ->whereNull('deleted_at')->get();
+            ->where('taxonomy',Category::BAI_VIET)
+            ->where('parent_id',0)
+            ->whereNull('deleted_at')->get();
 
             $latest_blog = DB::table('posts')->where('status',1)
-                ->whereNull('deleted_at')->limit(5)->get();
+            ->whereNull('deleted_at')->limit(5)->get();
 
             $arrCategoryRela = [];
             foreach ($post->getCategoryRela as $item){
                 $arrCategoryRela[] = $item->cat_id;
             }
             $category_post = DB::table('category_relationships')
-                        ->whereIn('cat_id',$arrCategoryRela)->get();
+            ->whereIn('cat_id',$arrCategoryRela)->get();
             $arrPost = [];
             foreach ($category_post as $category){
                 $arrPost[] = $category->post_id;
             }
 
             $post_pre = Post::whereIn('id',$arrPost)
-                ->where('id','<>',$post->id)
-                ->first();
+            ->where('id','<>',$post->id)
+            ->first();
             $post_next = null;
             if (!is_null($post_pre)){
                 $post_next = Post::whereIn('id',$arrPost)
-                    ->whereNotIn('id',[$post->id,$post_pre->id])
-                    ->first();
+                ->whereNotIn('id',[$post->id,$post_pre->id])
+                ->first();
             }
 
             $count_vote = Vote::where('post_id',$post->id)->whereNull(['deleted_at','product_id'])->count();
             $votes = Vote::with('parentID')
-                ->where('post_id',$post->id)
-                ->where('parent_id',0)->whereNull(['deleted_at','product_id'])->get();
+            ->where('post_id',$post->id)
+            ->where('parent_id',0)->whereNull(['deleted_at','product_id'])->get();
             $Sidebars           = $this->getmenu('sidebar');
             $getcategoryblog    = $this->getcategoryblog();
             return view('frontend.single-post',[
@@ -344,19 +344,46 @@ class HomeController extends Controller
         return abort(404);
     }
 
-
     public function product_cat(Request $request){
+        // dd();
+        // $arr = self::$arr_temp;
+        // if(!empty( $request->all())){
+        //     foreach ($request->all() as $key_request => $value_request) {
+        //         if(!empty($arr_temp)){
+        //              dd($arr_temp);
+        //             foreach ($arr_temp as $key_temp => $value_temp) {
+
+        //                 dd($arr_temp);
+        //                 if($value_request != $value_temp && $key_request != $key_temp){
+        //                     array_push($arr_temp,[$key_request => $value_request]); 
+
+        //                     dd('neu gia tri pt khac thi update gia tri tu request');
+        //                 }
+        //                 elseif ($value_request != $value_temp && $key_request == $key_temp) {
+        //                     $value_temp = $value_temp.','.$value_request;
+        //                     dd('neu gia tri pt trung thi them gia tri tu request');
+        //                 }
+        //             }
+        //             dd('mang_temp_co_pt');
+        //         }else{
+        //             // neu mang temp rong thi them gia tri
+        //             dd('mang_temp_rong');
+        //             array_push($arr_temp,[$key_request => $value_request]);
+        //         }
+        //     }
+        // }
 
 
-
-
-       
         ///////////////Tham so dau vao//////////////////]
+
+        // dd($request->all());
         $val=  array_values($request->all());
             // $val=  ['ram' => '8g','16g'];
 
 
         // dd($request->all());
+
+        $filter = $request->all();
         $agent = new Agent();
         $ag = "";
         if($agent->isMobile()){
@@ -370,15 +397,15 @@ class HomeController extends Controller
 
 
 
-         $cat = Category::where('slug', $request->slug)->first();
-                if (empty($cat)) {
-                    return abort(404);
-                }
+        $cat = Category::where('slug', $request->slug)->first();
+        if (empty($cat)) {
+            return abort(404);
+        }
 
         $categories = Category::where('taxonomy',Category::SAN_PHAM)
-            ->where('parent_id',$cat->id)
-            ->where('status',1)
-            ->get();
+        ->where('parent_id',$cat->id)
+        ->where('status',1)
+        ->get();
         $cat_parent = Category::where('taxonomy',Category::SAN_PHAM)
         ->where('parent_id', 0)
         ->where('status',1)
@@ -389,16 +416,24 @@ class HomeController extends Controller
         //////////////Dieu Kien loc//////////////////
 
 
-    $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
+        $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
         ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
         ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
         ->get();
 
 
-        $url = $request->fullUrl();
-        foreach ($attributes as $key => $attr) {
+
+        foreach ($filter as $key => $value) {
+                    // $filter_key[]=$key;
+            $value = explode(',',$value);
+            $filter[$key] = $value;
+        }
+        // dd($filter);
+
+
+        foreach ($attributes as $key_attr => $attr) {
             $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
-            foreach ($detailproperties as $key => $attr_detail) {
+            foreach ($detailproperties as $key_attr_dt => $attr_detail) {
                 $Propertyproducts = Propertyproducts::select('propertyproducts.*','detailproperties.ma as ma')
                 ->leftjoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
                 ->leftjoin('products','products.id','propertyproducts.products_id')
@@ -406,67 +441,93 @@ class HomeController extends Controller
                 ->where('products.deleted_at',null)
                 ->count();
                 $attr_detail->setAttribute('count_product',$Propertyproducts);
-                if(in_array($attr_detail->ma,$val)){
-                    $attr_detail->setAttribute('attr_checked',1);
+
+                $origin_url = "http:";
+                foreach ($filter as $key_filter => $value_filter) {
+                    $url_detail = "";
+                    if($attr->ma == $key_filter){
+                        foreach ($value_filter as $value) {
+                        
+                            if($value==$attr_detail->ma){
+                                    $url_detail = $url_detail;
+                                     $attr_detail->setAttribute('fullurl',$url_detail);
+                            }
+                            else{
+                                $url_detail = $url_detail.$value;
+                                $attr_detail->setAttribute('fullurl',$url_detail).$value;
+                            }
+                            dd($url_detail);
+                             
+                    }
+                    }
+                    
+                    // dd($url_detail);
+                  
+                   
                 }
-                else {
-                    $attr_detail->setAttribute('attr_checked',0);
-                }
-                if(!$request->all()){
-                    $origin_url = $url.'?'.$attr->name.'='.$attr_detail->ma;
-                    $attr_detail->setAttribute('fullurl',$origin_url);
-                }
-                else{
 
-
-                    // $arr_url =[$attr->name => $attr_detail->ma];
-
-
-
-                     $url_filter = $url.'&'.$attr->name.'='.$attr_detail->ma;
-
-
-                     $attr_detail->setAttribute('fullurl',$url_filter);
-                }
-                
             }
+            
 
 
-            $attr->setAttribute('detailproperty', $detailproperties);
+
+            
+                // dd($origin_url);
+
+
+
+
+
+
+                // if(!$request->all()){
+                //     $origin_url = $url.'?'.$attr->name.'='.$attr_detail->ma;
+                //     $attr_detail->setAttribute('fullurl',$origin_url);
+                // }
+                // else{
+
+                //      $url_filter = $url.'&'.$attr->name.'='.$attr_detail->ma;
+                //      $attr_detail->setAttribute('fullurl',$url_filter);
+                // }
+             $attr->setAttribute('detailproperty', $detailproperties);
+
         }
+
+
+       
+
 
 
 
         //////////////Cau Lenh Truy Van DL//////////////////
-        $exists_property ="";
+    $exists_property ="";
 
-        
+
         // if(!empty($val)){
 
-        $exists_property =  MenuItems::where('link',$request->slug)->whereIn('property',$val)->get();
+    $exists_property =  MenuItems::where('link',$request->slug)->whereIn('property',$val)->get();
 
-        
-        $products = Products::distinct()->select('products.*','detailproperties.ma as matt','categories.slug as url')
-        ->leftjoin('category_relationships','category_relationships.product_id','products.id')
-        ->leftjoin('categories','categories.id','category_relationships.cat_id')
-        ->leftjoin('propertyproducts','propertyproducts.products_id','products.id')
-        ->leftJoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
-        ->whereIn('detailproperties.ma',$val)
-        ->where('categories.slug',$request->slug)
-        ->where('products.status',1)
-        ->groupBy('products.id')
-        ->paginate(20)->withQueryString();
 
-        $slug = $request->slug;
+    $products = Products::distinct()->select('products.*','detailproperties.ma as matt','categories.slug as url')
+    ->leftjoin('category_relationships','category_relationships.product_id','products.id')
+    ->leftjoin('categories','categories.id','category_relationships.cat_id')
+    ->leftjoin('propertyproducts','propertyproducts.products_id','products.id')
+    ->leftJoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
+    ->whereIn('detailproperties.ma',$val)
+    ->where('categories.slug',$request->slug)
+    ->where('products.status',1)
+    ->groupBy('products.id')
+    ->paginate(20)->withQueryString();
+
+    $slug = $request->slug;
 
         //////////////Tra ve//////////////////
-       
 
-        return \view('frontend.product', \compact('products', 'categories',
+
+    return \view('frontend.product', \compact('products', 'categories',
         'cat', 'Sidebars','locale', 'active_menu', 'posts_footer','cat_parent','attributes','slug'))->with('agent',$ag);
 
 
-    }
+}
 
     // /* ==== Xử lý dữ liệu trang danh sách sản phẩm */
     // public function list_product(Request $request){
@@ -646,135 +707,135 @@ class HomeController extends Controller
 
 
     // lay comment
-    public function commentPost(Request $request){
-        $post = Post::find($request->comment_post);
-        if (!is_null($post)){
-            $input = [
-                'level'     => 0,
-                'comment'   => $request->comment,
-                'post_id'   => $request->comment_post,
-                'product_id'=> null,
-                'name_user' => $request->author,
-                'user_id'   => null,
-                'email'     => $request->email,
-                'parent_id' => $request->comment_parent
-            ];
-            Vote::create($input);
-            return redirect()->route('singlePost',['slug'=>$post->slug]);
-        }
+public function commentPost(Request $request){
+    $post = Post::find($request->comment_post);
+    if (!is_null($post)){
+        $input = [
+            'level'     => 0,
+            'comment'   => $request->comment,
+            'post_id'   => $request->comment_post,
+            'product_id'=> null,
+            'name_user' => $request->author,
+            'user_id'   => null,
+            'email'     => $request->email,
+            'parent_id' => $request->comment_parent
+        ];
+        Vote::create($input);
+        return redirect()->route('singlePost',['slug'=>$post->slug]);
     }
+}
     //xu ly lay danh gia vote
-    public function getFormVote(Request $request){
-        $locale            = config('app.locale');
-        if ($request->type == 'reply'){
-            $view = view('frontend.form_reply', [
-                'post_id'   => $request->post_id,
-                'parent_id' => $request->vote_id,
-                'type'      => 'reply',
-                'locale'    => $locale,
+public function getFormVote(Request $request){
+    $locale            = config('app.locale');
+    if ($request->type == 'reply'){
+        $view = view('frontend.form_reply', [
+            'post_id'   => $request->post_id,
+            'parent_id' => $request->vote_id,
+            'type'      => 'reply',
+            'locale'    => $locale,
 
-            ])->render();
-        }else{
-            $view = view('frontend.form_reply', [
-                'post_id'   => $request->post_id,
-                'parent_id' => $request->vote_id,
-                'locale'    => $locale,
-            ])->render();
-        }
-        return response()->json($view);
+        ])->render();
+    }else{
+        $view = view('frontend.form_reply', [
+            'post_id'   => $request->post_id,
+            'parent_id' => $request->vote_id,
+            'locale'    => $locale,
+        ])->render();
     }
+    return response()->json($view);
+}
     //xu ly nhap thanh tim kiem ra san pham
-    public function autotypeahead(Request $request){
+public function autotypeahead(Request $request){
     $locale            = config('app.locale');
     $view ='';
     if($request->data!= null)
     {
-    $data =  Products::where('name','like', '%' .$request->data. '%')->limit(15)->get();
-    if($data !=null)
-    $view = view('frontend.search', [
-            'data'   => $data,
-            'locale' => $locale,
-        ])->render();
+        $data =  Products::where('name','like', '%' .$request->data. '%')->limit(15)->get();
+        if($data !=null)
+            $view = view('frontend.search', [
+                'data'   => $data,
+                'locale' => $locale,
+            ])->render();
     }
     return response()->json(['html' => $view]);
-    }
+}
     //lien he
-    public function contact(){
-        $agent = new Agent();
-        $ag = "";
-        if($agent->isMobile()){
-            $ag = "mobile";
-        }
-        else $ag = "desktop";
-        $active_menu = "contact";
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $locale             = config('app.locale');
-        $Sidebars           = $this->getmenu('sidebar');
+public function contact(){
+    $agent = new Agent();
+    $ag = "";
+    if($agent->isMobile()){
+        $ag = "mobile";
+    }
+    else $ag = "desktop";
+    $active_menu = "contact";
+    $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+    $locale             = config('app.locale');
+    $Sidebars           = $this->getmenu('sidebar');
         // $Menus              = $this->getmenu('menu');
-        return \view('frontend.contact', \compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
+    return \view('frontend.contact', \compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
+}
+public function changeLanguage($language)
+{
+    Session::put('website_language', $language);
+
+    return redirect()->back();
+}
+
+
+public function recruit()
+{
+    $agent = new Agent();
+    $ag = "";
+    if($agent->isMobile()){
+        $ag = "mobile";
     }
-    public function changeLanguage($language)
-    {
-        Session::put('website_language', $language);
-
-        return redirect()->back();
-    }
-
-
-    public function recruit()
-    {
-        $agent = new Agent();
-        $ag = "";
-        if($agent->isMobile()){
-            $ag = "mobile";
-        }
-        else $ag = "desktop";
-        $list_location = Recruit::where('status',1)->groupBy('location')->get();
-        $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
-        $active_menu = "contact";
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
-        // $Sub_menus          = $this->getmenu('submenu');
-        return view('frontend.recruit', \compact('Sidebars',  'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ))->with('agent',$ag);
-    }
-
-    public function recruit_register(Request $request)
-    {
-        $agent = new Agent();
-        $ag = "";
-        if($agent->isMobile()){
-            $ag = "mobile";
-        }
-        else $ag = "desktop";
-        $list_location = Recruit::where('status',1)->groupBy('location')->get();
-        $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
-        $active_menu = "contact";
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $Sidebars           = $this->getmenu('sidebar');
+    else $ag = "desktop";
+    $list_location = Recruit::where('status',1)->groupBy('location')->get();
+    $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
+    $active_menu = "contact";
+    $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+    $Sidebars           = $this->getmenu('sidebar');
         // $Menus              = $this->getmenu('menu');
         // $Sub_menus          = $this->getmenu('submenu');
+    return view('frontend.recruit', \compact('Sidebars',  'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ))->with('agent',$ag);
+}
 
-        if ($request->fileupload == null) {
-            $request->fileupload = "";
-        }
+public function recruit_register(Request $request)
+{
+    $agent = new Agent();
+    $ag = "";
+    if($agent->isMobile()){
+        $ag = "mobile";
+    }
+    else $ag = "desktop";
+    $list_location = Recruit::where('status',1)->groupBy('location')->get();
+    $list_vacancies = Recruit::where('status',1)->orderBy('created_at', 'ASC')->get();
+    $active_menu = "contact";
+    $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+    $Sidebars           = $this->getmenu('sidebar');
+        // $Menus              = $this->getmenu('menu');
+        // $Sub_menus          = $this->getmenu('submenu');
 
-        $recruit_register =[
-            'first_name'    => $request->first_name,
-            'phone_number'  => $request->phone_number,
-            'email'         => $request->email,
-            'vitriungtuyen' => $request->vitriungtuyen,
-            'parent_id'     => $request->parent_id,
-            'fileupload'    => $request->fileupload,
-            'status'        => 0,
-        ];
+    if ($request->fileupload == null) {
+        $request->fileupload = "";
+    }
+
+    $recruit_register =[
+        'first_name'    => $request->first_name,
+        'phone_number'  => $request->phone_number,
+        'email'         => $request->email,
+        'vitriungtuyen' => $request->vitriungtuyen,
+        'parent_id'     => $request->parent_id,
+        'fileupload'    => $request->fileupload,
+        'status'        => 0,
+    ];
 
 
-        try {
-            DB::beginTransaction();
-            Recruit_register::create($recruit_register);
-            DB::commit();
-            return redirect()->route('recruit',[
+    try {
+        DB::beginTransaction();
+        Recruit_register::create($recruit_register);
+        DB::commit();
+        return redirect()->route('recruit',[
             'Sidebars' => $Sidebars,
             // 'Menus' => $Menus,
             // 'Sub_menus' => $Sub_menus,
@@ -784,10 +845,10 @@ class HomeController extends Controller
             'list_vacancies' => $list_vacancies,
             'agent' => $ag,
         ])->with('error','Ứng tuyển thành công!');
-        }
-        catch (\Exception $exception){
-            DB::rollBack();
-           return redirect()->route('recruit',[
+    }
+    catch (\Exception $exception){
+        DB::rollBack();
+        return redirect()->route('recruit',[
             'Sidebars' => $Sidebars,
             // 'Menus' => $Menus,
             // 'Sub_menus' => $Sub_menus,
@@ -797,41 +858,41 @@ class HomeController extends Controller
             'list_vacancies' => $list_vacancies,
             'agent' => $ag,
         ])->with('error','Đăng kí thất bại!');
-        }
     }
+}
 
-    public function about_us(){
-        $agent = new Agent();
-        $ag = "";
-        if($agent->isMobile()){
-            $ag = "mobile";
-        }
-        else $ag = "desktop";
-        $active_menu = "about_us";
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $locale             = config('app.locale');
-        $Sidebars           = $this->getmenu('sidebar');
+public function about_us(){
+    $agent = new Agent();
+    $ag = "";
+    if($agent->isMobile()){
+        $ag = "mobile";
+    }
+    else $ag = "desktop";
+    $active_menu = "about_us";
+    $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+    $locale             = config('app.locale');
+    $Sidebars           = $this->getmenu('sidebar');
         // $Menus              = $this->getmenu('menu');
-        return \view('frontend.page.about-us', compact('Sidebars' ,'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
-    }
+    return \view('frontend.page.about-us', compact('Sidebars' ,'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+}
 
-    public function menucontent(Request $request){
-        $Sidebars  = $this->getmenu('sidebar');
-        $Sidebarid  = $request->id;
-        $agent = new Agent();
-        if($agent->isMobile()){
-             $view2     = view('frontend.contentmenumobile', [
-                'Sidebars'  => $Sidebars, 
-            ])->render();
-        }
-        else{
-            $view2     = view('frontend.contentmenu', [
-                'Sidebars'  => $Sidebars, 
-                'Sidebarid' => $Sidebarid, 
-            ])->render();
-        }
+public function menucontent(Request $request){
+    $Sidebars  = $this->getmenu('sidebar');
+    $Sidebarid  = $request->id;
+    $agent = new Agent();
+    if($agent->isMobile()){
+       $view2     = view('frontend.contentmenumobile', [
+        'Sidebars'  => $Sidebars, 
+    ])->render();
+   }
+   else{
+    $view2     = view('frontend.contentmenu', [
+        'Sidebars'  => $Sidebars, 
+        'Sidebarid' => $Sidebarid, 
+    ])->render();
+}
 
-       
-        return response()->json($view2);
-    }
+
+return response()->json($view2);
+}
 }

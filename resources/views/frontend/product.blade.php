@@ -456,13 +456,15 @@
     $(document).ready(function(){
             //Add to Cart
 
-            console.log(window.location.search);
+         /*  var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+           
+            }
 
-            $(".checkfilter").click(function(){
-                console.log(1);
-            })
-
-            const myArray = text.split(" ", 3);
+            console.log(sParameterName);*/
 
             var mess = document.getElementById('message_add_cart').innerHTML;
             add_cart = function(id){
