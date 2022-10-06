@@ -3,7 +3,7 @@
     <ul>
     @foreach($childs as $child)
         <li>
-        <a href="{!! route('product_cat', ['slug' => $child->link, $child->code_property]) !!}">
+        <a href="{!! route('product_cat', ['slug' => $child->link,$child->code_categoryproperties => $child->code_property]) !!}">
             {{-- @if($locale == 'vi') --}}
             {{$child->label}}
             {{-- @else {{$child->name2}} --}}

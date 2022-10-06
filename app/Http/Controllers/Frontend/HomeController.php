@@ -92,7 +92,7 @@ class HomeController extends Controller
         if($location == 'sidebar')  {$location = "sidebar_location"; }
         if($location == 'menu')  {$location = "menu_location"; }
         if($location == 'footer')  {$location = "footer_location"; }
-        $getmenu = MenuItems::select('admin_menu_items.*','detailproperties.ma as code_property','categoryproperties.name as name_categories_property')
+        $getmenu = MenuItems::select('admin_menu_items.*','detailproperties.ma as code_property','categoryproperties.name as name_categories_property', 'categoryproperties.ma as code_categoryproperties')
         ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
         ->leftjoin('detailproperties','detailproperties.id','admin_menu_items.property')
         ->leftjoin('categoryproperties','categoryproperties.id','detailproperties.categoryproperties_id')

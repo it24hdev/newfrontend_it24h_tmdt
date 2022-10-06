@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Categoryproperty;
 use App\Http\Controllers\laravelmenu\src\Models\Menus;
 use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use Maatwebsite\Excel\Facades\Excel;
@@ -202,7 +203,6 @@ class MenuController extends Controller
     {
         $menu = Menus::find(request()->input("idmenu"));
         $menu->name = request()->input("menuname");
-
         $menu->save();
         if (is_array(request()->input("arraydata"))) {
             foreach (request()->input("arraydata") as $value) {
@@ -212,6 +212,12 @@ class MenuController extends Controller
                     $menuitem->sort = $value["sort"];
                     $menuitem->depth = $value["depth"];
                     $menuitem->property = $value["property"]; 
+                  
+                    $get_code_categoryproperties = Categoryproperty::select('categoryproperties.*')->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                    ->where('detailproperties.id',$value["property"])
+                    ->first();
+                    if(!empty($get_code_categoryproperties))
+                    $menuitem->name_categoryproperty = $get_code_categoryproperties->ma;
                     if (config('menu.use_roles')) {
                         $menuitem->role_id = request()->input("role_id");
                     }

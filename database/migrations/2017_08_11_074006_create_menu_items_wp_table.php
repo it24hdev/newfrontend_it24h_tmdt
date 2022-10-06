@@ -27,6 +27,7 @@ class CreateMenuItemsWpTable extends Migration
             $table->integer('categoryselect')->nullable();
             $table->integer('property')->nullable();
             $table->boolean('form_filter')->nullable();
+            $table->string('name_categoryproperty')->nullable();
             $table->timestamps();
 
             $table->foreign('menu')->references('id')->on(config('menu.table_prefix') . config('menu.table_name_menus'))

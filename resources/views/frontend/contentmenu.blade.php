@@ -4,13 +4,17 @@
     @if($subsidebar->parent == $Sidebarid)
 
     <div class="wp-menu-parent">
-        <a href="{!! route('product_cat',  ['slug' => $subsidebar->link,  $subsidebar->code_property]) !!}" class="title-cat">{{$subsidebar->label}}</a>
+        @if(!empty($subsidebar->link))
+        <a href="{!! route('product_cat',  ['slug' => $subsidebar->link,$subsidebar->code_categoryproperties =>  $subsidebar->code_property]) !!}" class="title-cat">{{$subsidebar->label}}</a>
+        @else
+        <b style="color:black; font-size: 14px;"><p>{{$subsidebar->label}}</p></b>
+        @endif
         @if(count($subsidebar->childs))
         <ul>
             @foreach($Sidebars as $subsidebar3)
             @if($subsidebar3->parent == $subsidebar->id)
             <li>
-                <a href="{!! route('product_cat', ['slug' => $subsidebar3->link,   $subsidebar3->code_property]) !!}" class="cat-child">
+                <a href="{!! route('product_cat', ['slug' => $subsidebar3->link, $subsidebar3->code_categoryproperties  => $subsidebar3->code_property]) !!}" class="cat-child">
                     <span>{{$subsidebar3->label}}</span>
                     @if(count($subsidebar3->childs))
                     <span class="next-right">

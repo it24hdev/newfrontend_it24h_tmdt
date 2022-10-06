@@ -142,14 +142,12 @@
                                              @endif
                                         </a>
                                         <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}">
-                                            
-                                                <div class="wp-submenu">
-                                                    <div class="content-submenu">
-                                                        @if(count($Sidebar->childs))
-                                                        <div id="subid-{{$Sidebar->id}}" class="full_sub">
-                                                        </div>
-
-                                                        @endif
+                                            <div class="wp-submenu">
+                                                <div class="content-submenu">
+                                                    @if(count($Sidebar->childs))
+                                                    <div id="subid-{{$Sidebar->id}}" class="full_sub">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
