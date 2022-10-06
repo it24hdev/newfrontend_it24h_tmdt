@@ -17,6 +17,7 @@ function getmenus() {
       }
     }
     var listcate = $(this).find('.listcate').val();
+    var form_filter = $(this).find('.form_filter').val();
     var textoiner = $(this).find('.item-edit').text();
     var id = this.id.split('-');
     var textoexplotado = textoiner.split('|');
@@ -31,7 +32,7 @@ function getmenus() {
       parent: padre,
       sort: cont,
       property: listcate,
-
+      form_filter: form_filter,
     });
     cont++;
   });

@@ -212,6 +212,7 @@ class MenuController extends Controller
                     $menuitem->sort = $value["sort"];
                     $menuitem->depth = $value["depth"];
                     $menuitem->property = $value["property"]; 
+                    $menuitem->form_filter = $value["form_filter"]; 
                   
                     $get_code_categoryproperties = Categoryproperty::select('categoryproperties.*')->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
                     ->where('detailproperties.id',$value["property"])

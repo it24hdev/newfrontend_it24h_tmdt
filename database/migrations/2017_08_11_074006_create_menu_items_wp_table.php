@@ -26,7 +26,8 @@ class CreateMenuItemsWpTable extends Migration
             $table->integer('depth')->default(0);
             $table->integer('categoryselect')->nullable();
             $table->integer('property')->nullable();
-            $table->boolean('form_filter')->nullable();
+            $table->integer('form_filter')->nullable();
+            $table->string('price')->nullable();
             $table->string('name_categoryproperty')->nullable();
             $table->timestamps();
 

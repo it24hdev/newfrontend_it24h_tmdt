@@ -3,9 +3,22 @@
     <ul>
     @foreach($childs as $child)
         <li>
-        <a href="{!! route('product_cat', ['slug' => $child->link,$child->code_categoryproperties => $child->code_property]) !!}">
+            <p> {{$child}}</p>
+
+            @if($child->form_filter == 0)
+            <a href="{!! route('product_cat',  ['slug' => $child->link]) !!}">{{$child->label}}</a>
+            @elseif($child->form_filter == 1)
+            <a href="{!! route('product_cat',  ['slug' => $child->link,$child->code_categoryproperties =>  $child->code_property]) !!}" >{{$child->label}}</a>
+            @else
+            <a href="{!! route('product_cat',  ['slug' => $child->link, 'p' =>  $child->price]) !!}">{{$child->label}}</a>
+            @endif
+
+
+        <a href="{!! route('product_cat', ['slug' => $child->link, $child->code_categoryproperties => $child->code_property]) !!}">
+
+
             {{-- @if($locale == 'vi') --}}
-            {{$child->label}}
+            {{-- {{$child->label}} --}}
             {{-- @else {{$child->name2}} --}}
             {{-- @endif --}}
             @if(count($child->childs))

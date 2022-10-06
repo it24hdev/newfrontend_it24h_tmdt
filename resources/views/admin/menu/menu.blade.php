@@ -245,8 +245,12 @@ $currentUrl = url()->current();
                                     </label>
                                     </p>
                                     <div style="margin-right: 10px;margin-top: 10px;">
-                                    <input type="checkbox" name="form_filter" id="checkfilter{{$m->id}}" class="check_filter ">
-                                    <label for="checkfilter{{$m->id}}"> Lọc</label>
+                                    <label> Lọc</label>
+                                    <select name="form_filter" id="checkfilter{{$m->id}}" class="form_filter">
+                                    <option value="0" selected="selected">Chọn thuộc tính</option>
+                                    <option value="1" {{$m->form_filter == 1 ? 'selected':false}}>Lọc thuộc tính </option>
+                                    <option value="2" {{$m->form_filter == 2 ? 'selected':false}}>Lọc giá </option>
+                                    </select>
                                     </div>
                                     <div id="form_filter{{$m->id}}" style="margin-right: 10px;margin-top: 10px;float: left;">
                                         <ul class="nav nav-tabs" id="myTab{{$m->id}}" role="tablist">
@@ -259,7 +263,7 @@ $currentUrl = url()->current();
                                         </ul>
                                         <div class="tab-content" id="myTabContent{{$m->id}}">
                                             <div class="tab-pane fade show active p-4" id="properties{{$m->id}}" role="tabpanel" aria-labelledby="property_tab{{$m->id}}">
-                                            <select name="list_property" id="list_property{{$m->id}}" class="listcate">
+                                        <select name="list_property" id="list_property{{$m->id}}" class="listcate">
                                             @if($m->property ==null || $m->property ==0)
                                                 <option value="0">Chọn thuộc tính</option>
                                                 @endif

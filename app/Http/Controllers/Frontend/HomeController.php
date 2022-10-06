@@ -346,38 +346,9 @@ class HomeController extends Controller
     }
 
     public function product_cat(Request $request){
-        // dd();
-        // $arr = self::$arr_temp;
-        // if(!empty( $request->all())){
-        //     foreach ($request->all() as $key_request => $value_request) {
-        //         if(!empty($arr_temp)){
-        //              dd($arr_temp);
-        //             foreach ($arr_temp as $key_temp => $value_temp) {
-
-        //                 dd($arr_temp);
-        //                 if($value_request != $value_temp && $key_request != $key_temp){
-        //                     array_push($arr_temp,[$key_request => $value_request]); 
-
-        //                     dd('neu gia tri pt khac thi update gia tri tu request');
-        //                 }
-        //                 elseif ($value_request != $value_temp && $key_request == $key_temp) {
-        //                     $value_temp = $value_temp.','.$value_request;
-        //                     dd('neu gia tri pt trung thi them gia tri tu request');
-        //                 }
-        //             }
-        //             dd('mang_temp_co_pt');
-        //         }else{
-        //             // neu mang temp rong thi them gia tri
-        //             dd('mang_temp_rong');
-        //             array_push($arr_temp,[$key_request => $value_request]);
-        //         }
-        //     }
-        // }
-
-
+    
         ///////////////Tham so dau vao//////////////////]
 
-        // dd($request->all());
         $val=  array_values($request->all());
             // $val=  ['ram' => '8g','16g'];
 
@@ -530,41 +501,14 @@ class HomeController extends Controller
                     }
                     $attr_detail->setAttribute('fullurl',rtrim($url, '?'));
                 }
-      
-
-                // $origin_url = "http:";
-                // foreach ($filter as $key_filter => $value_filter) {
-                //     $url_detail = "";
-                //     if($attr->ma == $key_filter){
-                //         foreach ($value_filter as $value) {
-                //             if($value==$attr_detail->ma){
-                //                     // $url_detail = $url_detail;
-                //                 $attr_detail->setAttribute('attr_checked',1);
-                //                  // dd($attr_detail, $attr);
-                //                     // $attr_detail->setAttribute('fullurl',$url_detail);
-                //             }
-                //             else{
-                //                 $attr_detail->setAttribute('attr_checked',0);
-                //                 // $url_detail = $url_detail.$value;
-                //                 // $attr_detail->setAttribute('fullurl',$url_detail).$value;
-                //             }
-                             
-                //     }
-                //     }
-                // }
-
             }
             $attr->setAttribute('detailproperty', $detailproperties);
         }
         //////////////Cau Lenh Truy Van DL//////////////////
     $exists_property ="";
-
-
-        // if(!empty($val)){
-
     $exists_property =  MenuItems::where('link',$request->slug)->whereIn('property',$val)->get();
 
-
+    if($request->p){
     $products = Products::distinct()->select('products.*','detailproperties.ma as matt','categories.slug as url')
     ->leftjoin('category_relationships','category_relationships.product_id','products.id')
     ->leftjoin('categories','categories.id','category_relationships.cat_id')
@@ -575,6 +519,13 @@ class HomeController extends Controller
     ->where('products.status',1)
     ->groupBy('products.id')
     ->paginate(20)->withQueryString();
+    }
+    else{
+    $products = Products::where('status', 1)->whereIn('id', $list_id)
+                ->orderBy('price_onsale', 'ASC')
+                ->whereBetween('price_onsale', [$min_price, $max_price])
+                ->paginate(20)->withQueryString();
+    }
 
     $slug = $request->slug;
 

@@ -5,7 +5,13 @@
 
     <div class="wp-menu-parent">
         @if(!empty($subsidebar->link))
-        <a href="{!! route('product_cat',  ['slug' => $subsidebar->link,$subsidebar->code_categoryproperties =>  $subsidebar->code_property]) !!}" class="title-cat">{{$subsidebar->label}}</a>
+            @if($subsidebar->form_filter == 0)
+            <a href="{!! route('product_cat',  ['slug' => $subsidebar->link]) !!}" class="title-cat">{{$subsidebar->label}}</a>
+            @elseif($subsidebar->form_filter == 1)
+            <a href="{!! route('product_cat',  ['slug' => $subsidebar->link,$subsidebar->code_categoryproperties =>  $subsidebar->code_property]) !!}" class="title-cat">{{$subsidebar->label}}</a>
+            @else
+            <a href="{!! route('product_cat',  ['slug' => $subsidebar->link, 'p' =>  $subsidebar->price]) !!}" class="title-cat">{{$subsidebar->label}}</a>
+            @endif
         @else
         <b style="color:black; font-size: 14px;"><p>{{$subsidebar->label}}</p></b>
         @endif
@@ -14,6 +20,16 @@
             @foreach($Sidebars as $subsidebar3)
             @if($subsidebar3->parent == $subsidebar->id)
             <li>
+                @if($subsidebar3->form_filter == 0)
+                <a href="{!! route('product_cat', ['slug' => $subsidebar3->link]) !!}" class="cat-child">
+                    <span>{{$subsidebar3->label}}</span>
+                    @if(count($subsidebar3->childs))
+                    <span class="next-right">
+                        <i class="far fa-angle-right"></i>
+                    </span>
+                    @endif
+                </a>
+                @elseif($subsidebar3->form_filter == 1)
                 <a href="{!! route('product_cat', ['slug' => $subsidebar3->link, $subsidebar3->code_categoryproperties  => $subsidebar3->code_property]) !!}" class="cat-child">
                     <span>{{$subsidebar3->label}}</span>
                     @if(count($subsidebar3->childs))
@@ -22,6 +38,17 @@
                     </span>
                     @endif
                 </a>
+                @else
+                <a href="{!! route('product_cat', ['slug' => $subsidebar3->link,'p' => $subsidebar3->price]) !!}" class="cat-child">
+                    <span>{{$subsidebar3->label}}</span>
+                    @if(count($subsidebar3->childs))
+                    <span class="next-right">
+                        <i class="far fa-angle-right"></i>
+                    </span>
+                    @endif
+                </a>
+                @endif
+                
                 @if(count($subsidebar3->childs))
                 @include('frontend.subsidebar',['childs' => $subsidebar3->childs])
                 @endif
