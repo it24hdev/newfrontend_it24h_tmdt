@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Products;
@@ -411,26 +412,19 @@ class HomeController extends Controller
         ->where('status',1)
         ->get();
 
-
-
         //////////////Dieu Kien loc//////////////////
-
 
         $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
         ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
         ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
         ->get();
 
-
-
+        $filter_all = [];
         foreach ($filter as $key => $value) {
-                    // $filter_key[]=$key;
-            $value = explode(',',$value);
-            $filter[$key] = $value;
+            $value  = explode(',',$value);
+            $filter_all = array_merge($filter_all, $value);
         }
-        // dd($filter);
-
-
+        $origin_url = $request->url();
         foreach ($attributes as $key_attr => $attr) {
             $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
             foreach ($detailproperties as $key_attr_dt => $attr_detail) {
@@ -441,63 +435,127 @@ class HomeController extends Controller
                 ->where('products.deleted_at',null)
                 ->count();
                 $attr_detail->setAttribute('count_product',$Propertyproducts);
-
-                $origin_url = "http:";
-                foreach ($filter as $key_filter => $value_filter) {
-                    $url_detail = "";
-                    if($attr->ma == $key_filter){
-                        foreach ($value_filter as $value) {
-                        
-                            if($value==$attr_detail->ma){
-                                    $url_detail = $url_detail;
-                                     $attr_detail->setAttribute('fullurl',$url_detail);
-                            }
-                            else{
-                                $url_detail = $url_detail.$value;
-                                $attr_detail->setAttribute('fullurl',$url_detail).$value;
-                            }
-                            dd($url_detail);
-                             
+                $url ="";
+                $string_value='';
+                $get_name_key_prev='';
+                $name_pre="";
+                $name_current="";
+                $name="";
+                if(in_array($attr_detail->ma,$filter_all)){
+                    $attr_detail->setAttribute('attr_checked',1);
+                    $value_url = $filter_all;
+                    if (($key = array_search($attr_detail->ma, $value_url)) !== false) {
+                        unset($value_url[$key]);
                     }
+                    foreach ($value_url as $key => $value) {
+                       $cate_properties = Categoryproperty::select('categoryproperties.ma')
+                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                       ->where('detailproperties.ma',$value)
+                       ->first();
+                       if(isset($cate_properties->ma)){
+                        $name=$cate_properties->ma;
+                       }
+                        if(isset($value_url[$key-1])){
+                        $get_name_key_prev = $value_url[$key-1];
+                        $cate_properties_pre = Categoryproperty::select('categoryproperties.ma')
+                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                       ->where('detailproperties.ma',$get_name_key_prev)
+                       ->first();
+                           if(isset($cate_properties_pre->ma)){
+                            $name_pre=$cate_properties_pre->ma;
+                           }
+                        }
+                        if($name_pre == $name){
+                            $string_value = trim($string_value, '&').','.$value;
+                        }
+                        else{
+                        $string_value = $string_value.'&'.$name.'='.$value;
+                       }
                     }
-                    
-                    // dd($url_detail);
-                  
-                   
+                    $url = $origin_url.'?'.trim($string_value, '&');
+                    $attr_detail->setAttribute('fullurl',rtrim($url, '?'));
                 }
+                else{
+                    $attr_detail->setAttribute('attr_checked',0);
+                    // if (($key = array_search($attr_detail->ma, $filter_all)) == false) {
+                    //     array_push($filter_all,$attr_detail->ma);
+                    // }
+                    foreach ($filter_all as $key => $value) {
+                       $cate_properties = Categoryproperty::select('categoryproperties.ma')
+                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                       ->where('detailproperties.ma',$value)
+                       // ->where('detailproperties.ma',$attr_detail->ma)
+                       ->first();
+                       if(isset($cate_properties->ma)){
+                        $name=$cate_properties->ma;
+                       }
+
+                       $cate_properties_curren = Categoryproperty::select('categoryproperties.ma')
+                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                       ->where('detailproperties.ma',$attr_detail->ma)
+                       ->first();
+
+                       if(isset($cate_properties_curren->ma)){
+                        $name_current=$cate_properties_curren->ma;
+                       }
+
+                        if(isset($filter_all[$key-1])){
+                        $get_name_key_prev = $filter_all[$key-1];
+                        $cate_properties_pre = Categoryproperty::select('categoryproperties.ma')
+                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                       ->where('detailproperties.ma',$get_name_key_prev)
+                       ->first();
+                           if(isset($cate_properties_pre->ma)){
+                            $name_pre=$cate_properties_pre->ma;
+                           }
+                       }
+                       if($name_pre != $name){
+                        $string_value = $string_value.'&'.$name.'='.$value;
+                        }
+                       else{
+                        $string_value = trim($string_value, '&').','.$value;
+                        
+                       }
+                    }
+
+                    $url = $origin_url.'?'.trim($string_value, '&');
+                    if(Str::contains($url , $attr->ma)  == true)
+                    {
+                    $find = $attr->ma.'=';
+                    $replacement =  $attr->ma.'='.$attr_detail->ma.',';
+                    $url = str_replace($find,$replacement,$url);
+                    }
+                    else{
+                        $url = $url.'&'.$attr->ma.'='.$attr_detail->ma;
+                    }
+                    $attr_detail->setAttribute('fullurl',rtrim($url, '?'));
+                }
+      
+
+                // $origin_url = "http:";
+                // foreach ($filter as $key_filter => $value_filter) {
+                //     $url_detail = "";
+                //     if($attr->ma == $key_filter){
+                //         foreach ($value_filter as $value) {
+                //             if($value==$attr_detail->ma){
+                //                     // $url_detail = $url_detail;
+                //                 $attr_detail->setAttribute('attr_checked',1);
+                //                  // dd($attr_detail, $attr);
+                //                     // $attr_detail->setAttribute('fullurl',$url_detail);
+                //             }
+                //             else{
+                //                 $attr_detail->setAttribute('attr_checked',0);
+                //                 // $url_detail = $url_detail.$value;
+                //                 // $attr_detail->setAttribute('fullurl',$url_detail).$value;
+                //             }
+                             
+                //     }
+                //     }
+                // }
 
             }
-            
-
-
-
-            
-                // dd($origin_url);
-
-
-
-
-
-
-                // if(!$request->all()){
-                //     $origin_url = $url.'?'.$attr->name.'='.$attr_detail->ma;
-                //     $attr_detail->setAttribute('fullurl',$origin_url);
-                // }
-                // else{
-
-                //      $url_filter = $url.'&'.$attr->name.'='.$attr_detail->ma;
-                //      $attr_detail->setAttribute('fullurl',$url_filter);
-                // }
-             $attr->setAttribute('detailproperty', $detailproperties);
-
+            $attr->setAttribute('detailproperty', $detailproperties);
         }
-
-
-       
-
-
-
-
         //////////////Cau Lenh Truy Van DL//////////////////
     $exists_property ="";
 

@@ -145,27 +145,16 @@
                             </div>
                             <ul class="list-categories list-categories-brand">
                                 @foreach($value->detailproperty as $property)
-                                <li class="cat-item" onclick="">
+                                <li class="cat-item" onclick="location.href='{{$property->fullurl}}'">
                                      <a href="{{$property->fullurl}}">
-                                    <input type="checkbox" name="{{$value->ma}}[]" class="checkfilter" value="{{$property->ma}}" 
-                                        @if($property->attr_checked == 1)
-                                        checked ="checked"
-                                        @endif>
-                                        {{$property->name}}
-                                    
-                                        
-                                    </a>
-                                    </input>
-
-                                   {{--  <a href="{{Request::url().'?'.$value->name.'='.$property->ma}}">
-                                        @if($property->attr_checked == 1)
+                                     @if($property->attr_checked == 1)
                                         <i class="far fa-check-square"></i>
                                         @else
                                          <i class="far fa-square"></i> 
                                         @endif
                                         {{$property->name}}
                                     </a>
-                                    <span class="count">{{$property->count_product}}</span> --}}
+                                    </input>
                                 </li>
                                 @endforeach
                             </ul>
