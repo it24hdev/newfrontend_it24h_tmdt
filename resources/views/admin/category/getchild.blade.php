@@ -9,14 +9,14 @@
                 $str.='&nbsp';
             }
         @endphp
-        {{$ma}}.{{$key+1}}
+        {{$category_child->ma}}
         </td>
         <td class="category_child_name">
             @php
             $str ='';
             for ($i=0; $i < $category_child->level; $i++) {
                 echo $str;
-                $str.='━';
+                $str.='━ ';
             }
             @endphp
             {{$category_child->name}} 

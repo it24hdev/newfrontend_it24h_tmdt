@@ -48,15 +48,14 @@ class CategoryController extends Controller
         if($sort    ==null) {$sort    ='asc';}
         if($keywords==null) {$keywords="";}
         if($orderby ==null) {$orderby ="ma";}
-        $data = Category::where('taxonomy', '=', 0)
-        ->where('taxonomy', '=', 0)
+
+
+        $data = Category::where('taxonomy', 0)
         ->where('name', 'like', '%' . $keywords . '%')
-        ->orderby($orderby,$sort)
-        ->Paginate($limit);
+        ->orderby($orderby,$sort)->get();
 
         $listcategories = [];
         Category::recursive($data, $parents = 0, $level = 1, $listcategories);
-
 
         return view('admin.category.index',[
             'Categories' => $listcategories,
@@ -302,7 +301,6 @@ class CategoryController extends Controller
 
     public function getchild(Request $request){
         $id = $request->id;
-        $ma = Category::where('id',$id)->first();
         $data = Category::where('taxonomy', '=', 0)->get();
 
         $listcategories = [];
@@ -310,7 +308,6 @@ class CategoryController extends Controller
         $view2     = view('admin.category.getchild', [
                 'listcategories' => $listcategories,
                 'sub_id' => $id,
-                'ma' => $ma->ma,
             ])->render();
         return response()->json(['html'=>$view2]);
     }

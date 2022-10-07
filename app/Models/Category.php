@@ -32,13 +32,16 @@ class Category extends Model
     {
         if (count($data)>0) {
             foreach ($data as $key => $value) {
-                // code...
+                // dd($value->parent_id);
                 if ($value->parent_id==$parents) {
-                    // code...
+
+
                     $value->level=$level;
                     $listcategory[]=$value;
                     unset($data[$key]);
                     $parent = $value->id;
+
+
                     self::recursive($data, $parent, $level + 1, $listcategory);
 
                 }

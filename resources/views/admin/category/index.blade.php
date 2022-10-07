@@ -96,23 +96,9 @@
                     @if($category->parent_id == 0)
                         <tr class=" overflow-x-auto scrollbar-hidden get_child" id="{{ $category->id }}">
                             <td class="text-left font-medium ">
-                            {{-- @php 
-                                $str ='';
-                                for ($i=0; $i < $category->level; $i++) {
-                                    echo $str;
-                                    $str.='&nbsp';
-                                }
-                            @endphp --}}
                             {{ $category->ma }}
                             </td>
                             <td class="category_name">
-                               {{--   @php
-                                $str ='';
-                                for ($i=0; $i < $category->level; $i++) {
-                                    echo $str;
-                                    $str.='━';
-                                }
-                            @endphp --}}
                                 {{$category->name}} </td>
                             <td class="text-center">
                                 @if ($category->cat_parent)
