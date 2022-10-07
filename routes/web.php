@@ -36,7 +36,7 @@ Artisan::call('config:cache');
 Artisan::call('view:clear');
 return "Cleared!";
 });
-/* ========== ADMIN =========== */
+/* ========== ADMIN ========== */
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
