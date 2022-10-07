@@ -24,7 +24,7 @@ use App\Http\Controllers\Recruit\RecruitController;
 use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
 use App\Http\Controllers\Categoryproperty\Category_propertyController;
-
+ 
 
 Auth::routes();
 Route::get('/clear', function() {
