@@ -10,7 +10,7 @@
             @elseif($subsidebar->form_filter == 1)
             <a href="{!! route('product_cat',  ['slug' => $subsidebar->link,$subsidebar->code_categoryproperties =>  $subsidebar->code_property]) !!}" class="title-cat">{{$subsidebar->label}}</a>
             @else
-            <a href="{!! route('product_cat',  ['slug' => $subsidebar->link, 'p' =>  $subsidebar->price]) !!}" class="title-cat">{{$subsidebar->label}}</a>
+            <a href="{!! route('product_cat',  ['slug' => $subsidebar->link, 'p' =>  $subsidebar->min_price.','.$subsidebar->max_price]) !!}" class="title-cat">{{$subsidebar->label}}</a>
             @endif
         @else
         <b style="color:black; font-size: 14px;"><p>{{$subsidebar->label}}</p></b>
@@ -39,7 +39,7 @@
                     @endif
                 </a>
                 @else
-                <a href="{!! route('product_cat', ['slug' => $subsidebar3->link,'p' => $subsidebar3->price]) !!}" class="cat-child">
+                <a href="{!! route('product_cat', ['slug' => $subsidebar3->link,'p' =>  $subsidebar3->min_price.','.$subsidebar3->max_price]) !!}" class="cat-child">
                     <span>{{$subsidebar3->label}}</span>
                     @if(count($subsidebar3->childs))
                     <span class="next-right">
@@ -48,7 +48,6 @@
                     @endif
                 </a>
                 @endif
-                
                 @if(count($subsidebar3->childs))
                 @include('frontend.subsidebar',['childs' => $subsidebar3->childs])
                 @endif

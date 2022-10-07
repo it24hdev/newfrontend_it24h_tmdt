@@ -245,20 +245,20 @@ $currentUrl = url()->current();
                                     </label>
                                     </p>
                                     <div style="margin-right: 10px;margin-top: 10px;">
-                                    <label> Lọc</label>
+                                    <label> Lọc theo </label>
                                     <select name="form_filter" id="checkfilter{{$m->id}}" class="form_filter">
-                                    <option value="0" selected="selected">Chọn thuộc tính</option>
-                                    <option value="1" {{$m->form_filter == 1 ? 'selected':false}}>Lọc thuộc tính </option>
-                                    <option value="2" {{$m->form_filter == 2 ? 'selected':false}}>Lọc giá </option>
+                                    <option value="0" selected="selected">Chọn</option>
+                                    <option value="1" {{$m->form_filter == 1 ? 'selected':false}}>Thuộc tính </option>
+                                    <option value="2" {{$m->form_filter == 2 ? 'selected':false}}>Giá </option>
                                     </select>
                                     </div>
                                     <div id="form_filter{{$m->id}}" style="margin-right: 10px;margin-top: 10px;float: left;">
                                         <ul class="nav nav-tabs" id="myTab{{$m->id}}" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                            <button class="nav-link active bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="property_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#properties{{$m->id}}" type="button" role="tab" aria-controls="properties{{$m->id}}" aria-selected="true">properties</button>
+                                            <button class="nav-link active bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="property_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#properties{{$m->id}}" type="button" role="tab" aria-controls="properties{{$m->id}}" aria-selected="true">Thuộc tính</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                            <button class="nav-link bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="price_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#price{{$m->id}}" type="button" role="tab" aria-controls="price{{$m->id}}" aria-selected="false">price</button>
+                                            <button class="nav-link bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="price_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#price{{$m->id}}" type="button" role="tab" aria-controls="price{{$m->id}}" aria-selected="false">Giá</button>
                                             </li>
                                         </ul>
                                         <div class="tab-content" id="myTabContent{{$m->id}}">
@@ -275,13 +275,18 @@ $currentUrl = url()->current();
                                                 @endforeach
                                         </select>
                                             </div>
-                                            <div class="tab-pane fade p-4" id="price{{$m->id}}" role="tabpanel" aria-labelledby="price_tab{{$m->id}}">2</div>
+                                            <div class="tab-pane fade p-4" id="price{{$m->id}}" role="tabpanel" aria-labelledby="price_tab{{$m->id}}">
+                                                <label for="from_price{{$m->id}}">Từ<br>
+                                                <input type="number" id="from_price{{$m->id}}" min="0" max="1000000000000" class="widefat code edit-menu-item-classes min_price" name="min_price" value="{{$m->min_price}}">
+                                                 <label for="to_price{{$m->id}}">Đến<br>
+                                                <input type="number" id="to_price{{$m->id}}" min="0" max="1000000000000" class="widefat code edit-menu-item-classes max_price" name="max_price" value="{{$m->max_price}}">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="menu-item-actions description-wide submitbox">
-                                        <a class="item-delete submitdelete deletion" id="delete-{{$m->id}}" href="{{ $currentUrl }}?action=delete-menu-item&menu-item={{$m->id}}&_wpnonce=2844002501">Delete</a>
+                                        <a class="item-delete submitdelete deletion" id="delete-{{$m->id}}" href="{{ $currentUrl }}?action=delete-menu-item&menu-item={{$m->id}}&_wpnonce=2844002501">Xóa</a>
                                         <span class="meta-sep hide-if-no-js"> | </span>
-                                        <a class="item-cancel submitcancel hide-if-no-js button-secondary" id="cancel-{{$m->id}}" href="{{ $currentUrl }}?edit-menu-item={{$m->id}}&cancel=1424297719#menu-item-settings-{{$m->id}}">Cancel</a>
+                                        <a class="item-cancel submitcancel hide-if-no-js button-secondary" id="cancel-{{$m->id}}" href="{{ $currentUrl }}?edit-menu-item={{$m->id}}&cancel=1424297719#menu-item-settings-{{$m->id}}">Hủy</a>
                                         <span class="meta-sep hide-if-no-js"> | </span>
                                         <a onclick="getmenus()" class="button button-primary updatemenu" id="update-{{$m->id}}" href="javascript:void(0)">Cập nhật</a>
                                         <a class="button button-primary updatemenu"  href="https://fontawesome.com/v5/search" target="_blank">Lấy icon</a>
@@ -293,7 +298,6 @@ $currentUrl = url()->current();
                                     @endif
                                 </ul>
                                 <div class="menu-settings">
-
                                 </div>
                             </div>
                         </div>

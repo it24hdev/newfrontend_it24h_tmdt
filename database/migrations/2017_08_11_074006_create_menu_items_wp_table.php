@@ -27,7 +27,8 @@ class CreateMenuItemsWpTable extends Migration
             $table->integer('categoryselect')->nullable();
             $table->integer('property')->nullable();
             $table->integer('form_filter')->nullable();
-            $table->string('price')->nullable();
+            $table->integer('min_price')->default(0);
+            $table->integer('max_price')->default(0);
             $table->string('name_categoryproperty')->nullable();
             $table->timestamps();
 

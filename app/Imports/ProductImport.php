@@ -42,6 +42,33 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
               'slug'      =>   Str::slug( $row[1], '-'),
               'deleted_at'=>   NUll,
           ]);
+
+            // $Products = Products::find($exists->id);
+            // $Product = [
+            // 'ma'        =>   $row[0],
+            // 'name'      =>   $row[1],
+            // 'price'     =>   $row[2],
+            // 'quantity'  =>   $row[3],
+            // 'unit'      =>   $row[4],
+            // 'brand'     =>   $row[5],
+            // 'property'  =>   $row[6],
+            // 'still_stock'     =>   $row[7],
+            // 'short_content'   =>   $row[8],
+            // 'gift'      =>   $row[9],
+            // 'content'   =>   $row[10],
+            // 'slug'      =>   Str::slug( $row[1], '-'),
+            // 'deleted_at'=>   NUll
+            // ];
+            // try {
+            // DB::beginTransaction();
+            // $Products->update($Product);
+            // DB::commit();
+
+
+            // }
+            // catch (\Exception $exception){
+            //     DB::rollBack();
+            // }
         }
         else{
         $Products = new Products();

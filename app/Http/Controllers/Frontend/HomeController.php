@@ -366,9 +366,6 @@ class HomeController extends Controller
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
-
-
-
         $cat = Category::where('slug', $request->slug)->first();
         if (empty($cat)) {
             return abort(404);
@@ -448,9 +445,6 @@ class HomeController extends Controller
                 }
                 else{
                     $attr_detail->setAttribute('attr_checked',0);
-                    // if (($key = array_search($attr_detail->ma, $filter_all)) == false) {
-                    //     array_push($filter_all,$attr_detail->ma);
-                    // }
                     foreach ($filter_all as $key => $value) {
                        $cate_properties = Categoryproperty::select('categoryproperties.ma')
                        ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
@@ -469,7 +463,6 @@ class HomeController extends Controller
                        if(isset($cate_properties_curren->ma)){
                         $name_current=$cate_properties_curren->ma;
                        }
-
                         if(isset($filter_all[$key-1])){
                         $get_name_key_prev = $filter_all[$key-1];
                         $cate_properties_pre = Categoryproperty::select('categoryproperties.ma')
@@ -485,10 +478,8 @@ class HomeController extends Controller
                         }
                        else{
                         $string_value = trim($string_value, '&').','.$value;
-                        
                        }
                     }
-
                     $url = $origin_url.'?'.trim($string_value, '&');
                     if(Str::contains($url , $attr->ma)  == true)
                     {
@@ -507,8 +498,7 @@ class HomeController extends Controller
         //////////////Cau Lenh Truy Van DL//////////////////
     $exists_property ="";
     $exists_property =  MenuItems::where('link',$request->slug)->whereIn('property',$val)->get();
-
-    if($request->p){
+    if(!$request->p){
     $products = Products::distinct()->select('products.*','detailproperties.ma as matt','categories.slug as url')
     ->leftjoin('category_relationships','category_relationships.product_id','products.id')
     ->leftjoin('categories','categories.id','category_relationships.cat_id')
@@ -521,21 +511,25 @@ class HomeController extends Controller
     ->paginate(20)->withQueryString();
     }
     else{
-    $products = Products::where('status', 1)->whereIn('id', $list_id)
+   
+   
+    $price =[];
+    foreach ($request->all() as $key => $value) {
+        $value  = explode(',',$value);
+        $price = array_merge($price, $value);
+    }
+    $min_price = $price[0];
+    $max_price = $price[1];
+    $products = Products::where('status', 1)
                 ->orderBy('price_onsale', 'ASC')
                 ->whereBetween('price_onsale', [$min_price, $max_price])
                 ->paginate(20)->withQueryString();
     }
-
     $slug = $request->slug;
 
         //////////////Tra ve//////////////////
-
-
     return \view('frontend.product', \compact('products', 'categories',
         'cat', 'Sidebars','locale', 'active_menu', 'posts_footer','cat_parent','attributes','slug'))->with('agent',$ag);
-
-
 }
 
     // /* ==== Xử lý dữ liệu trang danh sách sản phẩm */

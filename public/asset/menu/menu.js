@@ -16,6 +16,8 @@ function getmenus() {
         dept = i;
       }
     }
+    var min_price = $(this).find('.min_price').val();
+    var max_price = $(this).find('.max_price').val();
     var listcate = $(this).find('.listcate').val();
     var form_filter = $(this).find('.form_filter').val();
     var textoiner = $(this).find('.item-edit').text();
@@ -33,6 +35,8 @@ function getmenus() {
       sort: cont,
       property: listcate,
       form_filter: form_filter,
+      min_price: min_price,
+      max_price: max_price,
     });
     cont++;
   });
