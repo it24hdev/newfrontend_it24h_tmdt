@@ -15,6 +15,7 @@ class Detailproperties extends Model
         'stt',
         'explain',
         'categoryproperties_id',
+        'categoryproperties_code',
     ];
 
 

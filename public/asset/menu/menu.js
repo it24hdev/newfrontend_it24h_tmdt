@@ -175,6 +175,7 @@ function updateitem(id = 0) {
 
     var data = { arraydata: arr_data };
   }
+  
 
   $.ajax({
     data: data,

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('ma')->nullable();
             $table->integer('stt')->nullable();
             $table->integer('categoryproperties_id')->nullable();
+            $table->string('categoryproperties_code')->nullable();
             $table->string('explain')->nullable();
             $table->timestamps();
         });

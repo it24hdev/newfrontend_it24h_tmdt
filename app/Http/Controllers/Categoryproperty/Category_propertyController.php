@@ -37,11 +37,11 @@ class Category_propertyController extends Controller
         ]);
     }
 
-    public function createdetail($id)
+    public function createdetail($ma)
     {
         return view('admin.categoryproperty.createdetail',[
             'title' => 'Thêm thuộc tính chi tiết',
-            'categoryproperty_id' => $id,
+            'categoryproperty_code' => $ma,
         ]);
     }
 
@@ -92,6 +92,7 @@ class Category_propertyController extends Controller
             'stt'   => $request->stt,
             'explain'   => $request->explain,
             'categoryproperties_id' => $id,
+            'categoryproperties_code' => $id,
         ];
 
         $detailproperties  = Detailproperties::where('categoryproperties_id',$id)->get();

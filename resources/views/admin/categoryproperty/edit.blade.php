@@ -15,7 +15,7 @@
             </div>
             <div class="form-group mb-4">
                 <label>Mã nhận dạng cho quản trị</label>
-                <input type="text" class=" form-control" name='ma' value="{{old('ma') ?? $category_property->ma}}">
+                <input type="text" class=" form-control" name='ma' value="{{old('ma') ?? $category_property->ma}}" required>
                 @error('ma') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
             <div class="form-group mb-4">
@@ -59,7 +59,7 @@
                         <td class="w-20">
                             <div class="flex justify-center items-center">
                                 <a class="btn btn-sm btn-primary mr-2"
-                                   href="{{route('detailproperty.edit',['id' => $value->id, 'id_categoryproperty' => $category_property->id])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
+                                   href="{{route('detailproperty.edit',['id' => $value->id, 'categoryproperties_code' => $category_property->ma])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a title="Xóa" data-toggle="modal"
                                    data-value="{{$value->id}}"

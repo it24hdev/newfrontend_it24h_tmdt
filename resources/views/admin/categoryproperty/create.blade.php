@@ -10,12 +10,12 @@
             
             <div class="form-group mb-4">
                 <label>Tên thuộc tính</label>
-                <input type="text" class=" form-control" name='name' value="{{old('name')}}">
+                <input type="text" class=" form-control" name='name' value="{{old('name')}} " required>
                 @error('name') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
             <div class="form-group mb-4">
                 <label>Mã nhận dạng cho quản trị</label>
-                <input type="text" class=" form-control" name='ma' value="{{old('ma')}}">
+                <input type="text" class=" form-control" name='ma' value="{{old('ma')}}" required>
                 @error('ma') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
             <div class="form-group mb-4">

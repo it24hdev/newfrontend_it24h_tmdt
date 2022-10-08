@@ -34,7 +34,8 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
       // Schema::table('admin_menu_items', function (Blueprint $table) {
       //   $table->dropForeign('admin_menu_items_menu_foreign');
       // });
-      foreach ($rows as $row) {
+      foreach ($rows as $key => $row) {
+
         // $exists = db::table('admin_menu_items')->where('ma',$row[0])->where('menu',$this->menu)->first();
         // if(!empty($exists)){
         //   $parent = "";
@@ -69,30 +70,57 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
         // }
         
         // else{
+
+        // if(!empty($exists)){
         $MenuItems = new MenuItems();
-        $MenuItems->ma       = $row[0];
+        $MenuItems->ma       = $row[1];
         $MenuItems->menu     = $this->menu;
-        $MenuItems->label    = $row[2];
+        $MenuItems->label    = $row[0];
         if(!empty($row[3]))
         {$MenuItems->depth    = $row[3];}
         else
         {$MenuItems->depth    = 0;}
-        $MenuItems->link     = Str::slug( $row[2], '-');
-        if($row[1] !== ""){
-          $code  = $row[1];
-          $cate  = Category::where("ma" , $code)->first();
+        $cate_code = Category::where("ma" , $row[4])->first();
+        if(!empty($cate_code)){
+          $MenuItems->link           = $cate_code->slug;
+          $MenuItems->category_code  = $cate_code->ma;
+          $MenuItems->category_id    = $cate_code->id;
+        }
+        
+        if($row[2] !== ""){
+          $code  = $row[2];
+          $cate  = MenuItems::where("ma" , $code)->first();
           if(!empty($cate)){
             $MenuItems->parent = $cate->id;
           }
         }
-
-        if($row[0] !== ""){
-          $code2  = $row[0];
-          $cate2  = Category::where("ma" , $code2)->first();
-          if(!empty($cate2)){
-            $MenuItems->category_id = $cate2->id;
+        if($row[5] != ""){
+          if($row[5] == "Thuộc tính"){
+            $MenuItems->form_filter = 1;
+          }
+          elseif ($row[5] == "Giá") {
+            $MenuItems->form_filter = 2;
+          }
+          elseif ($row[5] == "Thương hiệu") {
+            $MenuItems->form_filter = 3;
+          }
+          else{
+            $MenuItems->form_filter = 0;
           }
         }
+
+        if($row[6] != ""){
+          $MenuItems->property = $row[6];
+        }
+
+        if($row[7] != ""){
+          $MenuItems->min_price = $row[7];
+        }
+
+        if($row[8] != ""){
+          $MenuItems->max_price = $row[8];
+        }
+        // $MenuItems->sort = $key;
         $MenuItems->save();
         }  
       // }

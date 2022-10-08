@@ -17,6 +17,7 @@ class CreateMenuItemsWpTable extends Migration
             $table->bigIncrements('id');
             $table->string('ma');
             $table->string('category_id');
+            $table->string('category_code');
             $table->string('label');
             $table->string('link');
             $table->unsignedBigInteger('parent')->default(0);

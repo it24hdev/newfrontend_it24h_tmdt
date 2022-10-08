@@ -253,16 +253,16 @@ $currentUrl = url()->current();
                                     </select>
                                     </div>
                                     <div id="form_filter{{$m->id}}" style="margin-right: 10px;margin-top: 10px;float: left;">
-                                        <ul class="nav nav-tabs" id="myTab{{$m->id}}" role="tablist">
+                                       {{--  <ul class="nav nav-tabs" id="myTab{{$m->id}}" role="tablist">
                                             <li class="nav-item" role="presentation">
                                             <button class="nav-link active bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="property_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#properties{{$m->id}}" type="button" role="tab" aria-controls="properties{{$m->id}}" aria-selected="true">Thuộc tính</button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                             <button class="nav-link bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="price_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#price{{$m->id}}" type="button" role="tab" aria-controls="price{{$m->id}}" aria-selected="false">Giá</button>
                                             </li>
-                                        </ul>
+                                        </ul> --}}
                                         <div class="tab-content" id="myTabContent{{$m->id}}">
-                                            <div class="tab-pane fade show active p-4" id="properties{{$m->id}}" role="tabpanel" aria-labelledby="property_tab{{$m->id}}">
+                                            <div class="" id="properties{{$m->id}}" role="tabpanel" aria-labelledby="property_tab{{$m->id}}">
                                         <select name="list_property" id="list_property{{$m->id}}" class="listcate">
                                             @if($m->property ==null || $m->property ==0)
                                                 <option value="0">Chọn thuộc tính</option>
@@ -275,11 +275,13 @@ $currentUrl = url()->current();
                                                 @endforeach
                                         </select>
                                             </div>
-                                            <div class="tab-pane fade p-4" id="price{{$m->id}}" role="tabpanel" aria-labelledby="price_tab{{$m->id}}">
-                                                <label for="from_price{{$m->id}}">Từ<br>
+                                            <div class="" id="price{{$m->id}}" role="tabpanel" aria-labelledby="price_tab{{$m->id}}">
                                                 <input type="number" id="from_price{{$m->id}}" min="0" max="1000000000000" class="widefat code edit-menu-item-classes min_price" name="min_price" value="{{$m->min_price}}">
-                                                 <label for="to_price{{$m->id}}">Đến<br>
                                                 <input type="number" id="to_price{{$m->id}}" min="0" max="1000000000000" class="widefat code edit-menu-item-classes max_price" name="max_price" value="{{$m->max_price}}">
+                                                
+                                            </div>
+                                            <div>
+                                                Thương hiệu
                                             </div>
                                         </div>
                                     </div>

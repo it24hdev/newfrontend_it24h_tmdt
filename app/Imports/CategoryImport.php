@@ -20,7 +20,7 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
 
     public function __construct()
     {
-        ini_set('max_execution_time', 1800);
+      ini_set('max_execution_time', 1800);
     }
   
     public function collection(Collection $rows)
