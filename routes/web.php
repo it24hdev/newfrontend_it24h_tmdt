@@ -257,7 +257,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('/createdetail/{id}', [Category_propertyController::class, 'storedetail'])->name('detailproperty.store');
 
-        Route::get('/editdetail/{id}/{id_categoryproperty}', [Category_propertyController::class, 'editdetail'])->name('detailproperty.edit');
+        Route::get('/editdetail/{id}/{categoryproperties_code}', [Category_propertyController::class, 'editdetail'])->name('detailproperty.edit'); 
 
         Route::post('/updatedetail/{id}',[Category_propertyController::class, 'updatedetail'])->name('detailproperty.update');
 

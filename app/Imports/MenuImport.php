@@ -28,12 +28,44 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
         ini_set('max_execution_time', 1800);
         $this->menu = $menu;
     }
-  
+    
+
+    // public static function recursive($data, $parents = 0, $level = 1, &$listcategory)
+    // {
+    //     if (count($data)>0) {
+    //       $count = 0;
+    //         foreach ($data as $key => $value) {
+
+    //           ;
+    //             // dd($value->parent_id);
+    //             if ($value==$parents) {
+
+    //                 $count = $count + 1;
+    //                 $value[8]=$count;
+    //                 $listcategory[]=$value;
+    //                 unset($data[$key]);
+    //                 $parent = $value[1];
+
+    //                 dd( $listcategory[]);
+    //                 self::recursive($data, $parent, $level + 1, $listcategory);
+
+    //             }
+    //         }
+    //     }
+
+    // }
+
+
     public function collection(Collection $rows)
     {
       // Schema::table('admin_menu_items', function (Blueprint $table) {
       //   $table->dropForeign('admin_menu_items_menu_foreign');
       // });
+
+      // $listcategory =[];
+      // $data = $this->recursive($rows, $parents = 0, $level = 1, $listcategory);
+      // dd($data);
+
       foreach ($rows as $key => $row) {
 
         // $exists = db::table('admin_menu_items')->where('ma',$row[0])->where('menu',$this->menu)->first();
