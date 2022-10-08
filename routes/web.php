@@ -162,6 +162,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/productsimport', [ProductsController::class, 'import'])->name('products.import');
         Route::get('/productsproperties/{id}', [ProductsController::class, 'productsproperties'])->name('productsproperties.edit');
         Route::post('/saveproductsproperties/{id}', [ProductsController::class, 'saveproductsproperties'])->name('saveproductsproperties');
+        Route::get('/brandexport',[ProductsController::class, 'brandexport'])->name('brand.export');
+        Route::post('/brandimport', [ProductsController::class, 'brandimport'])->name('brand.import');
     });
 
 

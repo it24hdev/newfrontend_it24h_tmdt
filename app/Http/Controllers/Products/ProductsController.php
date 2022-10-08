@@ -2,23 +2,25 @@
 
 namespace App\Http\Controllers\Products;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\Controller;
+use App\Helpers\CommonHelper;
 use App\Models\Products;
 use App\Models\Category;
 use App\Models\CategoryRelationship;
 use App\Models\Detailproperties;
 use App\Models\Propertyproducts;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
-use App\Helpers\CommonHelper;
 use App\Models\Attribute_product;
 use App\Models\Brand;
 use App\Models\Tag_event;
-use Illuminate\Support\Facades\Session;
 use App\Exports\ProductExport;
+use App\Exports\BrandExport;
 use App\Imports\ProductImport;
+use App\Imports\BrandImport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsController extends Controller
@@ -458,7 +460,7 @@ class ProductsController extends Controller
     //xu ly lay danh sac thuong hieu san pham
     public function list_brand(){
         $this->authorize('viewAny', Products::class);
-        $brands = Brand::get();
+        $brands = Brand::paginate(10);
         return \view('admin.products.list-brand', \compact('brands'));
     }
     //xu ly luu thuong hieu san pham
@@ -467,7 +469,7 @@ class ProductsController extends Controller
         $request->validate(
             [
                 'name' => 'required|string|max:250',
-                'image' => 'required|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+                'image' => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
                 'required' => ':attribute không được để trống',
@@ -483,6 +485,7 @@ class ProductsController extends Controller
             $nameFile = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
         }
         $input = [
+            'ma'  => $request->ma,
             'name'  => $request->name,
             'image'  => $nameFile,
         ];
@@ -528,8 +531,8 @@ class ProductsController extends Controller
         );
         $brand = Brand::find($request->id);
 
-        $nameFile = Products::IMAGE;
-        $nameFileOld = $brand->image;
+        $nameFile     = Products::IMAGE;
+        $nameFileOld  = $brand->image;
         if ($request->image  != null){
             $nameFile = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
         }else{
@@ -537,8 +540,9 @@ class ProductsController extends Controller
         }
 
         $input = [
+            'ma'    => $request->ma,
             'name'  => $request->name,
-            'image'  => $nameFile,
+            'image' => $nameFile,
         ];
         try {
             DB::beginTransaction();
@@ -725,8 +729,24 @@ class ProductsController extends Controller
         return back();
     }
 
-    public function productsproperties(Request $request, $id){
+    
 
+    public function brandexport() 
+    {
+        return Excel::download(new BrandExport, 'Brand.xlsx');
+    }
+
+    public function brandimport() 
+    {
+        if(!empty(request()->file('file'))){
+            ini_set('max_execution_time', 1800); 
+            Excel::import(new BrandImport,request()->file('file')); 
+        }
+        return back();
+    }
+
+    public function productsproperties(Request $request, $id)
+    {
         $product = Products::find($id);
         $categoryproperties  =  DB::table('categoryproperties')->select('categoryproperties.*')
         ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')

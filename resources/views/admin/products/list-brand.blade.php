@@ -10,6 +10,16 @@
         @endcan
     </div>
 </div>
+<div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center">
+    <form action="{{ route('brand.import') }}" method="POST" enctype="multipart/form-data" 
+    style="display: contents;">
+        @csrf
+        <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
+        <button type="submit" class="btn btn-success" >Import Data</button>
+    </form>
+    <a class="btn btn-warning" href="{{ route('brand.export') }}">Export Data</a>
+</div>
+
 <!-- BEGIN: HTML Table Data -->
 <div class="grid grid-cols-12 gap-6">
 
@@ -18,6 +28,7 @@
             <thead>
                 <tr class="bg-gray-700 dark:bg-dark-1 text-white">
                     <th class="whitespace-nowrap">#</th>
+                    <th class="whitespace-nowrap">Mã</th>
                     <th class="whitespace-nowrap">Tên thương hiệu</th>
                     <th class="whitespace-nowrap">Ảnh</th>
                     <th class="whitespace-nowrap">Tác vụ</th>
@@ -32,7 +43,8 @@
                         $t++;
                     @endphp
                     <tr id="html-attr-{{ $brand->id }}">
-                        <td class="border-b dark:border-dark-5">{{ $t }}</td>
+                        <td class="border-b dark:border-dark-5">{{ $brand->id }}</td>
+                        <td class="border-b dark:border-dark-5 font-bold">{{ $brand->ma }}</td>
                         <td class="border-b dark:border-dark-5 font-bold">{{ $brand->name }}</td>
                         <td class="border-b dark:border-dark-5">
                             <div class="rounded">
@@ -60,6 +72,10 @@
                                                     </div> <!-- END: Modal Header -->
                                                     <!-- BEGIN: Modal Body -->
                                                     <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
+                                                        <div class="col-span-12">
+                                                            <label for="modal-form-61" class="form-label font-medium">Mã</label>
+                                                            <input type="text" name="ma" value="{{$brand->ma}}" class="form-control">
+                                                        </div>
                                                         <div class="col-span-12">
                                                             <label for="modal-form-6" class="form-label font-medium">Tên thương hiệu</label>
                                                             <input type="text" name="name" value="{{$brand->name}}" class="form-control">
@@ -97,7 +113,9 @@
                                                 </form>
                                                 <!-- END: Modal Footer -->
                                             </div>
+                                           
                                         </div>
+                                         
                                     </div> <!-- END: Modal Content -->
                                 @endcan
                                 @can('delete', App\Models\Products::class)
@@ -134,7 +152,9 @@
             </tbody>
         </table>
     </div>
-
+    <div class="intro-y col-span-12 flex flex-wrap sm:flex-row sm:flex-nowrap items-center">
+            {!! $brands->links('admin.layouts.pagination') !!}
+        </div>
 </div>
 
 {{-- Modal create attribute product --}}
@@ -149,6 +169,10 @@
                 @csrf
                 <div class="modal-body grid grid-cols-12 gap-4 gap-y-3">
                     <div class="col-span-12">
+                        <label for="modal-form-23" class="form-label font-medium">Mã</label>
+                        <input id="modal-form-23" type="text" name="ma" class="form-control">
+                    </div>
+                    <div class="col-span-12">
                         <label for="modal-form-2" class="form-label font-medium">Tên</label>
                         <input id="modal-form-2" type="text" name="name" class="form-control" required>
                     </div>
@@ -157,7 +181,7 @@
                         <div class="px-4 pb-4 flex items-center cursor-pointer relative">
                             <i data-feather="image" class="w-4 h-4 mr-2"></i>
                             <span class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
-                            <input name='image' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0" id="fileupload3" required/>
+                            <input name='image' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0" id="fileupload3" />
 
                         </div>
                         <div class="border-2 border-dashed dark:border-dark-5 rounded-md p-2">

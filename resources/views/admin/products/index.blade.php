@@ -23,7 +23,7 @@
                         <option value="ma" {{request()->input('orderby') =='ma' ? 'selected' : ''}} >Mã</option>
                         <option value="name" {{request()->input('orderby') =='name' ? 'selected' : ''}} >Tên SP</option>
                         <option value="category_id" {{request()->input('orderby') =='category_id' ? 'selected' : ''}}>Danh mục</option>
-                        <option value="brand" {{request()->input('orderby') =='brand' ? 'selected' : ''}}>Nhãn</option>
+                        <option value="brand" {{request()->input('orderby') =='brand' ? 'selected' : ''}}>Thương hiệu</option>
                         <option value="quantity" {{request()->input('orderby') =='quantity' ? 'selected' : ''}}>Số lượng</option>
                         <option value="price" {{request()->input('orderby') =='price' ? 'selected' : ''}}>Giá</option>
                         <option value="limit_amount" {{request()->input('orderby') =='limit_amount' ? 'selected' : ''}}>Cảnh báo sl tồn</option>
