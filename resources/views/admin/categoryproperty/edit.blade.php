@@ -59,12 +59,12 @@
                         <td class="w-20">
                             <div class="flex justify-center items-center">
                                 <a class="btn btn-sm btn-primary mr-2"
-                                   href="{{route('detailproperty.edit',['id' => $value->id, 'categoryproperties_code' => $category_property->ma])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
+                                   href="{{route('detailproperty.edit',['id' => $value->id, 'id_categoryproperty' => $category_property->id])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a title="Xóa" data-toggle="modal"
                                    data-value="{{$value->id}}"
                                    data-target="#delete-confirmation-modal"
-                                   class="btn btn-danger py-1 px-2 btn-delete"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
+                                   class="btn btn-danger py-1 px-2 btn-delete2"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
                                 </a>
                             </div>
                         </td>
@@ -82,4 +82,15 @@
     </form>
 </div>
 </div>
+@endsection
+@section('js2')
+ <script>
+    $(document).ready(function () {
+        $(document).on('click',".btn-delete2",function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data-value');
+                $('#delete_id').val(id);
+        });
+    });
+</script>
 @endsection
