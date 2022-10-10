@@ -41,7 +41,7 @@
                 <thead>
                     <tr >
                         <th class="text-center whitespace-nowrap">STT</th>
-                        <th class="text-center whitespace-nowrap">ID</th>
+                        <th class="text-center whitespace-nowrap">MÃ</th>
                         <th class="text-center whitespace-nowrap">TÊN</th>
                         <th class="text-center whitespace-nowrap">MÔ TẢ</th>
                         <th class="text-center whitespace-nowrap">THỨ TỰ HIỂN THỊ</th>
@@ -52,7 +52,7 @@
                     @foreach($detailproperties as $key => $value)
                     <tr id="{{ $value->id }}">
                         <td class="text-center">{{$key+1}}</td>
-                        <td class="text-center">{{$value->id}}</td>
+                        <td class="text-center">{{$value->ma}}</td>
                         <td class="text-center">{{$value->name}}</td>
                         <td class="text-center">{{$value->explain}}</td>
                         <td class="text-center">{{$value->stt}}</td>

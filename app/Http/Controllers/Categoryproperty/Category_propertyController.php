@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Categoryproperty;
 use App\Http\Controllers\Controller;
 use App\Models\Categoryproperty;
 use App\Models\Detailproperties;
+use App\Exports\PropertyExport;
+use App\Imports\PropertyImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\File;
 use Validator;
 use Response;
 use Redirect;
@@ -86,13 +90,15 @@ class Category_propertyController extends Controller
 
     public function storedetail(Request $request, $id)
     {
+
+        $Categoryproperty = Categoryproperty::find($id);
         $detailproperty  = [
             'name'  => $request->name,
             'ma'  => $request->ma,
             'stt'   => $request->stt,
             'explain'   => $request->explain,
             'categoryproperties_id' => $id,
-            // 'categoryproperties_code' => $id,
+            'categoryproperties_code' => $Categoryproperty->ma,
         ];
 
         $detailproperties  = Detailproperties::where('categoryproperties_id',$id)->get();
@@ -180,9 +186,12 @@ class Category_propertyController extends Controller
             'status'    => $request->has('status'),
         ];
 
+
+
         try {
             DB::beginTransaction();
             $category_properties->update($category_property);
+            Detailproperties::where('categoryproperties_id',$id)->update(['categoryproperties_code' => $request->ma]);
             DB::commit();
             return redirect()->route('category_property.index')->with('success','Cập nhật danh mục thuộc tính thành công.');
         }
@@ -239,5 +248,17 @@ class Category_propertyController extends Controller
             return \json_encode(array('success'=>true));
         }
         return \json_encode(array('success'=>false));
+    }
+
+    public function export() 
+    {
+        return Excel::download(new PropertyExport, 'property.xlsx');
+    }
+
+    public function import() 
+    {
+        if(!empty(request()->file('file')))
+        Excel::import(new PropertyImport,request()->file('file')); 
+        return back();
     }
 }

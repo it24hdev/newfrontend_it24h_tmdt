@@ -252,6 +252,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update/{id}',[Category_propertyController::class, 'update'])->name('category_property.update');
         Route::get('/edit/{id}', [Category_propertyController::class, 'edit'])->name('category_property.edit');
         Route::post('/delete', [Category_propertyController::class, 'destroy'])->name('category_property.delete');
+        Route::post('/import', [Category_propertyController::class, 'import'])->name('category_property.import');
+        Route::get('/export', [Category_propertyController::class, 'export'])->name('category_property.export');
 
         Route::get('/createdetail/{id}', [Category_propertyController::class, 'createdetail'])->name('detailproperty.create');
 

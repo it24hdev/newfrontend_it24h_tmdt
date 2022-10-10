@@ -31,7 +31,15 @@
                         </div>
                     </div>
                 </div>
-               
+                <div style=" margin-top: 20px;">
+                <form action="{{ route('category_property.import') }}" method="POST" enctype="multipart/form-data" style="
+            display: contents;">
+                    @csrf
+                    <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
+                    <button type="submit" class="btn btn-success" >Import Data</button>
+                </form>
+                <a class="btn btn-warning" href="{{ route('category_property.export') }}">Export Data</a>
+            </div>
             </div>
         </div>
         <div>
@@ -77,6 +85,10 @@
                             <td class="w-20">
                                 <div class="flex justify-center items-center">
                                     {{-- @can('update',App\Models\Category::class) --}}
+                                        <a class="btn btn-sm btn-primary mr-2"
+                                           href="{{ route('detailproperty.create',[$category_property->id])}}" data-bs-toggle="tooltip" title="Thêm chi tiết" ><i class="fas fa-plus-square"></i>
+                                        </a>
+                                        
                                         <a class="btn btn-sm btn-primary mr-2"
                                            href="{{route('category_property.edit',$category_property->id)}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
                                         </a>

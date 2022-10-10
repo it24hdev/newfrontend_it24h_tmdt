@@ -23,37 +23,44 @@ class PropertyImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
         ini_set('max_execution_time', 1800);
     }
     public function collection(Collection $rows)
-    {
+    {   
         foreach ($rows as $row) {
-        if($row[0] == 1){
-            $exists = db::table('brands')->where('ma',$row[0])->first();
+        if($row[0] != ""){
+            $Categoryproperty = Categoryproperty::where('ma',$row[0])->first();
+
+            $exists = db::table('detailproperties')->where('ma',$row[1])->first();
+
             if(!empty($exists)){
-                $Products = Brands::find($exists->id);
-                $Products->name     = $row[1];
-                $Products->save();
+
+                $Detailproperties = Detailproperties::find($exists->id);
+                $Detailproperties->name     = $row[1];
+                $Detailproperties->categoryproperties_id  = $Categoryproperty->id;
+                $Detailproperties->categoryproperties_code  = $row[0];
+                $Detailproperties->save();
             }
-            else{
-                $Brands = new Brand();
-                $Brands->ma       = $row[0];
-                $Brands->name     = $row[1];
-                $Brands->save();
+            else{ 
+
+                $Detailproperties = new Detailproperties();
+                $Detailproperties->ma       = $row[1];
+                $Detailproperties->name     = $row[2];
+                $Detailproperties->categoryproperties_id  = $Categoryproperty->id;
+                $Detailproperties->categoryproperties_code  = $row[0];
+                $Detailproperties->save();
             }
         }
-
         else{
-            $exists = db::table('brands')->where('ma',$row[0])->first();
+            $exists = db::table('categoryproperties')->where('ma',$row[1])->first();
             if(!empty($exists)){
-                $Products = Brands::find($exists->id);
-                $Products->name     = $row[1];
-                $Products->save();
+                $Categoryproperty = Categoryproperty::find($exists->id);
+                $Categoryproperty->name     = $row[2];
+                $Categoryproperty->save();
             }
             else{
-                $Brands = new Brand();
-                $Brands->ma       = $row[0];
-                $Brands->name     = $row[1];
-                $Brands->save();
+                $Categoryproperty = new Categoryproperty();
+                $Categoryproperty->ma       = $row[1];
+                $Categoryproperty->name     = $row[2];
+                $Categoryproperty->save();
             }
-
         } 
       }
     }
