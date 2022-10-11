@@ -94,26 +94,27 @@ class HomeController extends Controller
         if($location == 'sidebar') {
             $location = "sidebar_location";
         }
-        $getmenu = MenuItems::select('admin_menu_items.*')
+        $getmenu = MenuItems::select('admin_menu_items.*',DB::raw('null as filter_name'))
         ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
         ->get();
+
         foreach ($getmenu as $key => $value) {
            if($value->filter_by == 1){
-            $filter_name = Categoryproperty::leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')->where('detailproperties.ma',$value->filter_value);
-            $value->setAttribute('filter_name',$filter_name);
+            $filter_name = Categoryproperty::select('categoryproperties.*')
+            ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+            ->where('detailproperties.ma',$value->filter_value)
+            ->first();
+            $value->filter_name = $filter_name->ma;
            }
            elseif ($value->filter_by == 2) {
-            $filter_name = $value->setAttribute('filter_name','p');
+            $value->filter_name = 'p';
            }
            else{
-
+            $value->filter_name = '';
            }
         }
-
-        // dd($getmenu);
-
         return $getmenu;
     }
     
@@ -401,11 +402,21 @@ class HomeController extends Controller
         ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
         ->get();
 
+        // dd($request->all());
+       
+
+
+
         $filter_all = [];
         foreach ($filter as $key => $value) {
-            $value  = explode(',',$value);
+            $explode = explode(',',$value);
+            if(!empty($explode)){
+                $value  = $explode;
+            }
             $filter_all = array_merge($filter_all, $value);
         }
+
+        // dd($filter_all);
         $origin_url = $request->url();
         // parse_str($url['query'], $rq);
         // var_dump(parse_url($origin_url));
@@ -420,100 +431,90 @@ class HomeController extends Controller
                 ->count();
                 $attr_detail->setAttribute('count_product',$Propertyproducts);
                 $url ="";
-                $string_value='';
-                $get_name_key_prev='';
-                $name_pre="";
-                $name_current="";
-                $name="";
                 if(in_array($attr_detail->ma,$filter_all)){
                     $attr_detail->setAttribute('attr_checked',1);
-                    $value_url = $filter_all;
-                    if (($key = array_search($attr_detail->ma, $value_url)) !== false) {
-                        unset($value_url[$key]);
+                    $value_url = $request->all();
+                    foreach ($value_url as $key => $value) {
+                        $explode = explode(',',$value);
+                        if(!empty($explode)){
+                            $value_url[$key]= $explode;
+                        }
+                    }
+                    foreach ($value_url as $key => $subArr) {
+                        foreach ($subArr as $key2 => $value2) {
+                            if(($value_url[$key][$key2])==$attr_detail->ma){
+                                unset($value_url[$key][$key2]); 
+                            }
+                        }
+                        if($value_url[$key] == [])
+                        {
+                            unset($value_url[$key]);
+                        }
                     }
                     foreach ($value_url as $key => $value) {
-                       $cate_properties = Categoryproperty::select('categoryproperties.ma')
-                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                       ->where('detailproperties.ma',$value)
-                       ->first();
-                       if(isset($cate_properties->ma)){
-                        $name=$cate_properties->ma;
-                       }
-                        if(isset($value_url[$key-1])){
-                        $get_name_key_prev = $value_url[$key-1];
-                        $cate_properties_pre = Categoryproperty::select('categoryproperties.ma')
-                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                       ->where('detailproperties.ma',$get_name_key_prev)
-                       ->first();
-                           if(isset($cate_properties_pre->ma)){
-                            $name_pre=$cate_properties_pre->ma;
-                           }
+                        $implode = implode(',',$value);
+                        if(!empty($implode)){
+                            $value_url[$key]= $implode;
                         }
-                        if($name_pre == $name){
-                            $string_value = trim($string_value, '&').','.$value;
-                        }
-                        else{
-                        $string_value = $string_value.'&'.$name.'='.$value;
-                       }
                     }
-                    $url = $origin_url.'?'.trim($string_value, '&');
-                    $attr_detail->setAttribute('fullurl',rtrim($url, '?'));
+                    $url = $origin_url.'?'.http_build_query($value_url);
+                    $attr_detail->setAttribute('fullurl',$url);
                 }
                 else{
                     $attr_detail->setAttribute('attr_checked',0);
-                    foreach ($filter_all as $key => $value) {
-                       $cate_properties = Categoryproperty::select('categoryproperties.ma')
-                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                       ->where('detailproperties.ma',$value)
-                       // ->where('detailproperties.ma',$attr_detail->ma)
-                       ->first();
-                       if(isset($cate_properties->ma)){
-                        $name=$cate_properties->ma;
-                       }
+                    // foreach ($filter_all as $key => $value) {
+                    //    $cate_properties = Categoryproperty::select('categoryproperties.ma')
+                    //    ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                    //    ->where('detailproperties.ma',$value)
+                    //    // ->where('detailproperties.ma',$attr_detail->ma)
+                    //    ->first();
+                    //    if(isset($cate_properties->ma)){
+                    //     $name=$cate_properties->ma;
+                    //    }
 
-                       $cate_properties_curren = Categoryproperty::select('categoryproperties.ma')
-                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                       ->where('detailproperties.ma',$attr_detail->ma)
-                       ->first();
+                    //    $cate_properties_curren = Categoryproperty::select('categoryproperties.ma')
+                    //    ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                    //    ->where('detailproperties.ma',$attr_detail->ma)
+                    //    ->first();
 
-                       if(isset($cate_properties_curren->ma)){
-                        $name_current=$cate_properties_curren->ma;
-                       }
-                        if(isset($filter_all[$key-1])){
-                        $get_name_key_prev = $filter_all[$key-1];
-                        $cate_properties_pre = Categoryproperty::select('categoryproperties.ma')
-                       ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                       ->where('detailproperties.ma',$get_name_key_prev)
-                       ->first();
-                           if(isset($cate_properties_pre->ma)){
-                            $name_pre=$cate_properties_pre->ma;
-                           }
-                       }
-                       if($name_pre != $name){
-                        $string_value = $string_value.'&'.$name.'='.$value;
-                        }
-                       else{
-                        $string_value = trim($string_value, '&').','.$value;
-                       }
-                    }
-                    $url = $origin_url.'?'.trim($string_value, '&');
-                    if(Str::contains($url , $attr->ma)  == true)
-                    {
-                    $find = $attr->ma.'=';
-                    $replacement =  $attr->ma.'='.$attr_detail->ma.',';
-                    $url = str_replace($find,$replacement,$url);
-                    }
-                    else{
-                        $url = $url.'&'.$attr->ma.'='.$attr_detail->ma;
-                    }
-                    $attr_detail->setAttribute('fullurl',rtrim($url, '?'));
+                    //    if(isset($cate_properties_curren->ma)){
+                    //     $name_current=$cate_properties_curren->ma;
+                    //    }
+                    //     if(isset($filter_all[$key-1])){
+                    //     $get_name_key_prev = $filter_all[$key-1];
+                    //     $cate_properties_pre = Categoryproperty::select('categoryproperties.ma')
+                    //    ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+                    //    ->where('detailproperties.ma',$get_name_key_prev)
+                    //    ->first();
+                    //        if(isset($cate_properties_pre->ma)){
+                    //         $name_pre=$cate_properties_pre->ma;
+                    //        }
+                    //    }
+                    //    if($name_pre != $name){
+                    //     $string_value = $string_value.'&'.$name.'='.$value;
+                    //     }
+                    //    else{
+                    //     $string_value = trim($string_value, '&').','.$value;
+                    //    }
+                    // }
+                    // $url = $origin_url.'?'.trim($string_value, '&');
+                    // if(Str::contains($url , $attr->ma)  == true)
+                    // {
+                    // $find = $attr->ma.'=';
+                    // $replacement =  $attr->ma.'='.$attr_detail->ma.',';
+                    // $url = str_replace($find,$replacement,$url);
+                    // }
+                    // else{
+                    //     $url = $url.'&'.$attr->ma.'='.$attr_detail->ma;
+                    // }
+                    // $attr_detail->setAttribute('fullurl',rtrim($url, '?'));
                 }
             }
             $attr->setAttribute('detailproperty', $detailproperties);
         }
         //////////////Cau Lenh Truy Van DL//////////////////
     $exists_property ="";
-    $exists_property =  MenuItems::where('link',$request->slug)->whereIn('property',$val)->get();
+    $exists_property =  MenuItems::where('link',$request->slug)->whereIn('filter_value',$val)->get();
     if(!$request->p){
     $products = Products::distinct()->select('products.*','detailproperties.ma as matt','categories.slug as url')
     ->leftjoin('category_relationships','category_relationships.product_id','products.id')

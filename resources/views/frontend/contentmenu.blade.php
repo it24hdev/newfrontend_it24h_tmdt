@@ -20,6 +20,7 @@
             @foreach($Sidebars as $subsidebar3)
             @if($subsidebar3->parent == $subsidebar->id)
             <li>
+
                 <a class="cat-child" href="{!! route('product_cat', ['slug' => $subsidebar3->link, $subsidebar3->filter_name => $subsidebar3->filter_value ]) !!}">
                     <span>
                         {{$subsidebar3->label}}
