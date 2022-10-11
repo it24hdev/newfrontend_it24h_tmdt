@@ -365,11 +365,6 @@ class HomeController extends Controller
     
         ///////////////Tham so dau vao//////////////////]
         $val=  array_values($request->all());
-            // $val=  ['ram' => '8g','16g'];
-
-
-        // dd($request->all());
-
         $filter = $request->all();
         $agent = new Agent();
         $ag = "";
@@ -402,11 +397,6 @@ class HomeController extends Controller
         ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
         ->get();
 
-        // dd($request->all());
-       
-
-
-
         $filter_all = [];
         foreach ($filter as $key => $value) {
             $explode = explode(',',$value);
@@ -415,11 +405,7 @@ class HomeController extends Controller
             }
             $filter_all = array_merge($filter_all, $value);
         }
-
-        // dd($filter_all);
         $origin_url = $request->url();
-        // parse_str($url['query'], $rq);
-        // var_dump(parse_url($origin_url));
         foreach ($attributes as $key_attr => $attr) {
             $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
             foreach ($detailproperties as $key_attr_dt => $attr_detail) {
@@ -431,15 +417,16 @@ class HomeController extends Controller
                 ->count();
                 $attr_detail->setAttribute('count_product',$Propertyproducts);
                 $url ="";
-                if(in_array($attr_detail->ma,$filter_all)){
-                    $attr_detail->setAttribute('attr_checked',1);
-                    $value_url = $request->all();
+                $value_url = $request->all();
                     foreach ($value_url as $key => $value) {
                         $explode = explode(',',$value);
                         if(!empty($explode)){
                             $value_url[$key]= $explode;
                         }
-                    }
+                }
+                $value_url2= $value_url;
+                if(in_array($attr_detail->ma,$filter_all)){
+                    $attr_detail->setAttribute('attr_checked',1);
                     foreach ($value_url as $key => $subArr) {
                         foreach ($subArr as $key2 => $value2) {
                             if(($value_url[$key][$key2])==$attr_detail->ma){
@@ -458,90 +445,111 @@ class HomeController extends Controller
                         }
                     }
                     $url = $origin_url.'?'.http_build_query($value_url);
-                    $attr_detail->setAttribute('fullurl',$url);
+                    $attr_detail->setAttribute('fullurl',trim($url,'?'));
                 }
                 else{
                     $attr_detail->setAttribute('attr_checked',0);
-                    // foreach ($filter_all as $key => $value) {
-                    //    $cate_properties = Categoryproperty::select('categoryproperties.ma')
-                    //    ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                    //    ->where('detailproperties.ma',$value)
-                    //    // ->where('detailproperties.ma',$attr_detail->ma)
-                    //    ->first();
-                    //    if(isset($cate_properties->ma)){
-                    //     $name=$cate_properties->ma;
-                    //    }
-
-                    //    $cate_properties_curren = Categoryproperty::select('categoryproperties.ma')
-                    //    ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                    //    ->where('detailproperties.ma',$attr_detail->ma)
-                    //    ->first();
-
-                    //    if(isset($cate_properties_curren->ma)){
-                    //     $name_current=$cate_properties_curren->ma;
-                    //    }
-                    //     if(isset($filter_all[$key-1])){
-                    //     $get_name_key_prev = $filter_all[$key-1];
-                    //     $cate_properties_pre = Categoryproperty::select('categoryproperties.ma')
-                    //    ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                    //    ->where('detailproperties.ma',$get_name_key_prev)
-                    //    ->first();
-                    //        if(isset($cate_properties_pre->ma)){
-                    //         $name_pre=$cate_properties_pre->ma;
-                    //        }
-                    //    }
-                    //    if($name_pre != $name){
-                    //     $string_value = $string_value.'&'.$name.'='.$value;
-                    //     }
-                    //    else{
-                    //     $string_value = trim($string_value, '&').','.$value;
-                    //    }
-                    // }
-                    // $url = $origin_url.'?'.trim($string_value, '&');
-                    // if(Str::contains($url , $attr->ma)  == true)
-                    // {
-                    // $find = $attr->ma.'=';
-                    // $replacement =  $attr->ma.'='.$attr_detail->ma.',';
-                    // $url = str_replace($find,$replacement,$url);
-                    // }
-                    // else{
-                    //     $url = $url.'&'.$attr->ma.'='.$attr_detail->ma;
-                    // }
-                    // $attr_detail->setAttribute('fullurl',rtrim($url, '?'));
+                    foreach ($value_url2 as $key => $subArr) {
+                        foreach ($subArr as $key2 => $value2) {
+                            if($key == $attr->ma){
+                                array_push($subArr,$attr_detail->ma);
+                                $value_url2[$key] = $subArr;
+                            }
+                            else{
+                                $value_url2[$attr->ma]= $attr_detail->ma;
+                                // dd( $value_url2);
+                                // $value_url2[$key] = $subArr;
+                            }
+                        }
+                        if($value_url2[$key] == [])
+                        {
+                            unset($value_url2[$key]);
+                        }
+                    }
+                    if(($value_url2) ==[]){
+                        $value_url2[$attr->ma]= $attr_detail->ma;
+                    }
+                    foreach ($value_url2 as $key => $value) {
+                        if(is_array($value)){
+                            $implode = implode(',',$value);
+                            if(!empty($implode)){
+                                $value_url2[$key]= $implode;
+                            }
+                        }
+                        else{
+                            $value_url2[$key] =  $value;
+                        }
+                    }
+                    $url = $origin_url.'?'.http_build_query($value_url2);
+                    $attr_detail->setAttribute('fullurl',trim($url,'?'));
                 }
             }
             $attr->setAttribute('detailproperty', $detailproperties);
         }
+
+
         //////////////Cau Lenh Truy Van DL//////////////////
-    $exists_property ="";
-    $exists_property =  MenuItems::where('link',$request->slug)->whereIn('filter_value',$val)->get();
-    if(!$request->p){
-    $products = Products::distinct()->select('products.*','detailproperties.ma as matt','categories.slug as url')
+
+    $price =  "";
+    $property = $request->all();
+    if(!empty($request->p)){
+        $price = $request->p;
+    }
+    $products = Products::select('products.*','detailproperties.ma as matt','categories.slug as url')
     ->leftjoin('category_relationships','category_relationships.product_id','products.id')
     ->leftjoin('categories','categories.id','category_relationships.cat_id')
     ->leftjoin('propertyproducts','propertyproducts.products_id','products.id')
     ->leftJoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
-    ->whereIn('detailproperties.ma',$val)
     ->where('categories.slug',$request->slug)
+    ->where(function ($query) use ($property)
+                {  
+                    foreach ($property as $key => $value) {
+                        if($key == 'p'){
+                            unset($property[$key]);
+                        }
+                    }
+                    $properties =[];
+                    foreach ($property as $key => $value) {
+                        $explode = explode(',',$value);
+                        if(!empty($explode)){
+                            $value  = $explode;
+                        }
+                        $properties = array_merge($property, $value);
+                    }
+                    if($properties !=[]){
+                        $query->whereIn('detailproperties.ma', $properties);
+                    }
+                    else {
+                    }
+                })
+    ->where(function ($query) use ($price)
+                {
+                    if($price !=""){
+                        $p =[];
+                        $p  = explode(';',$price);
+                        $min_price = $p[0];
+                        $max_price = $p[1];
+                        $query->whereBetween('products.price_onsale', [$min_price, $max_price]);
+                    }
+                    else {
+                    }
+                })
     ->where('products.status',1)
     ->groupBy('products.id')
     ->paginate(20)->withQueryString();
-    }
-    else{
-   
-   
-    $price =[];
-    foreach ($request->all() as $key => $value) {
-        $value  = explode(',',$value);
-        $price = array_merge($price, $value);
-    }
-    $min_price = $price[0];
-    $max_price = $price[1];
-    $products = Products::where('status', 1)
-                ->orderBy('price_onsale', 'ASC')
-                ->whereBetween('price_onsale', [$min_price, $max_price])
-                ->paginate(20)->withQueryString();
-    }
+    // else{
+    // $price =[];
+    // foreach ($request->all() as $key => $value) {
+    //     $value  = explode(',',$value);
+    //     $price = array_merge($price, $value);
+    // }
+    // $min_price = $price[0];
+    // $max_price = $price[1];
+    // $products = Products::where('status', 1)
+    //             ->orderBy('price_onsale', 'ASC')
+    //             ->whereBetween('price_onsale', [$min_price, $max_price])
+    //             ->paginate(20)->withQueryString();
+    // }
     $slug = $request->slug;
 
         //////////////Tra ve//////////////////

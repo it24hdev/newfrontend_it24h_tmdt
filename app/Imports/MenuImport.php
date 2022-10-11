@@ -47,6 +47,7 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
               $MenuItems->category_code  = $cate_code->ma;
               $MenuItems->category_id    = $cate_code->id;
             }
+           
             if($row[2] !== ""){
               $code  = $row[2];
               $cate  = MenuItems::where("ma" , $code)->first();
@@ -112,6 +113,17 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
               }
               else{
                 $MenuItems->filter_by = 0;
+              }
+              if(!empty($row[7])){
+                $MenuItems->sort = $row[7];
+              }
+              else {
+                $MenuItems->sort = 0;
+              }
+              
+
+              if($MenuItems->link ==null){
+                $MenuItems->link = "#";
               }
               $MenuItems->save();
             }
