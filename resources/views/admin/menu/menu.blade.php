@@ -244,47 +244,30 @@ $currentUrl = url()->current();
                                     <label> <span>Di chuyển</span> <a href="{{ $currentUrl }}" class="menus-move-up" style="display: none;">Lên trên</a> <a href="{{ $currentUrl }}" class="menus-move-down" title="Mover uno abajo" style="display: inline;">Xuống dưới</a> <a href="{{ $currentUrl }}" class="menus-move-left" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-right" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-top" style="display: none;">Lên đầu</a> 
                                     </label>
                                     </p>
-                                    <div style="margin-right: 10px;margin-top: 10px;">
+                                    <div class="filter">
                                     <label> Lọc theo </label>
-                                    <select name="form_filter" id="checkfilter{{$m->id}}" class="form_filter">
+                                    <select name="filter_by" id="{{$m->id}}" class="filter_by">
                                     <option value="0" selected="selected">Chọn</option>
-                                    <option value="1" {{$m->form_filter == 1 ? 'selected':false}}>Thuộc tính </option>
-                                    <option value="2" {{$m->form_filter == 2 ? 'selected':false}}>Giá </option>
+                                    <option value="1" {{$m->filter_by == 1 ? 'selected':false}}>Thuộc tính </option>
+                                    <option value="2" {{$m->filter_by == 2 ? 'selected':false}}>Giá </option>
                                     </select>
-                                    </div>
-                                    <div id="form_filter{{$m->id}}" style="margin-right: 10px;margin-top: 10px;float: left;">
-                                       {{--  <ul class="nav nav-tabs" id="myTab{{$m->id}}" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                            <button class="nav-link active bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="property_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#properties{{$m->id}}" type="button" role="tab" aria-controls="properties{{$m->id}}" aria-selected="true">Thuộc tính</button>
-                                            </li>
-                                            <li class="nav-item" role="presentation">
-                                            <button class="nav-link bg-white px-4 text-gray-800 font-semibold py-2 rounded-t -mb-px" id="price_tab{{$m->id}}" data-bs-toggle="tab" data-bs-target="#price{{$m->id}}" type="button" role="tab" aria-controls="price{{$m->id}}" aria-selected="false">Giá</button>
-                                            </li>
-                                        </ul> --}}
-                                        <div class="tab-content" id="myTabContent{{$m->id}}">
-                                            <div class="" id="properties{{$m->id}}" role="tabpanel" aria-labelledby="property_tab{{$m->id}}">
-                                        <select name="list_property" id="list_property{{$m->id}}" class="listcate">
-                                            @if($m->property ==null || $m->property ==0)
-                                                <option value="0">Chọn thuộc tính</option>
-                                                @endif
-                                                @foreach ($list_property as $val)
-                                                @if($val->cate_id == $m->category_id)
-                                                <option value="{{ $val->id}}" {{$m->property == $val->id ? 'selected':false}}>
-                                                    {{ $val->name}}
-                                                @endif
-                                                @endforeach
-                                        </select>
-                                            </div>
-                                            <div class="" id="price{{$m->id}}" role="tabpanel" aria-labelledby="price_tab{{$m->id}}">
-                                                <input type="number" id="from_price{{$m->id}}" min="0" max="1000000000000" class="widefat code edit-menu-item-classes min_price" name="min_price" value="{{$m->min_price}}">
-                                                <input type="number" id="to_price{{$m->id}}" min="0" max="1000000000000" class="widefat code edit-menu-item-classes max_price" name="max_price" value="{{$m->max_price}}">
-                                                
-                                            </div>
-                                            <div>
-                                                Thương hiệu
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                  {{--   <select name="filter_by" id="filter_by_property_{{$m->id}}" class="filter_by_property">
+                                        @if($m->property ==null || $m->property ==0)
+                                            <option value="0">Chọn thuộc tính</option>
+                                            @endif
+                                            @foreach ($list_property as $val)
+                                            @if($val->cate_id == $m->category_id)
+                                            <option value="{{ $val->id}}" {{$m->property == $val->id ? 'selected':false}}>
+                                                {{ $val->name}}
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                    </div> --}}
+                                 <input type="text" class="widefat code edit-menu-item-classes filter_value" name="filter_value" value="{{$m->filter_value}}">
+
+
+                                           {{--  <input type="number" id="to_price{{$m->id}}" min="0" max="1000000000000" class="widefat code edit-menu-item-classes max_price" name="max_price" value="{{$m->max_price}}"> --}}
                                     <div class="menu-item-actions description-wide submitbox">
                                         <a class="item-delete submitdelete deletion" id="delete-{{$m->id}}" href="{{ $currentUrl }}?action=delete-menu-item&menu-item={{$m->id}}&_wpnonce=2844002501">Xóa</a>
                                         <span class="meta-sep hide-if-no-js"> | </span>
@@ -375,4 +358,18 @@ $currentUrl = url()->current();
 <script src="{{asset('asset/menu/scripts2.js')}}"></script>
 <script src="{{asset('asset/menu/menu.js')}}"></script>
 <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script>
+    // $(document).ready(function () {
+    //     $(".filter_value").click(function(){
+    //         var filter_value = $(this).attr('id');
+    //         console.log("#filter_by_property_"+filter_value);
+    //         if(filter_value==2){
+    //         $("#filter_by_property_"+filter_value).addClass('active');
+    //         }
+    //         else{
+    //         $("#filter_by_property_"+filter_value).removeClass('active')
+    //         }
+    //     })
+    // })
+</script>
 @endsection

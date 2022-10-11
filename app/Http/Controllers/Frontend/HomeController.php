@@ -89,13 +89,11 @@ class HomeController extends Controller
     }
     // lay memu sidebar
     public function getmenu($location){
-        if($location == 'sidebar')  {$location = "sidebar_location"; }
-        if($location == 'menu')  {$location = "menu_location"; }
-        if($location == 'footer')  {$location = "footer_location"; }
-        $getmenu = MenuItems::select('admin_menu_items.*','detailproperties.ma as code_property','categoryproperties.name as name_categories_property', 'categoryproperties.ma as code_categoryproperties')
+        if($location == 'sidebar') {
+            $location = "sidebar_location";
+        }
+        $getmenu = MenuItems::select('admin_menu_items.*')
         ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
-        ->leftjoin('detailproperties','detailproperties.id','admin_menu_items.property')
-        ->leftjoin('categoryproperties','categoryproperties.id','detailproperties.categoryproperties_id')
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
         ->get();
@@ -345,7 +343,7 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    public function product_cat(Request $request){
+    public function product_cat(Request $request, $slug){
     
         ///////////////Tham so dau vao//////////////////]
 
@@ -393,6 +391,8 @@ class HomeController extends Controller
             $filter_all = array_merge($filter_all, $value);
         }
         $origin_url = $request->url();
+        // parse_str($url['query'], $rq);
+        // var_dump(parse_url($origin_url));
         foreach ($attributes as $key_attr => $attr) {
             $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
             foreach ($detailproperties as $key_attr_dt => $attr_detail) {

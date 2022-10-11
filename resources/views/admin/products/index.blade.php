@@ -147,6 +147,8 @@
                             <td class="table-report__action w-40" style="padding: 0.25rem 0.25rem !important;">
                                 <div class="flex justify-center items-center">
                                     @can('update', App\Models\Products::class)
+                                    <a  href="{{ route('productsproperties.edit',['id' => $product->id]) }}"
+                                        title="Thuộc tính sản phẩm" class="btn btn-sm btn-primary mr-2"><i class="fas fa-plus-square"></i></a>
                                         <a href="{{ route('products.edit', ['id' => $product->id]) }}" title="Chỉnh sửa"
                                             class="btn btn-sm btn-primary mr-2">
                                             <i class="fa-solid fa-pen-to-square"></i>

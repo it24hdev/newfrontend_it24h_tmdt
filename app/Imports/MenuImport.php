@@ -55,33 +55,22 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
               }
             }
 
-            if($row[5] != ""){
-              if($row[5] == "Thuộc tính"){
-                $MenuItems->form_filter = 1;
+            if($row[5] == 1){
+                $MenuItems->filter_by = 1;
+                $MenuItems->filter_value=$row[6];
               }
-              elseif ($row[5] == "Giá") {
-                $MenuItems->form_filter = 2;
+              elseif ($row[5] == 2) {
+                $MenuItems->filter_by = 2;
+                $MenuItems->filter_value=$row[6];
               }
-              elseif ($row[5] == "Thương hiệu") {
-                $MenuItems->form_filter = 3;
+              elseif ($row[5] == 3) {
+                $MenuItems->filter_by = 3;
               }
               else{
-                $MenuItems->form_filter = 0;
+                $MenuItems->filter_by = 0;
               }
+                $MenuItems->save();
             }
-            if($row[6] != ""){
-              $MenuItems->property = $row[6];
-            }
-            if($row[7] != ""){
-              $MenuItems->min_price = $row[7];
-            }
-            if($row[8] != ""){
-              $MenuItems->max_price = $row[8];
-            }
-            $MenuItems->sort = $key;
-            $MenuItems->save();
-        }
-          
         else {
             $MenuItems = new MenuItems();
             $MenuItems->ma       = $row[1];
@@ -109,32 +98,23 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
                 $MenuItems->parent = $cate->id;
               }
             }
-            if($row[5] != ""){
-              if($row[5] == "Thuộc tính"){
-                $MenuItems->form_filter = 1;
+
+            if($row[5] == 1){
+                $MenuItems->filter_by = 1;
+                $MenuItems->filter_value=$row[6];
               }
-              elseif ($row[5] == "Giá") {
-                $MenuItems->form_filter = 2;
+              elseif ($row[5] == 2) {
+                $MenuItems->filter_by = 2;
+                $MenuItems->filter_value=$row[6];
               }
-              elseif ($row[5] == "Thương hiệu") {
-                $MenuItems->form_filter = 3;
+              elseif ($row[5] == 3) {
+                $MenuItems->filter_by = 3;
               }
               else{
-                $MenuItems->form_filter = 0;
+                $MenuItems->filter_by = 0;
               }
+              $MenuItems->save();
             }
-            if($row[6] != ""){
-              $MenuItems->property = $row[6];
-            }
-            if($row[7] != ""){
-              $MenuItems->min_price = $row[7];
-            }
-            if($row[8] != ""){
-              $MenuItems->max_price = $row[8];
-            }
-            $MenuItems->sort = $key;
-            $MenuItems->save();
-          }
         }
       }
 

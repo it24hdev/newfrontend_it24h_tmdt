@@ -25,14 +25,9 @@ class CreateMenuItemsWpTable extends Migration
             $table->string('class')->nullable();
             $table->unsignedBigInteger('menu');
             $table->integer('depth')->default(0);
-            $table->integer('categoryselect')->nullable();
-            $table->integer('property')->nullable();
-            $table->integer('form_filter')->nullable();
-            $table->integer('min_price')->default(0);
-            $table->integer('max_price')->default(0);
-            $table->string('name_categoryproperty')->nullable();
+            $table->integer('filter_by')->default(0);
+            $table->string('filter_value')->nullable();
             $table->timestamps();
-
             $table->foreign('menu')->references('id')->on(config('menu.table_prefix') . config('menu.table_name_menus'))
             ->onDelete('cascade')
             ->onUpdate('cascade');

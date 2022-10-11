@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MenuExport;
 use App\Imports\MenuImport;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
@@ -176,13 +177,13 @@ class MenuController extends Controller
         $menuitem = new MenuItems();
         $menuitem->label = request()->input("labelmenu");
         $menuitem->link = request()->input("linkmenu");
-        if (config('menu.use_roles')) {
+        $menuitem->ma = strtoupper(Str::random(6));
+         if (config('menu.use_roles')) {
             $menuitem->role_id = request()->input("rolemenu") ? request()->input("rolemenu")  : 0 ;
         }
 
         $menuitem->menu = request()->input("idmenu");
         $menuitem->sort = MenuItems::getNextSortRoot(request()->input("idmenu"));
-         dd($menuitem->sort);
         $menuitem->save();
     }
 
@@ -198,8 +199,6 @@ class MenuController extends Controller
         $menuitem->category_id  = $categories->id;
         $menuitem->category_code  = $categories->ma;
         $menuitem->menu = request()->input("idmenu");
-
-        // $menuitem->sort = MenuItems::getNextSortRoot(request()->input("idmenu"));
         $menuitem->save();
         }
     }
@@ -216,16 +215,8 @@ class MenuController extends Controller
                     $menuitem->parent = $value["parent"];
                     $menuitem->sort = $value["sort"];
                     $menuitem->depth = $value["depth"];
-                    $menuitem->property = $value["property"]; 
-                    $menuitem->form_filter = $value["form_filter"]; 
-                    $menuitem->min_price = $value["min_price"]; 
-                    $menuitem->max_price = $value["max_price"]; 
-                  
-                    $get_code_categoryproperties = Categoryproperty::select('categoryproperties.*')->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
-                    ->where('detailproperties.id',$value["property"])
-                    ->first();
-                    if(!empty($get_code_categoryproperties))
-                    $menuitem->name_categoryproperty = $get_code_categoryproperties->ma;
+                    $menuitem->filter_by = $value["filter_by"]; 
+                    $menuitem->filter_value = $value["filter_value"]; 
                     if (config('menu.use_roles')) {
                         $menuitem->role_id = request()->input("role_id");
                     }

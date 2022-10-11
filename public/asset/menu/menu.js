@@ -16,10 +16,9 @@ function getmenus() {
         dept = i;
       }
     }
-    var min_price = $(this).find('.min_price').val();
-    var max_price = $(this).find('.max_price').val();
-    var listcate = $(this).find('.listcate').val();
-    var form_filter = $(this).find('.form_filter').val();
+    var filter_value = $(this).find('.filter_value').val();
+    var filter_by    = $(this).find('.filter_by').val();
+
     var textoiner = $(this).find('.item-edit').text();
     var id = this.id.split('-');
     var textoexplotado = textoiner.split('|');
@@ -33,10 +32,8 @@ function getmenus() {
       id: id[2],
       parent: padre,
       sort: cont,
-      property: listcate,
-      form_filter: form_filter,
-      min_price: min_price,
-      max_price: max_price,
+      filter_by: filter_by,
+      filter_value: filter_value,
     });
     cont++;
   });
