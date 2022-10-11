@@ -53,6 +53,8 @@ class HomeController extends Controller
         }
         $list_cat = \implode(' ', $list_cat_id);
         $Sidebars           = $this->getmenu('sidebar');
+
+
         $locale             = config('app.locale');
         $banner_1   = DB::table('sliders')->where('location',1)->where('status', 1)->inRandomOrder()->first();
         $banner_2   = DB::table('sliders')->where('location',2)->where('status', 1)->inRandomOrder()->first();
@@ -97,6 +99,21 @@ class HomeController extends Controller
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
         ->get();
+        foreach ($getmenu as $key => $value) {
+           if($value->filter_by == 1){
+            $filter_name = Categoryproperty::leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')->where('detailproperties.ma',$value->filter_value);
+            $value->setAttribute('filter_name',$filter_name);
+           }
+           elseif ($value->filter_by == 2) {
+            $filter_name = $value->setAttribute('filter_name','p');
+           }
+           else{
+
+           }
+        }
+
+        // dd($getmenu);
+
         return $getmenu;
     }
     
@@ -346,7 +363,6 @@ class HomeController extends Controller
     public function product_cat(Request $request, $slug){
     
         ///////////////Tham so dau vao//////////////////]
-
         $val=  array_values($request->all());
             // $val=  ['ram' => '8g','16g'];
 
