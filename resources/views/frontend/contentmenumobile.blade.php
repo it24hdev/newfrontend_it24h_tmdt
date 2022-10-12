@@ -2,7 +2,7 @@
 @foreach($Sidebars  as $Sidebar)
     @if($Sidebar->parent==0)
     <li>
-        <a href="{!! route('product_cat',  ['slug' => $Sidebar->link, $Sidebar->code_property]) !!}"><span class="icon-menu me-1">
+        <a href="{!! $Sidebar->link !!}"><span class="icon-menu me-1">
         {!! $Sidebar->class !!} {{$Sidebar->label}}</a>
         @if(count($Sidebar->childs))
         <span class="icon-right"><i class="far fa-angle-right"></i></span>
@@ -14,7 +14,7 @@
                 @foreach($Sidebars as $subsidebar)
                 @if($subsidebar->parent == $Sidebar->id)
 
-                <li><a href="{!! route('product_cat', ['slug' =>  $subsidebar->link, $subsidebar->code_property]) !!}">- {{$subsidebar->label}}</a>
+                <li><a href="{!! $subsidebar->link !!}">- {{$subsidebar->label}}</a>
                     @if(count($subsidebar->childs))
                         @include('frontend.subsidebarmenu',['childs' => $subsidebar->childs])
                     @endif

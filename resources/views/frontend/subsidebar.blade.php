@@ -2,7 +2,7 @@
     <ul>
     @foreach($childs as $child)
         <li>
-            <a href="{!! route('product_cat',  ['slug' => $child->link,$child->filter_name => $child->filter_value]) !!}">{{$child->label}}</a>
+            <a href="{!! $child->link !!}">{{$child->label}}</a>
             @if(count($child->childs))
             <span class="next-right">
                 <i class="far fa-angle-right"></i>

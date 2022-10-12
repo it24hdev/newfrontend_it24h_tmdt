@@ -2,7 +2,7 @@
 <div class="submenu-parent-mobile-1">
     <ul style="margin-left: 15px;">
         @foreach($childs as $child)
-        <li><a style="position:initial" href="{!! route('product_cat', ['slug' => $child->link, $child->code_property]) !!}">{{$child->label}}</a>  
+        <li><a style="position:initial" href="{!!  $child->link !!}">{{$child->label}}</a>  
             @if(count($child->childs))
                 @include('frontend.subsidebarmenu',['childs' => $child->childs])
             @endif

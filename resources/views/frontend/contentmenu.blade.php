@@ -4,7 +4,7 @@
     <div class="wp-menu-parent">
         @if(!empty($subsidebar->link))
             {{-- @if($subsidebar->form_filter == 0) --}}
-        <a class="title-cat" href="{!! route('product_cat',  ['slug' => $subsidebar->link]) !!}">
+        <a class="title-cat" href="{!!$subsidebar->link !!}">
             {{$subsidebar->label}}
         </a>
         {{-- @endif --}}
@@ -21,7 +21,7 @@
             @if($subsidebar3->parent == $subsidebar->id)
             <li>
 
-                <a class="cat-child" href="{!! route('product_cat', ['slug' => $subsidebar3->link, $subsidebar3->filter_name => $subsidebar3->filter_value ]) !!}">
+                <a class="cat-child" href="{!!  $subsidebar3->link !!}">
                     <span>
                         {{$subsidebar3->label}}
                     </span>

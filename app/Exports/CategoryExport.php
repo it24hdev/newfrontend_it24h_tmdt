@@ -17,7 +17,7 @@ class CategoryExport implements FromCollection, WithHeadings
     {
         // return
 
-        $categories = Category::select("ma","parent_id","name","name2")->where('taxonomy',0)->whereNull('deleted_at')->get();
+        $categories = Category::select("name","ma","parent_id",)->where('taxonomy',0)->whereNull('deleted_at')->get();
 
         foreach($categories as $category){
 
@@ -31,6 +31,6 @@ class CategoryExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["Mã" ,"Danh mục cha", "Tên danh mục", "Tên danh mục (ngoại ngữ)"];
+        return ["Tên danh mục" ,"Mã", "Danh mục cha"];
     }
 }

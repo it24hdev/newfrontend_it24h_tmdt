@@ -47,7 +47,7 @@ class CategoryController extends Controller
         if($limit   ==null) {$limit   =10;}
         if($sort    ==null) {$sort    ='asc';}
         if($keywords==null) {$keywords="";}
-        if($orderby ==null) {$orderby ="ma";}
+        if($orderby ==null) {$orderby ="id";}
 
 
         $data = Category::where('taxonomy', 0)
@@ -248,7 +248,6 @@ class CategoryController extends Controller
             ->update([
             'ma' => $request->ma,
             'label' => $request->name,
-            'link' => $request->slug
             ]);
             $folder_thumb  = 'upload/images/products/thumb/';
             $folder = 'upload/images/products';
@@ -292,7 +291,11 @@ class CategoryController extends Controller
         if (!is_null($Category)){
             $Category->delete();
             if (!is_null($menu)){
-            $menu->delete();
+            DB::table('admin_menu_items')->where('category_id', $request->id)
+              ->update([
+                'category_id'  =>   null,
+                'category_code'=>   NUll,
+              ]);
             }
             return \json_encode(array('success'=>true));
         }

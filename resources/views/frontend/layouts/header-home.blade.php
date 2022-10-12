@@ -57,7 +57,7 @@
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @foreach($Sidebars as $Sidebar)
                                                 @if($Sidebar->parent==0)
-                                                    <li><a class="dropdown-item" href="{{route('product_cat',['slug' => $Sidebar->link])}}">{{$Sidebar->label}}</a></li>
+                                                    <li><a class="dropdown-item" href="{!!$Sidebar->link!!}">{{$Sidebar->label}}</a></li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -135,7 +135,7 @@
                                     @foreach($Sidebars  as $Sidebar)
                                     @if($Sidebar->parent==0)
                                     <li>
-                                        <a href="{!! route('product_cat',  ['slug' => $Sidebar->link]) !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
+                                        <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
                                             {{$Sidebar->label}}
                                              @if(count($Sidebar->childs))
                                              <span class="icon-right"><i class="far fa-angle-right"></i></span>

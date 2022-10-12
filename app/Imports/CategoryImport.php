@@ -26,35 +26,51 @@ class CategoryImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
     public function collection(Collection $rows)
     {
       foreach ($rows as $row) {
-        $exists = db::table('categories')->where('ma',$row[0])->where('taxonomy',0)->first();
+        $exists = db::table('categories')->where('ma',$row[1])->where('taxonomy',0)->first();
+
+        $cate_slug = Str::slug( $row[0], '-');
+        
         if(!empty($exists)){
+          $exists_slug = db::table('categories')->where('slug',$cate_slug)->where('id','<>',$exists->id)->where('taxonomy',0)->first();
           $parent_id = "";
-          if($row[1] !== ""){
-            $code  = $row[1];
+          if($row[2] !== ""){
+            $code  = $row[2];
             $cate  = Category::where("ma" , $code)->where('taxonomy',0)->first();
             if(!empty($cate)){
               $parent_id = $cate->id;
             }
           }
+          $slug ="";
+          if(!empty($exists_slug)){
+          $slug   = Str::slug( $row[0], '-').'-'.Str::random(3);
+          }
+          else{
+            $slug     = Str::slug( $row[0], '-');
+          }
           DB::table('categories')->where('id', $exists->id)
           ->update([
-            'name' => $row[2],
-            'name2'=> $row[3],
-            'slug' => Str::slug( $row[2], '-'),
+            'name' => $row[0],
+            'slug' => $slug,
             'taxonomy' => 0,
             'deleted_at' => null,
             'parent_id' => $parent_id,
           ]);
         }
         else{
+        $exists_slug = db::table('categories')->where('slug',$cate_slug)->where('taxonomy',0)->first();
         $Category = new Category();
-        $Category->ma       = $row[0];
-        $Category->name     = $row[2];
-        $Category->name2    = $row[3];
-        $Category->slug     = Str::slug( $row[2], '-');
+        $Category->ma       = $row[1];
+        $Category->name     = $row[0];
+
+        if(!empty($exists_slug)){
+          $Category->slug   = Str::slug( $row[0], '-').'-'.Str::random(3);
+        }
+        else{
+          $Category->slug     = Str::slug( $row[0], '-');
+        }
         $Category->taxonomy = 0;
-        if($row[1] !== ""){
-          $code  = $row[1];
+        if($row[2] !== ""){
+          $code  = $row[2];
           $cate  = Category::where("ma" , $code)->where('taxonomy',0)->first();
           if(!empty($cate)){
             $Category->parent_id = $cate->id;

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Categoryproperty;
 
 use App\Http\Controllers\Controller;
 use App\Models\Categoryproperty;
+use App\Models\Categoryproperties_manages;
 use App\Models\Detailproperties;
+use App\Models\Products;
 use App\Exports\PropertyExport;
 use App\Imports\PropertyImport;
 use Illuminate\Http\Request;
@@ -185,12 +187,14 @@ class Category_propertyController extends Controller
             'stt'      => $request->stt,
             'status'    => $request->has('status'),
         ];
-
-
-
         try {
             DB::beginTransaction();
             $category_properties->update($category_property);
+            DB::table('categoryproperties_manages')->where('categoryproperties_id', $id)
+              ->update([
+                'ma' => $request->ma,
+                'name'=> $request->name,
+              ]);
             Detailproperties::where('categoryproperties_id',$id)->update(['categoryproperties_code' => $request->ma]);
             DB::commit();
             return redirect()->route('category_property.index')->with('success','Cập nhật danh mục thuộc tính thành công.');
@@ -230,10 +234,19 @@ class Category_propertyController extends Controller
     {
         $Categoryproperty     = Categoryproperty::find($request->id);
         $detailproperties = DB::table('detailproperties')->where('categoryproperties_id', $request->id);
+        $Categoryproperties_manages = DB::table('categoryproperties_manages')->where('categoryproperties_id', $request->id);
         if (!is_null($Categoryproperty)){
             $Categoryproperty->delete();
             if (!is_null($detailproperties)){
+                $detailproperties_value = $detailproperties->get();
+            foreach($detailproperties_value as $value){
+                $Propertyproducts = DB::table('propertyproducts')->where('detailproperties_id', $value->id);
+                $Propertyproducts->delete();
+            }
             $detailproperties->delete();
+            }
+            if (!is_null($Categoryproperties_manages)){
+            $Categoryproperties_manages->delete();
             }
             return \json_encode(array('success'=>true));
         }
@@ -243,8 +256,12 @@ class Category_propertyController extends Controller
     public function destroydetail(Request $request)
     {
         $Detailproperty     = Detailproperties::find($request->id);
+        $Propertyproducts = DB::table('propertyproducts')->where('detailproperties_id', $request->id);
         if (!is_null($Detailproperty)){
             $Detailproperty->delete();
+            if (!is_null($Propertyproducts)){
+            $Propertyproducts->delete();
+            }
             return \json_encode(array('success'=>true));
         }
         return \json_encode(array('success'=>false));

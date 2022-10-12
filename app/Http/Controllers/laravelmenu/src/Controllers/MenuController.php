@@ -24,6 +24,7 @@ class MenuController extends Controller
             \session(['module_active' => 'menu', 'active' => 'Menu']);
             return $next($request);
         });
+        ini_set('max_execution_time', 1800);
     }
     public function index(Request $request)
     {
@@ -194,7 +195,7 @@ class MenuController extends Controller
         $categories = Category::find($value);
         $menuitem   = new MenuItems();
         $menuitem->label = $categories->name;
-        $menuitem->link  = $categories->slug;
+        // $menuitem->link  = $categories->slug;
         $menuitem->class  = $categories->icon;
         $menuitem->category_id  = $categories->id;
         $menuitem->category_code  = $categories->ma;

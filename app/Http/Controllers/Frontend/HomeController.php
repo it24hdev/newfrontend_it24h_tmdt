@@ -94,19 +94,21 @@ class HomeController extends Controller
         if($location == 'sidebar') {
             $location = "sidebar_location";
         }
-        $getmenu = MenuItems::select('admin_menu_items.*',DB::raw('null as filter_name'))
+        $getmenu = MenuItems::select('admin_menu_items.*',DB::raw('null as filter_name'),'categories.slug as slug')
         ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+        ->leftjoin('categories','categories.id','admin_menu_items.category_id')
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
         ->get();
-
         foreach ($getmenu as $key => $value) {
            if($value->filter_by == 1){
             $filter_name = Categoryproperty::select('categoryproperties.*')
             ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
             ->where('detailproperties.ma',$value->filter_value)
             ->first();
-            $value->filter_name = $filter_name->ma;
+            if(!empty($filter_name)){
+                $value->filter_name = $filter_name->ma;
+            }
            }
            elseif ($value->filter_by == 2) {
             $value->filter_name = 'p';
@@ -114,6 +116,19 @@ class HomeController extends Controller
            else{
             $value->filter_name = '';
            }
+        $url ="#";
+
+
+
+        if(!empty($value->link)){
+            $url = 'https://'.$value->link;
+        }
+        else{
+            if(!empty($value->slug)){
+                $url = redirect()->route('product_cat',['slug' => $value->slug, $value->filter_name => $value->filter_value])->getTargetUrl();
+            }
+        }
+        $value->link = $url;
         }
         return $getmenu;
     }
@@ -537,19 +552,6 @@ class HomeController extends Controller
     ->where('products.status',1)
     ->groupBy('products.id')
     ->paginate(20)->withQueryString();
-    // else{
-    // $price =[];
-    // foreach ($request->all() as $key => $value) {
-    //     $value  = explode(',',$value);
-    //     $price = array_merge($price, $value);
-    // }
-    // $min_price = $price[0];
-    // $max_price = $price[1];
-    // $products = Products::where('status', 1)
-    //             ->orderBy('price_onsale', 'ASC')
-    //             ->whereBetween('price_onsale', [$min_price, $max_price])
-    //             ->paginate(20)->withQueryString();
-    // }
     $slug = $request->slug;
 
         //////////////Tra ve//////////////////
