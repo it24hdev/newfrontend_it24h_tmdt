@@ -47,6 +47,8 @@ class Products extends Model
         'attr',
         'quantity',
         'detailproperty',
+        'tax',
+        'warranty',
     ];
     const IMAGE = 'no-images.jpg';
     const ACTIVE = 1;

@@ -45,7 +45,7 @@ class ProductsController extends Controller
     {
         $this->authorize('viewAny', Products::class);
         $limit    =  $request->query('limit');
-        $keywords =  $request->query('search');
+        $keywords =  $request->query('keywords');
         $orderby  =  $request->query('orderby');
         $sort     =  $request->query('sort');
         if ($sort  == null) {
@@ -63,7 +63,9 @@ class ProductsController extends Controller
         if ($limit == 10 && $keywords == "" && $orderby == "ma" && $sort =="asc") {
             $Products = Products::paginate($limit);
         } else
-            $Products = Products::where('name', 'like', '%' . $keywords . '%')->orderby($orderby, $sort)->Paginate($limit);
+            $Products = Products::where('name', 'like', '%' . $keywords . '%')
+            ->orwhere('ma', 'like', '%' . $keywords . '%')
+            ->orderby($orderby, $sort)->Paginate($limit);
         return view('admin.products.index', [
             'products' => $Products,
             'title'    => 'Sản phẩm',

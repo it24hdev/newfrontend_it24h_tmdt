@@ -26,14 +26,14 @@ class BrandImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVal
         foreach ($rows as $row) {
         $exists = db::table('brands')->where('ma',$row[0])->first();
         if(!empty($exists)){
-            $Products = Brands::find($exists->id);
-            $Products->name     = $row[1];
-            $Products->save();
+            $Brands = Brand::find($exists->id);
+            $Brands->name     = $row[1];
+            $Brands->save();
         }
         else{
             $Brands = new Brand();
             $Brands->ma       = $row[0];
-            $Brands->name     = $row[1];
+            $Brands->name     = $row[1] ;
             $Brands->save();
         }  
       }

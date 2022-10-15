@@ -43,7 +43,10 @@
                                 </div>
                                 @if (!empty($product->brand))
                                     <div class="product-brand">
-                                        <img src="{{asset('upload/images/products/medium/'.$product->brands->image)}}" alt="">
+                                        @if(!empty($product->brands->image)){
+                                            <img src="{{asset('upload/images/products/medium/'.$product->brands->image)}}" alt="">
+                                        }
+                                        @endif
                                     </div>
                                 @endif
                                 <span class="prev"><i class="fas fa-chevron-left"></i></span>
@@ -116,6 +119,18 @@
                                     </div>
                                 @endif
 
+                            </div>
+                            <div class="warranty_flex">
+                                @if(!empty($product->tax) && $product->tax==1)
+                                
+                                <div class="warranty">Giá đã có VAT</div>
+                                
+                                @endif
+                                @if(!empty($product->warranty))
+      
+                                <div class="warranty">Bảo hành {{$product->warranty}}</div>
+                    
+                                @endif
                             </div>
                             @if (!empty($product->gift))
                                 <div class="product-gift">
@@ -480,7 +495,7 @@
                                         <div class="thumb">
                                             <a href="{{ route('detailproduct', $item->slug)}}">
                                                 <img class="owl-lazy" data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
-                                                @if (!empty($item->brand))
+                                                @if (!empty($item->brands->image))
                                                     <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
                                                 @endif
                                                 <div class="wp-tag">

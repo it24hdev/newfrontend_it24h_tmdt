@@ -2,7 +2,9 @@
 
 namespace App\Imports;
 
+use App\Models\Brand;
 use App\Models\Products;
+use App\Models\Category;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -26,65 +28,91 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
         foreach ($rows as $row) {
         $exists = db::table('products')->where('ma',$row[0])->first();
         if(!empty($exists)){
-          DB::table('products')->where('id', $exists->id)
-          ->update([
-              'ma'        =>   $row[0],
-              'name'      =>   $row[1],
-              'price'     =>   $row[2],
-              'quantity'  =>   $row[3],
-              'unit'      =>   $row[4],
-              'brand'     =>   $row[5],
-              'property'  =>   $row[6],
-              'still_stock'     =>   $row[7],
-              'short_content'   =>   $row[8],
-              'gift'      =>   $row[9],
-              'content'   =>   $row[10],
-              'slug'      =>   Str::slug( $row[1], '-'),
-              'deleted_at'=>   NUll,
-          ]);
-
-            // $Products = Products::find($exists->id);
-            // $Product = [
-            // 'ma'        =>   $row[0],
-            // 'name'      =>   $row[1],
-            // 'price'     =>   $row[2],
-            // 'quantity'  =>   $row[3],
-            // 'unit'      =>   $row[4],
-            // 'brand'     =>   $row[5],
-            // 'property'  =>   $row[6],
-            // 'still_stock'     =>   $row[7],
-            // 'short_content'   =>   $row[8],
-            // 'gift'      =>   $row[9],
-            // 'content'   =>   $row[10],
-            // 'slug'      =>   Str::slug( $row[1], '-'),
-            // 'deleted_at'=>   NUll
-            // ];
-            // try {
-            // DB::beginTransaction();
-            // $Products->update($Product);
-            // DB::commit();
-
-
-            // }
-            // catch (\Exception $exception){
-            //     DB::rollBack();
-            // }
+            $Products = Products::find($exists->id);
+            // $Products->ma       = strtoupper(Str::random(6));
+            $Products->name     = $row[1];
+            
+            if($row[3]!=""){
+                $Products->price    = $row[3];
+                $Products->price_onsale    = $row[2];
+                $Products->onsale    = $row[4];
+            }
+            else{
+                $Products->onsale    = $row[3];
+                $Products->price_onsale    = 0;
+                $Products->onsale    = 0;
+            }
+            $Products->quantity    = $row[5];
+            if($row[6] !=""){
+                $code_cat = explode(',',$row[6]);
+                $json_cat_id=[];
+                foreach ($code_cat as $key => $value) {
+                    $cat = Category::where('ma',$value)->first();
+                    if(!empty($cat)){
+                        array_push($json_cat_id,$cat->id);
+                    }    
+                }
+                $Products->cat_id = json_encode($json_cat_id);
+            }
+            if($row[7] != ""){
+                $Brand = Brand::where('name', $row[7])->first();
+                if(!empty($Brand)){
+                    $Products->brand    = $Brand->id;
+                }
+            }
+            $Products->short_content    = $row[8];
+            $Products->gift    = $row[9];
+            $Products->content    = $row[10];
+            $Products->slug    = Str::slug( $row[1], '-');
+            $Products->warranty    = $row[11];
+            $Products->tax    = $row[12];
+            $Products->deleted_at    = null;
+            $Products->save();
         }
-        else{
-        $Products = new Products();
-        $Products->ma       = $row[0];
-        $Products->name     = $row[1];
-        $Products->price    = $row[2];
-        $Products->quantity    = $row[3];
-        $Products->unit    = $row[4];
-        $Products->brand    = $row[5];
-        $Products->property    = $row[6];
-        $Products->still_stock    = $row[7];
-        $Products->short_content    = $row[8];
-        $Products->gift    = $row[9];
-        $Products->content    = $row[10];
-        $Products->slug    = Str::slug( $row[1], '-');
-        $Products->save();
+        else{ 
+            if($row[1] != ""){
+            $Products = new Products();
+            $Products->ma       = strtoupper(Str::random(6));
+            $Products->name     = $row[1];
+            
+            if($row[3]!=""){
+                $Products->price    = $row[3];
+                $Products->price_onsale    = $row[2];
+                $Products->onsale    = $row[4];
+            }
+            else{
+                $Products->price    = $row[2];
+                $Products->price_onsale    = 0;
+                $Products->onsale    = 0;
+            }
+            
+           
+            $Products->quantity    = $row[5];
+            if($row[6] !=""){
+                $code_cat = explode(',',$row[6]);
+                $json_cat_id=[];
+                foreach ($code_cat as $key => $value) {
+                    $cat = Category::where('ma',$value)->first();
+                    if(!empty($cat)){
+                        array_push($json_cat_id,$cat->id);
+                    }        
+                }
+                $Products->cat_id = json_encode($json_cat_id);
+            }
+            if($row[7] != ""){
+                $Brand = Brand::where('name', $row[7])->first();
+                if(!empty($Brand)){
+                    $Products->brand    = $Brand->id;
+                }
+            }
+            $Products->short_content    = $row[8];
+            $Products->gift    = $row[9];
+            $Products->content    = $row[10];
+            $Products->slug    = Str::slug( $row[1], '-');
+            $Products->warranty    = $row[11];
+            $Products->tax    = $row[12];
+            $Products->save();
+            } 
         }  
       }
     }
