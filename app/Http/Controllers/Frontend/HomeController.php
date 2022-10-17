@@ -376,8 +376,8 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    public function product_cat(Request $request, $slug){
-    
+    public function product_cat(Request $request){
+        
         ///////////////Tham so dau vao//////////////////]
         $val=  array_values($request->all());
         $filter = $request->all();
@@ -391,15 +391,24 @@ class HomeController extends Controller
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
+
+        
+        
         $cat = Category::where('slug', $request->slug)->first();
-        if (empty($cat)) {
-            return abort(404);
+        if (!empty($cat)) {
+           $categories = Category::where('taxonomy',Category::SAN_PHAM)
+            ->where('parent_id',$cat->id)
+            ->where('status',1)
+            ->get();
+        }
+        else{
+            $categories = Category::where('taxonomy',Category::SAN_PHAM)
+            ->where('parent_id',0)
+            ->where('status',1)
+            ->get();
         }
 
-        $categories = Category::where('taxonomy',Category::SAN_PHAM)
-        ->where('parent_id',$cat->id)
-        ->where('status',1)
-        ->get();
+        
         $cat_parent = Category::where('taxonomy',Category::SAN_PHAM)
         ->where('parent_id', 0)
         ->where('status',1)
@@ -552,189 +561,10 @@ class HomeController extends Controller
     ->where('products.status',1)
     ->groupBy('products.id')
     ->paginate(20)->withQueryString();
-    $slug = $request->slug;
-
         //////////////Tra ve//////////////////
     return \view('frontend.product', \compact('products', 'categories',
-        'cat', 'Sidebars','locale', 'active_menu', 'posts_footer','cat_parent','attributes','slug'))->with('agent',$ag);
+        'cat', 'Sidebars','locale', 'active_menu', 'posts_footer','cat_parent','attributes'))->with('agent',$ag);
 }
-
-    // /* ==== Xử lý dữ liệu trang danh sách sản phẩm */
-    // public function list_product(Request $request){
-    //     $agent = new Agent();
-    //     $ag = "";
-    //     if($agent->isMobile()){
-    //         $ag = "mobile";
-    //     }
-    //     else $ag = "desktop";
-    //     $active_menu = "product";
-    //     $locale       = config('app.locale');
-    //     $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-    //     $searchValues = '';
-    //     if($request->query('searchs') !=""){
-    //         $searchValues = preg_split('/\s+/', $request->query('searchs'), -1, PREG_SPLIT_NO_EMPTY);
-    //     }
-    //     $Sidebars = $this->getmenu('sidebar');
-    //     $categories = Category::where('taxonomy',Category::SAN_PHAM)
-    //         ->where('parent_id',0)
-    //         ->where('status',1)
-    //         ->get();
-    //     $cat = NULL;
-    //     $orderby = $request->input('sort');
-    //         if(!empty($request->input('min-value')) && !empty($request->input('max-value'))){
-    //             $min_price = $request->input('min-value');
-    //             $max_price = $request->input('max-value');
-    //         }else{
-    //             $min_price = 0;
-    //             $max_price = 1000000000;
-    //         }
-    //         if($orderby=='A-Z'){
-    //             $products = Products::where('status', 1)
-    //             ->where(function ($q) use ($searchValues) {
-    //                     if($searchValues!="")
-    //                       foreach ($searchValues as $value) {
-    //                         $q->orWhere('name', 'like', '%'.$value.'%');
-    //                       }
-    //                 })
-    //             ->orderBy('name', 'ASC')
-    //             ->whereBetween('price_onsale', [$min_price, $max_price])
-    //             ->paginate(20)->withQueryString();
-    //         }elseif($orderby=='Z-A'){
-    //             $products = Products::where('status', 1)
-    //             ->where(function ($q) use ($searchValues) {
-    //                     if($searchValues!="")
-    //                       foreach ($searchValues as $value) {
-    //                         $q->orWhere('name', 'like', '%'.$value.'%');
-    //                       }
-    //                 })
-    //             ->orderBy('name', 'DESC')
-    //             ->whereBetween('price_onsale', [$min_price, $max_price])
-    //             ->paginate(20)->withQueryString();;
-    //         }elseif($orderby=='gia-giam-dan'){
-    //             $products = Products::where('status', 1)
-    //             ->where(function ($q) use ($searchValues) {
-    //                     if($searchValues!="")
-    //                       foreach ($searchValues as $value) {
-    //                         $q->orWhere('name', 'like', '%'.$value.'%');
-    //                       }
-    //                 })
-    //             ->orderBy('price_onsale', 'DESC')
-    //             ->whereBetween('price_onsale', [$min_price, $max_price])
-    //             ->paginate(20)->withQueryString();
-    //         }elseif($orderby=='gia-tang-dan'){
-    //             $products = Products::where('status', 1)
-    //             ->where(function ($q) use ($searchValues) {
-    //                     if($searchValues!="")
-    //                       foreach ($searchValues as $value) {
-    //                         $q->orWhere('name', 'like', '%'.$value.'%');
-    //                       }
-    //                 })
-    //             ->orderBy('price_onsale', 'ASC')
-    //             ->whereBetween('price_onsale', [$min_price, $max_price])
-    //             ->paginate(20)->withQueryString();
-    //         }
-    //         else{
-    //             $products = Products::where('status', 1)
-    //             ->where(function ($q) use ($searchValues) {
-    //                     if($searchValues!="")
-    //                       foreach ($searchValues as $value) {
-    //                         $q->orWhere('name', 'like', '%'.$value.'%');
-    //                       }
-    //                 })
-    //             ->whereBetween('price_onsale', [$min_price, $max_price])
-    //             ->paginate(20)->withQueryString();
-    //         }
-
-    //     return \view('frontend.product', \compact('products', 'categories',
-    //     'cat', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
-    // }
-
-    // // trang danh sach san pham khi loc
-    // public function product_cat(Request $request, $slug){
-    //     $agent = new Agent();
-    //     $ag = "";
-    //     if($agent->isMobile()){
-    //         $ag = "mobile";
-    //     }
-    //     else $ag = "desktop";
-    //     $active_menu = "product";
-    //     $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-
-    //     $exists_property =  MenuItems::where('link',$slug)->where('property','<>',0)
-    //     ->Where('property','<>',null)->first();
-    //     $cat = Category::where('slug', $slug)->first();
-    //     if (empty($cat)) {
-    //         return abort(404);
-    //     }
-
-    //     $categories = Category::where('taxonomy',Category::SAN_PHAM)
-    //         ->where('parent_id',$cat->id)
-    //         ->where('status',1)
-    //         ->get();
-
-    //     $cat_parent = Category::where('taxonomy',Category::SAN_PHAM)
-    //     ->where('parent_id', 0)
-    //     ->where('status',1)
-    //     ->get();
-
-
-    //     $categoryproperties  =  DB::table('categoryproperties')->select('categoryproperties.*')
-    //     ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
-    //     ->leftjoin('categories','categories.id', '=', 'categoryproperties_manages.category_id')
-    //     ->where('categories.id',$cat->id)
-    //     ->get();
-
-
-    //     $detailproperty = Detailproperties::get();
-
-    //     $Sidebars           = $this->getmenu('sidebar');
-    //     $locale             = config('app.locale');
-    //     $banner_1 = DB::table('sliders')->where('location',6)->first();
-    //     $banner_2 = DB::table('sliders')->where('location',7)->first();
-    //     $banner_3 = DB::table('sliders')->where('location',8)->first();
-
-    //     if(!empty($exists_property)){
-    //         $products = Products::select('products.*')
-    //         ->leftJoin('propertyproducts','products.id', 'propertyproducts.products_id')
-    //         ->leftJoin('category_relationships','products.id','category_relationships.product_id')
-    //         ->where('propertyproducts.detailproperties_id',$exists_property->property)
-    //         ->where('category_relationships.cat_id',$cat->id) 
-    //         ->where('products.status', 1)->paginate(20)->withQueryString();
-
-    //     }
-    //     else{
-    //         /* Xử lý đệ quy vòng lặp khi có danh mục cha xác định và lấy danh sách sản phẩm theo từng danh mục
-    //         thực hiện hàm get_product_by_cat tại model category */
-    //         $list_id = $cat->get_product_by_cat();
-    //         $orderby = $request->input('sort');
-    //             if(!empty($request->input('min-value')) && !empty($request->input('max-value'))){
-    //                 $min_price = $request->input('min-value');
-    //                 $max_price = $request->input('max-value');
-    //             }else{
-    //                 $min_price = 0;
-    //                 $max_price = 1000000000;
-    //             }
-    //             if($orderby=='A-Z'){
-    //                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-    //                 ->orderBy('name', 'ASC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();
-    //             }elseif($orderby=='Z-A'){
-    //                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-    //                 ->orderBy('name', 'DESC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20);
-    //             }elseif($orderby=='gia-giam-dan'){
-    //                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-    //                 ->orderBy('price_onsale', 'DESC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();
-    //             }elseif($orderby=='gia-tang-dan'){
-    //                 $products = Products::where('status', 1)->whereIn('id', $list_id)
-    //                 ->orderBy('price_onsale', 'ASC')->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();
-    //             }else{
-    //                 $products = Products::where('status', 1)->whereIn('id', $list_id)->orderBy('id', 'DESC')
-    //                 ->whereBetween('price_onsale', [$min_price, $max_price])->paginate(20)->withQueryString();
-    //             }
-    //         }
-    //     return \view('frontend.product', \compact('products', 'categories', 'cat','Sidebars',
-    //    'locale', 'active_menu', 'posts_footer', 'cat_parent', 'categoryproperties', 'detailproperty'))->with('agent', $ag);
-    // }
-
 
     // lay comment
 public function commentPost(Request $request){

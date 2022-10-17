@@ -315,7 +315,7 @@ Route::post('/new', [HomeController::class, 'getnewProduct'])->name('getnewProdu
 Route::post('/footer', [HomeController::class, 'loadfooter'])->name('loadfooter');
 Route::post('/loadsliderbottom', [HomeController::class, 'loadsliderbottom'])->name('loadsliderbottom');
 
-Route::get('/san-pham', [HomeController::class, 'list_product'])->name('list_product');
+Route::get('/san-pham', [HomeController::class, 'product_cat'])->name('list_product');
 Route::get('/san-pham/{slug}', [HomeController::class, 'product_cat'])->name('product_cat');
 Route::get('/bai-viet', [HomeController::class, 'categoryBlogs'])->name('categoryBlogs');
 Route::get('/bai-viet/{slug}', [HomeController::class, 'categoryBlog'])->name('categoryBlog');
