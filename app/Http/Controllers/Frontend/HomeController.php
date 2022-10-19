@@ -48,7 +48,14 @@ class HomeController extends Controller
         ->where('show_push_product', 1)
         ->get();
         $list_cat_id = array();
+        $cat_arr = array();
         foreach ($get_cat_parents as $cat){
+            $count_products =  Products::leftjoin('category_relationships', 'products.id', 'category_relationships.product_id')
+            ->leftjoin('categories','categories.id','category_relationships.cat_id')
+            ->where('categories.id',$cat->id)->count();
+            if($count_products>0){
+                $cat_arr[] = $cat->id;
+            }
             $list_cat_id[] = $cat->id;
         }
         $list_cat = \implode(' ', $list_cat_id);
@@ -62,9 +69,17 @@ class HomeController extends Controller
         $banner_sidebar   = DB::table('sliders')->where('location',4)->where('status', 1)->inRandomOrder()->first();
         $sliders = DB::table('sliders')->where('location',9)->where('status', 1)->orderBy('position', 'ASC')->get();
         $list_post = DB::table('posts')->where('status',1)->whereNull('deleted_at')->limit(3)->get();
+
+        $list_cat_head = Category::where('taxonomy', 0)
+        ->where('parent_id', 0)
+        ->where('status', 1)
+        ->where('show_push_product', 1)->limit(8)
+        ->get();
         
         return view('frontend.index',[
-            'get_cat_parents' =>  $get_cat_parents,
+            'cat_arr' => $cat_arr,
+            'get_cat_parents' => $get_cat_parents,
+            'list_cat_head'   => $list_cat_head,
             'Sidebars'        => $Sidebars,
             'banner_1'        => $banner_1,
             'banner_2'        => $banner_2,

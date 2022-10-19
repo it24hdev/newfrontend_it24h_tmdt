@@ -51,11 +51,11 @@
                 <tbody>
                     @foreach($detailproperties as $key => $value)
                     <tr id="{{ $value->id }}">
-                        <td class="text-center">{{$key+1}}</td>
-                        <td class="text-center">{{$value->ma}}</td>
-                        <td class="text-center">{{$value->name}}</td>
-                        <td class="text-center">{{$value->explain}}</td>
-                        <td class="text-center">{{$value->stt}}</td>
+                        <td class="text-left">{{$key+1}}</td>
+                        <td class="text-left">{{$value->ma}}</td>
+                        <td class="text-left">{{$value->name}}</td>
+                        <td class="text-left">{{$value->explain}}</td>
+                        <td class="text-left">{{$value->stt}}</td>
                         <td class="w-20">
                             <div class="flex justify-center items-center">
                                 <a class="btn btn-sm btn-primary mr-2"

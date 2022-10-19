@@ -27,23 +27,23 @@ class PropertyImport implements ToCollection, SkipsEmptyRows, WithStartRow, With
         foreach ($rows as $row) {
         if($row[0] != ""){
             $Categoryproperty = Categoryproperty::where('ma',$row[0])->first();
-
             $exists = db::table('detailproperties')->where('ma',$row[1])->first();
-
             if(!empty($exists)){
-
                 $Detailproperties = Detailproperties::find($exists->id);
                 $Detailproperties->name     = $row[1];
-                $Detailproperties->categoryproperties_id  = $Categoryproperty->id;
+                if(!empty($Categoryproperty)){
+                    $Detailproperties->categoryproperties_id  = $Categoryproperty->id;
+                }
                 $Detailproperties->categoryproperties_code  = $row[0];
                 $Detailproperties->save();
             }
             else{ 
-
                 $Detailproperties = new Detailproperties();
                 $Detailproperties->ma       = $row[1];
                 $Detailproperties->name     = $row[2];
-                $Detailproperties->categoryproperties_id  = $Categoryproperty->id;
+                if(!empty($Categoryproperty)){
+                    $Detailproperties->categoryproperties_id  = $Categoryproperty->id;
+                }
                 $Detailproperties->categoryproperties_code  = $row[0];
                 $Detailproperties->save();
             }

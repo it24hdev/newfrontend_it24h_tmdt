@@ -13,8 +13,8 @@
                     <div class="product-item mb-3">
                         <div class="thumb">
                             <a href="{{ route('detailproduct', $item->slug)}}">
-                                <img class="owl-lazy" data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
-                                @if (!empty($item->brand))
+                                <img class="owl-lazy" data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="" style="height: 297px; width: 297px;">
+                                @if (!empty($item->brands->image))
                                     <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
                                 @endif
                                 <div class="wp-tag">

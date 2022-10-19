@@ -61,15 +61,15 @@
                     <tbody class="col-span-12 " id="table1" >
                     @foreach($category_propertys as $key => $category_property)
                         <tr class=" overflow-x-auto scrollbar-hidden get_child" id="{{ $category_property->id }}">
-                            <td class="text-center">
+                            <td class="text-left">
                             {{ $key+1 }}
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                 {{$category_property->ma}} </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                  {{$category_property->name}}
                             </td>
-                            <td class="text-center">
+                            <td class="text-left">
                                  {{$category_property->detail_property_id}}
                             </td>
                             <td class="text-center">
