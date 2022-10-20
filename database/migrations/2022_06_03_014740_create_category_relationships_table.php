@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('category_relationships', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('cat_id');
+            $table->string('product_code');
             $table->unsignedBigInteger('post_id')->nullable();
             $table->unsignedBigInteger('product_id')->nullable();
             $table->timestamps();

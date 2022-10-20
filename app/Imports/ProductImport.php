@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\Brand;
 use App\Models\Products;
 use App\Models\Category;
+use App\Models\CategoryRelationship;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
 use Maatwebsite\Excel\Concerns\Importable;
@@ -38,7 +39,7 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
                 $Products->onsale    = $row[4];
             }
             else{
-                $Products->onsale    = $row[3];
+                $Products->price    = $row[2];
                 $Products->price_onsale    = 0;
                 $Products->onsale    = 0;
             }
@@ -68,7 +69,19 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
             $Products->tax    = $row[12];
             $Products->deleted_at    = null;
             $Products->save();
-        }
+
+            if($row[6] != ""){
+                $arr = explode(',',$row[6]);
+                DB::table('category_relationships')->where('product_id', $exists->id)->delete();
+                foreach ($arr as $key => $value) {
+                    $get_cat = Category::where('ma',$value)->first();
+                    $CategoryRelationship = new CategoryRelationship();
+                    $CategoryRelationship->product_code = $Products->ma;
+                    $CategoryRelationship->cat_id= $get_cat->id;
+                    $CategoryRelationship->save();
+                }
+            }
+        } 
         else{ 
             if($row[1] != ""){
             $Products = new Products();
@@ -85,8 +98,6 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
                 $Products->price_onsale    = 0;
                 $Products->onsale    = 0;
             }
-            
-           
             $Products->quantity    = $row[5];
             if($row[6] !=""){
                 $code_cat = explode(',',$row[6]);
@@ -112,6 +123,16 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
             $Products->warranty    = $row[11];
             $Products->tax    = $row[12];
             $Products->save();
+            if($row[6] != ""){
+                    $arr = explode(',',$row[6]);
+                    foreach ($arr as $key => $value) {
+                        $get_cat = Category::where('ma',$value)->first();
+                        $CategoryRelationship = new CategoryRelationship();
+                        $CategoryRelationship->product_code = $Products->ma;
+                        $CategoryRelationship->cat_id= $get_cat->id;
+                        $CategoryRelationship->save();
+                    }
+                }
             } 
         }  
       }

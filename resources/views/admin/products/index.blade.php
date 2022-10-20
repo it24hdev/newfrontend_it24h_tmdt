@@ -59,20 +59,18 @@
                         <th class="text-center whitespace-nowrap w-28" style="padding: 0.25rem 0.25rem !important;">Ảnh sản phẩm</th>
                         <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Mã</th>
                         <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Tên</th>
-                        <th class="text-center whitespace-nowrap w-24" style="padding: 0.25rem 0.25rem !important;">NCC</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Danh mục</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">SL</th>
-                        <th class="text-center whitespace-nowrap w-32" style="padding: 0.25rem 0.25rem !important;">Giá bán</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Tồn kho</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Trạng thái</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Chức năng</th>
+                        <th class="text-center w-20" style="padding: 0.25rem 0.25rem !important;">NCC</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Danh mục</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">SL</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Giá bán</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Tồn kho</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Trạng thái</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
-                        <tr id="{{ $product->id }}" >
-
-
+                        <tr id="{{ $product->id }}">
                             <td style="padding: 0.25rem 0.25rem !important;">
                                 @can('viewAny', \App\Models\Products::class)
                                 <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $product->id }}"title="Chi tiết sản phẩm">
@@ -100,8 +98,8 @@
                                  @can('viewAny', \App\Models\Products::class)
                                 <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $product->id }}"title="Chi tiết sản phẩm">
                                 @endcan
-                                <div class="font-medium text-center" style="overflow-y: hidden;overflow-x: clip;width: 120px;text-overflow: ellipsis;max-height: 70px;">
-                                    {{ $product->brand }}</div>
+                                <div class="font-medium text-center">
+                                    {{ $product->brand_name }}</div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
                                 @can('viewAny', \App\Models\Products::class)
@@ -144,7 +142,7 @@
                                             class="w-4 h-4 mr-2"></i></div>
                                 @endif
                             </td>
-                            <td class="table-report__action w-40" style="padding: 0.25rem 0.25rem !important;">
+                            <td class="table-report__action w-38" style="padding: 0.25rem 0.25rem !important;">
                                 <div class="flex justify-center items-center">
                                     @can('update', App\Models\Products::class)
                                     <a  href="{{ route('productsproperties.edit',['id' => $product->id]) }}"
@@ -157,7 +155,7 @@
                                     @can('delete', App\Models\Products::class)
                                         <a title="Xóa" data-toggle="modal" data-value="{{ $product->id }}"
                                             data-target="#delete-confirmation-modal"
-                                            class="btn btn-danger py-1 px-2 btn-delete"><i class="fa-solid fa-trash-can" style="padding: 1px"></i>
+                                            class="btn btn-danger py-1 px-1 btn-delete"><i class="fa-solid fa-trash-can" style="padding: 1px"></i>
                                         </a>
                                     @endcan
                                 </div>

@@ -60,12 +60,19 @@ class ProductsController extends Controller
         if ($orderby  == null) {
             $orderby  = "ma";
         }
-        if ($limit == 10 && $keywords == "" && $orderby == "ma" && $sort =="asc") {
-            $Products = Products::paginate($limit);
-        } else
-            $Products = Products::where('name', 'like', '%' . $keywords . '%')
-            ->orwhere('ma', 'like', '%' . $keywords . '%')
+        if ($limit == 10 && $keywords == "" && $orderby == "ma" && $sort =="ASC") {
+            $Products = Products::select('products.*','brands.name as brand_name')
+            ->leftjoin('brands','brands.id','products.brand')
+            ->orderby($orderby, $sort)
+            ->paginate($limit);
+        } else{
+            $Products = Products::select('products.*', 'brands.name as brand_name')
+            ->leftjoin('brands','brands.id','products.brand')
+            ->where('products.name', 'like', '%' . $keywords . '%')
+            ->orwhere('products.ma', 'like', '%' . $keywords . '%')
             ->orderby($orderby, $sort)->Paginate($limit);
+        }
+            
         return view('admin.products.index', [
             'products' => $Products,
             'title'    => 'Sản phẩm',
@@ -272,7 +279,6 @@ class ProductsController extends Controller
             } else{
                 $imgs = $this->saveimg($request, $oldimage);
             }
-
             $cat_id   = json_encode($request->cat_id);
             $attr_id = \json_encode($request->attr_id);
             if(!empty($request->specifications)){
@@ -715,24 +721,21 @@ class ProductsController extends Controller
         CommonHelper::deleteImage($nameFile, $path_thumb);
         Tag_event::find($id)->delete();
     }
-
     public function export() 
     {
-        return Excel::download(new ProductExport, 'Products.xlsx');
+        return Excel::download(new ProductExport, 'Products_export.xlsx');
     }
-
     public function import() 
     {
         if(!empty(request()->file('file'))){
             ini_set('max_execution_time', 1800); 
             Excel::import(new ProductImport,request()->file('file')); 
         }
-        
+        DB::statement("update category_relationships set category_relationships.product_id = (
+    SELECT products.id FROM products WHERE category_relationships.product_code = products.ma)");
+
         return back();
     }
-
-    
-
     public function brandexport() 
     {
         return Excel::download(new BrandExport, 'Brand.xlsx');
