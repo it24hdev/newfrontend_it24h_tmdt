@@ -250,6 +250,7 @@ $currentUrl = url()->current();
                                     <option value="0" selected="selected">Chọn</option>
                                     <option value="1" {{$m->filter_by == 1 ? 'selected':false}}>Thuộc tính </option>
                                     <option value="2" {{$m->filter_by == 2 ? 'selected':false}}>Giá </option>
+                                    <option value="3" {{$m->filter_by == 3 ? 'selected':false}}>Thương hiệu </option>
                                     </select>
 
                                   {{--   <select name="filter_by" id="filter_by_property_{{$m->id}}" class="filter_by_property">

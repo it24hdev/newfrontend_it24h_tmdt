@@ -55,31 +55,29 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
                 $MenuItems->parent = $cate->id;
               }
             }
-
             if($row[5] == 1){
-                $MenuItems->filter_by = 1;
-                $MenuItems->filter_value=$row[6];
-              }
-              elseif ($row[5] == 2) {
-                $MenuItems->filter_by = 2;
-                $MenuItems->filter_value=$row[6];
-              }
-              elseif ($row[5] == 3) {
-                $MenuItems->filter_by = 3;
-              }
-              else{
-                $MenuItems->filter_by = 0;
-              }
-              if(!empty($row[7])){
+              $MenuItems->filter_by = 1;
+            }
+            elseif ($row[5] == 2) {
+              $MenuItems->filter_by = 2;
+            }
+            elseif ($row[5] == 3) {
+              $MenuItems->filter_by = 3;
+            }
+            else{
+              $MenuItems->filter_by = 0;
+            }
+            $MenuItems->filter_value=$row[6];
+            if(!empty($row[7])){
                 $MenuItems->sort = $row[7];
-              }
-              else {
-                $MenuItems->sort = 0;
-              }
-              if($row[8] != ""){
-                $MenuItems->link = $row[8];
-              }
-              $MenuItems->save();
+            }
+            else {
+              $MenuItems->sort = 0;
+            }
+            if($row[8] != ""){
+              $MenuItems->link = $row[8];
+            }
+            $MenuItems->save();
             }
         else{
             $MenuItems = new MenuItems();
@@ -88,52 +86,46 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
             $MenuItems->menu     = $this->menu;
 
             if(!empty($row[3]))
-            {
-              $MenuItems->depth    = $row[3];
-            }
-            else
-            { 
-              $MenuItems->depth    = 0;
-            }
+            {$MenuItems->depth    = $row[3];}
+            else {  $MenuItems->depth    = 0;}
             $cate_code = Category::where("ma" , $row[4])->first();
             if(!empty($cate_code)){
               // $MenuItems->link           = $cate_code->slug;
               $MenuItems->category_code  = $cate_code->ma;
               $MenuItems->category_id    = $cate_code->id;
             }
-              $cha ="";
+            $cha ="";
             if($row[2] !== ""){
-              $code  = $row[2];
-              $cha = MenuItems::where('ma',$code)->first();
-              if(!empty($cha)){
-                $MenuItems->parent = $cha->id;
+            $code  = $row[2];
+            $cha = MenuItems::where('ma',$code)->first();
+            if(!empty($cha)){
+              $MenuItems->parent = $cha->id;
               }
             }
-              if($row[5] == 1){
-                $MenuItems->filter_by = 1;
-                $MenuItems->filter_value=$row[6];
-              }
-              elseif ($row[5] == 2) {
-                $MenuItems->filter_by = 2;
-                $MenuItems->filter_value=$row[6];
-              }
-              elseif ($row[5] == 3) {
-                $MenuItems->filter_by = 3;
-              }
-              else{
-                $MenuItems->filter_by = 0;
-              }
-              if($row[7]!= ""){
-                $MenuItems->sort = $row[7];
-              }
-              else {
-                $MenuItems->sort = 0;
-              }
-              if($row[8] != ""){
-                $MenuItems->link = $row[8];
-              }
-              $MenuItems->save();
+            if($row[5] == 1){
+              $MenuItems->filter_by = 1;
             }
+            elseif ($row[5] == 2) {
+              $MenuItems->filter_by = 2;
+            }
+            elseif ($row[5] == 3) {
+              $MenuItems->filter_by = 3;
+            }
+            else{
+              $MenuItems->filter_by = 0;
+            }
+            $MenuItems->filter_value=$row[6];
+            if($row[7]!= ""){
+              $MenuItems->sort = $row[7];
+            }
+            else {
+              $MenuItems->sort = 0;
+            }
+            if($row[8] != ""){
+              $MenuItems->link = $row[8];
+            }
+            $MenuItems->save();
+          }
         }
       }
 

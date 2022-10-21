@@ -20,7 +20,6 @@
             @foreach($Sidebars as $subsidebar3)
             @if($subsidebar3->parent == $subsidebar->id)
             <li>
-
                 <a class="cat-child" href="{!!  $subsidebar3->link !!}">
                     <span>
                         {{$subsidebar3->label}}

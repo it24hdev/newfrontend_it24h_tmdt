@@ -239,7 +239,6 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $this->authorize('update', Products::class);
         $request->validate(
             [
@@ -347,11 +346,11 @@ class ProductsController extends Controller
                 /* Chuyển cách insert update cat_id qua bảng trung gian bằng cách này! */
                 $product->category()->sync($request->input('cat_id'));
                 DB::commit();
-                DB::transaction(function () use ($id){
-                    DB::table('category_relationships')
+                DB::transaction(function () use ($id, $request){
+                     DB::table('category_relationships')
                     ->where('product_id', $id)
-                    ->update('product_code'=>$request->ma);
-                }
+                    ->update(['product_code'=>$request->ma]);
+                });
                 return redirect()->route('products.index')->with('success', 'Sửa sản phẩm mới thành công.');
             } catch (\Exception $exception) {
                 DB::rollBack();
@@ -658,8 +657,6 @@ class ProductsController extends Controller
             return redirect()->route('products.list_tag-event')->with('error', 'Đã có lỗi xảy ra. Vui lòng thử lại!');
         }
     }
-
-
     public function update_tag_event(Request $request){
         $this->authorize('update', Products::class);
         $request->validate(

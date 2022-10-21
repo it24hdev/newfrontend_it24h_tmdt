@@ -129,12 +129,9 @@ class HomeController extends Controller
             $value->filter_name = 'p';
            }
            else{
-            $value->filter_name = '';
+            $value->filter_name = 'brand';
            }
         $url ="#";
-
-
-
         if(!empty($value->link)){
             $url = 'https://'.$value->link;
         }
@@ -434,6 +431,7 @@ class HomeController extends Controller
         $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
         ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
         ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
+        ->where('categories.slug',$request->slug)
         ->get();
 
         $filter_all = [];
@@ -530,20 +528,25 @@ class HomeController extends Controller
         //////////////Cau Lenh Truy Van DL//////////////////
 
     $price =  "";
+    $brand =  "";
     $property = $request->all();
     if(!empty($request->p)){
         $price = $request->p;
+    }
+    if(!empty($request->brand)){
+        $brand = $request->brand;
     }
     $products = Products::select('products.*','detailproperties.ma as matt','categories.slug as url')
     ->leftjoin('category_relationships','category_relationships.product_id','products.id')
     ->leftjoin('categories','categories.id','category_relationships.cat_id')
     ->leftjoin('propertyproducts','propertyproducts.products_id','products.id')
     ->leftJoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
+    ->leftJoin('brands','brands.id','products.brand')
     ->where('categories.slug',$request->slug)
     ->where(function ($query) use ($property)
                 {  
                     foreach ($property as $key => $value) {
-                        if($key == 'p'){
+                        if($key == 'p' || $key == 'brand'){
                             unset($property[$key]);
                         }
                     }
@@ -573,9 +576,18 @@ class HomeController extends Controller
                     else {
                     }
                 })
+    ->where(function ($query) use ($brand)
+                {
+                    if($brand !=""){
+                        $query->where('brands.name', trim($brand));
+                    }
+                    else {
+                    }
+                })
     ->where('products.status',1)
     ->groupBy('products.id')
     ->paginate(20)->withQueryString();
+
         //////////////Tra ve//////////////////
     return \view('frontend.product', \compact('products', 'categories',
         'cat', 'Sidebars','locale', 'active_menu', 'posts_footer','cat_parent','attributes'))->with('agent',$ag);
