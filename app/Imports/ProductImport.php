@@ -74,10 +74,13 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
                 $arr = explode(',',$row[6]);
                 DB::table('category_relationships')->where('product_id', $exists->id)->delete();
                 foreach ($arr as $key => $value) {
-                    $get_cat = Category::where('ma',$value)->first();
+                   
                     $CategoryRelationship = new CategoryRelationship();
                     $CategoryRelationship->product_code = $Products->ma;
-                    $CategoryRelationship->cat_id= $get_cat->id;
+                    $get_cat = Category::where('ma',trim($value))->first();
+                    if(!empty($get_cat)){
+                            $CategoryRelationship->cat_id= $get_cat->id;
+                        }
                     $CategoryRelationship->save();
                 }
             }
@@ -126,10 +129,12 @@ class ProductImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithV
             if($row[6] != ""){
                     $arr = explode(',',$row[6]);
                     foreach ($arr as $key => $value) {
-                        $get_cat = Category::where('ma',$value)->first();
                         $CategoryRelationship = new CategoryRelationship();
                         $CategoryRelationship->product_code = $Products->ma;
-                        $CategoryRelationship->cat_id= $get_cat->id;
+                        $get_cat = Category::where('ma',trim($value))->first();
+                        if(!empty($get_cat)){
+                            $CategoryRelationship->cat_id= $get_cat->id;
+                        }
                         $CategoryRelationship->save();
                     }
                 }

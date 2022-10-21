@@ -317,10 +317,8 @@ class ProductsController extends Controller
                 'time_deal'    => $request->time_deal,
                 'youtube' => $request->youtube,
             ];
-
             try {
                 DB::beginTransaction();
-
                 Products::where('id', $id)->update($Product);
                 $product = Products::find($id);
                 // xu ly anh khong bi vo anh
@@ -349,6 +347,11 @@ class ProductsController extends Controller
                 /* Chuyển cách insert update cat_id qua bảng trung gian bằng cách này! */
                 $product->category()->sync($request->input('cat_id'));
                 DB::commit();
+                DB::transaction(function () use ($id){
+                    DB::table('category_relationships')
+                    ->where('product_id', $id)
+                    ->update('product_code'=>$request->ma);
+                }
                 return redirect()->route('products.index')->with('success', 'Sửa sản phẩm mới thành công.');
             } catch (\Exception $exception) {
                 DB::rollBack();
