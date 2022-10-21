@@ -22,6 +22,7 @@ use App\Exports\BrandExport;
 use App\Imports\ProductImport;
 use App\Imports\BrandImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
@@ -104,11 +105,11 @@ class ProductsController extends Controller
         $this->authorize('update', Products::class);
         $request->validate(
             [
-                'ma'          => 'required|max:300|unique:products',
+                'ma'          => 'max:300|unique:products',
                 'thumb'         => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
-                'ma.required' => 'Mã sản phẩm không được để bỏ trống.',
+                // 'ma.required' => 'Mã sản phẩm không được để bỏ trống.',
                 'ma.max'      => 'Mã sản phẩm có độ dài tối đa :max ký tự.',
                 'ma.unique'   => 'Mã sản phẩm đã tồn tại trong hệ thống',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
@@ -141,6 +142,9 @@ class ProductsController extends Controller
             $specifications = NULL;
         }
 
+        if(empty($request->ma)){
+            $request->ma      = strtoupper(Str::random(9));
+        }
         $Product  = [
             'ma'           => $request->ma,
             'name'         => $request->name,

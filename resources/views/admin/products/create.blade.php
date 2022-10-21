@@ -19,10 +19,10 @@
             <form action="{{route('products.store')}}" method="post" enctype="multipart/form-data" id="form-post">
                 <div class="intro-y box p-5">
                     <div>
-                        <label for="crud-form-z" class="form-label">Mã(<span class="text-red-600">*</span>)</label>
-                        <input id="crud-form-z" type="text" name="ma" value="{{old('ma')}}" class="form-control w-full" required>
+                        <label for="crud-form-z" class="form-label">Mã</label>
+                        <input id="crud-form-z" type="text" name="ma" value="{{old('ma')}}" class="form-control w-full" placeholder="random">
                         @error('ma')
-                        <span style="color:red">{{$message}}</span>
+                        {{-- <span style="color:red">{{$message}}</span> --}}
                         @enderror
                     </div>
                     <div>

@@ -402,10 +402,7 @@ class HomeController extends Controller
         $active_menu = "product";
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $Sidebars = $this->getmenu('sidebar');
-
-        
-        
+        $Sidebars = $this->getmenu('sidebar'); 
         $cat = Category::where('slug', $request->slug)->first();
         if (!empty($cat)) {
            $categories = Category::where('taxonomy',Category::SAN_PHAM)
