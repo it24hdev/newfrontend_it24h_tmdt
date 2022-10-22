@@ -244,7 +244,9 @@ class CategoryController extends Controller
         try {
             DB::beginTransaction();
             $Categorys->update($Category);
-            DB::table('admin_menu_items')->where('category_id', $request->id)
+            DB::table('admin_menu_items')
+            ->where('category_id','<>',null)
+            ->where('category_id', $request->id)
             ->update([
             'ma' => $request->ma,
             'label' => $request->name,

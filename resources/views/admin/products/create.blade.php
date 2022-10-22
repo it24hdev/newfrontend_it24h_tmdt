@@ -249,7 +249,7 @@
                                 id="year" value="{{ old('youtube') }}" placeholder="Nhập link video sản phẩm">
                         </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3" style=" display: none;">
                         <div class="mt-3">
                             <label for="" class="form-label">Tình trạng sản phẩm</label>
                             <input type="text" name="still_stock" class="form-control w-56 block mx-auto"
@@ -316,6 +316,15 @@
             const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
             const price_onsale = giaban1 - giaban1*percent/100;
             document.getElementById('price_onsale').value = new Intl.NumberFormat('vi-VN').format(price_onsale);
+            });
+
+            $('#price_onsale').on('keyup',  function(){
+            const giadagiam= this.value;
+            const giaban  = document.getElementById('price').value;
+            const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
+            const giadagiam1 =  giadagiam.replace(/[^a-zA-Z0-9 ]/g, '');
+            const onsale = parseInt(100-giadagiam1/giaban1*100);
+            document.getElementById('onsale').value = onsale;
             });
         });
     </script>

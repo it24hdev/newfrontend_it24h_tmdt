@@ -95,9 +95,12 @@
                                             </div>
 
                                             <div class="detail-bottom">
-                                                @if (!empty($item->still_stock))
-                                                    <div class="qty" style="color: #01aa42;
-                                                    background-color: #dbf8e1;">{{$item->still_stock}}</div>
+                                                @if (($item->quantity - $item->sold > 0))
+                                                    <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng
+                                                    </div>
+                                                @else
+                                                     <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng
+                                                    </div>
                                                 @endif
                                                 <div class="action">
                                                     <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>
@@ -196,9 +199,12 @@
                                             </div>
 
                                             <div class="detail-bottom">
-                                                @if (!empty($item->still_stock))
-                                                    <div class="qty" style="color: #01aa42;
-                                                    background-color: #dbf8e1;">{{$item->still_stock}}</div>
+                                                @if (($item->quantity - $item->sold > 0))
+                                                    <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng
+                                                    </div>
+                                                @else
+                                                     <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng
+                                                    </div>
                                                 @endif
                                                 <div class="action">
                                                     <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>

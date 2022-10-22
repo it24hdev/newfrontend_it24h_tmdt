@@ -13,7 +13,7 @@
                     <div class="product-item mb-3">
                         <div class="thumb">
                             <a href="{{ route('detailproduct', $item->slug)}}">
-                                <img class="owl-lazy" data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="" style="height: 297px; width: 297px;">
+                                <img class="owl-lazy" data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}">
                                 @if (!empty($item->brands->image))
                                     <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
                                 @endif
@@ -83,9 +83,16 @@
                                 </div>
                             </div>
                             <div class="detail-bottom">
-                                @if (!empty($item->still_stock))
+                                {{-- @if (!empty($item->still_stock))
                                     <div class="qty" style="color: #01aa42;
                                     background-color: #dbf8e1;">{{$item->still_stock}}</div>
+                                @endif --}}
+                                @if (($item->quantity - $item->sold > 0))
+                                    <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng
+                                    </div>
+                                @else
+                                     <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng
+                                    </div>
                                 @endif
                                 <div class="action">
                                     <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>

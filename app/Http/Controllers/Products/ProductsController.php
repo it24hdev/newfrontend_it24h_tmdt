@@ -472,9 +472,16 @@ class ProductsController extends Controller
         Attribute_product::where('id', $id)->delete();
     }
     //xu ly lay danh sac thuong hieu san pham
-    public function list_brand(){
+    public function list_brand(Request $request){
         $this->authorize('viewAny', Products::class);
-        $brands = Brand::paginate(10);
+        $keywords =  $request->query('keywords');
+        if(!empty($keywords)){
+            $brands = Brand::where('name', 'like', '%' . $keywords . '%')->paginate(100);
+        }
+        else{
+            $brands = Brand::paginate(15);
+        }
+        
         return \view('admin.products.list-brand', \compact('brands'));
     }
     //xu ly luu thuong hieu san pham

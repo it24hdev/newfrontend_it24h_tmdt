@@ -1,7 +1,7 @@
 @extends('admin.layouts.main')
 @section('subcontent')
 <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <a href="{{ route('products.list_attr') }}" class="text-lg font-medium mr-auto uppercase">
+    <a href="{{ route('products.list_brand') }}" class="text-lg font-medium mr-auto uppercase">
         Danh sách thương hiệu sản phẩm
     </a>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
@@ -10,15 +10,25 @@
         @endcan
     </div>
 </div>
+
 <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center">
     <form action="{{ route('brand.import') }}" method="POST" enctype="multipart/form-data" 
     style="display: contents;">
         @csrf
         <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
-        <button type="submit" class="btn btn-success" >Import Data</button>
+        <button type="submit" class="btn btn-success mr-3" >Import Data</button>
     </form>
-    <a class="btn btn-warning" href="{{ route('brand.export') }}">Export Data</a>
+    <a class="btn btn-warning mr-3" href="{{ route('brand.export') }}">Export Data</a>
+    <div class="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
+    <form  action="{{ route('products.list_brand')}}" method="get" class="flex flex-col sm:flex-row sm:items-end xl:items-start">
+        <div class=" relative text-gray-700 dark:text-gray-300">
+            <input id="search" type="text" name="keywords" class="form-control w-full box pr-10 placeholder-theme-13" placeholder="Tìm kiếm..." value="{{request()->input('keywords')}}">
+            <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
+        </div>
+    </form>
+    </div>
 </div>
+
 
 <!-- BEGIN: HTML Table Data -->
 <div class="grid grid-cols-12 gap-6">

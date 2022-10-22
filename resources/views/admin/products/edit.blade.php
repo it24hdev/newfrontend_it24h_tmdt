@@ -286,7 +286,7 @@
                                 id="year" value="{{ $edit->youtube }}" placeholder="Nhập link video sản phẩm">
                         </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3" style="display:none;">
                         <div class="mt-3">
                             <label for="" class="form-label">Tình trạng sản phẩm</label>
                             <input type="text" name="still_stock" class="form-control w-56 block mx-auto"
