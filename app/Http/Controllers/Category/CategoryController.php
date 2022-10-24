@@ -334,22 +334,18 @@ class CategoryController extends Controller
         $properties_id =  $request->properties_id;
         $category_id   =  $request->category_id;
 
-        $properties    =  Categoryproperty::where('id', $properties_id)->first();
-
-        $Categoryproperties_manages =  new Categoryproperties_manages();
-
-        $Categoryproperties_manages->category_id = $category_id;
-        $Categoryproperties_manages->categoryproperties_id = $properties_id;
-        $Categoryproperties_manages->name = $properties->name;
-        $Categoryproperties_manages->ma = $properties->ma;
-        $Categoryproperties_manages->save();
-
-        $value =  Categoryproperties_manages::latest()->first();
-
-        $view     = view('admin.category.addproperty', [
-                'value' => $value,
-            ])->render();
-        return response()->json(['html'=>$view,'id' => $category_id]);
+        if(!empty($properties_id)){
+            foreach ($properties_id as $key => $value) {
+            $properties    =  Categoryproperty::where('id', $value)->first();
+            $Categoryproperties_manages =  new Categoryproperties_manages();
+            $Categoryproperties_manages->category_id = $category_id;
+            $Categoryproperties_manages->categoryproperties_id = $value;
+            $Categoryproperties_manages->name = $properties->name;
+            $Categoryproperties_manages->ma = $properties->ma;
+            $Categoryproperties_manages->save();
+            }
+        }
+        return response()->json(['id' => $category_id]);
 
         // return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
     }

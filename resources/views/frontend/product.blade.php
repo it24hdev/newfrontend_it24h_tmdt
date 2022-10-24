@@ -137,7 +137,7 @@
                         </div>
 
                         <!-- ==== Foreach bộ lọc -->
-                      
+                        @if(!empty($attributes))
                         @foreach($attributes as $key => $value)
                         <div class="categories-product-sidebar">
                             <div class="header-sidebar">
@@ -160,6 +160,7 @@
                             </ul>
                         </div>
                         @endforeach
+                        @endif
                         <div class="product-tag-sidebar">
                             <div class="header-sidebar">
 

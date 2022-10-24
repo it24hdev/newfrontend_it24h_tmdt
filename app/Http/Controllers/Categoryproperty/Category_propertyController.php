@@ -27,9 +27,18 @@ class Category_propertyController extends Controller
         });
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        $data = Categoryproperty::Paginate(10);
+        $keywords =  $request->query('keywords');
+        $data ="";
+        if(!empty($keywords)){
+            $data = Categoryproperty::where('name', 'like', '%' . $keywords . '%')
+            ->orwhere('ma', 'like', '%' . $keywords . '%')
+            ->paginate(100);
+        }
+        else{
+             $data = Categoryproperty::Paginate(15);
+        }
         return view('admin.categoryproperty.index',[
             'category_propertys' => $data,
             'title'    => 'Danh mục thuộc tính',

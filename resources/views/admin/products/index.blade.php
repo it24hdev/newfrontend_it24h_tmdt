@@ -46,10 +46,10 @@
         <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data" style="
     display: contents;">
             @csrf
-            <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
-            <button type="submit" class="btn btn-success" >Import Data</button>
+            <input type="file" name="file" class="mr-3 h-10 w-64 border-0 p-2" value="Chọn">
+            <button type="submit" class="btn btn-success mr-3" >Import Data</button>
         </form>
-        <a class="btn btn-warning" href="{{ route('products.export') }}">Export Data</a>
+        <a class="btn btn-warning mr-3" href="{{ route('products.export') }}">Export Data</a>
         </div>
         <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">

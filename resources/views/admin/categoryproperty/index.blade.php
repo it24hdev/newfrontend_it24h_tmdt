@@ -31,14 +31,20 @@
                         </div>
                     </div>
                 </div>
-                <div style=" margin-top: 20px;">
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center">
                 <form action="{{ route('category_property.import') }}" method="POST" enctype="multipart/form-data" style="
             display: contents;">
                     @csrf
-                    <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
-                    <button type="submit" class="btn btn-success" >Import Data</button>
+                    <input type="file" name="file" class="mr-3 h-10 w-64 border-0 p-2" value="Chọn" >
+                    <button type="submit" class="btn btn-success mr-3" >Import Data</button>
                 </form>
-                <a class="btn btn-warning" href="{{ route('category_property.export') }}">Export Data</a>
+                <a class="btn btn-warning mr-3" href="{{ route('category_property.export') }}">Export Data</a>
+                 <form  action="{{ route('category_property.index')}}" method="get" class="flex flex-col sm:flex-row sm:items-end xl:items-start">
+                    <div class=" relative text-gray-700 dark:text-gray-300 mr-3">
+                        <input id="search" type="text" name="keywords" class="form-control w-full box pr-10 placeholder-theme-13" placeholder="Tìm kiếm..." value="{{request()->input('keywords')}}">
+                        <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
+                    </div>
+                </form>
             </div>
             </div>
         </div>

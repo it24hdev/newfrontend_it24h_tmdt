@@ -41,8 +41,8 @@
                         $('#' + id).remove();
                         var id = data.id;
                         console.log(id);
-                        var url = "{{ route('category.edit', "id") }}";
-                        url = url.replace('id', id);
+                        var url = "{{ route('category.edit', "cate_id") }}";
+                        url = url.replace('cate_id', id);
                         window.location.href=url;
                     }
                 });

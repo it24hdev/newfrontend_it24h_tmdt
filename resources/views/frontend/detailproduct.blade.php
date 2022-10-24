@@ -43,9 +43,9 @@
                                 </div>
                                 @if (!empty($product->brand))
                                     <div class="product-brand">
-                                        @if(!empty($product->brands->image)){
+                                        @if(!empty($product->brands->image))
                                             <img src="{{asset('upload/images/products/medium/'.$product->brands->image)}}" alt="">
-                                        }
+                                        
                                         @endif
                                     </div>
                                 @endif

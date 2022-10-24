@@ -1,3 +1,5 @@
+{{-- @if(!empty($values))
+@foreach($values as $value)
 <tr id="{{ $value->id }}">
     <td class="text-center"></td>
     <td class="text-center">{{$value->ma}}</td>
@@ -13,3 +15,5 @@
         </div>
     </td>
 </tr>
+@endforeach
+@endif --}}

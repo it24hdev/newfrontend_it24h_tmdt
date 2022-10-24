@@ -403,187 +403,183 @@ class HomeController extends Controller
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar'); 
+        $products="";
         $cat = Category::where('slug', $request->slug)->first();
         if (!empty($cat)) {
+            //neu co danh muc thi loc theo danh muc
            $categories = Category::where('taxonomy',Category::SAN_PHAM)
             ->where('parent_id',$cat->id)
             ->where('status',1)
             ->get();
+            $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
+            ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
+            ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
+            ->where('categories.slug',$request->slug)
+            ->get();
+
+            $filter_all = [];
+            foreach ($filter as $key => $value) {
+                $explode = explode(',',$value);
+                if(!empty($explode)){
+                    $value  = $explode;
+                }
+                $filter_all = array_merge($filter_all, $value);
+            }
+            $origin_url = $request->url();
+            foreach ($attributes as $key_attr => $attr) {
+                $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
+                foreach ($detailproperties as $key_attr_dt => $attr_detail) {
+                    $Propertyproducts = Propertyproducts::select('propertyproducts.*','detailproperties.ma as ma')
+                    ->leftjoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
+                    ->leftjoin('products','products.id','propertyproducts.products_id')
+                    ->where('propertyproducts.detailproperties_id',$attr_detail->id)
+                    ->where('products.deleted_at',null)
+                    ->count();
+                    $attr_detail->setAttribute('count_product',$Propertyproducts);
+                    $url ="";
+                    $value_url = $request->all();
+                        foreach ($value_url as $key => $value) {
+                            $explode = explode(',',$value);
+                            if(!empty($explode)){
+                                $value_url[$key]= $explode;
+                            }
+                    }
+                    $value_url2= $value_url;
+                    if(in_array($attr_detail->ma,$filter_all)){
+                        $attr_detail->setAttribute('attr_checked',1);
+                        foreach ($value_url as $key => $subArr) {
+                            foreach ($subArr as $key2 => $value2) {
+                                if(($value_url[$key][$key2])==$attr_detail->ma){
+                                    unset($value_url[$key][$key2]); 
+                                }
+                            }
+                            if($value_url[$key] == [])
+                            {
+                                unset($value_url[$key]);
+                            }
+                        }
+                        foreach ($value_url as $key => $value) {
+                            $implode = implode(',',$value);
+                            if(!empty($implode)){
+                                $value_url[$key]= $implode;
+                            }
+                        }
+                        $url = $origin_url.'?'.http_build_query($value_url);
+                        $attr_detail->setAttribute('fullurl',trim($url,'?'));
+                    }
+                    else{
+                        $attr_detail->setAttribute('attr_checked',0);
+                        foreach ($value_url2 as $key => $subArr) {
+                            foreach ($subArr as $key2 => $value2) {
+                                if($key == $attr->ma){
+                                    array_push($subArr,$attr_detail->ma);
+                                    $value_url2[$key] = $subArr;
+                                }
+                                else{
+                                    $value_url2[$attr->ma]= $attr_detail->ma;
+                                    // dd( $value_url2);
+                                    // $value_url2[$key] = $subArr;
+                                }
+                            }
+                            if($value_url2[$key] == [])
+                            {
+                                unset($value_url2[$key]);
+                            }
+                        }
+                        if(($value_url2) ==[]){
+                            $value_url2[$attr->ma]= $attr_detail->ma;
+                        }
+                        foreach ($value_url2 as $key => $value) {
+                            if(is_array($value)){
+                                $implode = implode(',',$value);
+                                if(!empty($implode)){
+                                    $value_url2[$key]= $implode;
+                                }
+                            }
+                            else{
+                                $value_url2[$key] =  $value;
+                            }
+                        }
+                        $url = $origin_url.'?'.http_build_query($value_url2);
+                        $attr_detail->setAttribute('fullurl',trim($url,'?'));
+                    }
+                }
+                $attr->setAttribute('detailproperty', $detailproperties);
+            }
+            $price =  "";
+            $brand =  "";
+            $property = $request->all();
+            if(!empty($request->p)){
+                $price = $request->p;
+            }
+            if(!empty($request->brand)){
+                $brand = $request->brand;
+            }
+            $products = Products::select('products.*','detailproperties.ma as matt','categories.slug as url')
+            ->leftjoin('category_relationships','category_relationships.product_id','products.id')
+            ->leftjoin('categories','categories.id','category_relationships.cat_id')
+            ->leftjoin('propertyproducts','propertyproducts.products_id','products.id')
+            ->leftJoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
+            ->leftJoin('brands','brands.id','products.brand')
+            ->where('categories.slug',$request->slug)
+            ->where(function ($query) use ($property)
+                        {  
+                            foreach ($property as $key => $value) {
+                                if($key == 'p' || $key == 'brand'){
+                                    unset($property[$key]);
+                                }
+                            }
+                            $properties =[];
+                            foreach ($property as $key => $value) {
+                                $explode = explode(',',$value);
+                                if(!empty($explode)){
+                                    $value  = $explode;
+                                }
+                                $properties = array_merge($property, $value);
+                            }
+                            if($properties !=[]){
+                                $query->whereIn('detailproperties.ma', $properties);
+                            }
+                            else {
+                            }
+                        })
+            ->where(function ($query) use ($price)
+                        {
+                            if($price !=""){
+                                $p =[];
+                                $p  = explode(';',$price);
+                                $min_price = $p[0];
+                                $max_price = $p[1];
+                                $query->whereBetween('products.price_onsale', [$min_price, $max_price]);
+                            }
+                            else {
+                            }
+                        })
+            ->where(function ($query) use ($brand)
+                        {
+                            if($brand !=""){
+                                $query->where('brands.name', trim($brand));
+                            }
+                            else {
+                            }
+                        })
+            ->where('products.status',1)
+            ->groupBy('products.id')
+            ->paginate(20)->withQueryString();
         }
         else{
+        // Neu khong co danh muc thi lay san pham moi
             $categories = Category::where('taxonomy',Category::SAN_PHAM)
             ->where('parent_id',0)
             ->where('status',1)
             ->get();
+            $products  = Products::where('status',1)->where('hot_sale', 1)->whereNull('deleted_at')->paginate(40)->withQueryString();
+            $attributes="";
         }
-
-        
         $cat_parent = Category::where('taxonomy',Category::SAN_PHAM)
         ->where('parent_id', 0)
         ->where('status',1)
         ->get();
-
-        //////////////Dieu Kien loc//////////////////
-
-        $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
-        ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
-        ->leftjoin('categories','categories.id','categoryproperties_manages.category_id')
-        ->where('categories.slug',$request->slug)
-        ->get();
-
-        $filter_all = [];
-        foreach ($filter as $key => $value) {
-            $explode = explode(',',$value);
-            if(!empty($explode)){
-                $value  = $explode;
-            }
-            $filter_all = array_merge($filter_all, $value);
-        }
-        $origin_url = $request->url();
-        foreach ($attributes as $key_attr => $attr) {
-            $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
-            foreach ($detailproperties as $key_attr_dt => $attr_detail) {
-                $Propertyproducts = Propertyproducts::select('propertyproducts.*','detailproperties.ma as ma')
-                ->leftjoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
-                ->leftjoin('products','products.id','propertyproducts.products_id')
-                ->where('propertyproducts.detailproperties_id',$attr_detail->id)
-                ->where('products.deleted_at',null)
-                ->count();
-                $attr_detail->setAttribute('count_product',$Propertyproducts);
-                $url ="";
-                $value_url = $request->all();
-                    foreach ($value_url as $key => $value) {
-                        $explode = explode(',',$value);
-                        if(!empty($explode)){
-                            $value_url[$key]= $explode;
-                        }
-                }
-                $value_url2= $value_url;
-                if(in_array($attr_detail->ma,$filter_all)){
-                    $attr_detail->setAttribute('attr_checked',1);
-                    foreach ($value_url as $key => $subArr) {
-                        foreach ($subArr as $key2 => $value2) {
-                            if(($value_url[$key][$key2])==$attr_detail->ma){
-                                unset($value_url[$key][$key2]); 
-                            }
-                        }
-                        if($value_url[$key] == [])
-                        {
-                            unset($value_url[$key]);
-                        }
-                    }
-                    foreach ($value_url as $key => $value) {
-                        $implode = implode(',',$value);
-                        if(!empty($implode)){
-                            $value_url[$key]= $implode;
-                        }
-                    }
-                    $url = $origin_url.'?'.http_build_query($value_url);
-                    $attr_detail->setAttribute('fullurl',trim($url,'?'));
-                }
-                else{
-                    $attr_detail->setAttribute('attr_checked',0);
-                    foreach ($value_url2 as $key => $subArr) {
-                        foreach ($subArr as $key2 => $value2) {
-                            if($key == $attr->ma){
-                                array_push($subArr,$attr_detail->ma);
-                                $value_url2[$key] = $subArr;
-                            }
-                            else{
-                                $value_url2[$attr->ma]= $attr_detail->ma;
-                                // dd( $value_url2);
-                                // $value_url2[$key] = $subArr;
-                            }
-                        }
-                        if($value_url2[$key] == [])
-                        {
-                            unset($value_url2[$key]);
-                        }
-                    }
-                    if(($value_url2) ==[]){
-                        $value_url2[$attr->ma]= $attr_detail->ma;
-                    }
-                    foreach ($value_url2 as $key => $value) {
-                        if(is_array($value)){
-                            $implode = implode(',',$value);
-                            if(!empty($implode)){
-                                $value_url2[$key]= $implode;
-                            }
-                        }
-                        else{
-                            $value_url2[$key] =  $value;
-                        }
-                    }
-                    $url = $origin_url.'?'.http_build_query($value_url2);
-                    $attr_detail->setAttribute('fullurl',trim($url,'?'));
-                }
-            }
-            $attr->setAttribute('detailproperty', $detailproperties);
-        }
-
-
-        //////////////Cau Lenh Truy Van DL//////////////////
-
-    $price =  "";
-    $brand =  "";
-    $property = $request->all();
-    if(!empty($request->p)){
-        $price = $request->p;
-    }
-    if(!empty($request->brand)){
-        $brand = $request->brand;
-    }
-    $products = Products::select('products.*','detailproperties.ma as matt','categories.slug as url')
-    ->leftjoin('category_relationships','category_relationships.product_id','products.id')
-    ->leftjoin('categories','categories.id','category_relationships.cat_id')
-    ->leftjoin('propertyproducts','propertyproducts.products_id','products.id')
-    ->leftJoin('detailproperties','detailproperties.id','propertyproducts.detailproperties_id')
-    ->leftJoin('brands','brands.id','products.brand')
-    ->where('categories.slug',$request->slug)
-    ->where(function ($query) use ($property)
-                {  
-                    foreach ($property as $key => $value) {
-                        if($key == 'p' || $key == 'brand'){
-                            unset($property[$key]);
-                        }
-                    }
-                    $properties =[];
-                    foreach ($property as $key => $value) {
-                        $explode = explode(',',$value);
-                        if(!empty($explode)){
-                            $value  = $explode;
-                        }
-                        $properties = array_merge($property, $value);
-                    }
-                    if($properties !=[]){
-                        $query->whereIn('detailproperties.ma', $properties);
-                    }
-                    else {
-                    }
-                })
-    ->where(function ($query) use ($price)
-                {
-                    if($price !=""){
-                        $p =[];
-                        $p  = explode(';',$price);
-                        $min_price = $p[0];
-                        $max_price = $p[1];
-                        $query->whereBetween('products.price_onsale', [$min_price, $max_price]);
-                    }
-                    else {
-                    }
-                })
-    ->where(function ($query) use ($brand)
-                {
-                    if($brand !=""){
-                        $query->where('brands.name', trim($brand));
-                    }
-                    else {
-                    }
-                })
-    ->where('products.status',1)
-    ->groupBy('products.id')
-    ->paginate(20)->withQueryString();
 
         //////////////Tra ve//////////////////
     return \view('frontend.product', \compact('products', 'categories',

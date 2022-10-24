@@ -15,7 +15,7 @@
     <form action="{{ route('brand.import') }}" method="POST" enctype="multipart/form-data" 
     style="display: contents;">
         @csrf
-        <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
+        <input type="file" name="file" class="mr-3 h-10 w-64 border-0 p-2" value="Chọn">
         <button type="submit" class="btn btn-success mr-3" >Import Data</button>
     </form>
     <a class="btn btn-warning mr-3" href="{{ route('brand.export') }}">Export Data</a>

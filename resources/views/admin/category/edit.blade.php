@@ -116,11 +116,11 @@
                 <div class="col-span-12 md:col-span-6">
                     <div class="form-group mb-4">
                         <label>Danh mục thuộc tính</label>
-                        <select name="property"  class="form-control w-full" id="properties">
-                            <option value="0" selected>Chọn thuộc tính</option>
+                        <select name="property" id="properties" class="tom-select w-full" multiple>
+                            {{-- <option value="0" selected>Chọn thuộc tính</option> --}}
                             @foreach ($categoryproperty as $key => $value)
                                 <option value="{{$value->id}}" class="form-control">
-                                    {{ $value->name}}
+                                    {{ $value->name}}  ━━━ {{ $value->ma}}
                                 </option>
                             @endforeach
                         </select>
@@ -172,7 +172,7 @@
  <script>
     $(document).ready(function () {
         $('#addproperty').on('click', function () {
-            var properties_id = $('#properties option:selected').attr('value');
+            var properties_id = $('#properties').val();
             var category_id   = {{$edit->id}};
             if(properties_id != 0){
             var _token = $('meta[name="csrf-token"]').attr('content');
@@ -189,8 +189,8 @@
                     success: function(data) {
                         $("#addrowproperty").append(data.html);
                         var id = data.id;
-                        var url = "{{ route('category.edit', "id") }}";
-                        url = url.replace('id', id);
+                        var url = "{{ route('category.edit', "cate_id") }}";
+                        url = url.replace("cate_id", id);
                         window.location.href=url;
                     }
                 });

@@ -370,12 +370,21 @@
         });
 
         $('#price').on('keyup',  function(){
-        const giaban= this.value;
-        const percent  = document.getElementById('onsale').value;
-        const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
-        const price_onsale = giaban1 - giaban1*percent/100;
-        document.getElementById('price_onsale').value = new Intl.NumberFormat('vi-VN').format(price_onsale);
-        });
+            const giaban= this.value;
+            const percent  = document.getElementById('onsale').value;
+            const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
+            const price_onsale = giaban1 - giaban1*percent/100;
+            document.getElementById('price_onsale').value = new Intl.NumberFormat('vi-VN').format(price_onsale);
+            });
+
+            $('#price_onsale').on('keyup',  function(){
+            const giadagiam= this.value;
+            const giaban  = document.getElementById('price').value;
+            const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
+            const giadagiam1 =  giadagiam.replace(/[^a-zA-Z0-9 ]/g, '');
+            const onsale = parseInt(100-giadagiam1/giaban1*100);
+            document.getElementById('onsale').value = onsale;
+            });
     });
 </script>
 @endsection
