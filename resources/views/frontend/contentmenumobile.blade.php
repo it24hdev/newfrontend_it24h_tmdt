@@ -16,7 +16,7 @@
 
                 <li><a href="{!! $subsidebar->link !!}">- {{$subsidebar->label}}</a>
                     @if(count($subsidebar->childs))
-                        @include('frontend.subsidebarmenu',['childs' => $subsidebar->childs])
+                        @include('frontend.subsidebarmenu',['childs' => $subsidebar->childs, 'menu' =>$subsidebar->menu])
                     @endif
                 </li>
                 @endif

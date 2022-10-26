@@ -32,7 +32,7 @@
                     @endif
                 </a>
                 @if(count($subsidebar3->childs))
-                @include('frontend.subsidebar',['childs' => $subsidebar3->childs])
+                @include('frontend.subsidebar',['childs'=>$subsidebar3->childs,'menu' =>$subsidebar3->menu])
                 @endif
             </li>
             @endif
