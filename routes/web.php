@@ -340,6 +340,7 @@ Route::get('/google/callback', [FrontendUserController::class, 'callback_google'
 
 Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('about_us');
 Route::post('/menucontent', [HomeController::class, 'menucontent'])->name('menucontent');
+Route::post('/menucontent2', [HomeController::class, 'menucontent2'])->name('menucontent2');
 
 
 

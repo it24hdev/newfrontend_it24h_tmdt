@@ -5,24 +5,13 @@
         <a href="{!! $Sidebar->link !!}"><span class="icon-menu me-1">
         {!! $Sidebar->class !!} {{$Sidebar->label}}</a>
         @if(count($Sidebar->childs))
-        <span class="icon-right"><i class="far fa-angle-right"></i></span>
+        <span class="icon-right" get-id="{{$Sidebar->id}}"><i class="far fa-angle-right"></i></span>
         @endif
         
-        <div class="submenu-parent-mobile">
-            @if(count($Sidebar->childs))
-            <ul style="margin-left: 5px;">
-                @foreach($Sidebars as $subsidebar)
-                @if($subsidebar->parent == $Sidebar->id)
+        <div class="submenu-parent-mobile ajaxsubmenu" >
+            <div id="subid-{{$Sidebar->id}}" class="full_sub">
 
-                <li><a href="{!! $subsidebar->link !!}">- {{$subsidebar->label}}</a>
-                    @if(count($subsidebar->childs))
-                        @include('frontend.subsidebarmenu',['childs' => $subsidebar->childs, 'menu' =>$subsidebar->menu])
-                    @endif
-                </li>
-                @endif
-                @endforeach
-            </ul>
-            @endif
+            </div>
         </div> 
     </li>
     @endif
@@ -31,7 +20,25 @@
 <script>
     $('.icon-right').click(function(){
         $(this).parent('li').children('.submenu-parent-mobile').slideToggle();
-        $(this).html('<i class="far fa-angle-down"></i>');
+        if(($(this).hasClass("loaded") == false)){
+            var id = $(this).attr('get-id');
+            var _token = $('meta[name="csrf-token"]').attr('content');
+            var data = {
+                id: id,
+                _token: _token
+            };
+            $.ajax({
+                url:"{{route('menucontent2')}}",
+                type:"post",
+                dataType:"json",
+                data: data,
+                success: function (data) {
+
+                   $("#subid-"+ id).append(data); 
+                },
+            })
+            $(this).addClass("loaded");
+        }
     });
     $('.icon-right-child').click(function(){
         $(this).parent('li').children('.submenu-parent-mobile-1').slideToggle();

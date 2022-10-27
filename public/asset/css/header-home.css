@@ -689,6 +689,10 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active{
     color: rgb(196, 78, 0);
     font-weight: 500;
 }
+
+.submenu-parent-mobile ul span i{
+    color: #888888;
+}
 .submenu-parent-mobile ul li a{
     padding: 5px 10px 5px 15px;
 }

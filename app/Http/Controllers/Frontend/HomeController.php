@@ -114,6 +114,48 @@ class HomeController extends Controller
         ->leftjoin('categories','categories.id','admin_menu_items.category_id')
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
+        ->where('admin_menu_items.depth',0)
+        ->get();
+        foreach ($getmenu as $key => $value) {
+           // if($value->filter_by == 1){
+           //  $filter_name = Categoryproperty::select('categoryproperties.*')
+           //  ->leftjoin('detailproperties','detailproperties.categoryproperties_id','categoryproperties.id')
+           //  ->where('detailproperties.ma',$value->filter_value)
+           //  ->first();
+           //  if(!empty($filter_name)){
+           //      $value->filter_name = $filter_name->ma;
+           //  }
+           // }
+           // elseif ($value->filter_by == 2) {
+           //  $value->filter_name = 'p';
+           // }
+           // else{
+           //  $value->filter_name = 'brand';
+           // }
+            $url ="#";
+            if(!empty($value->link)){
+                $url = 'https://'.$value->link;
+            }
+            else{
+                if(!empty($value->slug)){
+                    $url = redirect()->route('product_cat',['slug' => $value->slug])->getTargetUrl();
+                }
+            }
+            $value->link = $url;
+        }
+        return $getmenu;
+    }
+
+    public function getmenu_ajax($location, $parent){
+        if($location == 'sidebar') {
+            $location = "sidebar_location";
+        }
+        $getmenu = MenuItems::select('admin_menu_items.*',DB::raw('null as filter_name'),'categories.slug as slug')
+        ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+        ->leftjoin('categories','categories.id','admin_menu_items.category_id')
+        ->where('locationmenus.'.$location,'<>','0')
+        ->where('locationmenus.'.$location,'<>',null)
+        ->where('admin_menu_items.depth','<>',0)
         ->get();
         foreach ($getmenu as $key => $value) {
            if($value->filter_by == 1){
@@ -131,16 +173,16 @@ class HomeController extends Controller
            else{
             $value->filter_name = 'brand';
            }
-        $url ="#";
-        if(!empty($value->link)){
-            $url = 'https://'.$value->link;
-        }
-        else{
-            if(!empty($value->slug)){
-                $url = redirect()->route('product_cat',['slug' => $value->slug, $value->filter_name => $value->filter_value])->getTargetUrl();
+            $url ="#";
+            if(!empty($value->link)){
+                $url = 'https://'.$value->link;
             }
-        }
-        $value->link = $url;
+            else{
+                if(!empty($value->slug)){
+                    $url = redirect()->route('product_cat',['slug' => $value->slug, $value->filter_name => $value->filter_value])->getTargetUrl();
+                }
+            }
+            $value->link = $url;
         }
         return $getmenu;
     }
@@ -756,23 +798,24 @@ public function about_us(){
     return \view('frontend.page.about-us', compact('Sidebars' ,'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
 }
 
-public function menucontent(Request $request){
-    $Sidebars  = $this->getmenu('sidebar');
-    $Sidebarid  = $request->id;
-    $agent = new Agent();
-    if($agent->isMobile()){
-       $view2     = view('frontend.contentmenumobile', [
-        'Sidebars'  => $Sidebars, 
-    ])->render();
-   }
-   else{
-    $view2     = view('frontend.contentmenu', [
-        'Sidebars'  => $Sidebars, 
-        'Sidebarid' => $Sidebarid, 
-    ])->render();
-}
-
-
-return response()->json($view2);
-}
+    public function menucontent(Request $request){
+        $Sidebarid  = $request->id;
+        $agent = new Agent();
+        if($agent->isMobile()){
+            $Sidebars  = $this->getmenu('sidebar');
+            $view2     = view('frontend.contentmenumobile', [ 'Sidebars'  => $Sidebars ])->render();
+            }
+        else{
+            $Sidebars  = $this->getmenu_ajax('sidebar',$request->id);
+            $view2     = view('frontend.contentmenu',['Sidebars'=>$Sidebars,'Sidebarid'=>$Sidebarid 
+            ])->render();
+            }
+        return response()->json($view2);
+    }
+    public function menucontent2(Request $request){
+        $Sidebarid  = $request->id;
+        $Sidebars  = $this->getmenu_ajax('sidebar',$request->id);
+        $view2     = view('frontend.subsidebarmenu',['Sidebars'=>$Sidebars,'Sidebarid'=>$Sidebarid ])->render();
+        return response()->json($view2);
+    }
 }

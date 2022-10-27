@@ -160,27 +160,25 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#menucontent').hover(function() {
-                if(($("#menucontent").hasClass("loaded") == false)){
-
-                    $('.ajaxsubmenu').each(function() {
-                        var id = $(this).attr('get-id');
-                        var _token = $('meta[name="csrf-token"]').attr('content');
-                        var data = {
-                            id: id,
-                            _token: _token
-                        };
-                        $.ajax({
-                            url:"{{route('menucontent')}}",
-                            type:"post",
-                            dataType:"json",
-                            data: data,
-                            success: function (data) {
-                               $("#subid-"+ id).append(data); 
-                            },
-                        })
-                    });
-                    $("#menucontent").addClass("loaded");
+            $('.menucontent').hover(function() {
+                if(($(this).hasClass("loaded") == false)){
+                    var id = $(this).find('.ajaxsubmenu').attr('get-id');
+                    console.log(id);
+                    var _token = $('meta[name="csrf-token"]').attr('content');
+                    var data = {
+                        id: id,
+                        _token: _token
+                    };
+                    $.ajax({
+                        url:"{{route('menucontent')}}",
+                        type:"post",
+                        dataType:"json",
+                        data: data,
+                        success: function (data) {
+                           $("#subid-"+ id).append(data); 
+                        },
+                    })
+                    $(this).addClass("loaded");
                 }
             });
             $("#pills-2-tab").on("click", function() {

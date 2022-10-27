@@ -129,12 +129,12 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content " id="menucontent" style="visibility: hidden; transform: translateY(10px); opacity: 0;">
+                        <div class="vertical-menu-content " style="visibility: hidden; transform: translateY(10px); opacity: 0;">
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
                                     @if($Sidebar->parent==0)
-                                    <li>
+                                    <li class="menucontent">
                                         <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
                                             {{$Sidebar->label}}
                                              @if(count($Sidebar->childs))

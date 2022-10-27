@@ -3,11 +3,9 @@
     @if($subsidebar->parent == $Sidebarid)
     <div class="wp-menu-parent">
         @if(!empty($subsidebar->link))
-            {{-- @if($subsidebar->form_filter == 0) --}}
         <a class="title-cat" href="{!!$subsidebar->link !!}">
             {{$subsidebar->label}}
         </a>
-        {{-- @endif --}}
         @else
         <b style="color:black; font-size: 14px;">
             <p>

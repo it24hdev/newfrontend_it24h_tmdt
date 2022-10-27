@@ -38,15 +38,6 @@ $(document).ready(function () {
             },
         }
     });
-    $('.icon-right').click(function(){
-        $(this).parent('li').children('.submenu-parent-mobile').slideToggle();
-        $(this).html('<i class="far fa-angle-down"></i>');
-    });
-    $('.icon-right-child').click(function(){
-        $(this).parent('li').children('.submenu-parent-mobile-1').slideToggle();
-        $(this).html('<i class="far fa-angle-down"></i>');
-    });
-
     $('#list-cat-slider').owlCarousel({
         autoplay: true,
         autoplayHoverPause: true,

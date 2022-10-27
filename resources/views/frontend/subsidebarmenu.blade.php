@@ -1,36 +1,21 @@
-<span class="icon-right-child" style="color: #222;"><i class="far fa-angle-right"></i></span>
-<div class="submenu-parent-mobile-1">
-    <ul style="margin-left: 15px;">
-        @foreach($childs as $child)
-        @if($menu == $child->menu)
-        <li>
-            @if(!empty($child->link))
-                  <a style="position:initial"  href="https://{{$child->link}}">{{$child->label}}</a>
-            @else
-                @if(!empty($child->slug))
-                    <a style="position:initial"  href="{!!route('product_cat',['slug' => $child->slug,$child->filter_name => $child->filter_value])!!}">{{$child->label}}</a>
-                    @if(count($child->childs))
-                        <span class="next-right"><i class="far fa-angle-right"></i></span>
-                    @endif
-                    </a>
-                    @if(count($child->childs))
-                        @include('frontend.subsidebarmenu',[ 'childs' => $child->childs, 'menu' => $menu])
-                    @endif
-
-                @else
-                    <a style="position:initial"  href="#">{{$child->label}}</a>
-                    @if(count($child->childs))
-                        <span class="next-right"><i class="far fa-angle-right"></i></span>
-                    @endif
-                    </a>
-                    @if(count($child->childs))
-                        @include('frontend.subsidebarmenu',[ 'childs' => $child->childs, 'menu' => $menu])
-                    @endif
-
-                @endif
-            @endif
-        </li>
+<ul style="margin-left: 5px;">
+    @foreach($Sidebars as $subsidebar)
+    @if($subsidebar->parent == $Sidebarid)
+    <li><a href="{!! $subsidebar->link !!}">- {{$subsidebar->label}}</a>
+        @if(count($subsidebar->childs))
+       <span class="icon-right-child" style="color: #222;"><i class="far fa-angle-right"></i></span>
+            @include('frontend.subsidebarmenuchild',['childs' => $subsidebar->childs, 'menu' =>$subsidebar->menu])
         @endif
-        @endforeach
-    </ul>
-</div>
+    </li>
+    @endif
+    @endforeach
+</ul>
+
+<script>
+    $(document).ready(function () {
+     $('.icon-right-child').click(function(){
+        $(this).parent('li').children('.submenu-parent-mobile-1').slideToggle();
+        $(this).html('<i class="far fa-angle-down"></i>');
+    });
+ });
+</script>
