@@ -23,6 +23,7 @@ class Category extends Model
         'thumb',
         'banner',
         'show_push_product',
+        'content',
     ];
     const SAN_PHAM = 0;
     const BAI_VIET = 1;

@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('icon')->nullable();
             $table->boolean('status')->default(1);
             $table->boolean('show_push_product')->default(1);
+            $table->string('content')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -163,10 +163,11 @@
             $('.menucontent').hover(function() {
                 if(($(this).hasClass("loaded") == false)){
                     var id = $(this).find('.ajaxsubmenu').attr('get-id');
-                    console.log(id);
+                    var menu = $(this).find('.ajaxsubmenu').attr('get-menu');
                     var _token = $('meta[name="csrf-token"]').attr('content');
                     var data = {
                         id: id,
+                        menu: menu,
                         _token: _token
                     };
                     $.ajax({

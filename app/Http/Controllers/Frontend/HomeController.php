@@ -146,7 +146,7 @@ class HomeController extends Controller
         return $getmenu;
     }
 
-    public function getmenu_ajax($location, $parent){
+    public function getmenu_ajax($location, $menu){
         if($location == 'sidebar') {
             $location = "sidebar_location";
         }
@@ -156,6 +156,7 @@ class HomeController extends Controller
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
         ->where('admin_menu_items.depth','<>',0)
+        ->where('admin_menu_items.menu',$menu)
         ->get();
         foreach ($getmenu as $key => $value) {
            if($value->filter_by == 1){
@@ -180,6 +181,9 @@ class HomeController extends Controller
             else{
                 if(!empty($value->slug)){
                     $url = redirect()->route('product_cat',['slug' => $value->slug, $value->filter_name => $value->filter_value])->getTargetUrl();
+                }
+                else{
+                    $url = "#";
                 }
             }
             $value->link = $url;
@@ -693,17 +697,13 @@ public function contact(){
     $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
     $locale             = config('app.locale');
     $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
     return \view('frontend.contact', \compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent',$ag);
 }
 public function changeLanguage($language)
 {
     Session::put('website_language', $language);
-
     return redirect()->back();
 }
-
-
 public function recruit()
 {
     $agent = new Agent();
@@ -717,8 +717,6 @@ public function recruit()
     $active_menu = "contact";
     $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
     $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
-        // $Sub_menus          = $this->getmenu('submenu');
     return view('frontend.recruit', \compact('Sidebars',  'active_menu', 'posts_footer', 'list_location', 'list_vacancies' ))->with('agent',$ag);
 }
 
@@ -735,8 +733,6 @@ public function recruit_register(Request $request)
     $active_menu = "contact";
     $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
     $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
-        // $Sub_menus          = $this->getmenu('submenu');
 
     if ($request->fileupload == null) {
         $request->fileupload = "";
@@ -759,8 +755,6 @@ public function recruit_register(Request $request)
         DB::commit();
         return redirect()->route('recruit',[
             'Sidebars' => $Sidebars,
-            // 'Menus' => $Menus,
-            // 'Sub_menus' => $Sub_menus,
             'active_menu' => $active_menu,
             'posts_footer' => $posts_footer,
             'list_location' => $list_location,
@@ -794,19 +788,19 @@ public function about_us(){
     $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
     $locale             = config('app.locale');
     $Sidebars           = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
     return \view('frontend.page.about-us', compact('Sidebars' ,'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
 }
 
     public function menucontent(Request $request){
         $Sidebarid  = $request->id;
+        $Sidebarmenu  = $request->menu;
         $agent = new Agent();
         if($agent->isMobile()){
             $Sidebars  = $this->getmenu('sidebar');
             $view2     = view('frontend.contentmenumobile', [ 'Sidebars'  => $Sidebars ])->render();
             }
         else{
-            $Sidebars  = $this->getmenu_ajax('sidebar',$request->id);
+            $Sidebars  = $this->getmenu_ajax('sidebar',$Sidebarmenu);
             $view2     = view('frontend.contentmenu',['Sidebars'=>$Sidebars,'Sidebarid'=>$Sidebarid 
             ])->render();
             }
@@ -814,7 +808,8 @@ public function about_us(){
     }
     public function menucontent2(Request $request){
         $Sidebarid  = $request->id;
-        $Sidebars  = $this->getmenu_ajax('sidebar',$request->id);
+        $Sidebarmenu  = $request->menu;
+        $Sidebars  = $this->getmenu_ajax('sidebar',$Sidebarmenu);
         $view2     = view('frontend.subsidebarmenu',['Sidebars'=>$Sidebars,'Sidebarid'=>$Sidebarid ])->render();
         return response()->json($view2);
     }

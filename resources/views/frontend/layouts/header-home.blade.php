@@ -141,7 +141,7 @@
                                              <span class="icon-right"><i class="far fa-angle-right"></i></span>
                                              @endif
                                         </a>
-                                        <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}">
+                                        <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}">
                                             <div class="wp-submenu">
                                                 <div class="content-submenu">
                                                     @if(count($Sidebar->childs))

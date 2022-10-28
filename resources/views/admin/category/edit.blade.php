@@ -128,38 +128,43 @@
                     <input type="button" class="btn btn-primary" id="addproperty" value="Thêm">
                 </div>
             </div>
-            <table  class="table table-report -mt-2">
-                <thead>
-                    <tr >
-                        <th class="text-center whitespace-nowrap">STT</th>
-                        <th class="text-center whitespace-nowrap">MÃ</th>
-                        <th class="text-center whitespace-nowrap">THUỘC TÍNH</th>
-                        <th class="text-center whitespace-nowrap">GIÁ TRỊ</th>
-                        {{-- <th class="text-center whitespace-nowrap">THỨ TỰ HIỂN THỊ</th> --}}
-                        <th class="text-center whitespace-nowrap">CHỨC NĂNG</th>
-                    </tr>
-                </thead>
-                <tbody id="addrowproperty">
-                    @foreach($categoryproperties_manages as $key => $value)
-                    <tr id="{{ $value->id }}">
-                        <td class="text-center">{{$key+1}}</td>
-                        <td class="text-center">{{$value->ma}}</td>
-                        <td class="text-center">{{$value->name}}</td>
-                        <td class="text-center"><a href="{{route('category_property.edit',$value->categoryproperties_id)}}">Quản lý giá trị</a></td>
-                        <td class="w-20">
-                            <div class="flex justify-center items-center">
-                                <a title="Xóa" data-toggle="modal"
-                                   data-value="{{$value->id}}"
-                                   data-target="#delete-confirmation-modal"
-                                   class="btn btn-danger py-1 px-2 btn-delete2"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            @include('admin.category.deleteproperties')
+            <div>
+                <table  class="table table-report -mt-2">
+                    <thead>
+                        <tr >
+                            <th class="text-center whitespace-nowrap">STT</th>
+                            <th class="text-center whitespace-nowrap">MÃ</th>
+                            <th class="text-center whitespace-nowrap">THUỘC TÍNH</th>
+                            <th class="text-center whitespace-nowrap">GIÁ TRỊ</th>
+                            {{-- <th class="text-center whitespace-nowrap">THỨ TỰ HIỂN THỊ</th> --}}
+                            <th class="text-center whitespace-nowrap">CHỨC NĂNG</th>
+                        </tr>
+                    </thead>
+                    <tbody id="addrowproperty">
+                        @foreach($categoryproperties_manages as $key => $value)
+                        <tr id="{{ $value->id }}">
+                            <td class="text-center">{{$key+1}}</td>
+                            <td class="text-center">{{$value->ma}}</td>
+                            <td class="text-center">{{$value->name}}</td>
+                            <td class="text-center"><a href="{{route('category_property.edit',$value->categoryproperties_id)}}">Quản lý giá trị</a></td>
+                            <td class="w-20">
+                                <div class="flex justify-center items-center">
+                                    <a title="Xóa" data-toggle="modal"
+                                       data-value="{{$value->id}}"
+                                       data-target="#delete-confirmation-modal"
+                                       class="btn btn-danger py-1 px-2 btn-delete2"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @include('admin.category.deleteproperties')
+            </div>
+            <div class="grid grid-cols-12">
+                
+            </div>
             <div class="modal-footer">
                 <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
                 <input type="submit" class="btn btn-primary " value="Cập nhật">

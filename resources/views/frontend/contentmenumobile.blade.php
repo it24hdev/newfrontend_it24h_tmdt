@@ -5,7 +5,7 @@
         <a href="{!! $Sidebar->link !!}"><span class="icon-menu me-1">
         {!! $Sidebar->class !!} {{$Sidebar->label}}</a>
         @if(count($Sidebar->childs))
-        <span class="icon-right" get-id="{{$Sidebar->id}}"><i class="far fa-angle-right"></i></span>
+        <span class="icon-right" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}"><i class="far fa-angle-right"></i></span>
         @endif
         
         <div class="submenu-parent-mobile ajaxsubmenu" >
@@ -22,9 +22,11 @@
         $(this).parent('li').children('.submenu-parent-mobile').slideToggle();
         if(($(this).hasClass("loaded") == false)){
             var id = $(this).attr('get-id');
+            var menu = $(this).attr('get-menu');
             var _token = $('meta[name="csrf-token"]').attr('content');
             var data = {
                 id: id,
+                menu: menu,
                 _token: _token
             };
             $.ajax({
