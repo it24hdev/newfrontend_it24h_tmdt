@@ -2,19 +2,27 @@
 
 namespace App\Http\Controllers\Products;
 
-use App\Http\Controllers\Controller;
-use App\Models\Products;
-use App\Models\Category;
-use App\Models\CategoryRelationship;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Controller;
 use App\Helpers\CommonHelper;
+use App\Models\Products;
+use App\Models\Category;
+use App\Models\CategoryRelationship;
+use App\Models\Detailproperties;
+use App\Models\Propertyproducts;
 use App\Models\Attribute_product;
 use App\Models\Brand;
 use App\Models\Tag_event;
-use Illuminate\Support\Facades\Session;
+use App\Exports\ProductExport;
+use App\Exports\BrandExport;
+use App\Imports\ProductImport;
+use App\Imports\BrandImport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Str;
 
 class ProductsController extends Controller
 {
@@ -26,6 +34,7 @@ class ProductsController extends Controller
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1800);
         $this->middleware(function ($request, $next) {
             \session(['module_active' => 'products',  'active' => 'Sản phẩm']);
             return $next($request);
@@ -37,7 +46,7 @@ class ProductsController extends Controller
     {
         $this->authorize('viewAny', Products::class);
         $limit    =  $request->query('limit');
-        $keywords =  $request->query('search');
+        $keywords =  $request->query('keywords');
         $orderby  =  $request->query('orderby');
         $sort     =  $request->query('sort');
         if ($sort  == null) {
@@ -50,12 +59,21 @@ class ProductsController extends Controller
             $keywords = "";
         }
         if ($orderby  == null) {
-            $orderby  = "id";
+            $orderby  = "ma";
         }
-        if ($limit == 10 && $keywords == "" && $orderby == "id" && $sort =="asc") {
-            $Products = Products::paginate($limit);
-        } else
-            $Products = Products::where('name', 'like', '%' . $keywords . '%')->orderby($orderby, $sort)->Paginate($limit);
+        if ($limit == 10 && $keywords == "" && $orderby == "ma" && $sort =="ASC") {
+            $Products = Products::select('products.*','brands.name as brand_name')
+            ->leftjoin('brands','brands.id','products.brand')
+            ->orderby($orderby, $sort)
+            ->paginate($limit);
+        } else{
+            $Products = Products::select('products.*', 'brands.name as brand_name')
+            ->leftjoin('brands','brands.id','products.brand')
+            ->where('products.name', 'like', '%' . $keywords . '%')
+            ->orwhere('products.ma', 'like', '%' . $keywords . '%')
+            ->orderby($orderby, $sort)->Paginate($limit);
+        }
+            
         return view('admin.products.index', [
             'products' => $Products,
             'title'    => 'Sản phẩm',
@@ -84,17 +102,16 @@ class ProductsController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         $this->authorize('update', Products::class);
         $request->validate(
             [
-                'name'          => 'required|max:300|unique:products',
+                'ma'          => 'max:300|unique:products',
                 'thumb'         => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
-                'name.required' => 'Tên sản phẩm không được để bỏ trống.',
-                'name.max'      => 'Tên sản phẩm có độ dài tối đa :max ký tự.',
-                'name.unique'   => 'Tên sản phẩm đã tồn tại trong hệ thống',
+                // 'ma.required' => 'Mã sản phẩm không được để bỏ trống.',
+                'ma.max'      => 'Mã sản phẩm có độ dài tối đa :max ký tự.',
+                'ma.unique'   => 'Mã sản phẩm đã tồn tại trong hệ thống',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             ]
         );
@@ -125,7 +142,11 @@ class ProductsController extends Controller
             $specifications = NULL;
         }
 
+        if(empty($request->ma)){
+            $request->ma      = strtoupper(Str::random(9));
+        }
         $Product  = [
+            'ma'           => $request->ma,
             'name'         => $request->name,
             'slug'         => CommonHelper::convertTitleToSlug($request->name, '-'),
             'price'        => $request->price,
@@ -222,22 +243,20 @@ class ProductsController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $this->authorize('update', Products::class);
         $request->validate(
             [
-                'name'  => 'required|max:300|unique:products,name,' . $id . ',id',
+                'ma'  => 'required|max:300|unique:products,ma,' . $id . ',id',
                 'thumb' => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
-                'name.required' => 'Tên sản phẩm không được để bỏ trống.',
-                'name.max'      => 'Tên sản phẩm có độ dài tối đa :max ký tự.',
-                'name.unique'   => 'Tên sản phẩm đã tồn tại trong hệ thống',
+                'ma.required' => 'Mã sản phẩm không được để bỏ trống.',
+                'ma.max'      => 'Mã sản phẩm có độ dài tối đa :max ký tự.',
+                'ma.unique'   => 'Mã sản phẩm đã tồn tại trong hệ thống',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             ]
         );
         $Products = Products::find($id);
-
         if (!is_null($Products)) {
             $status        = Products::ACTIVE;
             $nameFile      = Products::IMAGE;
@@ -263,7 +282,6 @@ class ProductsController extends Controller
             } else{
                 $imgs = $this->saveimg($request, $oldimage);
             }
-
             $cat_id   = json_encode($request->cat_id);
             $attr_id = \json_encode($request->attr_id);
             if(!empty($request->specifications)){
@@ -272,6 +290,7 @@ class ProductsController extends Controller
                 $specifications = NULL;
             }
             $Product  = [
+                'ma'           => $request->ma,
                 'name'         => $request->name,
                 'slug'         => CommonHelper::convertTitleToSlug($request->name, '-'),
                 'price'        => $request->price,
@@ -301,10 +320,8 @@ class ProductsController extends Controller
                 'time_deal'    => $request->time_deal,
                 'youtube' => $request->youtube,
             ];
-
             try {
                 DB::beginTransaction();
-
                 Products::where('id', $id)->update($Product);
                 $product = Products::find($id);
                 // xu ly anh khong bi vo anh
@@ -333,6 +350,11 @@ class ProductsController extends Controller
                 /* Chuyển cách insert update cat_id qua bảng trung gian bằng cách này! */
                 $product->category()->sync($request->input('cat_id'));
                 DB::commit();
+                DB::transaction(function () use ($id, $request){
+                     DB::table('category_relationships')
+                    ->where('product_id', $id)
+                    ->update(['product_code'=>$request->ma]);
+                });
                 return redirect()->route('products.index')->with('success', 'Sửa sản phẩm mới thành công.');
             } catch (\Exception $exception) {
                 DB::rollBack();
@@ -450,9 +472,16 @@ class ProductsController extends Controller
         Attribute_product::where('id', $id)->delete();
     }
     //xu ly lay danh sac thuong hieu san pham
-    public function list_brand(){
+    public function list_brand(Request $request){
         $this->authorize('viewAny', Products::class);
-        $brands = Brand::get();
+        $keywords =  $request->query('keywords');
+        if(!empty($keywords)){
+            $brands = Brand::where('name', 'like', '%' . $keywords . '%')->paginate(100);
+        }
+        else{
+            $brands = Brand::paginate(15);
+        }
+        
         return \view('admin.products.list-brand', \compact('brands'));
     }
     //xu ly luu thuong hieu san pham
@@ -461,7 +490,7 @@ class ProductsController extends Controller
         $request->validate(
             [
                 'name' => 'required|string|max:250',
-                'image' => 'required|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+                'image' => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
                 'required' => ':attribute không được để trống',
@@ -477,6 +506,7 @@ class ProductsController extends Controller
             $nameFile = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
         }
         $input = [
+            'ma'  => $request->ma,
             'name'  => $request->name,
             'image'  => $nameFile,
         ];
@@ -522,8 +552,8 @@ class ProductsController extends Controller
         );
         $brand = Brand::find($request->id);
 
-        $nameFile = Products::IMAGE;
-        $nameFileOld = $brand->image;
+        $nameFile     = Products::IMAGE;
+        $nameFileOld  = $brand->image;
         if ($request->image  != null){
             $nameFile = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
         }else{
@@ -531,8 +561,9 @@ class ProductsController extends Controller
         }
 
         $input = [
+            'ma'    => $request->ma,
             'name'  => $request->name,
-            'image'  => $nameFile,
+            'image' => $nameFile,
         ];
         try {
             DB::beginTransaction();
@@ -637,8 +668,6 @@ class ProductsController extends Controller
             return redirect()->route('products.list_tag-event')->with('error', 'Đã có lỗi xảy ra. Vui lòng thử lại!');
         }
     }
-
-
     public function update_tag_event(Request $request){
         $this->authorize('update', Products::class);
         $request->validate(
@@ -702,5 +731,72 @@ class ProductsController extends Controller
         CommonHelper::deleteImage($nameFile, $path);
         CommonHelper::deleteImage($nameFile, $path_thumb);
         Tag_event::find($id)->delete();
+    }
+    public function export() 
+    {
+        return Excel::download(new ProductExport, 'Products_export.xlsx');
+    }
+    public function import() 
+    {
+        if(!empty(request()->file('file'))){
+            ini_set('max_execution_time', 1800); 
+            Excel::import(new ProductImport,request()->file('file')); 
+        }
+        DB::statement("update category_relationships set category_relationships.product_id = (
+    SELECT products.id FROM products WHERE category_relationships.product_code = products.ma)");
+
+        return back();
+    }
+    public function brandexport() 
+    {
+        return Excel::download(new BrandExport, 'Brand.xlsx');
+    }
+
+    public function brandimport() 
+    {
+        if(!empty(request()->file('file'))){
+            ini_set('max_execution_time', 1800); 
+            Excel::import(new BrandImport,request()->file('file')); 
+        }
+        return back();
+    }
+
+    public function productsproperties(Request $request, $id)
+    {
+        $product = Products::find($id);
+        $categoryproperties  =  DB::table('categoryproperties')->select('categoryproperties.*')
+        ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
+        ->leftjoin('categories','categories.id', '=', 'categoryproperties_manages.category_id')
+        ->leftjoin('category_relationships','category_relationships.cat_id', '=', 'categories.id')
+        ->leftjoin('products','products.id', '=', 'category_relationships.product_id')
+        ->where('products.id', $id)
+        ->get();
+
+        $detailproperty = Detailproperties::get();
+        return view('admin.products.properties',[
+            'detailproperty' => $detailproperty,
+            'categoryproperties' => $categoryproperties,
+            'product_id' => $id,
+            'title' => 'Sản phẩm :'.$product->name,
+            'list_checkbox_property' => json_decode($product->detailproperty),
+        ]);
+    }
+
+    public function saveproductsproperties(Request $request, $id){
+        Propertyproducts::where('products_id', $id)->delete();
+        if(!empty($request->property_product)){
+            foreach ($request->property_product as $key => $value) {
+           $Propertyproducts =  new Propertyproducts();
+           $Propertyproducts->products_id = $id;
+           $Propertyproducts->detailproperties_id = $value;
+           $Propertyproducts->save();
+            }
+        }
+        $list_checkbox_property = Products::find($id);
+        if(!empty($list_checkbox_property)){
+        $list_checkbox_property->detailproperty = $request->property_product;
+        $list_checkbox_property->save();
+        }
+        return redirect()->route('products.edit',$id)->with('success', 'Cập nhật thuộc tính thành công.');
     }
 }

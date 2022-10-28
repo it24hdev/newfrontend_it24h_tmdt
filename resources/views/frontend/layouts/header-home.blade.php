@@ -57,7 +57,7 @@
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @foreach($Sidebars as $Sidebar)
                                                 @if($Sidebar->parent==0)
-                                                    <li><a class="dropdown-item" href="{{route('product_cat', $Sidebar->link)}}">{{$Sidebar->label}}</a></li>
+                                                    <li><a class="dropdown-item" href="{!!$Sidebar->link!!}">{{$Sidebar->label}}</a></li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -129,27 +129,25 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content" id="menucontent">
+                        <div class="vertical-menu-content" >
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
                                     @if($Sidebar->parent==0)
-                                    <li>
-                                        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
+                                    <li class="menucontent">
+                                        <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
                                             {{$Sidebar->label}}
                                              @if(count($Sidebar->childs))
                                              <span class="icon-right"><i class="far fa-angle-right"></i></span>
                                              @endif
                                         </a>
                                         <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}">
-                                            
-                                                <div class="wp-submenu">
-                                                    <div class="content-submenu">
-                                                        @if(count($Sidebar->childs))
-                                                        <div id="subid-{{$Sidebar->id}}" class="full_sub">
-                                                        </div>
-
-                                                        @endif
+                                            <div class="wp-submenu">
+                                                <div class="content-submenu">
+                                                    @if(count($Sidebar->childs))
+                                                    <div id="subid-{{$Sidebar->id}}" class="full_sub">
+                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

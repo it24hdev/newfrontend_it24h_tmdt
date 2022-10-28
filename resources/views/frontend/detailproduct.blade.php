@@ -43,7 +43,10 @@
                                 </div>
                                 @if (!empty($product->brand))
                                     <div class="product-brand">
-                                        <img src="{{asset('upload/images/products/medium/'.$product->brands->image)}}" alt="">
+                                        @if(!empty($product->brands->image))
+                                            <img src="{{asset('upload/images/products/medium/'.$product->brands->image)}}" alt="">
+                                        
+                                        @endif
                                     </div>
                                 @endif
                                 <span class="prev"><i class="fas fa-chevron-left"></i></span>
@@ -69,7 +72,7 @@
                     </div>
                     <div class="product-detail-info">
                             <div class="product-detail-meta">
-                                <div class="code">Mã: {{$product->id}}</div> <span class="icon-meta">|</span>
+                                <div class="code">Mã: {{$product->ma}}</div> <span class="icon-meta">|</span>
                                 <div class="review">
                                     <div class="rating2">
                                         <div class="rating-upper" style="width: {{$product->count_vote()}}%">
@@ -116,6 +119,18 @@
                                     </div>
                                 @endif
 
+                            </div>
+                            <div class="warranty_flex">
+                                @if(!empty($product->tax) && $product->tax==1)
+                                
+                                <div class="warranty">Giá đã có VAT</div>
+                                
+                                @endif
+                                @if(!empty($product->warranty))
+      
+                                <div class="warranty">Bảo hành {{$product->warranty}}</div>
+                    
+                                @endif
                             </div>
                             @if (!empty($product->gift))
                                 <div class="product-gift">
@@ -480,7 +495,7 @@
                                         <div class="thumb">
                                             <a href="{{ route('detailproduct', $item->slug)}}">
                                                 <img class="owl-lazy" data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
-                                                @if (!empty($item->brand))
+                                                @if (!empty($item->brands->image))
                                                     <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
                                                 @endif
                                                 <div class="wp-tag">
@@ -503,7 +518,7 @@
                                                 @else
                                                     <p class="event" style="min-height: 20px;"></p>
                                                 @endif
-                                                <p class="code">Mã: {{$item->id}}</p>
+                                                <p class="code">Mã: {{$item->ma}}</p>
                                             </div>
                                             <div class="name">
                                                 <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>
@@ -549,9 +564,12 @@
                                                 </div>
                                             </div>
                                             <div class="detail-bottom">
-                                                @if (!empty($item->still_stock))
-                                                    <div class="qty" style="color: #01aa42;
-                                                    background-color: #dbf8e1;">{{$item->still_stock}}</div>
+                                               @if (($item->quantity - $item->sold > 0))
+                                                    <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng
+                                                    </div>
+                                                @else
+                                                     <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng
+                                                    </div>
                                                 @endif
                                                 <div class="action">
                                                     <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>
@@ -596,7 +614,7 @@
                                                 @else
                                                     <p class="event" style="min-height: 20px;"></p>
                                                 @endif
-                                                <p class="code">Mã: {{$item->id}}</p>
+                                                <p class="code">Mã: {{$item->ma}}</p>
                                             </div>
                                             <div class="name">
                                                 <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>
@@ -642,9 +660,12 @@
                                                 </div>
                                             </div>
                                             <div class="detail-bottom">
-                                                @if (!empty($item->still_stock))
-                                                    <div class="qty" style="color: #01aa42;
-                                                    background-color: #dbf8e1;">{{$item->still_stock}}</div>
+                                                @if (($item->quantity - $item->sold > 0))
+                                                    <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng
+                                                    </div>
+                                                @else
+                                                     <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng
+                                                    </div>
                                                 @endif
                                                 <div class="action">
                                                     <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>

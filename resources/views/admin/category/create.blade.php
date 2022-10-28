@@ -8,18 +8,21 @@
     <div class="form-group">
         <form action="{{ route('category.store')}}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="form-heade">
-            </div>
             <div class="grid grid-cols-12 gap-x-5">
             <div class="col-span-12 xl:col-span-6">
+            <div class="form-group mb-4">
+                <label>Mã</label>
+                <input type="text" class=" form-control" name='ma' value="{{old('ma')}}">
+                @error('ma') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
+            </div>
             <div class="form-group mb-4">
                 <label>Tên danh mục</label>
                 <input type="text" class=" form-control" name='name' id="typinginput" value="{{old('name')}}">
                 @error('name') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
-            <div class="form-group mb-4">
+            <div class="form-group mb-4" style="display:none;">
                 <label>Tên danh mục(ngoại ngữ)</label>
-                <input type="text" class=" form-control" name='name2' value="{{old('name2')}}" required>
+                <input type="text" class=" form-control" name='name2' value="{{old('name2')}}">
             </div>
             <div class="form-group mb-4">
                 <label>SLUG</label>
@@ -60,13 +63,6 @@
                 <label>Hiện danh sách sản phẩm lên trang chủ</label> <br>
                  <input type="checkbox" name='show_push_product' checked="checked" class="form-check-switch">
             </div>
-            <div class="modal-footer">
-
-                <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
-
-            <input type="submit" class="btn btn-primary " value="Create">
-
-        </div>
             </div>
             <div class="col-span-12 xl:col-span-6">
             <div class="form-group mb-4">
@@ -103,10 +99,12 @@
                     </div>
                 </div>
             </div>
-
             </div>
         </div>
-
+        <div class="modal-footer">
+            <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
+        <input type="submit" class="btn btn-primary " value="Create">
+        </div>
     </form>
 </div>
 </div>

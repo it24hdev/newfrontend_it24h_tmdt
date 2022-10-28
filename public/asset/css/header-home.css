@@ -355,14 +355,15 @@ ul{
     padding: 0;
 }
 .vertical-menu-content ul.menu-cat{
-    height: 662px;
+    height: auto;
     overflow: hidden;
 }
 .vertical-menu-content ul.menu-cat>li>a{
     display: block;
-    padding: 12.5px 0;
+    padding: 7px 0;
     margin: 0 18px;
     color: #222;
+    font-size: 12px;
     background-color: transparent;
     border-bottom: 1px solid #eee;
     transition: all ease 0.1s;
@@ -407,23 +408,21 @@ ul{
     flex-wrap: wrap;
 }
 ul li .wp-submenu .content-submenu .submenu{
-    width: 75%;
+    width: 85%;
     display: flex;
     flex-wrap: wrap;
+    font-size: 13px;
 }
 ul li .wp-submenu .content-submenu .wp-product-banner{
-    width: 25%;
-    padding: 25px 15px;
+    width: 15%;
+    /*padding: 25px 15px;*/
 }
 .wp-submenu .content-submenu .submenu .wp-menu-parent{
     padding: 0 15px;
-    width: 33%;
-    margin-bottom: 18px;
-}
-.wp-menu-parent a.title-cat{
     color: #222;
     font-weight: 600;
     margin: 0;
+    width: 25%;
 }
 .wp-menu-parent a.title-cat:hover{
     color: #169fd8;
@@ -689,6 +688,10 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active{
     font-size: 15px;
     color: rgb(196, 78, 0);
     font-weight: 500;
+}
+
+.submenu-parent-mobile ul span i{
+    color: #888888;
 }
 .submenu-parent-mobile ul li a{
     padding: 5px 10px 5px 15px;

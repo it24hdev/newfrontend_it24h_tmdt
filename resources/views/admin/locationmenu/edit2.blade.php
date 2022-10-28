@@ -8,57 +8,53 @@
             <div class="form-group mb-4">
                 <label>Menu</label><br>
                  <select name="menu_location" class="form-control">   
+                     @foreach($Menus as $menu)
+                     <option value="{{$menu->id}}"  {{($menu_locations == $menu->id)  ? 'selected':''}}>{{$menu->name}}</option>
+                     @endforeach
                      @if($menu_locations == 0)
                      <option value="0" selected>Chọn Menu</option>
-                     @endif
-                     @foreach($Menus as $menu)
-                     <option value="{{$menu->id}}"  {{old('menu_location') == $menu->id  ? 'selected':false}}>{{$menu->name}}</option>
-                     @if($menu_locations != 0)
+                     @else
                      <option value="0">Chọn Menu</option>
                      @endif
-                     @endforeach
                  </select>
             </div>
             <div class="form-group mb-4">
                 <label>Sidebar</label><br>
                  <select name="sidebar_location" class="form-control">
-                     @if($sidebar_locations == 0)
-                     <option value="0" selected>Chọn Menu</option>
-                     @endif
-                     @foreach($Menus as $menu)
-                     <option value="{{$menu->id}}" {{old('sidebar_location') == $menu->id  ? 'selected':false}}>{{$menu->name}}</option>
-                     @if($sidebar_locations != 0)
-                     <option value="0">Chọn Menu</option>
-                     @endif
-                     @endforeach
+                    @foreach($Menus as $menu)
+                    <option value="{{$menu->id}}" {{($sidebar_locations == $menu->id) ? 'selected' : ''}}>{{$menu->name}}</option>
+                    @endforeach
+                    @if($sidebar_locations == 0)
+                    <option value="0" selected>Chọn Menu</option>
+                    @else
+                    <option value="0">Chọn Menu</option>
+                    @endif
                  </select>
             </div>
             <div class="form-group mb-4">
                 <label>Footer</label><br>
                  <select name="footer_location" class="form-control">
-                     @if($footer_locations == 0)
-                     <option value="0" selected>Chọn Menu</option>
-                     @endif
-                     @foreach($Menus as $menu)
-                     <option value="{{$menu->id}}" {{old('footer_location') == $menu->id  ? 'selected':false}}>{{$menu->name}}</option>
-                     @if($footer_locations != 0 )
-                     <option value="0">Chọn Menu</option>
-                     @endif
-                     @endforeach
+                    @foreach($Menus as $menu)
+                    <option value="{{$menu->id}}" {{($footer_locations == $menu->id)  ? 'selected': ''}}>{{$menu->name}}</option>
+                    @endforeach
+                    @if($footer_locations == 0)
+                    <option value="0" selected>Chọn Menu</option>
+                    @else
+                    <option value="0">Chọn Menu</option>
+                    @endif
                  </select>
             </div>
             <div class="form-group mb-4">
                 <label>Rightmenu</label><br>
                  <select name="rightmenu_location" class="form-control">
+                    @foreach($Menus as $menu)
+                    <option value="{{$menu->id}}" {{($rightmenu_locations == $menu->id)  ? 'selected':''}}>{{$menu->name}}</option>
+                    @endforeach
                     @if($rightmenu_locations == 0)
                     <option value="0" selected>Chọn Menu</option>
+                    @else
+                    <option value="0">Chọn Menu</option>
                     @endif
-                    @foreach($Menus as $menu)
-                    <option value="{{$menu->id}}" {{old('rightmenu_location') == $menu->id  ? 'selected':false}}>{{$menu->name}}</option>
-                    @if($rightmenu_locations != 0)
-                     <option value="0">Chọn Menu</option>
-                     @endif
-                    @endforeach
                  </select>
             </div>
 

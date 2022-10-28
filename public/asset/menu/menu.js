@@ -5,14 +5,20 @@ function getmenus() {
   var cont = 0;
   $('#menu-to-edit li').each(function(index) {
     var dept = 0;
+    var id_item = "";
+
     for (var i = 0; i < $('#menu-to-edit li').length; i++) {
       var n = $(this)
         .attr('class')
         .indexOf('menu-item-depth-' + i);
+
       if (n != -1) {
         dept = i;
       }
     }
+    var filter_value = $(this).find('.filter_value').val();
+    var filter_by    = $(this).find('.filter_by').val();
+
     var textoiner = $(this).find('.item-edit').text();
     var id = this.id.split('-');
     var textoexplotado = textoiner.split('|');
@@ -25,7 +31,9 @@ function getmenus() {
       depth: dept,
       id: id[2],
       parent: padre,
-      sort: cont
+      sort: cont,
+      filter_by: filter_by,
+      filter_value: filter_value,
     });
     cont++;
   });
@@ -164,6 +172,7 @@ function updateitem(id = 0) {
 
     var data = { arraydata: arr_data };
   }
+  
 
   $.ajax({
     data: data,

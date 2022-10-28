@@ -22,8 +22,9 @@ $(document).ready(function () {
             } else {
                 cmsURL = cmsURL + "&type=Files";
             }
-
+console.log(cmsURL);
             tinyMCE.activeEditor.windowManager.openUrl({
+
                 url : cmsURL,
                 title : 'Filemanager',
                 width : x * 0.8,

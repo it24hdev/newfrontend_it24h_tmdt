@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{asset('asset/lib/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/lib/fontawesomePro5/css/all.min.css')}}">
+    <link rel="stylesheet" href="/asset/lib/fontawesomePro5/css/all.min.css">
     <link rel="stylesheet" href="{{asset('asset/css/header-home.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/content-home.css')}}">
     @yield('css')
@@ -81,7 +81,6 @@
         <div id="messenger"><a href="https://m.me/106139498237028/" target="_blank"><i class="fab fa-facebook-messenger"></i></a></div>
     </div>
     <!-- javascript -->
-
     <script src="{{ asset('lib/jquery360.min.js') }}"></script>
     <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
@@ -104,9 +103,6 @@
                     return false;
                 }
                 $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
                     url: "{{route('user_login_ajax')}}",
                     data: data,
                     method: "POST",
@@ -167,30 +163,25 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#menucontent').hover(function() {
-                if(($("#menucontent").hasClass("loaded") == false)){
-
-                    $('.ajaxsubmenu').each(function() {
-                        var id = $(this).attr('get-id');
-                        var _token = $('meta[name="csrf-token"]').attr('content');
-                        var data = {
-                            id: id,
-                            _token: _token
-                        };
-                        $.ajax({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            url:"{{route('menucontent')}}",
-                            type:"post",
-                            dataType:"json",
-                            data: data,
-                            success: function (data) {
-                               $("#subid-"+ id).append(data);
-                            },
-                        })
-                    });
-                    $("#menucontent").addClass("loaded");
+            $('.menucontent').hover(function() {
+                if(($(this).hasClass("loaded") == false)){
+                    var id = $(this).find('.ajaxsubmenu').attr('get-id');
+                    console.log(id);
+                    var _token = $('meta[name="csrf-token"]').attr('content');
+                    var data = {
+                        id: id,
+                        _token: _token
+                    };
+                    $.ajax({
+                        url:"{{route('menucontent')}}",
+                        type:"post",
+                        dataType:"json",
+                        data: data,
+                        success: function (data) {
+                           $("#subid-"+ id).append(data);
+                        },
+                    })
+                    $(this).addClass("loaded");
                 }
             });
             $("#pills-2-tab").on("click", function() {

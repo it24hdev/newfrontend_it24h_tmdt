@@ -1,7 +1,6 @@
 @extends('admin.layouts.main')
 @section('category')
  <div class="content">
-
                 <h2 class="intro-y text-lg font-medium mt-10">
                    {{ $title}}
                 </h2>
@@ -13,14 +12,18 @@
             <div class="grid grid-cols-12 gap-x-5">
             <div class="col-span-12 md:col-span-6">
             <div class="form-group mb-4">
-                <label>Tên danh mục</label>
-                <input type="text" class="form-control" name='name' value="{{old('name') ?? $edit->name}}"  id="typinginput">
-               @error('name')<span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
+            <label>Mã</label>
+            <input type="text" class="form-control" name='ma' value="{{old('ma') ?? $edit->ma}}">
+               @error('ma')<span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
             </div>
             <div class="form-group mb-4">
+            <label>Tên danh mục</label>
+            <input type="text" class="form-control" name='name' value="{{old('name') ?? $edit->name}}"  id="typinginput">
+            @error('name') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
+            </div>
+            <div class="form-group mb-4" style="display:none;">
                 <label>Tên danh mục(ngoại ngữ)</label>
-                <input type="text" class="form-control" name='name2' value="{{old('name2') ?? $edit->name2}}" required>
-
+                <input type="text" class="form-control" name='name2' value="{{old('name2') ?? $edit->name2}}">
             </div>
             <div class="form-group mb-4">
                 <label>SLUG</label>
@@ -66,12 +69,6 @@
                 <label>Hiện danh sách sản phẩm lên trang chủ</label><br>
                  <input type="checkbox" class="form-check-switch" name='show_push_product' value="{{$edit->show_push_product == true ? '1' : '0'}}" {{$edit->show_push_product == true ? 'checked' : ' '}}>
             </div>
-            <div class="modal-footer">
-
-                <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
-
-                <input type="submit" class="btn btn-primary " value="Cập nhật">
-            </div>
             </div>
             <div class="col-span-12 md:col-span-6">
                 <label>Ảnh đại diện danh mục (<span class="italic">Danh mục cha</span>)</label><br>
@@ -113,13 +110,98 @@
                     </div>
                     </div>
                 </div>
-
             </div>
-
             </div>
-
-
+            <div class="grid grid-cols-12 gap-x-5">
+                <div class="col-span-12 md:col-span-6">
+                    <div class="form-group mb-4">
+                        <label>Danh mục thuộc tính</label>
+                        <select name="property" id="properties" class="tom-select w-full" multiple>
+                            {{-- <option value="0" selected>Chọn thuộc tính</option> --}}
+                            @foreach ($categoryproperty as $key => $value)
+                                <option value="{{$value->id}}" class="form-control">
+                                    {{ $value->name}}  ━━━ {{ $value->ma}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <input type="button" class="btn btn-primary" id="addproperty" value="Thêm">
+                </div>
+            </div>
+            <table  class="table table-report -mt-2">
+                <thead>
+                    <tr >
+                        <th class="text-center whitespace-nowrap">STT</th>
+                        <th class="text-center whitespace-nowrap">MÃ</th>
+                        <th class="text-center whitespace-nowrap">THUỘC TÍNH</th>
+                        <th class="text-center whitespace-nowrap">GIÁ TRỊ</th>
+                        {{-- <th class="text-center whitespace-nowrap">THỨ TỰ HIỂN THỊ</th> --}}
+                        <th class="text-center whitespace-nowrap">CHỨC NĂNG</th>
+                    </tr>
+                </thead>
+                <tbody id="addrowproperty">
+                    @foreach($categoryproperties_manages as $key => $value)
+                    <tr id="{{ $value->id }}">
+                        <td class="text-center">{{$key+1}}</td>
+                        <td class="text-center">{{$value->ma}}</td>
+                        <td class="text-center">{{$value->name}}</td>
+                        <td class="text-center"><a href="{{route('category_property.edit',$value->categoryproperties_id)}}">Quản lý giá trị</a></td>
+                        <td class="w-20">
+                            <div class="flex justify-center items-center">
+                                <a title="Xóa" data-toggle="modal"
+                                   data-value="{{$value->id}}"
+                                   data-target="#delete-confirmation-modal"
+                                   class="btn btn-danger py-1 px-2 btn-delete2"><i class="fa-solid fa-trash-can"style="padding: 1px"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            @include('admin.category.deleteproperties')
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
+                <input type="submit" class="btn btn-primary " value="Cập nhật">
+            </div>
     </form>
 </div>
 </div>
+@endsection
+@section('js2')
+ <script>
+    $(document).ready(function () {
+        $('#addproperty').on('click', function () {
+            var properties_id = $('#properties').val();
+            var category_id   = {{$edit->id}};
+            if(properties_id != 0){
+            var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    properties_id: properties_id,
+                    category_id: category_id,
+                    _token: _token
+                };
+                $.ajax({
+                    url: "{{ route('category.addproperty') }}",
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function(data) {
+                        $("#addrowproperty").append(data.html);
+                        var id = data.id;
+                        var url = "{{ route('category.edit', "cate_id") }}";
+                        url = url.replace("cate_id", id);
+                        window.location.href=url;
+                    }
+                });
+            }
+        });
+
+        $(document).on('click',".btn-delete2",function (e) {
+                e.preventDefault();
+                var id = $(this).attr('data-value');
+                $('#delete_id').val(id);
+        });
+    });
+</script>
 @endsection

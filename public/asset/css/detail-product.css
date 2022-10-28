@@ -671,10 +671,25 @@ ul.list-post li a .desc{
     background-color: #eee;
     border-radius: 5px;
 }
+
 .list-product-recommend li button{
     color: #222;
     font-size: 18px;
     font-weight: 500;
+}
+
+.warranty_flex{
+    display: flex;
+    padding-bottom: 15px;
+}
+
+.warranty{
+    background: #f5f5f5;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 3px 5px;
+    border-radius: 3px;
+    margin-right: 10px;
 }
 @media (min-width:576px){
     .product-detail-left .product-detail-img{

@@ -12,7 +12,9 @@ class CategoryRelationship extends Model
 
     protected $fillable = [
         'cat_id',
-        'post_id'
+        'post_id',
+        'product_code',
+        'product_id',
     ];
 
     public function getPosts(){

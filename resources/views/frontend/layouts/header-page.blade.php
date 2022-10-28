@@ -57,7 +57,7 @@
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @foreach($Sidebars as $Sidebar)
                                                 @if($Sidebar->parent==0)
-                                                    <li><a class="dropdown-item" href="{{route('product_cat', $Sidebar->link)}}">{{$Sidebar->label}}</a></li>
+                                                    <li><a class="dropdown-item" href="{!! $Sidebar->link !!}">{{$Sidebar->label}}</a></li>
                                                 @endif
                                             @endforeach
                                         </ul>
@@ -129,103 +129,13 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content " id="menucontent" style="visibility: hidden; transform: translateY(10px); opacity: 0;">
+                        <div class="vertical-menu-content " style="visibility: hidden; transform: translateY(10px); opacity: 0;">
                             <nav>
-                                {{-- <ul class="menu-cat">
-                                    @foreach($Sidebars  as $Sidebar)
-                                    @if($Sidebar->parent==0)
-                                    <li>
-                                        
-                                        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu">{!! $Sidebar->icon !!}</span>
-                                            {{$Sidebar->label}}
-                                             @if(count($Sidebar->childs))
-                                             <span class="icon-right"><i class="far fa-angle-right"></i></span>
-                                             @endif
-                                        </a>
-                                        <div class="wp-submenu">
-                                            <div class="content-submenu">
-                                                @if(count($Sidebar->childs))
-                                                <div class="submenu">
-                                                    @foreach($Sidebars as $subsidebar)
-                                                    @if($subsidebar->parent == $Sidebar->id)
-
-                                                    <div class="wp-menu-parent">
-                                                        <span class="title-cat">{{$subsidebar->label}}</span>
-                                                        @if(count($subsidebar->childs))
-                                                        <ul>
-                                                            @foreach($Sidebars as $subsidebar3)
-                                                              @if($subsidebar3->parent == $subsidebar->id)
-                                                            <li>
-                                                                <a href="{!! route('product_cat',  $subsidebar3->slug) !!}" class="cat-child">
-                                                                    <span>{{$subsidebar3->name}}</span>
-                                                                    @if(count($subsidebar3->childs))
-                                                                    <span class="next-right">
-                                                                        <i class="far fa-angle-right"></i>
-                                                                    </span>
-                                                                    @endif
-                                                                </a>
-                                                                @if(count($subsidebar3->childs))
-                                                                @include('frontend.subsidebar',['childs' => $subsidebar3->childs])
-                                                                @endif
-                                                            </li>
-                                                            @endif
-                                                            @endforeach
-                                                        </ul>
-                                                        @endif
-                                                    </div>
-                                                    @endif
-                                                    @endforeach
-                                                </div>
-                                                @endif
-                                                <div class="wp-product-banner">
-                                                    <div class="wp-product">
-                                                        <a href="">
-                                                            <div class="thumb">
-                                                                <img src="/asset/images/l-04_2.jpg" alt="">
-                                                                <span class="sale">Sale</span>
-                                                                <span class="new">New</span>
-                                                            </div>
-                                                            <div class="desc">
-                                                                <div class="name">Laptop gaming MSI</div>
-                                                                <div class="rating2">
-                                                                    <div class="rating-upper" style="width: 80%">
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                    </div>
-                                                                    <div class="rating-lower">
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="price-old">
-                                                                    25.990.000 đ
-                                                                </div>
-                                                                <div class="price-new">
-                                                                    22.890.000 đ
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </li>
-                                    @endif
-                                    @endforeach
-                                </ul> --}}
-
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
                                     @if($Sidebar->parent==0)
-                                    <li>
-                                        <a href="{!! route('product_cat',  $Sidebar->link) !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
+                                    <li class="menucontent">
+                                        <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
                                             {{$Sidebar->label}}
                                              @if(count($Sidebar->childs))
                                              <span class="icon-right"><i class="far fa-angle-right"></i></span>

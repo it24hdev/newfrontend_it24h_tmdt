@@ -268,6 +268,12 @@
                         </a>
                     </li>
                 @endcan
+                    <li>
+                        <a href="{{ route('category_property.index') }}" class="menu">
+                            <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="menu__title"> Thuộc tính sản phẩm</div>
+                        </a>
+                    </li>
             </ul>
         </li>
          

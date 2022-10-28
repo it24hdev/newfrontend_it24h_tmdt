@@ -15,16 +15,17 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('name',300)->unique();
-            $table->string('slug',300)->unique();
-            $table->unsignedBigInteger('price')->nullable();
-            $table->unsignedBigInteger('quantity')->nullable();
-            $table->unsignedBigInteger('user_id');
-            $table->string('thumb',300)->default('no-image.jpg')->nullable();
-            $table->text('image')->default('no-image.jpg')->nullable();
+            $table->string('ma');
+            $table->string('name',300);
+            $table->string('slug',300);
+            $table->unsignedBigInteger('price')->default(0)->nullable();
+            $table->unsignedBigInteger('quantity')->default(0)->nullable();
+            $table->unsignedBigInteger('user_id')->default(1);
+            $table->string('thumb',300)->default('no-images.jpg')->nullable();
+            $table->text('image')->default('no-images.jpg')->nullable();
             $table->longText('content')->nullable();
             $table->longText('short_content')->nullable();
-            $table->integer('status')->default(0);
+            $table->integer('status')->default(1);
             $table->string('cat_id')->nullable();
             $table->unsignedBigInteger('brand')->nullable();
             $table->string('unit',32)->nullable();
@@ -44,6 +45,9 @@ return new class extends Migration
             $table->text('attr')->nullable();
             $table->string('still_stock')->nullable();
             $table->string('youtube')->nullable();
+            $table->string('detailproperty')->nullable();
+            $table->integer('tax')->nullable();
+            $table->string('warranty')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

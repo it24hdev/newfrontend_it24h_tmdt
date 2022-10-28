@@ -1658,7 +1658,8 @@ var wpNavMenu;
                     if (l["menu-item-parent-id"] === t) break;
                     j.shiftHorizontally(1)
             }
-            c.focus(), b.registerChange(), b.refreshKeyboardAccessibility(), b.refreshAdvancedAccessibility()
+            c.focus(), b.refreshKeyboardAccessibility(), b.refreshAdvancedAccessibility()
+             // b.registerChange(),
         },
         initAccessibility: function() {
             var c = a("#menu-to-edit");
@@ -1882,11 +1883,11 @@ var wpNavMenu;
             a(c).hideAdvancedMenuItemFields().prependTo(b.targetList), b.refreshKeyboardAccessibility(), b.refreshAdvancedAccessibility()
         },
         attachUnsavedChangesListener: function() {
-            a("#menu-management input, #menu-management select, #menu-management, #menu-management textarea, .menu-location-menus select").change(function() {
-                b.registerChange()
-            }), 0 !== a("#menu-to-edit").length || 0 !== a(".menu-location-menus select").length ? window.onbeforeunload = function() {
+        //     a("#menu-management input, #menu-management select, #menu-management, #menu-management textarea, .menu-location-menus select").change(function() {
+        //         b.registerChange()
+        //     }), 0 !== a("#menu-to-edit").length || 0 !== a(".menu-location-menus select").length ? window.onbeforeunload = function() {
              
-            } : a("#menu-settings-column").find("input,select").end().find("a").attr("href", "#").unbind("click")
+        //     } : a("#menu-settings-column").find("input,select").end().find("a").attr("href", "#").unbind("click")
         },
         registerChange: function() {
             b.menusChanged = !0

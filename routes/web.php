@@ -23,7 +23,8 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Recruit\RecruitController;
 use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
-
+use App\Http\Controllers\Categoryproperty\Category_propertyController;
+ 
 
 Auth::routes();
 Route::get('/clear', function() {
@@ -35,7 +36,7 @@ Artisan::call('config:cache');
 Artisan::call('view:clear');
 return "Cleared!";
 });
-/* ========== ADMIN =========== */
+/* ========== ADMIN ========== */
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
         \UniSharp\LaravelFilemanager\Lfm::routes();
@@ -54,6 +55,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/createnewmenu', [MenuController::class, 'createnewmenu'])->name('hcreatenewmenu');
     Route::post('/generatemenucontrol', [MenuController::class, 'generatemenucontrol'])->name('hgeneratemenucontrol');
     Route::post('/updateitem', [MenuController::class, 'updateitem'])->name('hupdateitem');
+
+    Route::get('/menu_export/{menu}',[MenuController::class, 'export'])->name('menu.export');
+    Route::post('/menu_import/{menu}', [MenuController::class, 'import'])->name('menu.import');
     });
 
     /*----------- USER ----------*/
@@ -154,6 +158,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/store-tag-event',  [ProductsController::class, 'store_tag_event'])->name('products.store_tag-event');
         Route::post('/update-tag-event',  [ProductsController::class, 'update_tag_event'])->name('products.update_tag-event');
         Route::post('/delete-tag-event',  [ProductsController::class, 'delete_tag_event'])->name('products.delete_tag-event');
+        Route::get('/productsexport',[ProductsController::class, 'export'])->name('products.export');
+        Route::post('/productsimport', [ProductsController::class, 'import'])->name('products.import');
+        Route::get('/productsproperties/{id}', [ProductsController::class, 'productsproperties'])->name('productsproperties.edit');
+        Route::post('/saveproductsproperties/{id}', [ProductsController::class, 'saveproductsproperties'])->name('saveproductsproperties');
+        Route::get('/brandexport',[ProductsController::class, 'brandexport'])->name('brand.export');
+        Route::post('/brandimport', [ProductsController::class, 'brandimport'])->name('brand.import');
     });
 
 
@@ -192,7 +202,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/delete', [CategoryController::class, 'destroy'])->name('category.delete');
         Route::post('/getchild', [CategoryController::class, 'getchild'])->name('category.getchild');
+        Route::get('/categoryexport',[CategoryController::class, 'export'])->name('category.export');
+        Route::post('/categoryimport', [CategoryController::class, 'import'])->name('category.import');
+        Route::post('/addproperty', [CategoryController::class, 'addproperty'])->name('category.addproperty');
+        Route::post('/deleteproperty', [CategoryController::class, 'destroyproperty'])->name('categorypropertymanages.delete');
     });
+
     /* ---------- Danh muc bai viet --------------- */
     Route::prefix('admin/categorypost')->group(function () {
         Route::get('/', [CategorypostController::class, 'index'])->name('categorypost.index');
@@ -203,6 +218,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/{id}', [CategorypostController::class, 'edit'])->name('categorypost.edit');
         Route::post('/delete', [CategorypostController::class, 'destroy'])->name('categorypost.delete');
         Route::post('/getchildpost', [CategorypostController::class, 'getchild'])->name('category.getchildpost');
+        Route::get('/categorypostexport',[CategorypostController::class, 'export'])->name('categorypost.export');
+        Route::post('/categorypostimport', [CategorypostController::class, 'import'])->name('categorypost.import');
     });
 
      /* ---------- Danh muc vi tri menu --------------- */
@@ -222,11 +239,31 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/delete', [RecruitController::class, 'destroy'])->name('recruit.delete');
     });
 
-    
-
     Route::prefix('admin/recruit_register')->group(function () {
         Route::get('/', [RecruitRegisterController::class, 'index'])->name('recruit_register.index');
         Route::post('/update', [RecruitRegisterController::class, 'update'])->name('recruit_register.update');
+    });
+
+     /* ---------- Danh muc thuoc tinh --------------- */
+    Route::prefix('admin/category_property')->group(function () {
+        Route::get('/', [Category_propertyController::class, 'index'])->name('category_property.index');
+        Route::get('/create', [Category_propertyController::class, 'create'])->name('category_property.create');
+        Route::post('/create', [Category_propertyController::class, 'store'])->name('category_property.store');
+        Route::post('/update/{id}',[Category_propertyController::class, 'update'])->name('category_property.update');
+        Route::get('/edit/{id}', [Category_propertyController::class, 'edit'])->name('category_property.edit');
+        Route::post('/delete', [Category_propertyController::class, 'destroy'])->name('category_property.delete');
+        Route::post('/import', [Category_propertyController::class, 'import'])->name('category_property.import');
+        Route::get('/export', [Category_propertyController::class, 'export'])->name('category_property.export');
+
+        Route::get('/createdetail/{id}', [Category_propertyController::class, 'createdetail'])->name('detailproperty.create');
+
+        Route::post('/createdetail/{id}', [Category_propertyController::class, 'storedetail'])->name('detailproperty.store');
+
+        Route::get('/editdetail/{id}/{id_categoryproperty}', [Category_propertyController::class, 'editdetail'])->name('detailproperty.edit'); 
+
+        Route::post('/updatedetail/{id}',[Category_propertyController::class, 'updatedetail'])->name('detailproperty.update');
+
+        Route::post('/deletedetail', [Category_propertyController::class, 'destroydetail'])->name('detailproperty.delete');
     });
 
 });
@@ -278,7 +315,7 @@ Route::post('/new', [HomeController::class, 'getnewProduct'])->name('getnewProdu
 Route::post('/footer', [HomeController::class, 'loadfooter'])->name('loadfooter');
 Route::post('/loadsliderbottom', [HomeController::class, 'loadsliderbottom'])->name('loadsliderbottom');
 
-Route::get('/san-pham', [HomeController::class, 'list_product'])->name('list_product');
+Route::get('/san-pham', [HomeController::class, 'product_cat'])->name('list_product');
 Route::get('/san-pham/{slug}', [HomeController::class, 'product_cat'])->name('product_cat');
 Route::get('/bai-viet', [HomeController::class, 'categoryBlogs'])->name('categoryBlogs');
 Route::get('/bai-viet/{slug}', [HomeController::class, 'categoryBlog'])->name('categoryBlog');
@@ -303,6 +340,7 @@ Route::get('/google/callback', [FrontendUserController::class, 'callback_google'
 
 Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('about_us');
 Route::post('/menucontent', [HomeController::class, 'menucontent'])->name('menucontent');
+Route::post('/menucontent2', [HomeController::class, 'menucontent2'])->name('menucontent2');
 
 
 

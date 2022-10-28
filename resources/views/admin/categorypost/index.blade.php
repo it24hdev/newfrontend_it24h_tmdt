@@ -35,7 +35,7 @@
                                         <option value="50" {{request()->input('limit') =='50' ? 'selected' : ''}}>50</option>
                                     </select>
                                     <select id="orderby" name="orderby" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3" onchange="this.form.submit()">
-                                        <option value="id" {{request()->input('orderby') =='id' ? 'selected' : ''}} >STT</option>
+                                        <option value="ma" {{request()->input('orderby') =='ma' ? 'selected' : ''}} >STT</option>
                                         <option value="name" {{request()->input('orderby') =='name' ? 'selected' : ''}} >Tên danh mục</option>
                                         <option value="parent_id" {{request()->input('orderby') =='parent_id' ? 'selected' : ''}}>Danh mục cha</option>
                                         <option value="user_id" {{request()->input('orderby') =='user_id' ? 'selected' : ''}}>Người dùng</option>
@@ -53,6 +53,15 @@
                                 </form>
                         </div>
                     </div>
+                    <div style=" margin-top: 20px;">
+                    <form action="{{ route('categorypost.import') }}" method="POST" enctype="multipart/form-data" style="
+                display: contents;">
+                        @csrf
+                        <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 250px; border-width: 0;">
+                        <button type="submit" class="btn btn-success" >Import Data</button>
+                    </form>
+                    <a class="btn btn-warning" href="{{ route('categorypost.export') }}">Export Data</a>
+                    </div>
 
                 <div id="searchs">
                     <!-- BEGIN: Data List -->
@@ -61,7 +70,7 @@
                         <table class="table table-report -mt-2">
                             <thead>
                                 <tr >
-                                    <th class="whitespace-nowrap text-center">STT</th>
+                                    <th class="whitespace-nowrap text-center">MÃ</th>
                                     <th class="whitespace-nowrap">TÊN DANH MỤC</th>
                                     <th class="text-center whitespace-nowrap ">SLUG</th>
                                     <th class="text-center whitespace-nowrap ">DANH MỤC CHA</th>
@@ -75,33 +84,18 @@
                                 @foreach($Category as $key => $list)
                                 @if($list->parent_id == 0)
                                 <tr class=" overflow-x-auto scrollbar-hidden get_child" id="{{ $list->id }}">
-                                    <td class="text-center font-medium ">
-                                        @php
-                                            $str ='';
-                                            for ($i=0; $i < $list->level; $i++) {
-                                                echo $str;
-                                                $str.='&nbsp';
-                                            }
-                                        @endphp
-                                        {{ $list->id }}
+                                    <td class="text-left font-medium ">
+                                        {{ $list->ma }}
                                     </td>
-                                    <td class="">
-                                         @php
-                                            $str ='';
-                                            for ($i=0; $i < $list->level; $i++) {
-                                                echo $str;
-                                                $str.='━';
-                                            }
-                                        @endphp
-                                        {{$list->name}} 
+                                    <td class="category_name">
+                                            {{$list->name}}
                                     </td>
                                     <td class="overflow-hidden ">{{$list->slug}}</td>
                                     <td class="text-center">
                                         @if ($list->cat_parent)
-                                        {{$list->cat_parent->name}}
+                                            {{$list->cat_parent->name}}
                                         @endif
                                     </td>
-                                    {{-- <td class="w-30 text-center">{{$list->user_id}}</td> --}}
                                     <td style="display:none;">{{$status = $list->status}}</td>
                                     <td>
                                         @if($status == '1')
@@ -176,6 +170,12 @@
                         }
                     }
                 });
+            });
+        $(document).on('click',".btn-delete2",function (e) {
+            e.preventDefault();
+            var id = $(this).attr('data-value');
+            console.log(id);
+            $('#delete_id').val(id);
         });
        });
     </script>

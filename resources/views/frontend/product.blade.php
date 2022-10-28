@@ -24,7 +24,7 @@
                         @if (!empty($cat))
                             <a href="{{route('user')}}">@lang('lang.Home')</a><i class="fas fa-angle-right mx-1"></i>
                             <a href="{{route('list_product')}}">@lang('lang.Shop')</a><i class="fas fa-angle-right mx-1"></i>
-                            <a href="{{route('product_cat', $cat->slug)}}">{{$cat->name}}</a>
+                            <a href="{{route('product_cat',[ 'slug' => $cat->slug])}}">{{$cat->name}}</a>
                         @else
                             <a href="{{route('user')}}">@lang('lang.Home')</a><i class="fas fa-angle-right mx-1"></i>
                             <a href="{{route('list_product')}}">@lang('lang.Shop')</a>
@@ -44,14 +44,14 @@
                                 @if (count($categories) > 0)
                                     @foreach ($categories as $item)
                                         <li class="cat-item">
-                                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                                            <a href="{{route('product_cat', ['slug' => $item->slug])}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
                                             <span class="count">({{$item->get_product_by_cat()->count()}})</span>
                                         </li>
                                     @endforeach
                                 @else
                                     @foreach ($cat_parent as $item)
                                         <li class="cat-item">
-                                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                                            <a href="{{route('product_cat', ['slug' => $item->slug])}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
                                             <span class="count">({{$item->get_product_by_cat()->count()}})</span>
                                         </li>
                                     @endforeach
@@ -137,173 +137,30 @@
                         </div>
 
                         <!-- ==== Foreach bộ lọc -->
+                        @if(!empty($attributes))
+                        @foreach($attributes as $key => $value)
                         <div class="categories-product-sidebar">
                             <div class="header-sidebar">
-                                <span>Thương hiệu</span>
+                                <span>{{$value->name}}</span>
                             </div>
                             <ul class="list-categories list-categories-brand">
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Apple
+                                @foreach($value->detailproperty as $property)
+                                <li class="cat-item" onclick="location.href='{{$property->fullurl}}'">
+                                     <a href="{{$property->fullurl}}">
+                                     @if($property->attr_checked == 1)
+                                        <i class="far fa-check-square"></i>
+                                        @else
+                                         <i class="far fa-square"></i> 
+                                        @endif
+                                        {{$property->name}}
                                     </a>
-                                    <span class="count">(14)</span>
+                                    </input>
                                 </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Asano
-                                    </a>
-                                    <span class="count">(2)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Digital
-                                    </a>
-                                    <span class="count">(8)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Digitechno
-                                    </a>
-                                    <span class="count">(10)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Electronic
-                                    </a>
-                                    <span class="count">(3)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Hightech
-                                    </a>
-                                    <span class="count">(16)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Sony
-                                    </a>
-                                    <span class="count">(2)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Samsung
-                                    </a>
-                                    <span class="count">(2)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Technolo
-                                    </a>
-                                    <span class="count">(2)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Oppo
-                                    </a>
-                                    <span class="count">(0)</span>
-                                </li>
+                                @endforeach
                             </ul>
                         </div>
-                        <div class="categories-product-sidebar">
-                            <div class="header-sidebar">
-                                <span>CPU</span>
-                            </div>
-                            <ul class="list-categories">
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Intel Core i3
-                                    </a>
-                                    <span class="count">(14)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Intel Core i5
-                                    </a>
-                                    <span class="count">(2)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Intel Core i7
-                                    </a>
-                                    <span class="count">(8)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Intel Core i9
-                                    </a>
-                                    <span class="count">(10)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> AMD Ryzen 5
-                                    </a>
-                                    <span class="count">(3)</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="categories-product-sidebar">
-                            <div class="header-sidebar">
-                                <span>Ổ cứng</span>
-                            </div>
-                            <ul class="list-categories">
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Chỉ có SSD
-                                    </a>
-                                    <span class="count">(14)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> Chỉ có HDD
-                                    </a>
-                                    <span class="count">(2)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> SSD + HDD
-                                    </a>
-                                    <span class="count">(8)</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="categories-product-sidebar">
-                            <div class="header-sidebar">
-                                <span>Ram</span>
-                            </div>
-                            <ul class="list-categories">
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> 4GB
-                                    </a>
-                                    <span class="count">(14)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> 8GB
-                                    </a>
-                                    <span class="count">(2)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> 16GB
-                                    </a>
-                                    <span class="count">(8)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> 32GB
-                                    </a>
-                                    <span class="count">(10)</span>
-                                </li>
-                                <li class="cat-item">
-                                    <a href="#">
-                                        <i class="far fa-square"></i> 64GB
-                                    </a>
-                                    <span class="count">(3)</span>
-                                </li>
-                            </ul>
-                        </div>
-
+                        @endforeach
+                        @endif
                         <div class="product-tag-sidebar">
                             <div class="header-sidebar">
 
@@ -376,7 +233,7 @@
                                                             @else
                                                                 <p class="event" style="min-height: 20px;"></p>
                                                             @endif
-                                                            <p class="code">Mã: {{$item->id}}</p>
+                                                            <p class="code">Mã: {{$item->ma}}</p>
                                                         </div>
                                                         <div class="name">
                                                             <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>
@@ -422,9 +279,12 @@
                                                             </div>
                                                         </div>
                                                         <div class="detail-bottom">
-                                                            @if (!empty($item->still_stock))
-                                                                <div class="qty" style="color: #01aa42;
-                                                                background-color: #dbf8e1;">{{$item->still_stock}}</div>
+                                                           @if (($item->quantity - $item->sold > 0))
+                                                                <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng
+                                                                </div>
+                                                            @else
+                                                                 <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng
+                                                                </div>
                                                             @endif
                                                             <div class="action">
                                                                 <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>
@@ -463,7 +323,7 @@
                 <ul class="list-categories">
                     @foreach ($categories as $item)
                         <li class="cat-item">
-                            <a href="{{route('product_cat', $item->slug)}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
+                            <a href="{{route('product_cat',['slug' =>  $item->slug])}}" style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
                             <span class="count">({{$item->get_product_by_cat()->count()}})</span>
                         </li>
                     @endforeach
@@ -552,142 +412,13 @@
                 </div>
                 <ul class="list-categories list-categories-brand">
                     <li class="cat-item">
-                        <a href="#">
+                        <a href="{{-- {{ request()->fullUrlWithQuery(['sort' => 'Z-A']) }} --}}">
                             <i class="far fa-square"></i> Apple
                         </a>
                         <span class="count">(14)</span>
                     </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Asano
-                        </a>
-                        <span class="count">(2)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Digital
-                        </a>
-                        <span class="count">(8)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Digitechno
-                        </a>
-                        <span class="count">(10)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Electronic
-                        </a>
-                        <span class="count">(3)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Hightech
-                        </a>
-                        <span class="count">(16)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Sony
-                        </a>
-                        <span class="count">(2)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Samsung
-                        </a>
-                        <span class="count">(2)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Technolo
-                        </a>
-                        <span class="count">(2)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Oppo
-                        </a>
-                        <span class="count">(0)</span>
-                    </li>
                 </ul>
             </div>
-            <div class="categories-product-sidebar">
-                <div class="header-sidebar">
-                    <span>CPU</span>
-                </div>
-                <ul class="list-categories">
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i3
-                        </a>
-                        <span class="count">(14)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i5
-                        </a>
-                        <span class="count">(2)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i7
-                        </a>
-                        <span class="count">(8)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i9
-                        </a>
-                        <span class="count">(10)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> AMD Ryzen 5
-                        </a>
-                        <span class="count">(3)</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="categories-product-sidebar">
-                <div class="header-sidebar">
-                    <span>CPU</span>
-                </div>
-                <ul class="list-categories">
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i3
-                        </a>
-                        <span class="count">(14)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i5
-                        </a>
-                        <span class="count">(2)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i7
-                        </a>
-                        <span class="count">(8)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> Intel Core i9
-                        </a>
-                        <span class="count">(10)</span>
-                    </li>
-                    <li class="cat-item">
-                        <a href="#">
-                            <i class="far fa-square"></i> AMD Ryzen 5
-                        </a>
-                        <span class="count">(3)</span>
-                    </li>
-                </ul>
-            </div>
-
 
             <div class="product-tag-sidebar">
                 <div class="header-sidebar">
@@ -717,6 +448,16 @@
 <script>
     $(document).ready(function(){
             //Add to Cart
+
+         /*  var sPageURL = window.location.search.substring(1);
+            var sURLVariables = sPageURL.split('&');
+            for (var i = 0; i < sURLVariables.length; i++)
+            {
+                var sParameterName = sURLVariables[i].split('=');
+           
+            }
+
+            console.log(sParameterName);*/
 
             var mess = document.getElementById('message_add_cart').innerHTML;
             add_cart = function(id){

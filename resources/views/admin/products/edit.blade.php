@@ -8,6 +8,7 @@
     {{ $title }}
 </h2>
 <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
+    <a class="btn btn-primary shadow-md mr-2" href="{{ route('productsproperties.edit',$edit->id) }}">Thuộc tính sản phẩm</a>
     @can('viewAny', App\Models\Products::class)
     <a class="btn btn-primary shadow-md mr-2" href="{{ route('products.index') }}">Danh sách sản phẩm</a>
     @endcan
@@ -20,13 +21,19 @@
             id="form-post">
             <div class="intro-y box p-5">
                 <div>
+                    <label for="crud-form-z" class="form-label">Mã(<span
+                            class="text-red-600">*</span>)</label>
+                    <input id="crud-form-z" type="text" name="ma" value="{{ old('ma') ?? $edit->ma }}"
+                        class="form-control w-full" required>
+                    @error('ma')
+                        <span style="color:red">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div>
                     <label for="crud-form-1" class="form-label">Tên sản phẩm(<span
                             class="text-red-600">*</span>)</label>
                     <input id="crud-form-1" type="text" name="name" value="{{ old('name') ?? $edit->name }}"
                         class="form-control w-full" required>
-                    @error('name')
-                        <span style="color:red">{{ $message }}</span>
-                    @enderror
                 </div>
                 <div class="form-group mb-3">
                     <label>Trạng thái</label><br>
@@ -39,7 +46,7 @@
                     <div class="px-4 pb-4 flex items-center cursor-pointer relative">
                         <i data-feather="image" class="w-4 h-4 mr-2"></i> <span
                             class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
-                        <input name='thumb' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0" id="fileupload2" />
+                        <input name='thumb' type="file" class="top-0 left-0 absolute opacity-0" id="fileupload2" />
                     </div>
                     <div class="border-2 border-dashed dark:border-dark-5 rounded-md p-2">
                     <div class="m-2" id="dvPreview2">
@@ -279,11 +286,11 @@
                                 id="year" value="{{ $edit->youtube }}" placeholder="Nhập link video sản phẩm">
                         </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3" style="display:none;">
                         <div class="mt-3">
                             <label for="" class="form-label">Tình trạng sản phẩm</label>
                             <input type="text" name="still_stock" class="form-control w-56 block mx-auto"
-                                id="year" value="{{ $edit->still_stock }}" placeholder="VD: Còn hàng" required>
+                                id="year" value="{{ $edit->still_stock }}" placeholder="VD: Còn hàng">
                         </div>
                     </div>
                 </div>
@@ -363,12 +370,21 @@
         });
 
         $('#price').on('keyup',  function(){
-        const giaban= this.value;
-        const percent  = document.getElementById('onsale').value;
-        const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
-        const price_onsale = giaban1 - giaban1*percent/100;
-        document.getElementById('price_onsale').value = new Intl.NumberFormat('vi-VN').format(price_onsale);
-        });
+            const giaban= this.value;
+            const percent  = document.getElementById('onsale').value;
+            const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
+            const price_onsale = giaban1 - giaban1*percent/100;
+            document.getElementById('price_onsale').value = new Intl.NumberFormat('vi-VN').format(price_onsale);
+            });
+
+            $('#price_onsale').on('keyup',  function(){
+            const giadagiam= this.value;
+            const giaban  = document.getElementById('price').value;
+            const giaban1 =  giaban.replace(/[^a-zA-Z0-9 ]/g, '');
+            const giadagiam1 =  giadagiam.replace(/[^a-zA-Z0-9 ]/g, '');
+            const onsale = parseInt(100-giadagiam1/giaban1*100);
+            document.getElementById('onsale').value = onsale;
+            });
     });
 </script>
 @endsection

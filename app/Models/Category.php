@@ -11,6 +11,7 @@ class Category extends Model
     use SoftDeletes;
     protected $fillable = [
         'id',
+        'ma',
         'name',
         'name2',
         'slug',
@@ -31,13 +32,16 @@ class Category extends Model
     {
         if (count($data)>0) {
             foreach ($data as $key => $value) {
-                // code...
+                // dd($value->parent_id);
                 if ($value->parent_id==$parents) {
-                    // code...
+
+
                     $value->level=$level;
                     $listcategory[]=$value;
                     unset($data[$key]);
                     $parent = $value->id;
+
+
                     self::recursive($data, $parent, $level + 1, $listcategory);
 
                 }
@@ -91,14 +95,7 @@ class Category extends Model
         }
         return $list_id;
     }
-    // public function get_list_product_by_cat(){
-    //     $db = \collect();
-    //     $list_id = \collect();
-    //     $db[] = $this->product;
-    //     $this->get_product_recursive($this, $db);
-    //     $products = $db->collapse()->unique('id');
-    //     return $products;
-    // }
+
     public function get_list_product_by_cat(){
         $list_id = $this->get_product_by_cat();
         $products = Products::where('status', 1)->whereIn('id', $list_id)->orderBy('id', 'DESC')->limit(10)->get();

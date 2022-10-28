@@ -7,8 +7,14 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Categoryproperty;
 use App\Http\Controllers\laravelmenu\src\Models\Menus;
 use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\MenuExport;
+use App\Imports\MenuImport;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
@@ -18,9 +24,8 @@ class MenuController extends Controller
             \session(['module_active' => 'menu', 'active' => 'Menu']);
             return $next($request);
         });
+        ini_set('max_execution_time', 1800);
     }
-
-
     public function index(Request $request)
     {
         $menu = new Menus();
@@ -35,12 +40,10 @@ class MenuController extends Controller
                         ->where('status',1)
                         ->where('taxonomy', 1)
                         ->get();
-
-
         if ((request()->has("action") && empty(request()->input("menu"))) || request()->input("menu") == '0') {
             return view('admin.menu.menu')->with("menulist" , $menulist)->with("category",$category);
-        } else {
-
+        }
+        else {
             $menu = Menus::find(request()->input("menu"));
             $menus = $menuitems->getall(request()->input("menu"));
 
@@ -50,12 +53,15 @@ class MenuController extends Controller
                 $data['role_pk'] = config('menu.roles_pk');
                 $data['role_title_field'] = config('menu.roles_title_field');
             }
-            return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost);
-            // ->with('category_lastes', $category_lastes)->with('categorypost_lastes', $categorypost_lastes);
+        $list_property  =  DB::table('detailproperties')->select('detailproperties.*','categories.id as cate_id')
+        ->leftjoin('categoryproperties', 'categoryproperties.id', '=', 'detailproperties.categoryproperties_id')
+        ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
+        ->leftjoin('categories','categories.id', '=', 'categoryproperties_manages.category_id')
+        ->get();
+
+        return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost)->with('list_property',$list_property);
         }
     }
-
-
     public function select($name = "menu", $menulist = array())
     {
         $html = '<select name="' . $name . '">';
@@ -71,14 +77,6 @@ class MenuController extends Controller
         return $html;
     }
 
-
-    /**
-     * Returns empty array if menu not found now.
-     * Thanks @sovichet
-     *
-     * @param $name
-     * @return array
-     */
     public static function getByName($name)
     {
         $menu = Menus::byName($name);
@@ -151,11 +149,10 @@ class MenuController extends Controller
     public function updateitem()
     {
         $arraydata = request()->input("arraydata");
+
         if (is_array($arraydata)) {
             foreach ($arraydata as $value) {
-               
                 $menuitem = MenuItems::find($value['id']);
-
                 $menuitem->label = $value['label'];
                 $menuitem->link  = $value['link'];
                 $menuitem->class = $value['class'];
@@ -164,11 +161,8 @@ class MenuController extends Controller
                 }
                 $menuitem->save();
             }
-            
         } else {
             $menuitem = MenuItems::find(request()->input("id"));
-
-
             $menuitem->label = request()->input("label");
             $menuitem->link = request()->input("url");
             $menuitem->class = request()->input("clases");
@@ -184,9 +178,11 @@ class MenuController extends Controller
         $menuitem = new MenuItems();
         $menuitem->label = request()->input("labelmenu");
         $menuitem->link = request()->input("linkmenu");
-        if (config('menu.use_roles')) {
+        $menuitem->ma = strtoupper(Str::random(6));
+         if (config('menu.use_roles')) {
             $menuitem->role_id = request()->input("rolemenu") ? request()->input("rolemenu")  : 0 ;
         }
+
         $menuitem->menu = request()->input("idmenu");
         $menuitem->sort = MenuItems::getNextSortRoot(request()->input("idmenu"));
         $menuitem->save();
@@ -194,14 +190,16 @@ class MenuController extends Controller
 
     public function addcustommenu2()
     {         
+         // dd(request()->input("idmenu"));
         foreach (request()->input('list') as $value) {
         $categories = Category::find($value);
         $menuitem   = new MenuItems();
         $menuitem->label = $categories->name;
-        $menuitem->link  = $categories->slug;
+        // $menuitem->link  = $categories->slug;
         $menuitem->class  = $categories->icon;
+        $menuitem->category_id  = $categories->id;
+        $menuitem->category_code  = $categories->ma;
         $menuitem->menu = request()->input("idmenu");
-        $menuitem->sort = MenuItems::getNextSortRoot(request()->input("idmenu"));
         $menuitem->save();
         }
     }
@@ -210,21 +208,36 @@ class MenuController extends Controller
     {
         $menu = Menus::find(request()->input("idmenu"));
         $menu->name = request()->input("menuname");
-
         $menu->save();
         if (is_array(request()->input("arraydata"))) {
             foreach (request()->input("arraydata") as $value) {
-                $menuitem = MenuItems::find($value["id"]);
-                $menuitem->parent = $value["parent"];
-                $menuitem->sort = $value["sort"];
-                $menuitem->depth = $value["depth"];
-                if (config('menu.use_roles')) {
-                    $menuitem->role_id = request()->input("role_id");
-                }
-                $menuitem->save();
+                if(!empty($value["id"])){
+                    $menuitem = MenuItems::find($value["id"]);
+                    $menuitem->parent = $value["parent"];
+                    $menuitem->sort = $value["sort"];
+                    $menuitem->depth = $value["depth"];
+                    $menuitem->filter_by = $value["filter_by"]; 
+                    $menuitem->filter_value = $value["filter_value"]; 
+                    if (config('menu.use_roles')) {
+                        $menuitem->role_id = request()->input("role_id");
+                    }
+                    $menuitem->save();
+                }                
             }
         }
         echo json_encode(array("resp" => 1));
-
     }
+
+    public function export($menu) 
+    {
+        return Excel::download(new MenuExport($menu), 'Menu.xlsx');
+    }
+
+    public function import($menu) 
+    {
+        if(!empty(request()->file('file')))
+        Excel::import(new MenuImport($menu),request()->file('file')); 
+        return back();
+    }
+
 }

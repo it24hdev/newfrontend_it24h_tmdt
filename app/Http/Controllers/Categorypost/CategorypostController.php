@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Categorypost;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Exports\CategorypostExport;
+use App\Imports\CategorypostImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 use Response;
 use Redirect;
@@ -17,6 +21,7 @@ class CategorypostController extends Controller
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1800);
         $this->middleware(function ($request, $next) {
             \session(['module_active' => 'post', 'active' => 'Bài viết']);
             return $next($request);
@@ -33,17 +38,18 @@ class CategorypostController extends Controller
         if($limit   ==null){$limit   =10;}
         if($sort    ==null){$sort    ='asc';}
         if($keywords==null){$keywords="";}
-        if($orderby ==null){$orderby ="id";}
+        if($orderby ==null){$orderby ="ma";}
+        $data = Category::where('taxonomy', '=', 1)
+        ->where('taxonomy', '=', 1)
+        ->where('name', 'like', '%' . $keywords . '%')
+        ->orderby($orderby,$sort)
+        ->Paginate($limit);
 
-        if($limit == 10 && $keywords=="" && $orderby== "id" && $sort =="asc"){
-            $Category = Category::where('taxonomy', '=', 1)->paginate($limit);}
-        else
-        {
-            $Category = Category::where('taxonomy', '=', 1)
-            ->where('name', 'like', '%' . $keywords . '%')->orderby($orderby,$sort)->Paginate($limit);
-        }
+        $listcategories = [];
+        Category::recursive($data, $parents = 0, $level = 1, $listcategories);
+
         return view('admin.categorypost.index',[
-                'Category' => $Category,
+                'Category' => $listcategories,
                 'title'    => 'Danh mục bài viết',
             ]);
     }
@@ -64,24 +70,24 @@ class CategorypostController extends Controller
         $name = $request->name;
         $slug = Str::slug($request->slug, '-');
         $request->validate([
-                'name' => 'required|max:255',
-                'slug' => 'required|max:255|unique:categories,slug,'.$slug,
+                'ma'   => 'required|max:255|unique:categories,ma',
+                'name' => 'required',
+                'slug' => 'required',
             ],
             [
+                'ma.required' => 'Mã danh mục không được phép bỏ trống',
+                'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
+                'ma.unique'   => 'Mã danh mục đã tồn tại trong hệ thống',
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
-                'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-                // 'name.unique'   => 'Tên danh mục đã tồn tại',
-                'slug.unique'   => 'Tên slug đã tồn tại',
-                'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
             ]);
         if (empty($request->slug))      {$request->slug      = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
-        // if (empty($request->user_id))   {$request->user_id   = 0;}
 
         $Category = [
+            'ma'        => $request->ma,
             'name'      => $request->name,
-            'name2'      => $request->name2,
+            'name2'     => $request->name2,
             'slug'      => $slug,
             'taxonomy'  => 1,
             'parent_id' => $request->parent_id,
@@ -126,26 +132,27 @@ class CategorypostController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $request->slug = Str::slug($request->slug, '-');
         $request->validate([
-                'name' => 'required|max:255',
-                'slug' => 'required|max:255|unique:categories,slug,'.$id.',id',
+                'ma'   => 'required|max:255|unique:categories,ma,'.$id.',id',
+                'name' => 'required',
+                'slug' => 'required',
             ],
             [
+                'ma.required' => 'Mã danh mục không được phép bỏ trống',
+                'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
+                'ma.unique'   => 'Mã danh mục đã tồn tại trong hệ thống',
                 'name.required' => 'Tên danh mục không được phép bỏ trống',
-                'name.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-                // 'name.unique'   => 'Tên danh mục đã tồn tại',
                 'slug.required' => 'Tên slug không được phép bỏ trống',
-                'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
-                'slug.unique'   => 'Tên slug đã tồn tại',
             ]);
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
-        // if (empty($request->user_id)) {$request->user_id = 0;}
 
         $Categorys = Category::find($id);
         $Category  = [
+            'ma'        => $request->ma,
             'name'      => $request->name,
             'name2'     => $request->name2,
             'slug'      => $slug,
@@ -158,6 +165,12 @@ class CategorypostController extends Controller
         try {
             DB::beginTransaction();
             $Categorys->update($Category);
+            DB::table('admin_menu_items')->where('category_id', $request->id)
+            ->update([
+            'ma' => $request->ma,
+            'label' => $request->name,
+            'link' => $request->slug
+            ]);
             DB::commit();
             return redirect()->route('categorypost.index')->with('success','Cập nhật danh mục thành công.');
             }
@@ -170,8 +183,12 @@ class CategorypostController extends Controller
     {
         $this->authorize('deletepost',Category::class);
         $Category = Category::find($request->id);
+        $menu = DB::table('admin_menu_items')->where('category_id', $request->id);
         if (!is_null($Category)){
         $Category->delete();
+        if (!is_null($menu)){
+            $menu->delete();
+            }
         return \json_encode(array('success'=>true));
         }
         return \json_encode(array('success'=>false));
@@ -179,14 +196,28 @@ class CategorypostController extends Controller
 
     public function getchild(Request $request){
         $id = $request->id;
+        $ma = Category::where('id',$id)->first();
         $data = Category::where('taxonomy', '=', 1)->get();
 
         $listcategories = [];
         Category::recursive_child($data, $id, 2, $listcategories);
          $view2     = view('admin.categorypost.getchild', [
-                'Category' => $listcategories,
-                'sub_id' => $id,
+                'listcategories' => $listcategories,
+                'sub_id'   => $id,
+                'ma'       => $ma->ma,
             ])->render();
         return response()->json(['html'=>$view2]);
+    }
+
+    public function export() 
+    {
+        return Excel::download(new CategorypostExport, 'Categoriespost.xlsx');
+    }
+
+    public function import() 
+    {
+        if(!empty(request()->file('file')))
+        Excel::import(new CategorypostImport,request()->file('file')); 
+        return back();
     }
 }

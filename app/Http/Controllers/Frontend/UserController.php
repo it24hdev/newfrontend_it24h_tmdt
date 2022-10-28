@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
 use Jenssegers\Agent\Agent;
+use App\Http\Controllers\laravelmenu\src\Models\Menus;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 
 class UserController extends Controller
 {
@@ -27,12 +29,13 @@ class UserController extends Controller
     }
 
     public function getmenu($location){
-        $getmenu = Locationmenu::select('locationmenus.*')
-        ->leftJoin('categories', 'categories.id', '=', 'locationmenus.category_id')
-        ->where('categories.taxonomy','=',0)
-        ->where('categories.status','=',1)
-        ->where('locationmenus.'.$location,'=',1)
-        ->orderby('position','asc')
+        if($location == 'sidebar')  {$location = "sidebar_location"; }
+        if($location == 'menu')  {$location = "menu_location"; }
+        if($location == 'footer')  {$location = "footer_location"; }
+        $getmenu = MenuItems::select('admin_menu_items.*')
+        ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+        ->where('locationmenus.'.$location,'<>','0')
+        ->where('locationmenus.'.$location,'<>',null)
         ->get();
         return $getmenu;
     }

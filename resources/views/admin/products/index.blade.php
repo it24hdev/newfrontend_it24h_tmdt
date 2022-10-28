@@ -20,10 +20,10 @@
                         <option value="50" {{request()->input('limit') =='50' ? 'selected' : ''}}>50</option>
                     </select>
                     <select id="orderby" name="orderby" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3" onchange="this.form.submit()">
-                        <option value="id" {{request()->input('orderby') =='id' ? 'selected' : ''}} >Mã</option>
+                        <option value="ma" {{request()->input('orderby') =='ma' ? 'selected' : ''}} >Mã</option>
                         <option value="name" {{request()->input('orderby') =='name' ? 'selected' : ''}} >Tên SP</option>
                         <option value="category_id" {{request()->input('orderby') =='category_id' ? 'selected' : ''}}>Danh mục</option>
-                        <option value="brand" {{request()->input('orderby') =='brand' ? 'selected' : ''}}>Nhãn</option>
+                        <option value="brand" {{request()->input('orderby') =='brand' ? 'selected' : ''}}>Thương hiệu</option>
                         <option value="quantity" {{request()->input('orderby') =='quantity' ? 'selected' : ''}}>Số lượng</option>
                         <option value="price" {{request()->input('orderby') =='price' ? 'selected' : ''}}>Giá</option>
                         <option value="limit_amount" {{request()->input('orderby') =='limit_amount' ? 'selected' : ''}}>Cảnh báo sl tồn</option>
@@ -42,6 +42,15 @@
                 </form>
             </div>
         </div>
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center">
+        <form action="{{ route('products.import') }}" method="POST" enctype="multipart/form-data" style="
+    display: contents;">
+            @csrf
+            <input type="file" name="file" class="mr-3 h-10 w-64 border-0 p-2" value="Chọn">
+            <button type="submit" class="btn btn-success mr-3" >Import Data</button>
+        </form>
+        <a class="btn btn-warning mr-3" href="{{ route('products.export') }}">Export Data</a>
+        </div>
         <!-- BEGIN: Data List -->
         <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
             <table class="table table-report -mt-2 p-1">
@@ -50,20 +59,18 @@
                         <th class="text-center whitespace-nowrap w-28" style="padding: 0.25rem 0.25rem !important;">Ảnh sản phẩm</th>
                         <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Mã</th>
                         <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Tên</th>
-                        <th class="text-center whitespace-nowrap w-24" style="padding: 0.25rem 0.25rem !important;">NCC</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Danh mục</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">SL</th>
-                        <th class="text-center whitespace-nowrap w-32" style="padding: 0.25rem 0.25rem !important;">Giá bán</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Tồn kho</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Trạng thái</th>
-                        <th class="text-center whitespace-nowrap" style="padding: 0.25rem 0.25rem !important;">Chức năng</th>
+                        <th class="text-center w-20" style="padding: 0.25rem 0.25rem !important;">NCC</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Danh mục</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">SL</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Giá bán</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Tồn kho</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Trạng thái</th>
+                        <th class="text-center" style="padding: 0.25rem 0.25rem !important;">Chức năng</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
-                        <tr id="{{ $product->id }}" >
-
-
+                        <tr id="{{ $product->id }}">
                             <td style="padding: 0.25rem 0.25rem !important;">
                                 @can('viewAny', \App\Models\Products::class)
                                 <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $product->id }}"title="Chi tiết sản phẩm">
@@ -79,7 +86,7 @@
                                  @can('viewAny', \App\Models\Products::class)
                                 <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $product->id }}"title="Chi tiết sản phẩm">
                                 @endcan
-                                 <div class="font-medium text-center" >{{ $product->id }}</div>
+                                 <div class="font-medium text-center" >{{ $product->ma }}</div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
                                  @can('viewAny', \App\Models\Products::class)
@@ -91,8 +98,8 @@
                                  @can('viewAny', \App\Models\Products::class)
                                 <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $product->id }}"title="Chi tiết sản phẩm">
                                 @endcan
-                                <div class="font-medium text-center" style="overflow-y: hidden;overflow-x: clip;width: 120px;text-overflow: ellipsis;max-height: 70px;">
-                                    {{ $product->brand }}</div>
+                                <div class="font-medium text-center">
+                                    {{ $product->brand_name }}</div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
                                 @can('viewAny', \App\Models\Products::class)
@@ -135,9 +142,11 @@
                                             class="w-4 h-4 mr-2"></i></div>
                                 @endif
                             </td>
-                            <td class="table-report__action w-40" style="padding: 0.25rem 0.25rem !important;">
+                            <td class="table-report__action w-38" style="padding: 0.25rem 0.25rem !important;">
                                 <div class="flex justify-center items-center">
                                     @can('update', App\Models\Products::class)
+                                    <a  href="{{ route('productsproperties.edit',['id' => $product->id]) }}"
+                                        title="Thuộc tính sản phẩm" class="btn btn-sm btn-primary mr-2"><i class="fas fa-plus-square"></i></a>
                                         <a href="{{ route('products.edit', ['id' => $product->id]) }}" title="Chỉnh sửa"
                                             class="btn btn-sm btn-primary mr-2">
                                             <i class="fa-solid fa-pen-to-square"></i>
@@ -146,7 +155,7 @@
                                     @can('delete', App\Models\Products::class)
                                         <a title="Xóa" data-toggle="modal" data-value="{{ $product->id }}"
                                             data-target="#delete-confirmation-modal"
-                                            class="btn btn-danger py-1 px-2 btn-delete"><i class="fa-solid fa-trash-can" style="padding: 1px"></i>
+                                            class="btn btn-danger py-1 px-1 btn-delete"><i class="fa-solid fa-trash-can" style="padding: 1px"></i>
                                         </a>
                                     @endcan
                                 </div>

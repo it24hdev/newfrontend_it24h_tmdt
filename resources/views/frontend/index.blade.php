@@ -117,10 +117,10 @@
                     </div>
                     <div class="wp-list-categories">
                         <div class="owl-carousel owl-theme owl-loaded owl-drag" id="list-cat-slider">
-                            @foreach ($get_cat_parents as $item)
+                            @foreach ($list_cat_head as $item)
                                 <div class="wp-category">
                                     <div class="cat-thumb">
-                                        <a href="{{route('product_cat', $item->slug)}}">
+                                        <a href="{{route('product_cat', ['slug' =>  $item->slug])}}">
                                             @if ($item->thumb == 'no-image-product.jpg' || empty($item->thumb))
                                                 <img class="owl-lazy" data-src="{{asset('upload/images/common_img/no-image-product.jpg')}}" />
                                             @else
@@ -130,39 +130,33 @@
                                     </div>
                                     <div class="child-cat">
                                         <div class="cat-title">
-                                            <a href="{{route('product_cat', $item->slug)}}">{{$item->name}}</a>
+                                            <a href="{{route('product_cat',['slug' =>  $item->slug])}}">{{$item->name}}</a>
                                         </div>
                                         <ul class="sub-cats">
-                                            @foreach ($item->cat_child as $cat_child)
-                                                <li><a href="{{route('product_cat', $cat_child->slug)}}">{{$cat_child->name}} <span class="count">({{$cat_child->get_product_by_cat()->count()}})</span></a></li>
+                                            @foreach ($item->cat_child as $key => $cat_child)
+                                            @if($key<8)
+                                                <li><a href="{{route('product_cat',['slug' =>  $cat_child->slug])}}">{{$cat_child->name}} <span class="count">({{$cat_child->get_product_by_cat()->count()}})</span></a></li>
+                                            @endif
                                             @endforeach
                                         </ul>
-                                        <a href="{{route('product_cat', $item->slug)}}" class="view-all">Xem tất cả</a>
+                                        <a href="{{route('product_cat', ['slug' => $item->slug])}}" class="view-all">Xem tất cả</a>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     </div>
                 </div>
-
-
-
-                <div id="slider-deal">
-                </div>
-
+                <div id="slider-deal"></div>
                 <div id="slider-new"></div>
-
-
             </div>
             <!-- Danh sách sp theo danh mục -->
             <div class="group-product">
-
                 <!-- Danh mục -->
                 @foreach ($get_cat_parents as $cat_parent)
+                @if(in_array($cat_parent->id, $cat_arr))
                     <div class="product-content" style="margin-bottom: 40px;" id="category-{{$cat_parent->id}}">
                         <div class="block-title">
                             <h2>{{$cat_parent->name}}</h2>
-
                             <ul class="nav nav-pills sub_cat_title_slider owl-carousel owl-theme owl-loaded owl-drag" id="pills-tab sub_cat_title_slider" role="tablist">
                                 @php
                                     $t=0;
@@ -176,16 +170,14 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <a href="{{route('product_cat', $cat_parent->slug)}}" class="show-all">Xem tất cả <i class="far fa-angle-right"></i></a>
+                            <a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all">Xem tất cả <i class="far fa-angle-right"></i></a>
                         </div>
-                        <div id="data-{{$cat_parent->id}}" class="wp-slider-pro">
-
-                        </div>
+                        <div id="data-{{$cat_parent->id}}" class="wp-slider-pro"></div>
                     </div>
+                @endif
                 @endforeach
             </div>
         </div>
-
         <div id="slider-bottom"></div>
     </div>
 </div>
@@ -397,6 +389,7 @@
                 if (isOnScreen($("#category-"+ category_id)) && ($("#category-"+ category_id).hasClass("loaded") == false))
                     {
                         laySp(category_id);
+
                         $("#category-"+ category_id).addClass("loaded");
                     }
                 });

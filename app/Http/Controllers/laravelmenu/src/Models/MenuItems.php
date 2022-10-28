@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\laravelmenu\src\Models;
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class MenuItems extends Model
@@ -9,7 +9,7 @@ class MenuItems extends Model
 
     protected $table = null;
 
-    protected $fillable = ['label', 'link', 'parent', 'sort', 'class', 'menu', 'depth', 'role_id'];
+    protected $fillable = ['label', 'link', 'parent', 'sort', 'class', 'menu', 'depth', 'role_id', 'filter_value','filter_value','category_id', 'category_code','ma'];
 
     public function __construct(array $attributes = [])
     {
@@ -38,6 +38,11 @@ class MenuItems extends Model
 
     public function childs()
     {
-        return $this->hasMany('App\Http\Controllers\laravelmenu\src\Models\MenuItems', 'parent', 'id')->orderBy('sort', 'ASC');
+       $get = $this->hasMany('App\Http\Controllers\laravelmenu\src\Models\MenuItems', 'parent', 'id')
+       ->leftjoin('categories','categories.id','admin_menu_items.category_id')
+       ->leftjoin('detailproperties','admin_menu_items.filter_value','detailproperties.ma')
+       ->select('admin_menu_items.*','detailproperties.categoryproperties_code as filter_name','categories.slug as slug')
+       ->orderBy('sort', 'ASC');
+        return $get;
     }
 }

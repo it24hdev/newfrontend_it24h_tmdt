@@ -13,14 +13,19 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
+use App\Http\Controllers\laravelmenu\src\Models\Menus;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
+
 
 class DetailproductController extends Controller
 {
 
     public function index($slug)
     {
+
         $agent = new Agent();
         $ag = "";
+
         if($agent->isMobile()){
             $ag = "mobile";
         }
@@ -28,6 +33,7 @@ class DetailproductController extends Controller
         try{
         $active_menu = "product";
         $Sidebars           = $this->getmenu('sidebar');
+
         // $Menus              = $this->getmenu('menu');
         $getcategoryblog    = $this->getcategoryblog();
         $product           = Products::where('slug','=',$slug)->first();
@@ -39,6 +45,8 @@ class DetailproductController extends Controller
         // $sizes  = Attribute_product::where('attr', 'size')->whereIn('id', $attrs)->get();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $products_id= array();
+
+
         foreach($product->category as $k){
             foreach($k->product as $pro){
                 $products_id[]= $pro->id;
@@ -51,6 +59,7 @@ class DetailproductController extends Controller
         }
 
         $imgs        = json_decode($product->image);
+
         $property   = $this->xulychuoi_thongsosanpham($product->property);
         
         /* XỬ LÝ LƯU SP ĐÃ XEM */
@@ -119,15 +128,13 @@ class DetailproductController extends Controller
     }
     // xu ly lay menu
     public function getmenu($location){
-        if($location == 'sidebar')  {$taxonomy = 0; }
-        if($location == 'menu')  {$taxonomy = 3; }
-        if($location == 'submenu')  {$taxonomy = 3; $location = 'menu';}
-        $getmenu = Locationmenu::select('locationmenus.*','categories.*')
-        ->leftJoin('categories', 'categories.id', '=', 'locationmenus.category_id')
-        ->where('categories.taxonomy','=', $taxonomy)
-        ->where('categories.status','=',1)
-        ->where('locationmenus.'.$location,'=',1)
-        ->orderby('position','asc')
+       if($location == 'sidebar')  {$location = "sidebar_location"; }
+        if($location == 'menu')  {$location = "menu_location"; }
+        if($location == 'footer')  {$location = "footer_location"; }
+        $getmenu = MenuItems::select('admin_menu_items.*')
+        ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+        ->where('locationmenus.'.$location,'<>','0')
+        ->where('locationmenus.'.$location,'<>',null)
         ->get();
         return $getmenu;
     }

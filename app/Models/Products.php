@@ -16,6 +16,7 @@ class Products extends Model
     protected $table = 'products';
 
     protected $fillable = [
+        'ma',
         'name',
         'slug',
         'price',
@@ -44,6 +45,10 @@ class Products extends Model
         'time_deal',
         'youtube',
         'attr',
+        'quantity',
+        'detailproperty',
+        'tax',
+        'warranty',
     ];
     const IMAGE = 'no-images.jpg';
     const ACTIVE = 1;

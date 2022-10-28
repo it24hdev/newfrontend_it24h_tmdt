@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,17 +15,18 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->string('name2');
-            $table->string('slug')->unique();
+            $table->string('ma');
+            $table->string('name')->nullable();
+            $table->string('name2')->nullable();
+            $table->string('slug')->nullable();
             $table->unsignedBigInteger('taxonomy');
-            $table->unsignedBigInteger('parent_id');
-            $table->unsignedBigInteger('user_id');
-            $table->string('thumb')->nullable();
-            $table->string('banner')->nullable();
+            $table->unsignedBigInteger('parent_id')->default(0);
+            $table->unsignedBigInteger('user_id')->default(1);
+            $table->string('thumb')->default('no-images.jpg')->nullable();
+            $table->string('banner')->default('no-images.jpg')->nullable();
             $table->string('icon')->nullable();
-            $table->boolean('status');
-            $table->boolean('show_push_product');
+            $table->boolean('status')->default(1);
+            $table->boolean('show_push_product')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -98,8 +98,6 @@ $(document).ready(function () {
         var id = $(this).attr('data-value');
         $('#delete_id').val(id);
     });
-
-
     //xử lý hien thi abum ảnh
     $("#fileupload").change(function () {
         if (typeof (FileReader) != "undefined") {
