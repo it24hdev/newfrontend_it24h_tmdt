@@ -75,7 +75,7 @@ class HomeController extends Controller
         ->where('status', 1)
         ->where('show_push_product', 1)->limit(8)
         ->get();
-        
+
         return view('frontend.index',[
             'cat_arr' => $cat_arr,
             'get_cat_parents' => $get_cat_parents,
@@ -190,7 +190,7 @@ class HomeController extends Controller
         }
         return $getmenu;
     }
-    
+
     public function arrcategory(){
         $arrCategory = DB::table('categories')->select('id','name','name2','slug', 'thumb', 'banner')
         ->where('taxonomy',Category::SAN_PHAM)
@@ -250,7 +250,7 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
 
         $view2     = view('frontend.layouts.footer', [
-            'posts_footer' => $posts_footer, 
+            'posts_footer' => $posts_footer,
         ])->render();
         return response()->json($view2);
     }
@@ -260,7 +260,7 @@ class HomeController extends Controller
         $list_brand = Brand::get();
 
         $view2  = view('frontend.slider-bottom', [
-            'list_brand' => $list_brand, 
+            'list_brand' => $list_brand,
         ])->render();
         return response()->json($view2);
     }
@@ -435,7 +435,7 @@ class HomeController extends Controller
     }
 
     public function product_cat(Request $request){
-        
+
         ///////////////Tham so dau vao//////////////////]
         $val=  array_values($request->all());
         $filter = $request->all();
@@ -448,7 +448,7 @@ class HomeController extends Controller
         $active_menu = "product";
         $locale       = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $Sidebars = $this->getmenu('sidebar'); 
+        $Sidebars = $this->getmenu('sidebar');
         $products="";
         $cat = Category::where('slug', $request->slug)->first();
         if (!empty($cat)) {
@@ -472,7 +472,9 @@ class HomeController extends Controller
                 $filter_all = array_merge($filter_all, $value);
             }
             $origin_url = $request->url();
+
             foreach ($attributes as $key_attr => $attr) {
+                $count_attr = 0;
                 $detailproperties = Detailproperties::where('categoryproperties_id',$attr->id)->get();
                 foreach ($detailproperties as $key_attr_dt => $attr_detail) {
                     $Propertyproducts = Propertyproducts::select('propertyproducts.*','detailproperties.ma as ma')
@@ -482,6 +484,7 @@ class HomeController extends Controller
                     ->where('products.deleted_at',null)
                     ->count();
                     $attr_detail->setAttribute('count_product',$Propertyproducts);
+                    $count_attr = $count_attr + $Propertyproducts;
                     $url ="";
                     $value_url = $request->all();
                         foreach ($value_url as $key => $value) {
@@ -496,7 +499,7 @@ class HomeController extends Controller
                         foreach ($value_url as $key => $subArr) {
                             foreach ($subArr as $key2 => $value2) {
                                 if(($value_url[$key][$key2])==$attr_detail->ma){
-                                    unset($value_url[$key][$key2]); 
+                                    unset($value_url[$key][$key2]);
                                 }
                             }
                             if($value_url[$key] == [])
@@ -523,8 +526,6 @@ class HomeController extends Controller
                                 }
                                 else{
                                     $value_url2[$attr->ma]= $attr_detail->ma;
-                                    // dd( $value_url2);
-                                    // $value_url2[$key] = $subArr;
                                 }
                             }
                             if($value_url2[$key] == [])
@@ -551,6 +552,7 @@ class HomeController extends Controller
                     }
                 }
                 $attr->setAttribute('detailproperty', $detailproperties);
+                $attr->setAttribute('count_attr', $count_attr);
             }
             $price =  "";
             $brand =  "";
@@ -569,7 +571,7 @@ class HomeController extends Controller
             ->leftJoin('brands','brands.id','products.brand')
             ->where('categories.slug',$request->slug)
             ->where(function ($query) use ($property)
-                        {  
+                        {
                             foreach ($property as $key => $value) {
                                 if($key == 'p' || $key == 'brand'){
                                     unset($property[$key]);
@@ -801,7 +803,7 @@ public function about_us(){
             }
         else{
             $Sidebars  = $this->getmenu_ajax('sidebar',$Sidebarmenu);
-            $view2     = view('frontend.contentmenu',['Sidebars'=>$Sidebars,'Sidebarid'=>$Sidebarid 
+            $view2     = view('frontend.contentmenu',['Sidebars'=>$Sidebars,'Sidebarid'=>$Sidebarid
             ])->render();
             }
         return response()->json($view2);

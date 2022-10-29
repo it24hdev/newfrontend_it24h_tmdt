@@ -139,12 +139,14 @@
                         <!-- ==== Foreach bộ lọc -->
                         @if(!empty($attributes))
                         @foreach($attributes as $key => $value)
+                            @if($value->count_attr>0)
                         <div class="categories-product-sidebar">
                             <div class="header-sidebar">
                                 <span>{{$value->name}}</span>
                             </div>
                             <ul class="list-categories list-categories-brand">
                                 @foreach($value->detailproperty as $property)
+                                    @if($property->count_product>0)
                                 <li class="cat-item" onclick="location.href='{{$property->fullurl}}'">
                                      <a href="{{$property->fullurl}}">
                                      @if($property->attr_checked == 1)
@@ -154,11 +156,13 @@
                                         @endif
                                         {{$property->name}}
                                     </a>
-                                    </input>
+                                    <span class="count">({{$property->count_product}})</span>
                                 </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>
+                                @endif
                         @endforeach
                         @endif
                         <div class="product-tag-sidebar">
@@ -411,21 +415,35 @@
                     </li>
                 </ul>
             </div>
-
             <!-- ==== Foreach bộ lọc -->
-            <div class="categories-product-sidebar">
-                <div class="header-sidebar">
-                    <span>Thương hiệu</span>
-                </div>
-                <ul class="list-categories list-categories-brand">
-                    <li class="cat-item">
-                        <a href="{{-- {{ request()->fullUrlWithQuery(['sort' => 'Z-A']) }} --}}">
-                            <i class="far fa-square"></i> Apple
-                        </a>
-                        <span class="count">(14)</span>
-                    </li>
-                </ul>
-            </div>
+            @if(!empty($attributes))
+                @foreach($attributes as $key => $value)
+                    @if($value->count_attr>0)
+                        <div class="categories-product-sidebar">
+                            <div class="header-sidebar">
+                                <span>{{$value->name}}</span>
+                            </div>
+                            <ul class="list-categories list-categories-brand">
+                                @foreach($value->detailproperty as $property)
+                                    @if($property->count_product>0)
+                                        <li class="cat-item" onclick="location.href='{{$property->fullurl}}'">
+                                            <a href="{{$property->fullurl}}">
+                                                @if($property->attr_checked == 1)
+                                                    <i class="far fa-check-square"></i>
+                                                @else
+                                                    <i class="far fa-square"></i>
+                                                @endif
+                                                {{$property->name}}
+                                            </a>
+                                            <span class="count">({{$property->count_product}})</span>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                @endforeach
+            @endif
 
             <div class="product-tag-sidebar">
                 <div class="header-sidebar">

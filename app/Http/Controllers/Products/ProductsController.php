@@ -73,7 +73,7 @@ class ProductsController extends Controller
             ->orwhere('products.ma', 'like', '%' . $keywords . '%')
             ->orderby($orderby, $sort)->Paginate($limit);
         }
-            
+
         return view('admin.products.index', [
             'products' => $Products,
             'title'    => 'Sản phẩm',
@@ -481,7 +481,7 @@ class ProductsController extends Controller
         else{
             $brands = Brand::paginate(15);
         }
-        
+
         return \view('admin.products.list-brand', \compact('brands'));
     }
     //xu ly luu thuong hieu san pham
@@ -732,31 +732,31 @@ class ProductsController extends Controller
         CommonHelper::deleteImage($nameFile, $path_thumb);
         Tag_event::find($id)->delete();
     }
-    public function export() 
+    public function export()
     {
         return Excel::download(new ProductExport, 'Products_export.xlsx');
     }
-    public function import() 
+    public function import()
     {
         if(!empty(request()->file('file'))){
-            ini_set('max_execution_time', 1800); 
-            Excel::import(new ProductImport,request()->file('file')); 
+            ini_set('max_execution_time', 1800);
+            Excel::import(new ProductImport,request()->file('file'));
         }
         DB::statement("update category_relationships set category_relationships.product_id = (
     SELECT products.id FROM products WHERE category_relationships.product_code = products.ma)");
 
         return back();
     }
-    public function brandexport() 
+    public function brandexport()
     {
         return Excel::download(new BrandExport, 'Brand.xlsx');
     }
 
-    public function brandimport() 
+    public function brandimport()
     {
         if(!empty(request()->file('file'))){
-            ini_set('max_execution_time', 1800); 
-            Excel::import(new BrandImport,request()->file('file')); 
+            ini_set('max_execution_time', 1800);
+            Excel::import(new BrandImport,request()->file('file'));
         }
         return back();
     }
@@ -770,9 +770,14 @@ class ProductsController extends Controller
         ->leftjoin('category_relationships','category_relationships.cat_id', '=', 'categories.id')
         ->leftjoin('products','products.id', '=', 'category_relationships.product_id')
         ->where('products.id', $id)
+        ->groupBy('categoryproperties.id')
         ->get();
 
-        $detailproperty = Detailproperties::get();
+        $arr = array();
+        foreach ($categoryproperties as $key => $cat){   
+          $arr[] = $cat->id;
+        }
+        $detailproperty = Detailproperties::whereIn('categoryproperties_id',$arr)->get();
         return view('admin.products.properties',[
             'detailproperty' => $detailproperty,
             'categoryproperties' => $categoryproperties,
