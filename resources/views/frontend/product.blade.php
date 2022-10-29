@@ -150,7 +150,7 @@
                                      @if($property->attr_checked == 1)
                                         <i class="far fa-check-square"></i>
                                         @else
-                                         <i class="far fa-square"></i> 
+                                         <i class="far fa-square"></i>
                                         @endif
                                         {{$property->name}}
                                     </a>
@@ -210,7 +210,7 @@
                                                     <div class="thumb">
                                                         <a href="{{ route('detailproduct', $item->slug)}}">
                                                             <img class="owl-lazy" src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
-                                                            @if (!empty($item->brand))
+                                                            @if (!empty($item->brands->image))
                                                                 <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
                                                             @endif
                                                             <div class="wp-tag">
@@ -302,8 +302,15 @@
                                 </div>
                             </div>
                         {!! $products->links('frontend.pagination') !!}
+
+                            <div style="overflow: hidden">
+                                {!! $cat->content !!}
+                            </div>
                         </div>
+
                     </div>
+
+
                 </div>
             </div>
     </div>
@@ -454,7 +461,7 @@
             for (var i = 0; i < sURLVariables.length; i++)
             {
                 var sParameterName = sURLVariables[i].split('=');
-           
+
             }
 
             console.log(sParameterName);*/

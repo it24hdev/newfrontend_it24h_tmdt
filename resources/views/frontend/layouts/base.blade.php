@@ -55,20 +55,21 @@
       window.addEventListener("orientationchange", lazyLoad);
     });
     </script>
-     
+
 </head>
 
 <body>
     <div id="wrapper-page">
-        
+
         {{-- inclucde header --}}
-        @if($agent == "desktop")
+{{--        @if($agent == "desktop")--}}
         @yield('header-home')
+        @yield('header-mobile')
 
         {{-- include menu mobile --}}
-        @else
-        @yield('header-mobile')
-        @endif
+{{--        @else--}}
+{{--        @yield('header-mobile')--}}
+{{--        @endif--}}
         <!-- backup top -->
         <a id="scroll_up" class="top-visible"><i class="fal fa-angle-up"></i></a>
         @yield('content')
@@ -176,7 +177,7 @@
                         dataType:"json",
                         data: data,
                         success: function (data) {
-                           $("#subid-"+ id).append(data); 
+                           $("#subid-"+ id).append(data);
                         },
                     })
                     $(this).addClass("loaded");
@@ -194,7 +195,7 @@
                         dataType:"json",
                         data: data,
                         success: function (data) {
-                           $("#pills-2").append(data); 
+                           $("#pills-2").append(data);
                         },
                     })
                     $("#pills-2").addClass("loaded");

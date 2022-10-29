@@ -1,4 +1,7 @@
 @extends('admin.layouts.main')
+@section('css')
+    <script src="{{ asset('lib/tinymce/js/tinymce/tinymce.min.js') }}" referrerpolicy="origin"></script>
+@endsection
 @section('category')
  <div class="content">
 
@@ -101,6 +104,12 @@
             </div>
             </div>
         </div>
+            <div class="mt-3">
+                <label>Mô tả</label>
+                <div class="mt-2">
+                    <textarea name="content" id="tiny-editor" rows="7"></textarea>
+                </div>
+            </div>
         <div class="modal-footer">
             <a type="button" class="btn btn-default" href="{{ route('category.index')}}">Hủy</a>
         <input type="submit" class="btn btn-primary " value="Create">
@@ -108,4 +117,7 @@
     </form>
 </div>
 </div>
+@endsection
+@section('js2')
+    <script src="{{ asset('/js/post-form.js') }}"></script>
 @endsection

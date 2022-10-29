@@ -122,6 +122,7 @@ class CategoryController extends Controller
             'banner'    => $nameFileBanner,
             'status'    => $request->has('status'),
             'show_push_product'    => $request->has('show_push_product'),
+            'content'      => $request->content,
         ];
 
         try {
@@ -146,7 +147,7 @@ class CategoryController extends Controller
         catch (\Exception $exception){
             DB::rollBack();
             return redirect()->route('category.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
-        }  
+        }
     }
 
     public function categorylevel()
@@ -203,7 +204,7 @@ class CategoryController extends Controller
             'name.required' => 'Tên danh mục không được phép bỏ trống',
             'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
-        ]); 
+        ]);
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
@@ -239,6 +240,7 @@ class CategoryController extends Controller
             'banner'    => $nameFileBanner,
             'status'    => $request->has('status'),
             'show_push_product'    => $request->has('show_push_product'),
+            'content'   => $request->content,
         ];
 
         try {
@@ -317,15 +319,15 @@ class CategoryController extends Controller
         return response()->json(['html'=>$view2]);
     }
 
-    public function export() 
+    public function export()
     {
         return Excel::download(new CategoryExport, 'Categories.xlsx');
     }
 
-    public function import() 
+    public function import()
     {
         if(!empty(request()->file('file')))
-        Excel::import(new CategoryImport,request()->file('file')); 
+        Excel::import(new CategoryImport,request()->file('file'));
         return back();
     }
 
