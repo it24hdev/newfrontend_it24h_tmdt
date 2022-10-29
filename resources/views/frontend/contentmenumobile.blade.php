@@ -8,8 +8,8 @@
         <span class="icon-right" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}"><i class="far fa-angle-right"></i></span>
         @endif
         
-        <div class="submenu-parent-mobile ajaxsubmenu" >
-            <div id="subid-{{$Sidebar->id}}" class="full_sub">
+        <div class="submenu-parent-mobile" >
+            <div id="submobileid-{{$Sidebar->id}}" class="full_sub">
 
             </div>
         </div> 
@@ -35,8 +35,9 @@
                 dataType:"json",
                 data: data,
                 success: function (data) {
+                    console.log(data);
 
-                   $("#subid-"+ id).append(data); 
+                   $("#submobileid-"+ id).append(data); 
                 },
             })
             $(this).addClass("loaded");

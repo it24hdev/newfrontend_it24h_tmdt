@@ -1,1 +1,12 @@
-Header edit Set-Cookie (?i)^(.*)(;\s*secure)??((\s*;)?(.*)) "$1; SameSite=None$3$4"
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ /public/$1 [L,QSA]
+
+php_value post_max_size 5M
+php_value upload_max_filesize 5M
+php_value memory_limit 128M
+php_value max_execution_time 18000
+php_value max_input_time 1800
+php_value session.gc_maxlifetime 1200
+</IfModule>
