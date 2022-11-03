@@ -93,7 +93,7 @@ $(document).ready(function () {
         imagesPreview(this,'div.show-image')
     })
 
-    $('.btn-delete').on('click',function (e) {
+    $(document).on('click','.btn-delete',function (e) {
         e.preventDefault();
         var id = $(this).attr('data-value');
         $('#delete_id').val(id);

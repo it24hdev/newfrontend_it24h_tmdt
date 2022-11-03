@@ -35,10 +35,12 @@ class MenuController extends Controller
         $category = Category::select('id', 'name')
                     ->where('status',1)
                     ->where('taxonomy', 0)
+                    ->where('parent_id',0)
                     ->get();
         $categorypost = Category::select('id', 'name')
                         ->where('status',1)
                         ->where('taxonomy', 1)
+                        ->where('parent_id',0)
                         ->get();
         if ((request()->has("action") && empty(request()->input("menu"))) || request()->input("menu") == '0') {
             return view('admin.menu.menu')->with("menulist" , $menulist)->with("category",$category);
@@ -189,7 +191,7 @@ class MenuController extends Controller
     }
 
     public function addcustommenu2()
-    {         
+    {
          // dd(request()->input("idmenu"));
         foreach (request()->input('list') as $value) {
         $categories = Category::find($value);
@@ -216,27 +218,27 @@ class MenuController extends Controller
                     $menuitem->parent = $value["parent"];
                     $menuitem->sort = $value["sort"];
                     $menuitem->depth = $value["depth"];
-                    $menuitem->filter_by = $value["filter_by"]; 
-                    $menuitem->filter_value = $value["filter_value"]; 
+                    $menuitem->filter_by = $value["filter_by"];
+                    $menuitem->filter_value = $value["filter_value"];
                     if (config('menu.use_roles')) {
                         $menuitem->role_id = request()->input("role_id");
                     }
                     $menuitem->save();
-                }                
+                }
             }
         }
         echo json_encode(array("resp" => 1));
     }
 
-    public function export($menu) 
+    public function export($menu)
     {
         return Excel::download(new MenuExport($menu), 'Menu.xlsx');
     }
 
-    public function import($menu) 
+    public function import($menu)
     {
         if(!empty(request()->file('file')))
-        Excel::import(new MenuImport($menu),request()->file('file')); 
+        Excel::import(new MenuImport($menu),request()->file('file'));
         return back();
     }
 

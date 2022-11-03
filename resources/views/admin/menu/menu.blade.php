@@ -96,7 +96,7 @@ $currentUrl = url()->current();
                                                             <a class="nav-tab-link" data-type="tabs-panel-posttype-page-most-recent" href="/wp-admin/nav-menus.php?page-tab=most-recent#tabs-panel-posttype-page-most-recent">
                                                                 Tất cả                </a>
                                                         </li>
-                                                    </ul>   
+                                                    </ul>
 
                                                     <div id="tabs-panel-posttype-page-most-recent" class="tabs-panel tabs-panel-active" role="region" aria-label="Mới nhất" tabindex="0">
                                                         <ul id="pagechecklist-most-recent" class="categorychecklist form-no-clear">
@@ -131,7 +131,7 @@ $currentUrl = url()->current();
                                                             <a class="nav-tab-link" data-type="tabs-panel-posttype-page-most-recent3" href="/wp-admin/nav-menus.php?page-tab=most-recent#tabs-panel-posttype-page-most-recent3">
                                                                 Tất cả               </a>
                                                         </li>
-                                                    </ul>   
+                                                    </ul>
                                                     <div id="tabs-panel-posttype-page-most-recent3" class="tabs-panel tabs-panel-active" role="region" aria-label="Mới nhất" tabindex="0">
                                                         <ul id="pagechecklist-most-recent3" class="categorychecklist form-no-clear">
                                                             @foreach($category as $cate3)
@@ -241,7 +241,11 @@ $currentUrl = url()->current();
                                     </p>
                                     @endif
                                     <p class="field-move hide-if-no-js description description-wide">
-                                    <label> <span>Di chuyển</span> <a href="{{ $currentUrl }}" class="menus-move-up" style="display: none;">Lên trên</a> <a href="{{ $currentUrl }}" class="menus-move-down" title="Mover uno abajo" style="display: inline;">Xuống dưới</a> <a href="{{ $currentUrl }}" class="menus-move-left" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-right" style="display: none;"></a> <a href="{{ $currentUrl }}" class="menus-move-top" style="display: none;">Lên đầu</a> 
+                                    <label> <span>Di chuyển</span> <a href="{{ $currentUrl }}" class="menus-move-up" style="display: none;">Lên trên</a>
+                                        <a href="{{ $currentUrl }}" class="menus-move-down" title="Mover uno abajo" style="display: inline;">Xuống dưới</a>
+                                        <a href="{{ $currentUrl }}" class="menus-move-left" style="display: none;"></a>
+                                        <a href="{{ $currentUrl }}" class="menus-move-right" style="display: none;"></a>
+                                        <a href="{{ $currentUrl }}" class="menus-move-top" style="display: none;">Lên đầu</a>
                                     </label>
                                     </p>
                                     <div class="filter">
@@ -279,6 +283,7 @@ $currentUrl = url()->current();
                                     </div>
                                     </div>
                                     <ul class="menu-item-transport"></ul>
+                                    </div>
                                     </li>
                                     @endforeach
                                     @endif
@@ -337,7 +342,7 @@ $currentUrl = url()->current();
         "menuFocus" : "%1$s. Element menu %2$d of %3$d.",
         "subMenuFocus" : "%1$s. Menu of subelement %2$d of %3$s."
     };
-    var arraydata = [];     
+    var arraydata = [];
     var addcustommenur= '{{ route("haddcustommenu") }}';
     var addcustommenur2= '{{ route("haddcustommenu2") }}';
     var updateitemr= '{{ route("hupdateitem")}}';

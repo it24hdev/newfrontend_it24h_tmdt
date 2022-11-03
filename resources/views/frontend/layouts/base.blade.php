@@ -137,7 +137,6 @@
             }
             $("#searchs").keyup(delay(function(e){
                 var keyword =  document.getElementById('searchs').value;
-                console.log(keyword);
                 $.ajax({
                         url:"{{route('autotypeahead')}}",
                         type:"post",

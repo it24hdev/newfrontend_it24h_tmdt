@@ -24,7 +24,8 @@ use App\Http\Controllers\Recruit\RecruitController;
 use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
 use App\Http\Controllers\Categoryproperty\Category_propertyController;
- 
+use App\Http\Controllers\Menu\MenusController;
+
 
 Auth::routes();
 Route::get('/clear', function() {
@@ -36,6 +37,10 @@ Artisan::call('config:cache');
 Artisan::call('view:clear');
 return "Cleared!";
 });
+
+Route::get('/linkstorage', function () {
+    Artisan::call('storage:link'); // this will do the command line job
+});
 /* ========== ADMIN ========== */
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
@@ -45,7 +50,7 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/admin', [DashboardController::class, 'index'])->name('dashboard');
 
-    
+
     Route::prefix('admin/menu')->group(function () {
     Route::get('/', [MenuController::class, 'index'])->name('menu');
     Route::post('/addcustommenu', [MenuController::class, 'addcustommenu'])->name('haddcustommenu');
@@ -259,11 +264,18 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('/createdetail/{id}', [Category_propertyController::class, 'storedetail'])->name('detailproperty.store');
 
-        Route::get('/editdetail/{id}/{id_categoryproperty}', [Category_propertyController::class, 'editdetail'])->name('detailproperty.edit'); 
+        Route::get('/editdetail/{id}/{id_categoryproperty}', [Category_propertyController::class, 'editdetail'])->name('detailproperty.edit');
 
         Route::post('/updatedetail/{id}',[Category_propertyController::class, 'updatedetail'])->name('detailproperty.update');
 
         Route::post('/deletedetail', [Category_propertyController::class, 'destroydetail'])->name('detailproperty.delete');
+    });
+    Route::prefix('admin/menus')->group(function () {
+        Route::get('/', [MenusController::class, 'index'])->name('menu.index');
+        Route::post('/change_number_menuitem', [MenusController::class, 'change_number_menuitem'])->name('change_number_menuitem');
+        Route::post('/get_menuitem_ajax', [MenusController::class, 'get_menuitem_ajax'])->name('get_menuitem_ajax');
+        Route::get('/create', [MenusController::class, 'create'])->name('menu.create');
+        Route::post('/destroy', [MenusController::class, 'destroy'])->name('menu.destroy');
     });
 
 });
@@ -324,7 +336,7 @@ Route::post('/comment-blog', [HomeController::class, 'commentPost'])->name('comm
 Route::post('/form-vote', [HomeController::class, 'getFormVote'])->name('getFormVote');
 Route::post('/autotypeahead', [HomeController::class, 'autotypeahead'])->name('autotypeahead');
 Route::get('/tuyen-dung',[HomeController::class, 'recruit'])->name('recruit');
-Route::post('/tuyen-dung',[HomeController::class, 'recruit_register'])->name('recruit_register'); 
+Route::post('/tuyen-dung',[HomeController::class, 'recruit_register'])->name('recruit_register');
 
 Route::get('/chi-tiet-san-pham/{slug}',[DetailproductController::class,'index'])->name('detailproduct');
 Route::post('/comment-product',[DetailproductController::class,'commentProduct'])->name('commentProduct');
@@ -341,6 +353,7 @@ Route::get('/google/callback', [FrontendUserController::class, 'callback_google'
 Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('about_us');
 Route::post('/menucontent', [HomeController::class, 'menucontent'])->name('menucontent');
 Route::post('/menucontent2', [HomeController::class, 'menucontent2'])->name('menucontent2');
+
 
 
 

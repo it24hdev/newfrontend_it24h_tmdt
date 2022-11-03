@@ -22,7 +22,7 @@ $(document).ready(function () {
             } else {
                 cmsURL = cmsURL + "&type=Files";
             }
-console.log(cmsURL);
+// console.log(cmsURL);
             tinyMCE.activeEditor.windowManager.openUrl({
 
                 url : cmsURL,

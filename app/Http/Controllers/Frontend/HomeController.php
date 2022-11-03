@@ -156,8 +156,8 @@ class HomeController extends Controller
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
         ->where('admin_menu_items.depth','<>',0)
-        ->where('admin_menu_items.menu',$menu)
         ->get();
+
         foreach ($getmenu as $key => $value) {
            if($value->filter_by == 1){
             $filter_name = Categoryproperty::select('categoryproperties.*')
