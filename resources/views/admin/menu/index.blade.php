@@ -16,7 +16,7 @@
     @endif
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a class="btn btn-primary shadow-md mr-2" href="{{ route('menu.create')}}" >Thêm danh mục</a>
+            <a id="add_menu" class="btn btn-primary shadow-md mr-2" href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview" title="Thêm mới">Thêm mới</a>
             <div class="dropdown">
                 <button class="dropdown-toggle btn px-2 box text-gray-700 dark:text-gray-300" aria-expanded="false">
                     <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
@@ -33,11 +33,12 @@
             <div class="hidden md:block mx-auto text-gray-600"></div>
         </div>
     </div>
+    @include('admin.menu.create')
     <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
         <table class="table">
             <thead>
             <tr >
-                <th class="whitespace-nowrap">Tên</th>
+                <th class="whitespace-nowrap">Tên hiển thị</th>
                 <th class="whitespace-nowrap">Link web</th>
                 <th class="whitespace-nowrap">STT</th>
                 <th class="whitespace-nowrap">Trạng thái</th>
@@ -46,6 +47,7 @@
             </thead>
             <tbody class="col-span-12" >
             @foreach($menus as $key => $menu)
+                @if($menu->parent==0)
                     <tr id="{{$menu->id}}" class="overflow-x-auto scrollbar-hidden border-separate" @if($menu->parent != 0) style="display: none;" @endif>
                         <td class="text-left  rowparent parent_{{$menu->parent}}" get-id="{{$menu->id}}">
                             @php
@@ -59,7 +61,7 @@
                         </td>
                         <td class="text-left">{{$menu->link}}</td>
                         <td class="text-left">
-                        <input class="td_stt w-10" type="number" name="stt" value="{{$menu->stt}}" get-id="{{$menu->id}}">
+                        <input class="td_stt w-10 text-center" type="number" name="stt" value="{{$menu->stt}}" get-id="{{$menu->id}}">
                         </td>
                         <td>
                             @if($menu->status == '1')
@@ -81,6 +83,7 @@
                             </div>
                         </td>
                     </tr>
+                    @endif
             @endforeach
             </tbody>
         </table>
@@ -92,7 +95,6 @@
         $(document).ready(function () {
             $(document).on('click','.rowparent' ,function (){
                 var get_id= $(this).attr('get-id');
-                console.log(get_id);
                 if($(this).parent().hasClass('loaded')==false){
                     var _token = $('meta[name="csrf-token"]').attr('content');
                     var data = {
@@ -149,6 +151,34 @@
                    }
                })
            })
+            $(document).on('click','#add_menu', function (){
+                if($(this).hasClass('loaded')==false) {
+                    var _token = $('meta[name="csrf-token"]').attr('content');
+                    var data = {
+                        _token: _token
+                    };
+                    $.ajax({
+                        url: "{{route('get_menu')}}",
+                        data: data,
+                        method: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            $.each(data.listmenu, function (key, value) {
+                                $("select[name='parent']").append(
+                                    "<option value=" + value.id + ">" + value.label + "</option>"
+                                );
+                            });
+                            $.each(data.listcategory, function (key, value) {
+                                $("select[name='category_id']").append(
+                                    "<option value=" + value.id + ">" + value.name + "</option>"
+                                );
+                            });
+                        }
+                    });
+                    $(this).addClass('loaded');
+                };
+            })
+
         });
     </script>
 @endsection

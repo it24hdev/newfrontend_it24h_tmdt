@@ -274,8 +274,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [MenusController::class, 'index'])->name('menu.index');
         Route::post('/change_number_menuitem', [MenusController::class, 'change_number_menuitem'])->name('change_number_menuitem');
         Route::post('/get_menuitem_ajax', [MenusController::class, 'get_menuitem_ajax'])->name('get_menuitem_ajax');
-        Route::get('/create', [MenusController::class, 'create'])->name('menu.create');
         Route::post('/destroy', [MenusController::class, 'destroy'])->name('menu.destroy');
+        Route::post('/get_menu', [MenusController::class, 'get_menu'])->name('get_menu');
     });
 
 });
