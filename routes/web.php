@@ -276,6 +276,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/get_menuitem_ajax', [MenusController::class, 'get_menuitem_ajax'])->name('get_menuitem_ajax');
         Route::post('/destroy', [MenusController::class, 'destroy'])->name('menu.destroy');
         Route::post('/get_menu', [MenusController::class, 'get_menu'])->name('get_menu');
+        Route::post('/get_categories_product', [MenusController::class, 'get_categories_product'])->name('get_categories_product');
+        Route::post('/get_categories_post', [MenusController::class, 'get_categories_post'])->name('get_categories_post');
+        Route::post('/get_post', [MenusController::class, 'get_post'])->name('get_post');
+        Route::post('/get_property', [MenusController::class, 'get_property'])->name('get_property');
+        Route::post('/get_detail_property', [MenusController::class, 'get_detail_property'])->name('get_detail_property');
+        Route::post('/get_brand', [MenusController::class, 'get_brand'])->name('get_brand');
     });
 
 });

@@ -178,7 +178,360 @@
                     $(this).addClass('loaded');
                 };
             })
+            $(document).on('change','.type_menu', function (){
+                var type_menu =  $(this).val();
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    _token: _token
+                };
+                $('#link_web').val("");
+                if(type_menu == 1){
+                    $("#link_web").attr('readonly', true);
+                    // $('select[name="property"]').val('0');
+                    $(".categories_product").removeClass('hidden');
+                    $(".filter_by").removeClass('hidden');
+                    if($(".categories_post").hasClass('hidden')==false){
+                        $(".categories_post").addClass('hidden');
+                    }
+                    if($(".post").hasClass('hidden')==false){
+                        $(".post").addClass('hidden');
+                    }
+                    if($(".categories_product").hasClass('loaded')==false) {
+                        $.ajax({
+                            url: "{{route('get_categories_product')}}",
+                            data: data,
+                            method: "POST",
+                            dataType: "json",
+                            success: function (data) {
+                                $.each(data.listcategory, function (key, value) {
+                                    $("select[name='categories_product']").append(
+                                        "<option get-slug=" + value.slug + " value=" + value.id + ">" + value.name + "</option>"
+                                    );
+                                });
+                            }
+                        });
+                        $(".categories_product").addClass('loaded');
+                    };
+                }
+                else if(type_menu == 2){
+                    $("#link_web").attr('readonly', true);
+                    if($(".categories_product").hasClass('hidden')==false){
+                        $(".categories_product").addClass('hidden');
+                    }
+                    if($(".filter_by").hasClass('hidden')==false){
+                        $(".filter_by").addClass('hidden');
+                    }
+                    if($(".filter_value").hasClass('hidden')==false){
+                        $(".filter_value").addClass('hidden');
+                    }
+                    if($(".post").hasClass('hidden')==false){
+                        $(".post").addClass('hidden');
+                    }
+                    $(".categories_post").removeClass('hidden');
+                    if($(".categories_post").hasClass('loaded')==false) {
+                        $.ajax({
+                            url: "{{route('get_categories_post')}}",
+                            data: data,
+                            method: "POST",
+                            dataType: "json",
+                            success: function (data) {
+                                $.each(data.listcategory, function (key, value) {
+                                    $("select[name='categories_post']").append(
+                                        "<option get-slug=" + value.slug + " value=" + value.id + ">" + value.name + "</option>"
+                                    );
+                                });
+                            }
+                        });
+                        $(".categories_post").addClass('loaded');
+                    };
+                }
+                else if(type_menu == 3) {
+                    $("#link_web").attr('readonly', true);
+                    if ($(".categories_product").hasClass('hidden') == false) {
+                        $(".categories_product").addClass('hidden');
+                    }
+                    if ($(".filter_by").hasClass('hidden') == false) {
+                        $(".filter_by").addClass('hidden');
+                    }
+                    if ($(".filter_value").hasClass('hidden') == false) {
+                        $(".filter_value").addClass('hidden');
+                    }
+                    if ($(".categories_post").hasClass('hidden') == false) {
+                        $(".categories_post").addClass('hidden');
+                    }
+                    $(".post").removeClass('hidden');
+                    if($(".post").hasClass('loaded')==false) {
+                        $.ajax({
+                            url: "{{route('get_post')}}",
+                            data: data,
+                            method: "POST",
+                            dataType: "json",
+                            success: function (data) {
+                                $.each(data.listpost, function (key, value) {
+                                    $("select[name='post']").append(
+                                        "<option get-slug=" + value.slug +" value=" + value.id + ">" + value.title + "</option>"
+                                    );
+                                });
+                            }
+                        });
+                        $(".post").addClass('loaded');
+                    };
+                }
+                else{
+                    $("#link_web").attr('readonly', false);
+                    if ($(".categories_product").hasClass('hidden') == false) {
+                        $(".categories_product").addClass('hidden');
+                    }
+                    if ($(".filter_by").hasClass('hidden') == false) {
+                        $(".filter_by").addClass('hidden');
+                    }
+                    if ($(".filter_value").hasClass('hidden') == false) {
+                        $(".filter_value").addClass('hidden');
+                    }
+                    if ($(".categories_post").hasClass('hidden') == false) {
+                        $(".categories_post").addClass('hidden');
+                    }
+                    if ($(".post").hasClass('hidden') == false) {
+                        $(".post").addClass('hidden');
+                    }
+                }
+            });
+            $(document).on('change','.filter_by', function (){
+                var filter_by = $("#filter_by").val();
+                var cat_id = $(".cat_product").val();
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                $('#link_web').val("");
+                var slug = $(".cat_product option:selected").attr('get-slug');
+                var url =   "{{route('product_cat',['slug' => '_url_'])}}";
+                if(typeof slug === "undefined"){
+                    url = url.replace('_url_', '');
+                }
+                else{
+                    url = url.replace('_url_', slug);
+                }
+                $('#link_web').val(url);
+                if(filter_by==1){
+                    $(".filter_value").removeClass('hidden');
+                    $(".property").removeClass('hidden');
+                    $(".detailproperty").removeClass('hidden');
+                    if ($(".price").hasClass('hidden') == false) {
+                        $(".price").addClass('hidden');
+                    }
+                    if ($(".brand").hasClass('hidden') == false) {
+                        $(".brand").addClass('hidden');
+                    }
+                    $("select[name='property']").empty().append('<option selected="selected" value="0">Thuộc tính</option>');
+                    $("select[name='detailproperty']").empty().append('<option selected="selected" value="0">Chi tiết</option>');
+                    var data = {
+                        cat_id: cat_id,
+                        _token: _token
+                    };
+                    $.ajax({
+                        url: "{{route('get_property')}}",
+                        data: data,
+                        method: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            $.each(data.listproperty, function (key, value) {
+                                $("select[name='property']").append(
+                                    "<option get-code=" + value.ma +" value=" + value.categoryproperties_id + ">" + value.name + "</option>"
+                                );
+                            });
+                        }
+                    });
+                }
+                else if(filter_by==2){
+                    $(".filter_value").removeClass('hidden');
+                    $(".price").removeClass('hidden');
+                    if ($(".detailproperty").hasClass('hidden') == false) {
+                        $(".detailproperty").addClass('hidden');
+                    }
+                    if ($(".property").hasClass('hidden') == false) {
+                        $(".property").addClass('hidden');
+                    }
+                    if ($(".brand").hasClass('hidden') == false) {
+                        $(".brand").addClass('hidden');
+                    }
+                }
+                else if(filter_by==3){
+                    $(".filter_value").removeClass('hidden');
+                    $(".brand").removeClass('hidden');
+                    if ($(".detailproperty").hasClass('hidden') == false) {
+                        $(".detailproperty").addClass('hidden');
+                    }
+                    if ($(".property").hasClass('hidden') == false) {
+                        $(".property").addClass('hidden');
+                    }
+                    if ($(".price").hasClass('hidden') == false) {
+                        $(".price").addClass('hidden');
+                    }
+                    var data = {
+                        _token: _token
+                    };
+                    $.ajax({
+                        url: "{{route('get_brand')}}",
+                        data: data,
+                        method: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            $.each(data.listbrand, function (key, value) {
+                                $("select[name='brand']").append(
+                                    "<option value=" + value.name + ">" + value.name + "</option>"
+                                );
+                            });
+                        }
+                    });
+                }
+                else{
+                    if ($(".filter_value").hasClass('hidden') == false) {
+                        $(".filter_value").addClass('hidden');
+                    }
+                    if ($(".property").hasClass('hidden') == false) {
+                        $(".property").addClass('hidden');
+                    }
+                    if ($(".detailproperty").hasClass('hidden') == false) {
+                        $(".detailproperty").addClass('hidden');
+                    }
+                    if ($(".price").hasClass('hidden') == false) {
+                        $(".price").addClass('hidden');
+                    }
+                    if ($(".brand").hasClass('hidden') == false) {
+                        $(".brand").addClass('hidden');
+                    }
+                    $('#price_from').val("");
+                    $('#price_to').val("");
+                }
+            });
+            $(document).on('change','.cat_product', function (){
+                var cat_id = $(this).val();
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                if(cat_id != 0){
+                    $('#link_web').val("");
+                    var slug = $('option:selected', this).attr('get-slug');
+                    var url =   "{{route('product_cat',['slug' => '_url_'])}}";
+                    url = url.replace('_url_', slug);
+                    $('#link_web').val(url);
+                    $("select[name='property']").empty().append('<option selected="selected" value="0">Thuộc tính</option>');
+                    $("select[name='detailproperty']").empty().append('<option selected="selected" value="0">Chi tiết</option>');
+                    var data = {
+                        cat_id: cat_id,
+                        _token: _token
+                    };
+                    $.ajax({
+                        url: "{{route('get_property')}}",
+                        data: data,
+                        method: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            $.each(data.listproperty, function (key, value) {
+                                $("select[name='property']").append(
+                                    "<option get-code=" + value.ma +"  value=" + value.categoryproperties_id + ">" + value.name + "</option>"
+                                );
+                            });
+                        }
+                    });
+                }
+                else{
+                    $('#link_web').val("");
+                    $("select[name='property']").empty().append('<option selected="selected" value="0">Thuộc tính</option>');
+                    $("select[name='detailproperty']").empty().append('<option selected="selected" value="0">Chi tiết</option>');
+                }
+            });
 
+            $(document).on('change','.post_single', function (){
+                $('#link_web').val("");
+                var slug = $(".post_single option:selected").attr('get-slug');
+                var url =   "{{route('singlePost',['slug' => '_url_'])}}";
+                url = url.replace('_url_', slug);
+                $('#link_web').val(url);
+            });
+
+            $(document).on('change','.cat_post', function (){
+                $('#link_web').val("");
+                var slug = $(".cat_post option:selected").attr('get-slug');
+                var url =   "{{route('categoryBlog',['slug' => '_url_'])}}";
+                url = url.replace('_url_', slug);
+                $('#link_web').val(url);
+            });
+            $(document).on('change','.attributes', function (){
+                var attr_id =  $(this).val();
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                if(attr_id !=0){
+                    $("select[name='detailproperty']").empty().append('<option selected="selected" value="0">Chi tiết</option>');
+                    var data = {
+                        attr_id: attr_id,
+                        _token: _token
+                    };
+                    $.ajax({
+                        url: "{{route('get_detail_property')}}",
+                        data: data,
+                        method: "POST",
+                        dataType: "json",
+                        success: function (data) {
+                            $.each(data.listdetailproperty, function (key, value) {
+                                $("select[name='detailproperty']").append(
+                                    "<option get-code=" + value.ma +" value=" + value.ma + ">" + value.name + "</option>"
+                                );
+                            });
+                        }
+                    });
+                }
+                else{
+                    $("select[name='detailproperty']").empty().append('<option selected="selected" value="0">Chi tiết</option>');
+                }
+            });
+            $(document).on('change','.detail_attr', function (){
+                var detail_attr_id = $(this).val();
+                var detail_attr_code = $("option:selected", this).attr('get-code');
+                var filter_name = $(".attributes option:selected").attr('get-code');
+                $('#link_web').val("");
+                var slug = $(".cat_product option:selected").attr('get-slug');
+                var url =   "{{route('product_cat',['slug' => '_url_'])}}";
+                url = url.replace('_url_', slug);
+                console.log(url);
+                if(detail_attr_id !=0){
+                    url =  $.trim(url,'/')+"?"+filter_name+"="+detail_attr_code;
+                }
+                $('#link_web').val(url);
+            });
+
+            $(document).on('change','#price_from, #price_to', function (){
+                var price_from = $("#price_from").val();
+                var price_to = $("#price_to").val();
+                if(price_from == ''){
+                    price_from = 0;
+                }
+                if(price_to == ''){
+                    price_to = 0;
+                }
+                $('#link_web').val("");
+                var url =   "{{route('product_cat',['slug' => '_url_'])}}";
+                var slug = $(".cat_product option:selected").attr('get-slug');
+                if(typeof slug === "undefined"){
+                    url = url.replace('_url_', '');
+                }
+                else{
+                    url = url.replace('_url_', slug);
+                    url =  $.trim(url,'/')+"?p="+price_from+"%3B"+price_to;
+                }
+                $('#link_web').val(url);
+            });
+
+            $(document).on('change','#brand', function (){
+                var brand =  $(this).val();
+                $('#link_web').val("");
+                var url =   "{{route('product_cat',['slug' => '_url_'])}}";
+                var slug = $(".cat_product option:selected").attr('get-slug');
+                if(typeof slug === "undefined"){
+                    url = url.replace('_url_', '');
+                }
+                else{
+                    url = url.replace('_url_', slug);
+                    url =  $.trim(url,'/')+"?brand="+brand;
+                }
+                $('#link_web').val(url);
+
+            });
         });
     </script>
 @endsection
