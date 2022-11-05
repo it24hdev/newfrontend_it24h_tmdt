@@ -10,9 +10,14 @@
             @endphp
             {{$menu->label}}
         </td>
-        <td class="text-left">{{$menu->link}}</td>
         <td class="text-left">
-            <input class="td_stt w-10" type="number" name="stt" value="{{$menu->stt}}" get-id="{{$menu->id}}">
+            @if(!empty($menu->link))<a href="{{$menu->link}}" title="Xem trên web">Xem trên web</a>
+            @else Chưa có link
+            @endif
+
+        </td>
+        <td class="text-left">
+            <input class="td_stt w-10 text-center" type="number" name="stt" value="{{$menu->stt}}" get-id="{{$menu->id}}">
         </td>
         <td>
             @if($menu->status == '1')
@@ -28,7 +33,7 @@
         <td class="w-20">
             <div class="flex justify-center items-center">
                 <a class="btn btn-sm btn-primary mr-2"
-                   href="#" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
+                   href="{{route('menu.edit',['id'=>$menu->id])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
                 </a>
                 <a title="Xóa" data-toggle="modal"
                    data-value="{{$menu->id}}"

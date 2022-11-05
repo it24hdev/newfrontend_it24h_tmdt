@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body p-0">
-                <input type="hidden" name="id" id="delete_id">
+                <input type="hidden" name="id" id="delete_id" >
                 <div class="p-5 text-center">
                     <i data-feather="x-circle" class="w-16 h-16 text-theme-6 mx-auto mt-3"></i>
                     <div class="text-3xl mt-5">Bạn muốn xoá mục này?</div>
@@ -12,7 +12,7 @@
                 </div>
                 <div class="px-5 pb-8 text-center">
                     <button type="button" data-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Quay lại</button>
-                    <button type="button" data-dismiss="modal"class="delete btn btn-danger w-24">Xóa</button>
+                    <button type="button" data-dismiss="modal" get-id-menu="{{request()->input('select_menu')}}" class="delete btn btn-danger w-24">Xóa</button>
                 </div>
 
             </div>
@@ -25,8 +25,10 @@
         $(document).ready(function() {
             $(document).on('click','.delete', function() {
                 var id = $("#delete_id").val();
+                var id_menu = $(this).attr('get-id-menu');
                 var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
+                    id_menu: id_menu,
                     id: id,
                     _token: _token
                 };
@@ -37,6 +39,12 @@
                     dataType: "json",
                     success: function(data) {
                         $('#' + id).remove();
+                        $("select[name='parent']").empty().append('<option selected="selected" value="0">=============  Chọn  ============</option>');
+                        $.each(data.listmenu, function (key, value) {
+                            $("select[name='parent']").append(
+                                "<option value=" + value.id + ">" + value.label + "</option>"
+                            );
+                        });
                     }
                 });
             });

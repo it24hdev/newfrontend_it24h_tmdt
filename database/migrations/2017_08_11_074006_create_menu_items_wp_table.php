@@ -26,6 +26,8 @@ class CreateMenuItemsWpTable extends Migration
             $table->unsignedBigInteger('menu');
             $table->integer('depth')->default(0);
             $table->integer('filter_by')->default(0);
+            $table->integer('stt')->default(0);
+            $table->boolean('status')->default(1);
             $table->string('filter_value')->nullable();
             $table->timestamps();
             $table->foreign('menu')->references('id')->on(config('menu.table_prefix') . config('menu.table_name_menus'))

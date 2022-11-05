@@ -16,27 +16,42 @@
     @endif
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <a id="add_menu" class="btn btn-primary shadow-md mr-2" href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview" title="Thêm mới">Thêm mới</a>
+            <form method="get" action="{{url()->current()}}" class="w-1/4 flex">
+            <select name="select_menu" id="select_menu" class="form-select mr-4">
+                <option selected="selected" value="0">Chọn menu</option>
+                @foreach($listmenu as $key => $value)
+                    <option value="{{$value->id}}" @if(request()->input('select_menu') == $value->id) selected="selected" @endif>{{ $value->name }}</option>
+                @endforeach
+            </select>
+                <input type="submit" class="btn btn-primary" value="Chọn">
+            </form>
+            <form method="get" action="{{route('menu.destroymenu')}}">
+                <input type="hidden" value="{{request()->input('select_menu')}}" name="id_menu" class="btn btn-primary form-control ml-4 w-16">
+                <input type="submit" value="Xóa" class="btn btn-primary destroymenu form-control ml-4 w-16">
+            </form>
             <div class="dropdown">
-                <button class="dropdown-toggle btn px-2 box text-gray-700 dark:text-gray-300" aria-expanded="false">
-                    <span class="w-5 h-5 flex items-center justify-center"> <i class="w-4 h-4" data-feather="plus"></i> </span>
-                </button>
-                <div class="dropdown-menu w-40">
-                    <div class="dropdown-menu__content box dark:bg-dark-1 p-2">
-                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="printer" class="w-4 h-4 mr-2"></i> Print </a>
-                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Export to Excel </a>
-                        <a href="" class="flex items-center block p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md"> <i data-feather="file-text" class="w-4 h-4 mr-2"></i> Export to PDF </a>
-                    </div>
-                </div>
+                <a id="add_menu" get-id-menu="{{request()->input('select_menu')}}" class="btn btn-primary form-control ml-4 w-32" href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview" title="Thêm mới"> <span> Thêm mục mới</span></a>
             </div>
+            <div class="hidden md:block mx-auto text-gray-600">
+                <form method="get" action="{{route('menu.addnewmenu')}}" class="flex">
+                    <input name="new_menu" placeholder="Tên menu" class="form-control mr-4">
+                    <input type="submit" class="btn btn-primary" value="Tạo mới">
+                </form>
+            </div>
+            <div class="hidden md:block mx-auto text-gray-600"></div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-12 gap-6 mt-5">
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
             <div class="hidden md:block mx-auto text-gray-600"></div>
             <div class="hidden md:block mx-auto text-gray-600"></div>
         </div>
     </div>
     @include('admin.menu.create')
-    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible">
+    <div class="intro-y col-span-12 overflow-auto lg:overflow-visible bg-white">
         <table class="table">
-            <thead>
+            <thead class="border-b">
             <tr >
                 <th class="whitespace-nowrap">Tên hiển thị</th>
                 <th class="whitespace-nowrap">Link web</th>
@@ -59,7 +74,12 @@
                             @endphp
                             {{$menu->label}}
                         </td>
-                        <td class="text-left">{{$menu->link}}</td>
+                        <td class="text-left">
+                            @if(!empty($menu->link))<a href="{{$menu->link}}" title="Xem trên web">Xem trên web</a>
+                            @else Chưa có link
+                            @endif
+
+                        </td>
                         <td class="text-left">
                         <input class="td_stt w-10 text-center" type="number" name="stt" value="{{$menu->stt}}" get-id="{{$menu->id}}">
                         </td>
@@ -73,7 +93,7 @@
                         <td class="w-20">
                             <div class="flex justify-center items-center">
                                     <a class="btn btn-sm btn-primary mr-2"
-                                       href="#" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
+                                       href="{{route('menu.edit',['id'=>$menu->id])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
                                     </a>
                                     <a title="Xóa" data-toggle="modal"
                                        data-value="{{$menu->id}}"
@@ -153,24 +173,23 @@
            })
             $(document).on('click','#add_menu', function (){
                 if($(this).hasClass('loaded')==false) {
+                    var id_menu = $(this).attr('get-id-menu');
                     var _token = $('meta[name="csrf-token"]').attr('content');
                     var data = {
+                        id_menu: id_menu,
                         _token: _token
                     };
                     $.ajax({
-                        url: "{{route('get_menu')}}",
+                        url: "{{route('get_location_menu')}}",
                         data: data,
                         method: "POST",
                         dataType: "json",
                         success: function (data) {
                             $.each(data.listmenu, function (key, value) {
+                                str ='━ ';
+                                str = str.repeat(value.depth)
                                 $("select[name='parent']").append(
-                                    "<option value=" + value.id + ">" + value.label + "</option>"
-                                );
-                            });
-                            $.each(data.listcategory, function (key, value) {
-                                $("select[name='category_id']").append(
-                                    "<option value=" + value.id + ">" + value.name + "</option>"
+                                    "<option value=" + value.id + ">" + str +value.label + "</option>"
                                 );
                             });
                         }
@@ -204,8 +223,10 @@
                             dataType: "json",
                             success: function (data) {
                                 $.each(data.listcategory, function (key, value) {
+                                    str ='━ ';
+                                    str = str.repeat(value.level-1);
                                     $("select[name='categories_product']").append(
-                                        "<option get-slug=" + value.slug + " value=" + value.id + ">" + value.name + "</option>"
+                                        "<option get-slug=" + value.slug + " value=" + value.id + ">" + str + value.name + "</option>"
                                     );
                                 });
                             }
@@ -236,8 +257,10 @@
                             dataType: "json",
                             success: function (data) {
                                 $.each(data.listcategory, function (key, value) {
+                                    str ='━ ';
+                                    str = str.repeat(value.level-1);
                                     $("select[name='categories_post']").append(
-                                        "<option get-slug=" + value.slug + " value=" + value.id + ">" + value.name + "</option>"
+                                        "<option get-slug=" + value.slug + " value=" + value.id + ">" + str + value.name + "</option>"
                                     );
                                 });
                             }
@@ -531,6 +554,24 @@
                 }
                 $('#link_web').val(url);
 
+            });
+
+            $(document).on('click','.destroymenu', function (){
+                var id_menu = $("#select_menu option:selected").val()
+                console.log(id_menu);
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    id_menu: id_menu,
+                    _token: _token
+                };
+                $.ajax({
+                    url: "{{route('menu.destroymenu')}}",
+                    data: data,
+                    method: "get",
+                    dataType: "json",
+                    success: function (data) {
+                    }
+                });
             });
         });
     </script>

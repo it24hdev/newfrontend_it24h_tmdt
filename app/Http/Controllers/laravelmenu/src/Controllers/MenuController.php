@@ -60,7 +60,6 @@ class MenuController extends Controller
         ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
         ->leftjoin('categories','categories.id', '=', 'categoryproperties_manages.category_id')
         ->get();
-
         return view('admin.menu.menu', $data)->with('category',$category)->with('categorypost',$categorypost)->with('list_property',$list_property);
         }
     }

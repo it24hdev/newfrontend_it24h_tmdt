@@ -275,13 +275,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/change_number_menuitem', [MenusController::class, 'change_number_menuitem'])->name('change_number_menuitem');
         Route::post('/get_menuitem_ajax', [MenusController::class, 'get_menuitem_ajax'])->name('get_menuitem_ajax');
         Route::post('/destroy', [MenusController::class, 'destroy'])->name('menu.destroy');
-        Route::post('/get_menu', [MenusController::class, 'get_menu'])->name('get_menu');
+        Route::post('/get_location_menu', [MenusController::class, 'get_location_menu'])->name('get_location_menu');
         Route::post('/get_categories_product', [MenusController::class, 'get_categories_product'])->name('get_categories_product');
         Route::post('/get_categories_post', [MenusController::class, 'get_categories_post'])->name('get_categories_post');
         Route::post('/get_post', [MenusController::class, 'get_post'])->name('get_post');
         Route::post('/get_property', [MenusController::class, 'get_property'])->name('get_property');
         Route::post('/get_detail_property', [MenusController::class, 'get_detail_property'])->name('get_detail_property');
         Route::post('/get_brand', [MenusController::class, 'get_brand'])->name('get_brand');
+        Route::post('/create', [MenusController::class, 'store'])->name('menu.store');
+        Route::get('/addnewmenu', [MenusController::class, 'addnewmenu'])->name('menu.addnewmenu');
+        Route::get('/destroymenu', [MenusController::class, 'destroymenu'])->name('menu.destroymenu');
+        Route::get('/edit/{id}', [MenusController::class, 'edit'])->name('menu.edit');
     });
 
 });

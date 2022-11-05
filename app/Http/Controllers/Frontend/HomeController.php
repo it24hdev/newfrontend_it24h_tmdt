@@ -155,7 +155,6 @@ class HomeController extends Controller
         ->leftjoin('categories','categories.id','admin_menu_items.category_id')
         ->where('locationmenus.'.$location,'<>','0')
         ->where('locationmenus.'.$location,'<>',null)
-        ->where('admin_menu_items.depth','<>',0)
         ->get();
 
         foreach ($getmenu as $key => $value) {

@@ -6,8 +6,9 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <form action="#" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('menu.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="menu" value="{{$menu}}">
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-4">
                                 <div class="form-group mb-4">
@@ -16,7 +17,7 @@
                                 </div>
                                 <div class="form-group mb-4">
                                     <label>Vị trí</label>
-                                    <select name="parent" class="form-control">
+                                    <select name="parent" class="form-control parent">
                                         <option value="0" selected="selected">=============  Chọn  ============</option>
                                     </select>
                                 </div>

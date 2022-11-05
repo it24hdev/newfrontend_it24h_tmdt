@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Menu;
 use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
 use App\Models\admin_menu_items;
+use App\Models\admin_menus;
 use App\Models\Category;
 use App\Models\Categoryproperties_manages;
 use App\Models\Detailproperties;
 use App\Models\Brand;
 use App\Models\Post;
+use http\Url;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,69 +20,138 @@ use Illuminate\Support\Str;
 class MenusController extends Controller
 {
     public function index(Request $request){
-        $menu =  admin_menu_items::orderby('stt','asc')->where('parent',0)->where('menu',4)->get();
-        $listmenu = [];
-        admin_menu_items::recursive($menu, $parents = 0, $level = 1, $listmenu);
-        return view('admin.menu.index',[
-            'menus' => $listmenu,
-            'title' => 'Menu',
-        ]);
+        $listmenu = admin_menus::get();
+        $menu ="";
+        $listmenuitem = [];
+        if(!empty($request->select_menu)){
+            $menu =  admin_menu_items::orderby('stt','asc')->where('parent',0)->where('menu',$request->select_menu)->get();
+            admin_menu_items::recursive($menu, $parents = 0, $level = 1, $listmenuitem);
+            return view('admin.menu.index',[
+                'menus' => $listmenuitem,
+                'listmenu' => $listmenu,
+                'menu' => $request->select_menu,
+                'title' => 'Menu',
+            ]);
+        }
+        else{
+            return view('admin.menu.index',[
+                'menus' => $listmenuitem,
+                'listmenu' => $listmenu,
+                'menu' => $menu,
+                'title' => 'Menu',
+            ]);
+        }
+    }
+
+    public function addnewmenu(Request $request){
+        $newmenu  = [
+            'name'          => $request->new_menu
+        ];
+        try {
+            DB::beginTransaction();
+            $addmenu = admin_menus::create($newmenu);
+            DB::commit();
+            return redirect()->route('menu.index',['select_menu' => $addmenu->id])->with('success','Thêm menu thành công');
+        }
+        catch (\Exception $exception){
+            DB::rollBack();
+            return redirect()->route('menu.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
+        }
+    }
+
+    public function destroymenu(Request $request){
+        $destroymenu = admin_menus::find($request->id_menu);
+        $destroymenuitem = DB::table('admin_menu_items')->where('menu',$request->id_menu);
+        if(!is_null($destroymenu)) {
+            $destroymenu->delete();
+            if(!is_null($destroymenuitem)){
+                $destroymenuitem->delete();
+            }
+            return redirect()->back()->with('success','Xóa thành công.');
+        }
+        else{
+            return redirect()->back()->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
+        }
     }
 
     public function store(Request $request)
     {
-        $category_code ="";
-        $category_id ="";
-        $filter_by ="";
-        $filter_value ="";
+        $category_code = $category_id = $filter_by = $filter_value = $brand = "";
+        $price_from = $price_to = 0 ;
+        if(!empty($request->price_from)){
+            $price_from =  $request->price_from;
+        }
+        if(!empty($request->price_to)){
+            $price_to =  $request->price_to;
+        }
         if($request->type_menu  == 1){
             if(!empty($request->categories_product) && $request->categories_product!=0){
-                $category_code  = Category::select('ma')->where('id',$request->categories_product)->first();
-                $category_id  = $request->categories_product;
+                $category_code  = Category::where('id',$request->categories_product)->first();
+                if(!empty($category_code)){
+                    $category_code  = $category_code->ma;
+                    $category_id    = $request->categories_product;
+                }
             }
             if(!empty($request->filter_by) && $request->filter_by!=0){
                 $filter_by = $request->filter_by;
+                if($filter_by == 1){
+                    if(!empty($request->detailproperty) && $request->detailproperty!=0){
+                        $filter_value = $request->detailproperty;
+                    }
+                }
+                elseif ($filter_by == 2){
+                       $filter_value = $price_from.";".$price_to;
+                }
+                elseif ($request->type_menu  == 3){
+                    if(!empty($request->brand)){
+                        $filter_value  = $request->brand;
+                    }
+                }
+                else{
+                }
             }
-            if(!empty($request->detailproperty) && $request->detailproperty!=0){
-                $filter_value = $request->detailproperty;
+        }
+        if($request->type_menu  == 2){
+            if(!empty($request->categories_post) && $request->categories_post!=0){
+                $category_code  = Category::where('id',$request->categories_post)->first();
+                if(!empty($category_code)){
+                    $category_code  = $category_code->ma;
+                    $category_id    = $request->categories_post;
+                }
+            }
+        }
+        if($request->type_menu  == 3){
+            if(!empty($request->post) && $request->type_menu!=0){
+                $post  = Post::where('id',$request->post)->first();
+                if(!empty($post)){
+                    $category_id    = $post->id;
+                }
             }
         }
         $Menuitem  = [
-            'name'      => $request->label,
-            'ma'        => $request->ma,
-            'stt'        => $request->stt,
-            'class'        => $request->class,
-            'link'        => $request->link,
-            'category_code'      => $category_code,
-            'category_id'      => $category_id,
-            'filter_by'        => $filter_by,
-            'filter_value'        => $filter_value,
-
-            'status'    => $request->has('status'),
+            'label'           => $request->label,
+            'ma'              => $request->ma,
+            'class'           => $request->class,
+            'stt'             => $request->stt,
+            'parent'          => $request->parent,
+            'link'            => $request->link,
+            'menu'            => $request->menu,
+            'type_menu'       => $request->type_menu,
+            'category_code'   => $category_code,
+            'category_id'     => $category_id,
+            'filter_by'       => $filter_by,
+            'filter_value'    => $filter_value,
+            'status'          => $request->has('status'),
         ];
-
         try {
             DB::beginTransaction();
-            Category::create($Category);
-
+            admin_menu_items::create($Menuitem);
             DB::commit();
-            //xu ly hinh anh danh muc sau khi luu
-            $folder = 'upload/images/products/';
-            $folder_thumb    = 'upload/images/products/thumb/';
-            if ($request->hasFile('thumb')) {
-                $file = CommonHelper::uploadImage($request->thumb, $nameFile, $folder);
-                CommonHelper::cropImage2($file, $nameFile, 300, 300, $folder_thumb);
-            }
-            //xu ly luu vi tri danh muc sau khi luu danh muc
-            if ($request->hasFile('banner')) {
-                $file_banner = CommonHelper::uploadImage($request->banner, $nameFileBanner, $folder);
-                CommonHelper::cropImage2($file_banner, $nameFileBanner, 180, 324, $folder_thumb);
-            }
-            return redirect()->route('category.index')->with('success','Thêm danh mục mới thành công.');
+            return redirect()->back()->with('success','Thêm danh mục mới thành công.');
         }
         catch (\Exception $exception){
             DB::rollBack();
-            return redirect()->route('category.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
+            return redirect()->back()->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
         }
     }
 
@@ -97,7 +168,7 @@ class MenusController extends Controller
         }
     }
     public function get_menuitem_ajax(Request $request){
-        $menu =  admin_menu_items::orderby('stt','asc')->where('menu',4)->where('parent',$request->id)->get();
+        $menu =  admin_menu_items::orderby('stt','asc')->where('menu',1)->where('parent',$request->id)->get();
         $listmenu = [];
         admin_menu_items::recursive($menu, $parents = $request->id, $level = 2, $listmenu);
         $view2     = view('admin.menu.childitems', [
@@ -106,8 +177,11 @@ class MenusController extends Controller
         return response()->json(['html'=>$view2]);
     }
 
-    public function get_menu(Request $request){
-        $menu =  admin_menu_items::orderby('stt','asc')->where('menu',4)->get();
+    public function get_location_menu(Request $request){
+        $menu="";
+        if(!is_null($request->id_menu)){
+            $menu =  admin_menu_items::orderby('stt','asc')->where('menu',$request->id_menu)->get();
+        }
         $listmenu = [];
         admin_menu_items::recursive($menu, $parents = 0, $level = 1, $listmenu);
         return response()->json(['listmenu' => $listmenu]);
@@ -158,10 +232,26 @@ class MenusController extends Controller
         $menu_item     = admin_menu_items::find($request->id);
         if (!is_null($menu_item)){
             $menu_item->delete();
-            return \json_encode(array('success'=>true));
+            $menu="";
+            if(!is_null($request->id_menu)){
+                $menu =  admin_menu_items::orderby('stt','asc')->where('menu',$request->id_menu)->get();
+            }
+            $listmenu = [];
+            admin_menu_items::recursive($menu, $parents = 0, $level = 1, $listmenu);
+            return response()->json(['success'=>true,'listmenu' => $listmenu]);
         }
         return \json_encode(array('success'=>false));
     }
-
+    public function edit(Request $request, $id){
+        $admin_menu_items = admin_menu_items::find($id);
+        if ($admin_menu_items !== null) {
+            return view('admin.menu.edit',[
+                'title'        => 'Sửa menu',
+                'admin_menu_items' => $admin_menu_items,
+            ]);
+        } else {
+            \abort(404);
+        }
+    }
 
 }

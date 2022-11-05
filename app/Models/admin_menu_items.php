@@ -23,7 +23,8 @@ class admin_menu_items extends Model
         'category_id',
         'category_code',
         'ma',
-        'stt'
+        'stt',
+        'type_menu'
     ];
 
 //    public function childs()
@@ -32,19 +33,18 @@ class admin_menu_items extends Model
 //    }
 
 
-    public static function recursive($menu, $parents = 0, $level = 1, &$listmenu)
+    public static function recursive($menu, $parents = 0, $level = 1, &$listmenuitem)
     {
         if (count($menu)>0) {
             foreach ($menu as $key => $value) {
                 if ($value->parent==$parents) {
                     $value->level=$level;
-                    $listmenu[]=$value;
+                    $listmenuitem[]=$value;
                     unset($menu[$key]);
                     $parent = $value->id;
-                    self::recursive($menu, $parent, $level + 1, $listmenu);
+                    self::recursive($menu, $parent, $level + 1, $listmenuitem);
                 }
             }
         }
-
     }
 }
