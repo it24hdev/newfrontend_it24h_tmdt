@@ -133,7 +133,7 @@
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
-                                    @if($Sidebar->parent==0)
+{{--                                    @if($Sidebar->parent==0)--}}
                                     <li class="menucontent">
                                         <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
                                             {{$Sidebar->label}}
@@ -152,7 +152,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    @endif
+{{--                                    @endif--}}
                                     @endforeach
                                 </ul>
                             </nav>

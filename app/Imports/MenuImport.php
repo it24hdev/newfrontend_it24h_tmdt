@@ -28,8 +28,6 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
         ini_set('max_execution_time', 1800);
         $this->menu = $menu;
     }
-    
-
     public function collection(Collection $rows)
     {
       foreach ($rows as $key => $row) {
@@ -47,7 +45,7 @@ class MenuImport implements ToCollection, SkipsEmptyRows, WithStartRow, WithVali
               $MenuItems->category_code  = $cate_code->ma;
               $MenuItems->category_id    = $cate_code->id;
             }
-           
+
             if($row[2] !== ""){
               $code  = $row[2];
               $cate  = MenuItems::where("ma" , $code)->first();

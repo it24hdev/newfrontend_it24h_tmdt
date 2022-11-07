@@ -1,20 +1,20 @@
 <ul class="menu-cat-mobile">
 @foreach($Sidebars  as $Sidebar)
-    @if($Sidebar->parent==0)
+{{--    @if($Sidebar->parent==0)--}}
     <li>
         <a href="{!! $Sidebar->link !!}"><span class="icon-menu me-1">
         {!! $Sidebar->class !!} {{$Sidebar->label}}</a>
         @if(count($Sidebar->childs))
         <span class="icon-right" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}"><i class="far fa-angle-right"></i></span>
         @endif
-        
+
         <div class="submenu-parent-mobile" >
             <div id="submobileid-{{$Sidebar->id}}" class="full_sub">
 
             </div>
-        </div> 
+        </div>
     </li>
-    @endif
+{{--    @endif--}}
 @endforeach
 </ul>
 <script>
@@ -37,7 +37,7 @@
                 success: function (data) {
                     console.log(data);
 
-                   $("#submobileid-"+ id).append(data); 
+                   $("#submobileid-"+ id).append(data);
                 },
             })
             $(this).addClass("loaded");

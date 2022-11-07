@@ -52,7 +52,7 @@
                     <span class="new">
                         New
                     </span>
-                </img>
+{{--                </img>--}}
             </div>
             <div class="desc">
                 <div class="name">

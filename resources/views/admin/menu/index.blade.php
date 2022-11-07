@@ -25,27 +25,36 @@
             </select>
                 <input type="submit" class="btn btn-primary" value="Chọn">
             </form>
-            <form method="get" action="{{route('menu.destroymenu')}}">
-                <input type="hidden" value="{{request()->input('select_menu')}}" name="id_menu" class="btn btn-primary form-control ml-4 w-16">
-                <input type="submit" value="Xóa" class="btn btn-primary destroymenu form-control ml-4 w-16">
-            </form>
+            <input type="button" value="Xóa" class="btn btn-primary destroymenu form-control ml-4 w-16">
             <div class="dropdown">
-                <a id="add_menu" get-id-menu="{{request()->input('select_menu')}}" class="btn btn-primary form-control ml-4 w-32" href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview" title="Thêm mới"> <span> Thêm mục mới</span></a>
+                <a id="add_menu" get-id-menu="{{request()->input('select_menu')}}" class="hidden btn btn-primary form-control ml-4 w-32" href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview" title="Thêm mới"> <span> Thêm mục mới</span></a>
             </div>
-            <div class="hidden md:block mx-auto text-gray-600">
-                <form method="get" action="{{route('menu.addnewmenu')}}" class="flex">
-                    <input name="new_menu" placeholder="Tên menu" class="form-control mr-4">
-                    <input type="submit" class="btn btn-primary" value="Tạo mới">
-                </form>
+
+            <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap">
+                <div id="im_export" class="hidden mt-2 ml-4">
+                    <a class="btn btn-primary mr-4" href="{{ route('menu.export',request()->input("select_menu")) }}">Export Data</a>
+                @if(!empty(request()->input("select_menu")) && request()->has('select_menu') && request()->input("select_menu") != 0)
+                        <form action="{{ route('menu.import',request()->input("select_menu")) }}" method="POST" enctype="multipart/form-data" style="display: contents;">
+                            @csrf
+                            <button type="submit" class="btn btn-primary mr-2" >Import Data</button>
+                            <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 190px; border-width: 0;">
+                        </form>
+                    @endif
+                </div>
+                <div class="hidden md:block mx-auto text-gray-600"></div>
             </div>
-            <div class="hidden md:block mx-auto text-gray-600"></div>
+            <div  class="hidden md:block mx-auto text-gray-600">
+
+            </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-12 gap-6 mt-5">
-        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-            <div class="hidden md:block mx-auto text-gray-600"></div>
-            <div class="hidden md:block mx-auto text-gray-600"></div>
+    <div class="grid grid-cols-12 gap-6 mt-2">
+        <div class="md:block mx-auto text-gray-600">
+            <form method="get" action="{{route('menu.addnewmenu')}}" class="mb-4 flex">
+                <input name="new_menu" placeholder="Tên menu" class="form-control mr-4 w-44">
+                <input type="submit" class="btn btn-primary" value="Tạo mới">
+            </form>
         </div>
     </div>
     @include('admin.menu.create')
@@ -113,6 +122,7 @@
 @section('js')
     <script>
         $(document).ready(function () {
+            //load danh sách con khi click vào cha
             $(document).on('click','.rowparent' ,function (){
                 var get_id= $(this).attr('get-id');
                 if($(this).parent().hasClass('loaded')==false){
@@ -147,6 +157,8 @@
                     $(this).parent().addClass('active')
                 }
             });
+
+            //lưu thay đổi vị trí trên menu cha/con
            $(document).on('change','.td_stt', function (){
                var id = $(this).attr('get-id');
                var val = $(this).val();
@@ -171,6 +183,7 @@
                    }
                })
            })
+            //load danh sách menu khi click thêm mới
             $(document).on('click','#add_menu', function (){
                 if($(this).hasClass('loaded')==false) {
                     var id_menu = $(this).attr('get-id-menu');
@@ -197,6 +210,8 @@
                     $(this).addClass('loaded');
                 };
             })
+
+            //load danh mục khi chọn kiểu menu(tự tạo/dm sp/dm bài viết/ bài viết)
             $(document).on('change','.type_menu', function (){
                 var type_menu =  $(this).val();
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -204,6 +219,7 @@
                     _token: _token
                 };
                 $('#link_web').val("");
+                //danh mục sản phẩm
                 if(type_menu == 1){
                     $("#link_web").attr('readonly', true);
                     // $('select[name="property"]').val('0');
@@ -233,7 +249,7 @@
                         });
                         $(".categories_product").addClass('loaded');
                     };
-                }
+                }// danh mục bài viết
                 else if(type_menu == 2){
                     $("#link_web").attr('readonly', true);
                     if($(".categories_product").hasClass('hidden')==false){
@@ -268,6 +284,7 @@
                         $(".categories_post").addClass('loaded');
                     };
                 }
+                //bài viết
                 else if(type_menu == 3) {
                     $("#link_web").attr('readonly', true);
                     if ($(".categories_product").hasClass('hidden') == false) {
@@ -300,6 +317,7 @@
                         $(".post").addClass('loaded');
                     };
                 }
+                // liên kết tự tạo
                 else{
                     $("#link_web").attr('readonly', false);
                     if ($(".categories_product").hasClass('hidden') == false) {
@@ -319,6 +337,8 @@
                     }
                 }
             });
+
+           //load chi tiết thuộc tính khi chọn loại thuộc tính
             $(document).on('change','.filter_by', function (){
                 var filter_by = $("#filter_by").val();
                 var cat_id = $(".cat_product").val();
@@ -333,6 +353,7 @@
                     url = url.replace('_url_', slug);
                 }
                 $('#link_web').val(url);
+                // thuộc tính
                 if(filter_by==1){
                     $(".filter_value").removeClass('hidden');
                     $(".property").removeClass('hidden');
@@ -363,6 +384,7 @@
                         }
                     });
                 }
+                // giá
                 else if(filter_by==2){
                     $(".filter_value").removeClass('hidden');
                     $(".price").removeClass('hidden');
@@ -376,6 +398,7 @@
                         $(".brand").addClass('hidden');
                     }
                 }
+                //thương hiệu
                 else if(filter_by==3){
                     $(".filter_value").removeClass('hidden');
                     $(".brand").removeClass('hidden');
@@ -405,6 +428,7 @@
                         }
                     });
                 }
+                //chọn
                 else{
                     if ($(".filter_value").hasClass('hidden') == false) {
                         $(".filter_value").addClass('hidden');
@@ -425,6 +449,8 @@
                     $('#price_to').val("");
                 }
             });
+
+            //load lại loại thuộc tính khi thay đổi danh mục
             $(document).on('change','.cat_product', function (){
                 var cat_id = $(this).val();
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -461,6 +487,7 @@
                 }
             });
 
+            //thay đổi url khi chọn bài viết
             $(document).on('change','.post_single', function (){
                 $('#link_web').val("");
                 var slug = $(".post_single option:selected").attr('get-slug');
@@ -468,7 +495,7 @@
                 url = url.replace('_url_', slug);
                 $('#link_web').val(url);
             });
-
+            // thay đổi url khi chọn danh mục bài viết
             $(document).on('change','.cat_post', function (){
                 $('#link_web').val("");
                 var slug = $(".cat_post option:selected").attr('get-slug');
@@ -476,6 +503,7 @@
                 url = url.replace('_url_', slug);
                 $('#link_web').val(url);
             });
+            // thay đổi chi tiết thuộc tính khi chọn lại loại thuộc tính
             $(document).on('change','.attributes', function (){
                 var attr_id =  $(this).val();
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -503,6 +531,8 @@
                     $("select[name='detailproperty']").empty().append('<option selected="selected" value="0">Chi tiết</option>');
                 }
             });
+
+            //thay đổi url khi thay đổi chi tiết thuộc tính
             $(document).on('change','.detail_attr', function (){
                 var detail_attr_id = $(this).val();
                 var detail_attr_code = $("option:selected", this).attr('get-code');
@@ -517,7 +547,7 @@
                 }
                 $('#link_web').val(url);
             });
-
+            //thay đổi url khi thay đổi giá tiền
             $(document).on('change','#price_from, #price_to', function (){
                 var price_from = $("#price_from").val();
                 var price_to = $("#price_to").val();
@@ -539,7 +569,7 @@
                 }
                 $('#link_web').val(url);
             });
-
+            // thay đổi url khi thay đổi hãng
             $(document).on('change','#brand', function (){
                 var brand =  $(this).val();
                 $('#link_web').val("");
@@ -555,10 +585,9 @@
                 $('#link_web').val(url);
 
             });
-
+            //xóa mục menu đã chọn
             $(document).on('click','.destroymenu', function (){
-                var id_menu = $("#select_menu option:selected").val()
-                console.log(id_menu);
+                var id_menu =  $("option:selected", 'select[name="select_menu"]').val();
                 var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
                     id_menu: id_menu,
@@ -567,12 +596,33 @@
                 $.ajax({
                     url: "{{route('menu.destroymenu')}}",
                     data: data,
-                    method: "get",
+                    method: "post",
                     dataType: "json",
                     success: function (data) {
+                        if (data.success) {
+                            var url = "{{route('menu.index')}}";
+                            window.location = url;
+                            alert('Xóa thành công.');
+                        }
+                        else{
+                            var url = "{{route('menu.index',['select_menu' => '_url_'])}}";
+                            url = url.replace('_url_', data.idmenu);
+                            window.location = url;
+                            alert('Đã xảy ra lỗi. Xin thử lại.');
+                        }
                     }
                 });
             });
+
+            var selectmenu = '{{request()->input('select_menu')}}';
+            if(selectmenu != 0 && selectmenu != null){
+                $('#add_menu').removeClass('hidden');
+                $('#im_export').removeClass('hidden');
+
+            }
+            $(document).ajaxStop(function() {
+                $("#submit_adnew").removeClass('hidden');
+            })
         });
     </script>
 @endsection

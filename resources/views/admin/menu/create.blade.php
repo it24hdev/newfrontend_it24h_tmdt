@@ -133,7 +133,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-sm btn-primary w-20 mr-1">Đóng</button>
-                            <input type="submit" class="btn btn-sm btn-primary w-20 mr-1" value="Tạo mới">
+                            <input id="submit_adnew" type="submit" class="hidden btn btn-sm btn-primary w-20 mr-1" value="Tạo mới">
                         </div>
                     </form>
                 </div>

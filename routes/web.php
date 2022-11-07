@@ -61,8 +61,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/generatemenucontrol', [MenuController::class, 'generatemenucontrol'])->name('hgeneratemenucontrol');
     Route::post('/updateitem', [MenuController::class, 'updateitem'])->name('hupdateitem');
 
-    Route::get('/menu_export/{menu}',[MenuController::class, 'export'])->name('menu.export');
-    Route::post('/menu_import/{menu}', [MenuController::class, 'import'])->name('menu.import');
+//    Route::get('/menu_export/{menu}',[MenuController::class, 'export'])->name('menu.export');
+//    Route::post('/menu_import/{menu}', [MenuController::class, 'import'])->name('menu.import');
     });
 
     /*----------- USER ----------*/
@@ -280,12 +280,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/get_categories_post', [MenusController::class, 'get_categories_post'])->name('get_categories_post');
         Route::post('/get_post', [MenusController::class, 'get_post'])->name('get_post');
         Route::post('/get_property', [MenusController::class, 'get_property'])->name('get_property');
+        Route::post('/get_property_edit', [MenusController::class, 'get_property_edit'])->name('get_property_edit');
         Route::post('/get_detail_property', [MenusController::class, 'get_detail_property'])->name('get_detail_property');
         Route::post('/get_brand', [MenusController::class, 'get_brand'])->name('get_brand');
+        Route::post('/get_brand_edit', [MenusController::class, 'get_brand_edit'])->name('get_brand_edit');
         Route::post('/create', [MenusController::class, 'store'])->name('menu.store');
         Route::get('/addnewmenu', [MenusController::class, 'addnewmenu'])->name('menu.addnewmenu');
-        Route::get('/destroymenu', [MenusController::class, 'destroymenu'])->name('menu.destroymenu');
+        Route::post('/destroymenu', [MenusController::class, 'destroymenu'])->name('menu.destroymenu');
         Route::get('/edit/{id}', [MenusController::class, 'edit'])->name('menu.edit');
+        Route::post('/update/{id}',[MenusController::class, 'update'])->name('menu.update');
+        Route::get('/menu_export/{menu}',[MenusController::class, 'export'])->name('menu.export');
+        Route::post('/menu_import/{menu}', [MenusController::class, 'import'])->name('menu.import');
+
     });
 
 });
