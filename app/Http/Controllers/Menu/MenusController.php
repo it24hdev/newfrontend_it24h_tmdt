@@ -23,6 +23,15 @@ use App\Imports\MenuImport;
 
 class MenusController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            \session(['module_active' => 'menu', 'active' => 'Menu']);
+            return $next($request);
+        });
+    }
+
     public function index(Request $request){
         $listmenu = admin_menus::get();
         $menu ="";

@@ -201,6 +201,9 @@
             });
         });
     </script>
+
+{{--    <script src="/path/to/cdn/jquery.slim.min.js"></script>--}}
+{{--    <script src="/path/to/jquery.bootstrap.newsbox.min.js"></script>--}}
 </body>
 
 </html>

@@ -32,9 +32,9 @@
 
             <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap">
                 <div id="im_export" class="hidden mt-2 ml-4">
+                    @if(!empty(request()->input("select_menu")) && request()->has('select_menu') && request()->input("select_menu") != 0)
                     <a class="btn btn-primary mr-4" href="{{ route('menu.export',request()->input("select_menu")) }}">Export Data</a>
-                @if(!empty(request()->input("select_menu")) && request()->has('select_menu') && request()->input("select_menu") != 0)
-                        <form action="{{ route('menu.import',request()->input("select_menu")) }}" method="POST" enctype="multipart/form-data" style="display: contents;">
+                       <form action="{{ route('menu.import',request()->input("select_menu")) }}" method="POST" enctype="multipart/form-data" style="display: contents;">
                             @csrf
                             <button type="submit" class="btn btn-primary mr-2" >Import Data</button>
                             <input type="file" name="file" class="" value="Chọn" style="height: 40px;width: 190px; border-width: 0;">

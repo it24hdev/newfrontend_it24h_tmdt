@@ -25,6 +25,8 @@ use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
 use App\Http\Controllers\Categoryproperty\Category_propertyController;
 use App\Http\Controllers\Menu\MenusController;
+use App\Http\Controllers\Recentactivity\RecentactivityController;
+use App\Http\Controllers\EXController;
 
 
 Auth::routes();
@@ -293,7 +295,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/menu_import/{menu}', [MenusController::class, 'import'])->name('menu.import');
 
     });
-
+    Route::prefix('admin/recentactivity')->group(function () {
+        Route::get('/', [RecentactivityController::class, 'index'])->name('recentactivity.index');
+        Route::post('/create', [RecentactivityController::class, 'store'])->name('recentactivity.store');
+        Route::post('/destroy', [RecentactivityController::class, 'destroy'])->name('recentactivity.destroy');
+        Route::post('/edit', [RecentactivityController::class, 'edit_ajax'])->name('recentactivity.edit_ajax');
+        Route::post('/update', [RecentactivityController::class, 'update_ajax'])->name('recentactivity.update_ajax');
+    });
 });
 
 /* ========== Change language =========== */
@@ -367,9 +375,6 @@ Route::get('/login-google', [FrontendUserController::class, 'login_google'])->na
 Route::get('/google/callback', [FrontendUserController::class, 'callback_google']);
 
 Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('about_us');
+Route::get('/ex', [EXController::class, 'index'])->name('ex');
 Route::post('/menucontent', [HomeController::class, 'menucontent'])->name('menucontent');
 Route::post('/menucontent2', [HomeController::class, 'menucontent2'])->name('menucontent2');
-
-
-
-

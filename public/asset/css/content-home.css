@@ -993,3 +993,93 @@ ul.sub_cat_title_slider li{
         max-width: 900px;
     }
 }
+
+
+.newsticker{
+    -webkit-border-radius: 10px;
+    margin-bottom: 5px;
+    /*padding: 10px;*/
+    align-items: center;
+    width: 270px;
+}
+/* (A) STANDARD ROW HEIGHT */
+.vwrap, .vitem {
+    height: auto;
+    /*line-height: 30px;*/
+}
+.vwrap ul{
+    padding: 0px 3px 0px 7px
+}
+
+/* (B) FIXED WRAPPER */
+.vwrap {
+    overflow: hidden;
+    background: #eee;
+    height: 300px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    align-items: center;
+}
+.vwrap ul{
+    padding: 0px 3px 0px 7px;
+}
+    /* (C) TICKER ITEMS */
+.vitem {
+    text-align: left;
+    line-height: 20px;
+    margin-bottom: 10px;
+    /* background: #169fd8; */
+    /* border-radius: 0px 5px; */
+    /* color: #ffffff; */
+    padding: 5px;
+    display: list-item;
+    /*border-bottom: 1px solid;*/
+}
+
+.vitem a{
+    color: #ff8401;
+}
+
+.vitem .Orange{
+    color: #0d6efd;
+}
+
+/* (D) ANIMATION - MOVE ITEMS FROM TOP TO BOTTOM */
+/* CHANGE KEYFRAMES IF YOU ADD/REMOVE ITEMS */
+.vmove { position: relative; }
+@keyframes tickerv {
+    0% { bottom: 0; } /* FIRST ITEM */
+    10% { bottom: 40px; } /* SECOND ITEM */
+    20% { bottom: 80px; } /* THIRD ITEM */
+    30% { bottom: 120px; } /* FORTH ITEM */
+    40% { bottom: 160px; } /* BACK TO FIRST */
+    50% { bottom: 200px; } /* BACK TO FIRST */
+    60% { bottom: 240px; } /* BACK TO FIRST */
+    70% { bottom: 260px; } /* BACK TO FIRST */
+    80% { bottom: 300px; } /* BACK TO FIRST */
+    90% { bottom: 340px; } /* BACK TO FIRST */
+    100% { bottom: 0px; } /* BACK TO FIRST */
+    /*77% { bottom: 420px; } !* BACK TO FIRST *!*/
+    /*84% { bottom: 460px; } !* BACK TO FIRST *!*/
+    /*91% { bottom: 500px; } !* BACK TO FIRST *!*/
+    /*100% { bottom: 540px; } !* BACK TO FIRST *!*/
+}
+.vmove {
+    animation-name: tickerv;
+    animation-duration: 35s;
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(1, 0, 0, 0);
+}
+.vmove:hover { animation-play-state: paused; }
+
+
+.register_service{
+    border-color: transparent;
+    border-bottom-color: #cecece;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    margin-bottom: 10px;
+    outline: none;
+}

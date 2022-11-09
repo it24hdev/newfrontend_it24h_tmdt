@@ -276,7 +276,7 @@
                     </li>
             </ul>
         </li>
-         
+
 
         <li>
             <a href="javascript:;" class="menu {{ $module_active == 'recruit' ? 'menu--active' : '' }}">
@@ -310,6 +310,15 @@
         </li>
 
         <li>
+            <a href="{{route('recentactivity.index')}}" class="menu">
+                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                <div class="menu__title">
+                    Hoạt động gần đây
+                </div>
+            </a>
+        </li>
+
+        <li>
             <a href="javascript:;" class="menu {{ $module_active == 'setting' ? 'menu--active' : '' }}">
                 <div class="menu__icon"> <i data-feather="settings"></i> </div>
                 <div class="menu__title">
@@ -322,7 +331,7 @@
             </a>
             <ul class="{{ $module_active == 'menu' ? 'menu__sub-open' : '' }}">
                 <li>
-                    <a href="{{ route('menu') }}" class="menu">
+                    <a href="{{ route('menu.index') }}" class="menu">
                         <div class="menu__icon"> <i data-feather="menu"></i> </div>
                         <div class="menu__title">Menu</div>
                     </a>
@@ -335,7 +344,7 @@
                         </a>
                     </li>
                 @endcan
-                
+
             </ul>
         </li>
     </ul>
