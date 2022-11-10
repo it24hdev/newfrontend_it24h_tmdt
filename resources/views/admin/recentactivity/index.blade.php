@@ -58,8 +58,6 @@
                         <td class="w-20">
                             <div class="flex justify-center items-center">
                                 <a class="btn btn-sm btn-primary mr-2 btn-edit"
-{{--                                   href="{{route('recentactivity.edit',['id'=>$value->id])}}" --}}
-{{--                                   data-bs-toggle="tooltip"--}}
                                     data-value="{{$value->id}}"
                                    data-target="#edit-confirmation-modal"
                                    href="javascript:;" data-toggle="modal"

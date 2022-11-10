@@ -303,6 +303,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/edit', [RecentactivityController::class, 'edit_ajax'])->name('recentactivity.edit_ajax');
         Route::post('/update', [RecentactivityController::class, 'update_ajax'])->name('recentactivity.update_ajax');
     });
+
+    Route::prefix('admin/service')->group(function () {
+        Route::get('/', [RegisterserviceController::class, 'index'])->name('registerservice.index');
+        Route::get('/edit/{id}', [RegisterserviceController::class, 'edit'])->name('registerservice.edit');
+    });
 });
 
 /* ========== Change language =========== */

@@ -1070,11 +1070,13 @@ ul.sub_cat_title_slider li{
 .register_service{
     border-color: transparent;
     border-bottom-color: #cecece;
-    border-radius: 0;
-    padding-left: 0;
-    padding-right: 0;
+    /*border-radius: 0;*/
+    /*padding-right: 0;*/
     margin-bottom: 10px;
     outline: none;
+    z-index: 2;
+    background-color: transparent;
+    padding-left: 34px;
 }
 
 .wp-supper-deal .title_activity{
@@ -1098,4 +1100,18 @@ ul.sub_cat_title_slider li{
     color: #212529;
     text-transform: uppercase;
     text-align: center;
+}
+
+.input-wrapper{
+    font-size: 14px;
+    position: relative;
+}
+.icon-wrapper{
+    left: 0;
+    width: 26px;
+    text-align: center;
+    font-family: CS_iconfont;
+    position: absolute;
+    top: 6px;
+    z-index: 1;
 }

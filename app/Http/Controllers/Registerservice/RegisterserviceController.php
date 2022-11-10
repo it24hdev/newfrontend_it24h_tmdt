@@ -14,7 +14,19 @@ use Redirect;
 class RegisterserviceController extends Controller
 {
     public function index(Request $request){
+        $Registerservice =  Registerservice::orderby('created_at','desc')->paginate('10');
+        return view('admin.registerservice.index',[
+            'registerservice' => $Registerservice,
+            'title' => 'Danh sách yêu cầu',
+        ]);
+    }
 
+    public function edit(Request $request, $id){
+        $Registerservice = Registerservice::find($id);
+        return view('admin.registerservice.edit',[
+            'registerservice' => $Registerservice,
+            'title' => 'Yêu cầu của khách hàng:',
+        ]);
     }
 
     public function create(Request $request){

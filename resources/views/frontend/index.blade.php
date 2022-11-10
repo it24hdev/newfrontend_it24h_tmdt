@@ -30,11 +30,50 @@
                     <div class="form-group wp-supper-deal p-3 mb-4">
                         <h3>Đăng ký dịch vụ</h3>
                         <form enctype="multipart/form-data" class="register_form">
-                            <input class="form-control register_service px-2" type="text" name="customer_name" placeholder="Họ và tên" required>
-                            <input class="form-control register_service px-2" type="tel" name="customer_numberphone" placeholder="SĐT" maxlength="12" required>
-                            <input class="form-control register_service px-2" type="email" name="customer_email" placeholder="EMAIL">
-                            <textarea class="form-control " name="customer_request" rows="3" placeholder="Nhập yêu cầu.." required></textarea>
-                            <input id="registerservice" type="button" class="btn-submit btn btn-primary px-2 form-control mt-4" value="Đăng ký">
+                            <div class="form-group">
+                                <div class="input-wrapper" >
+                                    <span class="icon-wrapper" >
+                                        <i class="fal fa-user"></i>
+                                    </span>
+                                    <span class="position-relative">
+                                        <input class="form-control register_service" type="text" name="customer_name" placeholder="Họ và tên" required>
+                                        <span class="required_name text-danger d-none"><i>Bạn chưa nhập họ và tên.</i></span>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-wrapper" >
+                                    <span class="icon-wrapper" >
+                                        <i class="fal fa-phone-alt"></i>
+                                    </span>
+                                    <span class="position-relative">
+                                        <input class="form-control register_service" type="tel" name="customer_numberphone" placeholder="Số điện thoại" maxlength="12" required>
+                                        <span class="required_phone text-danger d-none"><i>Bạn chưa nhập số điện thoại.</i></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-wrapper" >
+                                    <span class="icon-wrapper" >
+                                        <i class="fal fa-envelope"></i>
+                                    </span>
+                                    <span class="position-relative">
+                                        <input class="form-control register_service" type="email" name="customer_email" placeholder="Email">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-wrapper" >
+{{--                                    <span class="icon-wrapper" >--}}
+{{--                                        <i class="fal fa-comment-alt-edit"></i>--}}
+{{--                                    </span>--}}
+                                    <span class="position-relative">
+                                    <textarea class="form-control " name="customer_request" rows="3" placeholder="Nhập yêu cầu.." required></textarea>
+                                    <span class="required_request text-danger d-none"><i>Bạn chưa nhập yêu cầu.</i></span>
+                                    </span>
+                                </div>
+                            </div>
+                                    <input id="registerservice" type="button" class="btn-submit btn btn-primary px-2 form-control mt-4" value="Đăng ký">
                         </form>
                         <div class="respone_register d-none">
                             <div class="register_error d-none">
@@ -479,6 +518,30 @@
                     customer_request: customer_request,
                     _token: _token
                 };
+                if(name==""){
+                    $('.required_name').removeClass('d-none');
+                }else{
+                    if(!$('.required_name').hasClass('d-none')){
+                        $('.required_name').addClass('d-none');
+                    }
+                }
+
+                if(phone==""){
+                    $('.required_phone').removeClass('d-none');
+                }else{
+                    if(!$('.required_phone').hasClass('d-none')){
+                        $('.required_phone').addClass('d-none');
+                    }
+                }
+
+                if(customer_request==""){
+                    $('.required_request').removeClass('d-none');
+                }else{
+                    if(!$('.required_request').hasClass('d-none')){
+                        $('.required_request').addClass('d-none');
+                    }
+                }
+
                 if(name!='' && customer_request !='' && phone !=''){
                     $.ajax({
                         url: "{{route('registerservice.create')}}",
