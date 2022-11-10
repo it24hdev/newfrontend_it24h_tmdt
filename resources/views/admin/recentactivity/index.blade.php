@@ -115,15 +115,6 @@
                     }
                 })
             });
-
-            // $(document).on('click', '.check_status', function (){
-            //     if($(this).attr('checked')){
-            //         $(this).removeAttr('checked');
-            //     }
-            //     else{
-            //         $(this).attr('checked','checked');
-            //     }
-            // });
             $(document).on('click', '#update_recentactivity', function (){
                 var name_edit = $("input[name='name_edit']").val();
                 var id_edit = $("input[name='id_edit']").val();

@@ -213,6 +213,8 @@
     border-radius: 10px;
     padding: 13px 30px;
 }
+
+
 .wp-supper-deal .block-filterproducts{
     position: relative;
 }
@@ -995,13 +997,6 @@ ul.sub_cat_title_slider li{
 }
 
 
-.newsticker{
-    -webkit-border-radius: 10px;
-    margin-bottom: 5px;
-    /*padding: 10px;*/
-    align-items: center;
-    width: 270px;
-}
 /* (A) STANDARD ROW HEIGHT */
 .vwrap, .vitem {
     height: auto;
@@ -1014,9 +1009,7 @@ ul.sub_cat_title_slider li{
 /* (B) FIXED WRAPPER */
 .vwrap {
     overflow: hidden;
-    background: #eee;
     height: 300px;
-    padding: 10px;
     border-radius: 8px;
     text-align: center;
     align-items: center;
@@ -1027,22 +1020,22 @@ ul.sub_cat_title_slider li{
     /* (C) TICKER ITEMS */
 .vitem {
     text-align: left;
-    line-height: 20px;
+    line-height: 17px;
     margin-bottom: 10px;
-    /* background: #169fd8; */
-    /* border-radius: 0px 5px; */
-    /* color: #ffffff; */
-    padding: 5px;
+    padding: 0 5px 0 5px;
+    margin-left: 10px;
     display: list-item;
-    /*border-bottom: 1px solid;*/
+    list-style-type: circle;
 }
 
 .vitem a{
-    color: #ff8401;
+    color: #017efff5;
+    font-weight: 600;
 }
 
-.vitem .Orange{
-    color: #0d6efd;
+.vitem .colorattr{
+    color: #fd1616f2;
+    font-weight: 500;
 }
 
 /* (D) ANIMATION - MOVE ITEMS FROM TOP TO BOTTOM */
@@ -1082,4 +1075,27 @@ ul.sub_cat_title_slider li{
     padding-right: 0;
     margin-bottom: 10px;
     outline: none;
+}
+
+.wp-supper-deal .title_activity{
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-color: transparent;
+    text-align: center;
+    border-radius: 0;
+    padding-left: 0;
+    padding-right: 0;
+    border-bottom: 2px solid #169fd8;
+    margin-bottom: 10px;
+}
+.register_form input, textarea{
+    font-size: 14px!important;
+}
+.wp-supper-deal h3{
+    font-weight: 700;
+    font-size: 18px;
+    color: #212529;
+    text-transform: uppercase;
+    text-align: center;
 }

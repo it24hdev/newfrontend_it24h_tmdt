@@ -27,68 +27,80 @@
                             </a>
                         </div>
                     @endif
-                    <div>
+                    <div class="form-group wp-supper-deal p-3 mb-4">
                         <h3>Đăng ký dịch vụ</h3>
-                        <form>
-                            <input class="form-control register_service" type="text" name="name" placeholder="SĐT/EMAIL">
-                            <textarea class="form-control " name="content" rows="7" placeholder="Nhập yêu cầu.."></textarea>
-                            <input type="text" class="btn-submit btn btn-primary px-2 w-1 mb-2 mt-2" value="Đăng ký">
+                        <form enctype="multipart/form-data" class="register_form">
+                            <input class="form-control register_service px-2" type="text" name="customer_name" placeholder="Họ và tên" required>
+                            <input class="form-control register_service px-2" type="tel" name="customer_numberphone" placeholder="SĐT" maxlength="12" required>
+                            <input class="form-control register_service px-2" type="email" name="customer_email" placeholder="EMAIL">
+                            <textarea class="form-control " name="customer_request" rows="3" placeholder="Nhập yêu cầu.." required></textarea>
+                            <input id="registerservice" type="button" class="btn-submit btn btn-primary px-2 form-control mt-4" value="Đăng ký">
                         </form>
-                    </div>
-                    <div class="block-services" style="margin-bottom: 30px;">
-                        <ul class="clearfix">
-                            <li>
-                                <div class="item">
-                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-5.png')}}"
-                                                              alt="Slide Image" width="57" height="57"></div>
-                                    <div class="sv-info">
-                                        <div class="top-sv">Miễn phí vận chuyển</div>
-                                        <div class="bottom-sv">Áp dụng cho đơn hàng 2 sản phẩm</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item">
-                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-6.png')}}"
-                                                              alt="Slide Image" width="57" height="57"></div>
-                                    <div class="sv-info">
-                                        <div class="top-sv">Thanh toán dễ dàng</div>
-                                        <div class="bottom-sv">Trả tiền mặt, Banking, trả góp 0%</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item">
-                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-7.png')}}"
-                                                              alt="Slide Image" width="57" height="57"></div>
-                                    <div class="sv-info">
-                                        <div class="top-sv">Hỗ trợ 24/7</div>
-                                        <div class="bottom-sv">Tư vấn giải đáp mọi thắc mắc</div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="item">
-                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-8.png')}}"
-                                                              alt="Slide Image" width="57" height="57"></div>
-                                    <div class="sv-info">
-                                        <div class="top-sv">Quà tặng hấp dẫn</div>
-                                        <div class="bottom-sv">Nhiều chính sách quà tặng lớn</div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                        <h3>Hoạt động gần đây</h3>
-                    <div class="newsticker">
-                        <div class="vwrap">
-                            <div class="vmove">
+                        <div class="respone_register d-none">
+                            <div class="register_error d-none">
+                                <p>Đăng ký dịch vụ không thành công, xin vui lòng thử lại</p>
+                                <input id="re_register" type="button" class="form-control btn btn-primary" value="Đăng ký lại">
+                            </div>
+                            <div class="register_success d-none">
+                                <p>Cảm ơn bạn đã đăng ký dịch vụ IT24h</p>
+                                <input id="newrequest" type="button" class="form-control btn btn-primary" value="Thêm yêu cầu">
+                            </div>
+                        </div>
 
+                    </div>
+                    <div class="block-services mb-5">
+{{--                        <ul class="clearfix">--}}
+{{--                            <li>--}}
+{{--                                <div class="item">--}}
+{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-5.png')}}"--}}
+{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
+{{--                                    <div class="sv-info">--}}
+{{--                                        <div class="top-sv">Miễn phí vận chuyển</div>--}}
+{{--                                        <div class="bottom-sv">Áp dụng cho đơn hàng 2 sản phẩm</div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <div class="item">--}}
+{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-6.png')}}"--}}
+{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
+{{--                                    <div class="sv-info">--}}
+{{--                                        <div class="top-sv">Thanh toán dễ dàng</div>--}}
+{{--                                        <div class="bottom-sv">Trả tiền mặt, Banking, trả góp 0%</div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <div class="item">--}}
+{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-7.png')}}"--}}
+{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
+{{--                                    <div class="sv-info">--}}
+{{--                                        <div class="top-sv">Hỗ trợ 24/7</div>--}}
+{{--                                        <div class="bottom-sv">Tư vấn giải đáp mọi thắc mắc</div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <div class="item">--}}
+{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-8.png')}}"--}}
+{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
+{{--                                    <div class="sv-info">--}}
+{{--                                        <div class="top-sv">Quà tặng hấp dẫn</div>--}}
+{{--                                        <div class="bottom-sv">Nhiều chính sách quà tặng lớn</div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+                    </div>
+                    <div class="wp-supper-deal p-1">
+                        <div class="title_activity form-control">Hoạt động gần đây</div>
+                        <div class="vwrap p-1">
+                            <div class="vmove">
                                 <ul>
                                     @foreach($recentactivity as $value)
                                     <li class="vitem"><a
                                             href="#" target="_blank">{{$value->name}}</a>
-                                        {{$value->activities}} <span class="Orange">{{$value->attr}}</span>
+                                        {{$value->activities}} <span class="colorattr">{{$value->attr}}</span>
                                     </li>
                                     @endforeach
                                 </ul>
@@ -97,7 +109,7 @@
                     </div>
                 </div>
                 <div class="content-right">
-                    <div class="slider-banner" style="margin-bottom: 40px;">
+                    <div class="slider-banner mb-4">
                         <div class="slider">
                             <div class="slider-show">
                                 <div class="owl-carousel owl-theme owl-loaded owl-drag" id="slider-show">
@@ -143,7 +155,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="categories-slider-home" style="margin-bottom: 60px;">
+                    <div class="categories-slider-home mb-5">
                         <div class="block-title">
                             <strong>Sản phẩm theo danh mục</strong>
                         </div>
@@ -193,7 +205,7 @@
                     <!-- Danh mục -->
                     @foreach ($get_cat_parents as $cat_parent)
                         @if(in_array($cat_parent->id, $cat_arr))
-                            <div class="product-content" style="margin-bottom: 40px;" id="category-{{$cat_parent->id}}">
+                            <div class="product-content mb-4" id="category-{{$cat_parent->id}}">
                                 <div class="block-title">
                                     <h2>{{$cat_parent->name}}</h2>
                                     <ul class="nav nav-pills sub_cat_title_slider owl-carousel owl-theme owl-loaded owl-drag"
@@ -452,25 +464,47 @@
                     $("#slider-bottom").addClass("loaded");
                 }
             }
-
             $(window).scroll(runOnScroll);
+            $(document).on('click', '#registerservice', function (){
 
+                var name =   $("input[name='customer_name']").val();
+                var phone =   $("input[name='customer_numberphone']").val();
+                var email =   $("input[name='customer_email']").val();
+                var customer_request =   $("textarea[name='customer_request']").val();
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    customer_request: customer_request,
+                    _token: _token
+                };
+                if(name!='' && customer_request !='' && phone !=''){
+                    $.ajax({
+                        url: "{{route('registerservice.create')}}",
+                        data: data,
+                        method: "POST",
+                        dataType: "json",
+                        success: function(data){
+                            $('.respone_register').removeClass('d-none');
+                            $('.register_form').addClass('d-none');
+                            if(data.success){
+                                $('.register_success').removeClass('d-none');
+                            }
+                            else{
+                                $('.register_error').removeClass('d-none');
+                            }
+                        }
+                    });
+                }
+            });
+
+            $(document).on('click', '#re_register , #newrequest', function (){
+                $('.respone_register').addClass('d-none');
+                $('.register_form').removeClass('d-none');
+                $("textarea[name='customer_request']").val('');
+            });
         });
     </script>
-    {{--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>--}}
-
-    {{--    <script src="{{asset('asset/js/newsbox.js')}}"></script>--}}
-    {{--    <script>--}}
-    {{--        $(".demo1").bootstrapNews({--}}
-    {{--            //     newsPerPage: 3,--}}
-    {{--            //     autoplay: true,--}}
-    {{--            //     pauseOnHover: true,--}}
-    {{--            //     direction: 'up',--}}
-    {{--            //     newsTickerInterval: 4000,--}}
-    {{--            //     onToDo: function () {--}}
-    {{--            //         //console.log(this);--}}
-    {{--            //     }--}}
-    {{--        });--}}
-    {{--    </script>--}}
 @endsection
 

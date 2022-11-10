@@ -26,6 +26,7 @@ use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
 use App\Http\Controllers\Categoryproperty\Category_propertyController;
 use App\Http\Controllers\Menu\MenusController;
 use App\Http\Controllers\Recentactivity\RecentactivityController;
+use App\Http\Controllers\Registerservice\RegisterserviceController;
 use App\Http\Controllers\EXController;
 
 
@@ -378,3 +379,4 @@ Route::get('/gioi-thieu-ve-it24h', [HomeController::class, 'about_us'])->name('a
 Route::get('/ex', [EXController::class, 'index'])->name('ex');
 Route::post('/menucontent', [HomeController::class, 'menucontent'])->name('menucontent');
 Route::post('/menucontent2', [HomeController::class, 'menucontent2'])->name('menucontent2');
+Route::post('/registerservice', [RegisterserviceController::class, 'create'])->name('registerservice.create');
