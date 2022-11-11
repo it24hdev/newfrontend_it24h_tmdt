@@ -1,0 +1,18 @@
+:root {
+    --sat: env(safe-area-inset-top);
+    --sar: env(safe-area-inset-right);
+    --sab: env(safe-area-inset-bottom);
+    --sal: env(safe-area-inset-left);
+}
+html {
+    line-height: 1.15;
+    text-size-adjust: 100%;
+}
+html {
+    font-family: Roboto,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    background-color: #efefef;
+}
+*, ::before, ::after {
+    box-sizing: border-box;
+}

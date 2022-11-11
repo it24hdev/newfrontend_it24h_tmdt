@@ -28,20 +28,6 @@ use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 class HomeController extends Controller
 {
     public function index(){
-
-        $agent = new Agent();
-        $ag = "";
-        $isMobile = "";
-        if($agent->isMobile()){
-            $ag = "mobile";
-        }
-        else $ag = "desktop";
-
-        if($agent->isPhone())
-        {
-            $isMobile = "phone";
-        }
-
         //lay danh muc cha len trang chu
         $get_cat_parents = Category::where('taxonomy', 0)
         ->where('parent_id', 0)
@@ -76,23 +62,53 @@ class HomeController extends Controller
         ->where('show_push_product', 1)->limit(8)
         ->get();
 
-        return view('frontend.index',[
-            'cat_arr' => $cat_arr,
-            'get_cat_parents' => $get_cat_parents,
-            'list_cat_head'   => $list_cat_head,
-            'Sidebars'        => $Sidebars,
-            'banner_1'        => $banner_1,
-            'banner_2'        => $banner_2,
-            'banner_3'        => $banner_3,
-            'banner_sidebar'  => $banner_sidebar,
-            'sliders'         => $sliders,
-            'list_post'       => $list_post,
-            'list_cat'        => $list_cat,
-            'locale'          => $locale,
-            'agent'           => $ag,
-            'isMobile'        => $isMobile,
-            'recentactivity'  => $recentactivity,
-        ]);
+        $agent = new Agent();
+        $isMobile ="";
+        if($agent->isPhone())
+        {
+            $isMobile = "phone";
+        }
+
+
+        if($agent->isMobile()){
+            return view('frontend.mobile.index_mobile',[
+                'cat_arr'         => $cat_arr,
+                'get_cat_parents' => $get_cat_parents,
+                'list_cat_head'   => $list_cat_head,
+                'Sidebars'        => $Sidebars,
+                'banner_1'        => $banner_1,
+                'banner_2'        => $banner_2,
+                'banner_3'        => $banner_3,
+                'banner_sidebar'  => $banner_sidebar,
+                'sliders'         => $sliders,
+                'list_post'       => $list_post,
+                'list_cat'        => $list_cat,
+                'locale'          => $locale,
+                'recentactivity'  => $recentactivity,
+            ]);
+        }
+        else {
+            return view('frontend.index',[
+                'cat_arr' => $cat_arr,
+                'get_cat_parents' => $get_cat_parents,
+                'list_cat_head'   => $list_cat_head,
+                'Sidebars'        => $Sidebars,
+                'banner_1'        => $banner_1,
+                'banner_2'        => $banner_2,
+                'banner_3'        => $banner_3,
+                'banner_sidebar'  => $banner_sidebar,
+                'sliders'         => $sliders,
+                'list_post'       => $list_post,
+                'list_cat'        => $list_cat,
+                'locale'          => $locale,
+                'recentactivity'  => $recentactivity,
+                'isMobile'          => $isMobile,
+            ]);
+        }
+
+
+
+
     }
     //lay danh muc cho blog tren menu
     public function getcategoryblog(){
@@ -238,8 +254,6 @@ class HomeController extends Controller
             'blogs'           => $blogs,
             'latest_blog'     => $latest_blog,
             'Sidebars'        => $Sidebars,
-            // 'Menus'           => $Menus,
-            // 'Sub_menus'       => $Sub_menus,
             'getcategoryblog' => $getcategoryblog,
             'locale'          => $locale,
             'active_menu'   => $active_menu,
