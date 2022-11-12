@@ -65,7 +65,7 @@
     <script src="{{ asset('lib/jquery360.min.js') }}"></script>
     <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-{{--    <script src="{{ asset('asset/js/home.js') }}"></script>--}}
+    <script src="{{ asset('asset/js/home.js') }}"></script>
     @yield('js')
     <script>
         $(document).ready(function(){
