@@ -71,7 +71,7 @@ class HomeController extends Controller
 
 
         if($agent->isMobile()){
-            return view('frontend.mobile.index_mobile',[
+            return view('frontend.mobile.indexmobile',[
                 'cat_arr'         => $cat_arr,
                 'get_cat_parents' => $get_cat_parents,
                 'list_cat_head'   => $list_cat_head,

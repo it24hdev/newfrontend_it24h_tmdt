@@ -1,5 +1,5 @@
 
-.cHbtvT {
+.Homebottom {
     display: flex;
     -webkit-box-pack: justify;
     justify-content: space-between;
@@ -11,7 +11,7 @@
     width: 100%;
 }
 
-.lnKnmv {
+.Navigatoritem {
     width: 64px;
     display: flex;
     -webkit-box-pack: center;
@@ -19,7 +19,7 @@
     -webkit-box-align: center;
     align-items: center;
     padding-top: 5px;
-    padding-bottom: 6px;
+    padding-bottom: 4px;
     flex-direction: column;
     color: rgb(36, 36, 36);
     font-size: 10px;
@@ -29,12 +29,12 @@
 }
 
 
-.ekkfGn {
+.imgnav {
     padding-top: 100%;
     position: relative;
     background-color: white;
 }
-.cFoyeO {
+.style_img {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -42,4 +42,14 @@
     left: 0px;
     z-index: 2;
     object-fit: contain;
+}
+.imgnav img{
+    border-radius: 0px;
+}
+.imgnav span {
+    color:#242424
+}
+.Navigatoritem .img_w{
+    width: 20px;
+    padding-bottom: 4px;
 }
