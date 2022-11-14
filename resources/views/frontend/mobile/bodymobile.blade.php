@@ -15,6 +15,198 @@
             </div>
         </div>
     </div>
+
+    {{--    category--}}
+    <div class="col-12">
+        <div class="categories_home">
+            <div class="h_block iSyKie">
+                <div class="hide-scrollbar">
+                    <div class="scroll_view">
+                        <div class="size_block">
+                            <div class="l_cat">
+                                {{--                                    item--}}
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                {{--                                    end item--}}
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+                                <div class="i_cat">
+                                    <a class="text-decoration-none" href="#">
+                                        <div class="position-relative">
+                                            <img width="invalid-value" height="invalid-value"
+                                                 alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
+                                                 style="object-fit: contain"
+                                                 src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
+                                        </div>
+                                        <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{--    second slider--}}
+    {{--    <div class="col-12 mt-3">--}}
+    {{--        <div class="home_brand">--}}
+    {{--            <div class="r_brand">--}}
+    {{--                <div>--}}
+    {{--                </div>--}}
+    {{--                <a href="#" class="side-brand">--}}
+    {{--                    <img src="https://salt.tikicdn.com/ts/banner/6f/44/63/5087c1ae7a11391c4b5fcbac470f077c.png">--}}
+    {{--                </a>--}}
+    {{--                <a href="#" class="center-brand">--}}
+    {{--                    <img src="https://salt.tikicdn.com/ts/banner/0a/43/f2/205082fece3d9c8f6b04342b4242063c.png">--}}
+    {{--                </a>--}}
+    {{--                <a href="#" class="side-brand">--}}
+    {{--                    <img src="https://salt.tikicdn.com/ts/banner/b3/f9/5a/7703a3f5e28881b3f67cb9b087d9a44e.png">--}}
+    {{--                </a>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </div>--}}
     {{--    hotsale --}}
     <div class="hot_sale col-12">
         <div class="block_hot_sale">
@@ -23,19 +215,21 @@
                 <div class="header_sale">
                     <div class="top_header_sale">
                         <div class="h_inner">
-                            <a href="#">
-                                <img width="66" src="https://frontend.tikicdn.com/_mobile-next/static/img/giasoc.svg"
-                                     alt="flash deal">
-                                <img width="21" src="https://frontend.tikicdn.com/_mobile-next/static/img/dealFlashIcon.svg"
-                                     alt="flash deal" class="style__Flash-sc-eqzktw-1 eXUQVs">
-                                <img width="84" src="https://frontend.tikicdn.com/_mobile-next/static/img/homnay.svg"
-                                    alt="flash deal">
-                            </a>
+                               <p>Siêu ưu đãi trong tháng này</p>
+{{--                            <a href="#">--}}
+{{--                                <img class="img_sale" src="{{asset('asset/images/sud.png')}}"--}}
+{{--                                     alt="flash deal">--}}
+{{--                                --}}{{--                                <img width="21" src="https://frontend.tikicdn.com/_mobile-next/static/img/dealFlashIcon.svg"--}}
+{{--                                --}}{{--                                     alt="flash deal" class="style__Flash-sc-eqzktw-1 eXUQVs">--}}
+{{--                                --}}{{--                                <img width="84" src="https://frontend.tikicdn.com/_mobile-next/static/img/homnay.svg"--}}
+{{--                                --}}{{--                                    alt="flash deal">--}}
+{{--                            </a>--}}
                             <div class="time_count">
                                 <a title="Xem tất cả Deal Hot" href="#">
                                     <div class="count-down">
                                         <span>02</span>&nbsp;:&nbsp;<span>57</span>&nbsp;:&nbsp;<span>43</span></div>
-                                    <img width="20" height="20" src="https://frontend.tikicdn.com/_mobile-next/static/img/iconsChevronRight.png"
+                                    <img width="20" height="20"
+                                         src="https://frontend.tikicdn.com/_mobile-next/static/img/iconsChevronRight.png"
                                          alt="see_more">
                                 </a>
                             </div>
@@ -49,52 +243,33 @@
                             <div class="scroll_view">
                                 <div class="size_block">
                                     <div class="p_sale">
-{{--                                        item--}}
+                                        {{--                                        item--}}
                                         <div class="round_ps">
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">
+                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
-                                                    <div class="dprice">3.690.000 ₫</div>
-                                                    <div class="ddiscount">-18%</div>
-                                                    <div class="dealsqty">
-                                                        <div class="dprogress"></div>
-                                                        <span>Đã bán 22</span>
-                                                        <img class="fire-icon" src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                    <div class="p_price">
+                                                        <div class="promotion">
+                                                            <div class="dprice dpromotion">3.690.000 ₫</div>
+                                                            <div class="dprice dpercent">-5%</div>
+                                                        </div>
+                                                        <div class="p_price">3.690.000 ₫</div>
                                                     </div>
-                                                </a>
-                                            </div>
-                                        </div>
-{{--                                        end item--}}
-                                        <div class="round_ps">
-                                            <div class="item_p">
-                                                <a class="ditem" href="#">
-                                                    <div class="p_img">
-                                                        <img src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">
+{{--                                                    <div class="ddiscount">-18%</div>--}}
+                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <div class="dtag">
+                                                        <span class="years">NEW 2022</span>
+                                                        <span class="payment">Trả góp 0%</span>
                                                     </div>
-                                                    <div class="dprice">3.690.000 ₫</div>
-                                                    <div class="ddiscount">-18%</div>
-                                                    <div class="dealsqty">
-                                                        <div class="dprogress"></div>
-                                                        <span>Đã bán 22</span>
-                                                        <img class="fire-icon" src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="round_ps">
-                                            <div class="item_p">
-                                                <a class="ditem" href="#">
-                                                    <div class="p_img">
-                                                        <img src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">
-                                                    </div>
-                                                    <div class="dprice">3.690.000 ₫</div>
-                                                    <div class="ddiscount">-18%</div>
-                                                    <div class="dealsqty">
-                                                        <div class="dprogress"></div>
-                                                        <span>Đã bán 22</span>
-                                                        <img class="fire-icon" src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                    <div class="sold">
+                                                        <div class="dealsqty">
+                                                            <div class="dprogress"></div>
+                                                            <span>Đã bán 22</span>
+                                                            <img class="fire-icon"
+                                                                 src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                        </div>
                                                     </div>
                                                 </a>
                                             </div>
@@ -103,30 +278,28 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">
+                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
-                                                    <div class="dprice">3.690.000 ₫</div>
-                                                    <div class="ddiscount">-18%</div>
-                                                    <div class="dealsqty">
-                                                        <div class="dprogress"></div>
-                                                        <span>Đã bán 22</span>
-                                                        <img class="fire-icon" src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                    <div class="p_price">
+                                                        <div class="promotion">
+                                                            <div class="dprice dpromotion">3.690.000 ₫</div>
+                                                            <div class="dprice dpercent">-5%</div>
+                                                        </div>
+                                                        <div class="p_price">3.690.000 ₫</div>
                                                     </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="round_ps">
-                                            <div class="item_p">
-                                                <a class="ditem" href="#">
-                                                    <div class="p_img">
-                                                        <img src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">
+                                                    {{--                                                    <div class="ddiscount">-18%</div>--}}
+                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <div class="dtag">
+                                                        <span class="years">NEW 2022</span>
+                                                        <span class="payment">Trả góp 0%</span>
                                                     </div>
-                                                    <div class="dprice">3.690.000 ₫</div>
-                                                    <div class="ddiscount">-18%</div>
-                                                    <div class="dealsqty">
-                                                        <div class="dprogress"></div>
-                                                        <span>Đã bán 22</span>
-                                                        <img class="fire-icon" src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                    <div class="sold">
+                                                        <div class="dealsqty">
+                                                            <div class="dprogress"></div>
+                                                            <span>Đã bán 22</span>
+                                                            <img class="fire-icon"
+                                                                 src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                        </div>
                                                     </div>
                                                 </a>
                                             </div>
@@ -135,14 +308,28 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">
+                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
-                                                    <div class="dprice">3.690.000 ₫</div>
-                                                    <div class="ddiscount">-18%</div>
-                                                    <div class="dealsqty">
-                                                        <div class="dprogress"></div>
-                                                        <span>Đã bán 22</span>
-                                                        <img class="fire-icon" src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                    <div class="p_price">
+                                                        <div class="promotion">
+                                                            <div class="dprice dpromotion">3.690.000 ₫</div>
+                                                            <div class="dprice dpercent">-5%</div>
+                                                        </div>
+                                                        <div class="p_price">3.690.000 ₫</div>
+                                                    </div>
+                                                    {{--                                                    <div class="ddiscount">-18%</div>--}}
+                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <div class="dtag">
+                                                        <span class="years">NEW 2022</span>
+                                                        <span class="payment">Trả góp 0%</span>
+                                                    </div>
+                                                    <div class="sold">
+                                                        <div class="dealsqty">
+                                                            <div class="dprogress"></div>
+                                                            <span>Đã bán 22</span>
+                                                            <img class="fire-icon"
+                                                                 src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                        </div>
                                                     </div>
                                                 </a>
                                             </div>
@@ -151,18 +338,202 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">
+                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
-                                                    <div class="dprice">3.690.000 ₫</div>
-                                                    <div class="ddiscount">-18%</div>
-                                                    <div class="dealsqty">
-                                                        <div class="dprogress"></div>
-                                                        <span>Đã bán 22</span>
-                                                        <img class="fire-icon" src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                    <div class="p_price">
+                                                        <div class="promotion">
+                                                            <div class="dprice dpromotion">3.690.000 ₫</div>
+                                                            <div class="dprice dpercent">-5%</div>
+                                                        </div>
+                                                        <div class="p_price">3.690.000 ₫</div>
+                                                    </div>
+                                                    {{--                                                    <div class="ddiscount">-18%</div>--}}
+                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <div class="dtag">
+                                                        <span class="years">NEW 2022</span>
+                                                        <span class="payment">Trả góp 0%</span>
+                                                    </div>
+                                                    <div class="sold">
+                                                        <div class="dealsqty">
+                                                            <div class="dprogress"></div>
+                                                            <span>Đã bán 22</span>
+                                                            <img class="fire-icon"
+                                                                 src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                        </div>
                                                     </div>
                                                 </a>
                                             </div>
                                         </div>
+                                        <div class="round_ps">
+                                            <div class="item_p">
+                                                <a class="ditem" href="#">
+                                                    <div class="p_img">
+                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                    </div>
+                                                    <div class="p_price">
+                                                        <div class="promotion">
+                                                            <div class="dprice dpromotion">3.690.000 ₫</div>
+                                                            <div class="dprice dpercent">-5%</div>
+                                                        </div>
+                                                        <div class="p_price">3.690.000 ₫</div>
+                                                    </div>
+                                                    {{--                                                    <div class="ddiscount">-18%</div>--}}
+                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <div class="dtag">
+                                                        <span class="years">NEW 2022</span>
+                                                        <span class="payment">Trả góp 0%</span>
+                                                    </div>
+                                                    <div class="sold">
+                                                        <div class="dealsqty">
+                                                            <div class="dprogress"></div>
+                                                            <span>Đã bán 22</span>
+                                                            <img class="fire-icon"
+                                                                 src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="round_ps">
+                                            <div class="item_p">
+                                                <a class="ditem" href="#">
+                                                    <div class="p_img">
+                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                    </div>
+                                                    <div class="p_price">
+                                                        <div class="promotion">
+                                                            <div class="dprice dpromotion">3.690.000 ₫</div>
+                                                            <div class="dprice dpercent">-5%</div>
+                                                        </div>
+                                                        <div class="p_price">3.690.000 ₫</div>
+                                                    </div>
+                                                    {{--                                                    <div class="ddiscount">-18%</div>--}}
+                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <div class="dtag">
+                                                        <span class="years">NEW 2022</span>
+                                                        <span class="payment">Trả góp 0%</span>
+                                                    </div>
+                                                    <div class="sold">
+                                                        <div class="dealsqty">
+                                                            <div class="dprogress"></div>
+                                                            <span>Đã bán 22</span>
+                                                            <img class="fire-icon"
+                                                                 src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        {{--                                        end item--}}
+{{--                                        <div class="round_ps">--}}
+{{--                                            <div class="item_p">--}}
+{{--                                                <a class="ditem" href="#">--}}
+{{--                                                    <div class="p_img">--}}
+{{--                                                        <img--}}
+{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
+{{--                                                    <div class="ddiscount">-18%</div>--}}
+{{--                                                    <div class="dealsqty">--}}
+{{--                                                        <div class="dprogress"></div>--}}
+{{--                                                        <span>Đã bán 22</span>--}}
+{{--                                                        <img class="fire-icon"--}}
+{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
+{{--                                                    </div>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="round_ps">--}}
+{{--                                            <div class="item_p">--}}
+{{--                                                <a class="ditem" href="#">--}}
+{{--                                                    <div class="p_img">--}}
+{{--                                                        <img--}}
+{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
+{{--                                                    <div class="ddiscount">-18%</div>--}}
+{{--                                                    <div class="dealsqty">--}}
+{{--                                                        <div class="dprogress"></div>--}}
+{{--                                                        <span>Đã bán 22</span>--}}
+{{--                                                        <img class="fire-icon"--}}
+{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
+{{--                                                    </div>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="round_ps">--}}
+{{--                                            <div class="item_p">--}}
+{{--                                                <a class="ditem" href="#">--}}
+{{--                                                    <div class="p_img">--}}
+{{--                                                        <img--}}
+{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
+{{--                                                    <div class="ddiscount">-18%</div>--}}
+{{--                                                    <div class="dealsqty">--}}
+{{--                                                        <div class="dprogress"></div>--}}
+{{--                                                        <span>Đã bán 22</span>--}}
+{{--                                                        <img class="fire-icon"--}}
+{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
+{{--                                                    </div>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="round_ps">--}}
+{{--                                            <div class="item_p">--}}
+{{--                                                <a class="ditem" href="#">--}}
+{{--                                                    <div class="p_img">--}}
+{{--                                                        <img--}}
+{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
+{{--                                                    <div class="ddiscount">-18%</div>--}}
+{{--                                                    <div class="dealsqty">--}}
+{{--                                                        <div class="dprogress"></div>--}}
+{{--                                                        <span>Đã bán 22</span>--}}
+{{--                                                        <img class="fire-icon"--}}
+{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
+{{--                                                    </div>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="round_ps">--}}
+{{--                                            <div class="item_p">--}}
+{{--                                                <a class="ditem" href="#">--}}
+{{--                                                    <div class="p_img">--}}
+{{--                                                        <img--}}
+{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
+{{--                                                    <div class="ddiscount">-18%</div>--}}
+{{--                                                    <div class="dealsqty">--}}
+{{--                                                        <div class="dprogress"></div>--}}
+{{--                                                        <span>Đã bán 22</span>--}}
+{{--                                                        <img class="fire-icon"--}}
+{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
+{{--                                                    </div>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                        <div class="round_ps">--}}
+{{--                                            <div class="item_p">--}}
+{{--                                                <a class="ditem" href="#">--}}
+{{--                                                    <div class="p_img">--}}
+{{--                                                        <img--}}
+{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
+{{--                                                    <div class="ddiscount">-18%</div>--}}
+{{--                                                    <div class="dealsqty">--}}
+{{--                                                        <div class="dprogress"></div>--}}
+{{--                                                        <span>Đã bán 22</span>--}}
+{{--                                                        <img class="fire-icon"--}}
+{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
+{{--                                                    </div>--}}
+{{--                                                </a>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
 
                                     </div>
                                 </div>
@@ -172,199 +543,32 @@
                 </div>
             </div>
         </div>
-        {{--    second slider--}}
-        <div class="col-12 mt-3">
-            <div class="home_brand">
-                <div class="r_brand">
-                    <div>
-                    </div>
-                    <a href="#" class="side-brand">
-                        <img src="https://salt.tikicdn.com/ts/banner/6f/44/63/5087c1ae7a11391c4b5fcbac470f077c.png">
-                    </a>
-                    <a href="#" class="center-brand">
-                        <img src="https://salt.tikicdn.com/ts/banner/0a/43/f2/205082fece3d9c8f6b04342b4242063c.png">
-                    </a>
-                    <a href="#" class="side-brand">
-                        <img src="https://salt.tikicdn.com/ts/banner/b3/f9/5a/7703a3f5e28881b3f67cb9b087d9a44e.png">
-                    </a>
-                </div>
-            </div>
-        </div>
-        {{--    category--}}
-        <div class="col-12">
-            <div class="categories_home">
-                <div class="h_block iSyKie">
-                    <div class="hide-scrollbar">
-                        <div class="scroll_view">
-                            <div class="size_block">
-                                <div class="l_cat">
-{{--                                    item--}}
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-{{--                                    end item--}}
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
-                                    <div class="i_cat">
-                                        <a class="text-decoration-none" href="#">
-                                            <div class="position-relative">
-                                                <img width="invalid-value" height="invalid-value"
-                                                     alt="Khung Giờ Săn Sale" class="aVI9cK s1KOz9"
-                                                     style="object-fit: contain"
-                                                     src="https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/pc-vp-gaming-do-hoa-server-1666061497.png">
-                                            </div>
-                                            <div class="name_cat">PC VP, Gaming Đồ họa Serve</div>
-                                        </a>
-                                    </div>
 
-                                </div>
-                            </div>
-                        </div>
+
+    </div>
+{{--khuyen mai hot--}}
+    <div class="category-container">
+        <div class="prd-sale cate-box bg-white p-t-15 margin-20">
+            <div class="prd-sale p-l-15 p-r-15 margin-18">
+                <div class="title"><i class="icon-hotsale"> </i>
+                    <h2>Khuyến mãi hot</h2></div>
+            </div>
+            <div class="prd-sale__product">
+                <div
+                    class="swiper-container cdt-sale-js swiper-container-initialized swiper-container-horizontal swiper-container-ios">
+                    <div class="swiper-wrapper">
+
                     </div>
-                </div>
+                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+            </div>
+            <div class="prd-view text-center">
+                <a href="/dien-thoai?sort=uu-dai-online">Xem tất cả
+                    <i class="icon-angle-down"></i>
+                </a>
             </div>
         </div>
     </div>
-
-    {{--    product--}}
+    {{--categoryproduct--}}
     <div class="block-product">
         <div class="block-featured-product">
             {{--            list title--}}
@@ -390,19 +594,18 @@
             </div>
             {{--                product--}}
             <div class="featured-product-list" style="min-height:376px;">
+                {{--                item--}}
                 <div class="component-product" style="min-height:356px;">
                     <span class="percent">-6% </span>
                     <p class="p-sku">PCAS189</p>
                     <div class="p-img">
-                        <a href="/pc-asus-all-in-one-m5401wu-r5-5500u-8gb-ram-512gb-ssd-23.8-inch-full-hd-touch-wl-bt-k-m-win-10-m5401wuat-ba040t">
+                        <a href="#">
                             <img src="https://hanoicomputercdn.com/media/product/120_60623_asus_m5401.jpg"
-                                 style="min-width:150px;min-height:150px;"
                                  alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
                         </a>
                     </div>
                     <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-asus-all-in-one-m5401wu-r5-5500u-8gb-ram-512gb-ssd-23.8-inch-full-hd-touch-wl-bt-k-m-win-10-m5401wuat-ba040t"
-                           class="p-name">
+                        <a href="#" class="p-name">
                             PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win
                             10) (M5401WUAT-BA040T)
                         </a>
@@ -417,6 +620,7 @@
                         </a>
                     </div>
                 </div>
+                {{--                end item--}}
                 <div class="component-product" style="min-height:356px;">
                     <span class="percent">-2% </span>
                     <p class="p-sku">PCAC115</p>

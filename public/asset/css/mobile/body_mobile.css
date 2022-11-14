@@ -4,7 +4,7 @@
 .banner_top{
     position: relative;
     z-index: 1;
-    margin-bottom: 2px;
+    margin-top: 20px;
     padding: 0px 12px;
 }
 .border_slider{
@@ -15,23 +15,35 @@
     display: inline-block;
     vertical-align: middle;
     max-width: 100%;
-    border-radius: 4px;
-    height: calc(((100vw - 24px) * 116) / 351);
+    border-radius: 8px;
+    height: calc(((100vw - 24px) * 116) / 180);
 }
 .border_slider .owl-nav{
     display: none !important;
 }
+
+.border_slider .owl-dots{
+    /* position: absolute; */
+    /* z-index: 2; */
+    bottom: -3px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+}
+
 .border_slider .owl-dots span{
     width: 15px!important;
-    height: 3px!important;
+    height: 2px!important;
     margin: 2px 3px !important;
+    background-color: rgb(255, 255, 255);
+    opacity: 0.55;
+    display: inline-block;
 }
 .block_hot_sale{
     border-radius: 8px;
-    margin: 0 12px;
+    margin: 12px;
     background: rgb(38, 27, 94);
     width: calc(100vw - 24px);
-    /*height: calc(((100vw - 24px) * 74) / 131.5);*/
     height: auto;
     display: flex;
     flex-direction: column;
@@ -51,7 +63,7 @@
     background: transparent;
     position: relative;
     overflow: hidden;
-    height: 35px;
+    height: 45px;
     padding: 8px 7px;
 }
 .h_inner {
@@ -60,11 +72,14 @@
     z-index: 2;
     display: flex;
     -webkit-box-align: center;
-    align-items: center;
+    text-align: center;
     -webkit-box-pack: justify;
     justify-content: space-between;
 }
-
+.img_sale{
+    width: 170px;
+    height: 48px;
+}
 .h_inner div a{
     text-decoration: none;
     display: flex;
@@ -99,8 +114,6 @@
     height: 134px;
 }
 .inner .deals{
-    /*margin: 0px -12px;*/
-    /*padding: 0px 12px;*/
     white-space: nowrap;
     overflow-x: auto;
     z-index: 1;
@@ -110,7 +123,7 @@
     display: inline-block;
     vertical-align: top;
     margin: 0px 8px 0px 0px;
-    width: 80px;
+    width: 120px;
     text-decoration: none;
     position: relative;
     z-index: 1;
@@ -137,8 +150,8 @@
     min-height: 16px;
     text-align: center;
     font-weight: 500;
-    color: rgb(255, 66, 78);
-    margin: 8px 0px;
+    color: rgb(27 149 253);
+    margin-top: 6px;
 }
 .item_p .ddiscount {
     position: absolute;
@@ -148,9 +161,9 @@
     font-size: 12px;
     line-height: 16px;
     text-align: center;
-    color: rgb(255, 66, 78);
-    background: rgb(255, 240, 241);
-    box-shadow: rgb(255 66 78) 0px 0px 0px 1px inset;
+    color: rgb(6 251 37);
+    background: rgb(253 253 253);
+    box-shadow: rgb(66 255 89) 0px 0px 0px 1px inset;
     border-radius: 2px;
     padding: 0px 3px;
     display: flex;
@@ -160,7 +173,7 @@
     justify-content: center;
 }
 .item_p .dealsqty {
-    background-color: rgb(255, 170, 175);
+    background-color: rgb(27 149 253);
     color: rgb(255, 255, 255);
     border-radius: 7px;
     position: relative;
@@ -170,11 +183,14 @@
     width: 80px;
     height: 15px;
 }
+.dealsqty img{
+    display: none;
+}
 .item_p .dprogress {
     position: absolute;
     left: 0px;
     top: 0px;
-    background-color: rgb(255, 66, 78);
+    background-color: #2b4fff;
     height: 15px;
     padding: 0px 0px 0px 6px;
     min-width: 15px;
@@ -199,7 +215,7 @@
 }
 
 .home_brand {
-    margin-top: 8px;
+    /*margin-top: 8px;*/
     height: calc(30.2222vw);
 }
 .r_brand {
@@ -242,7 +258,6 @@
 
 .categories_home{
     background: white;
-    margin-top: 12px;
     padding: 0px 10px;
 }
 
@@ -255,10 +270,10 @@
     height: 6.875rem;
 }
 .iSyKie {
-    height: 16rem;
+    height: 17rem;
 }
 .hp_sale{
-    height: 10rem;
+    height: 12.5rem;
     border-radius: 8px;
 }
 .hide-scrollbar {
@@ -296,10 +311,12 @@
     padding-bottom: 0.125rem;
 }
 .i_cat {
-    width: 90px;
+    width: 78px;
     padding: 0 0.0625rem;
     text-align: center;
     height: 7rem;
+    margin-right: 6px;
+    margin-bottom: 15px;
 }
 /*.k1zPeU {*/
 /*    height: 6rem;*/
@@ -317,9 +334,10 @@
 }
 .aVI9cK {
     display: inline-block;
-    width: 4rem;
-    height: 4rem;
-    margin-bottom: 0.25rem;
+    width: 76px;
+    height: 5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
 }
 .s1KOz9 {
     opacity: 1;
@@ -339,7 +357,7 @@
     white-space: pre-line;
 }
 .round_ps{
-    width: 90px;
+    width: 130px;
     padding: 0.5rem;
     text-align: center;
     height: auto;
@@ -518,8 +536,10 @@ a {
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
     max-width: 150px;
-    max-width: 150px;
     max-height: 150px;
+}
+.component-product .p-info{
+    min-height: 98px
 }
 .component-product .p-info .p-name {
     display: block;
@@ -670,4 +690,99 @@ a:active, a:hover {
 .block-endhome{
     padding: 2px 0 0 0;
     background: #efefef;
+}
+.hot_sale {
+    border-top: 2px solid #ebebeb;
+    margin-top: 15px;
+}
+
+/*khuyen mai hot*/
+
+.category-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0 8px;
+}
+.mainmb-wrapper .cate-box {
+    border-radius: 6px;
+    -webkit-box-shadow: 0 0 3px 0 #dee2e6;
+    box-shadow: 0 0 3px 0 #dee2e6;
+    background-color: white;
+}
+.dbrand{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 30px;
+    height: 8px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: center;
+    border-radius: 2px;
+    padding: 0px 3px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.dtag{
+    width: 40px;
+    height: auto;
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    z-index: 2;
+    font-size: 5px;
+}
+.years, .payment{
+    width: 100%;
+    font-size: 9px;
+    float: left;
+    background-color: #f1f1f1;
+    color: rgb(255, 66, 78);
+    border: #169fd8;
+    border-radius: 3px;
+    height: 100%;
+    margin-bottom: 2px;
+}
+.promotion{
+    display: flex;
+    float: left;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+}
+.p_price{
+    font-size: 12px;
+    min-height: 16px;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    color:rgb(255, 66, 78);
+    float: left;
+}
+.dpercent{
+    color: #ff3434 !important;
+    font-weight: 600;
+    background-color: #f7ceb7e8 !important;
+    border-radius: 3px;
+    margin-left: 5px;
+}
+.dpromotion{
+    text-decoration: line-through;
+    color: #888888 !important;
+}
+.sold{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 3px 0px;
 }
