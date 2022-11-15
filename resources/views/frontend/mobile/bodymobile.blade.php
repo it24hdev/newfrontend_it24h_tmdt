@@ -15,7 +15,6 @@
             </div>
         </div>
     </div>
-
     {{--    category--}}
     <div class="col-12">
         <div class="categories_home">
@@ -188,25 +187,6 @@
             </div>
         </div>
     </div>
-
-    {{--    second slider--}}
-    {{--    <div class="col-12 mt-3">--}}
-    {{--        <div class="home_brand">--}}
-    {{--            <div class="r_brand">--}}
-    {{--                <div>--}}
-    {{--                </div>--}}
-    {{--                <a href="#" class="side-brand">--}}
-    {{--                    <img src="https://salt.tikicdn.com/ts/banner/6f/44/63/5087c1ae7a11391c4b5fcbac470f077c.png">--}}
-    {{--                </a>--}}
-    {{--                <a href="#" class="center-brand">--}}
-    {{--                    <img src="https://salt.tikicdn.com/ts/banner/0a/43/f2/205082fece3d9c8f6b04342b4242063c.png">--}}
-    {{--                </a>--}}
-    {{--                <a href="#" class="side-brand">--}}
-    {{--                    <img src="https://salt.tikicdn.com/ts/banner/b3/f9/5a/7703a3f5e28881b3f67cb9b087d9a44e.png">--}}
-    {{--                </a>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
     {{--    hotsale --}}
     <div class="hot_sale col-12">
         <div class="block_hot_sale">
@@ -214,16 +194,19 @@
                 {{--                header-time sale--}}
                 <div class="header_sale">
                     <div class="top_header_sale">
-                        <div class="h_inner">
-                               <p>Siêu ưu đãi trong tháng này</p>
-{{--                            <a href="#">--}}
-{{--                                <img class="img_sale" src="{{asset('asset/images/sud.png')}}"--}}
-{{--                                     alt="flash deal">--}}
-{{--                                --}}{{--                                <img width="21" src="https://frontend.tikicdn.com/_mobile-next/static/img/dealFlashIcon.svg"--}}
-{{--                                --}}{{--                                     alt="flash deal" class="style__Flash-sc-eqzktw-1 eXUQVs">--}}
-{{--                                --}}{{--                                <img width="84" src="https://frontend.tikicdn.com/_mobile-next/static/img/homnay.svg"--}}
-{{--                                --}}{{--                                    alt="flash deal">--}}
-{{--                            </a>--}}
+                        <div class="h_inner title_s">
+                            <div class="d-flex">
+                                <i class="fas fa-bolt"></i>
+                                <p>SIÊU ƯU ĐÃI TRONG THÁNG NÀY</p>
+                            </div>
+                            {{--                            <a href="#">--}}
+                            {{--                                <img class="img_sale" src="{{asset('asset/images/sud.png')}}"--}}
+                            {{--                                     alt="flash deal">--}}
+                            {{--                                --}}{{--                                <img width="21" src="https://frontend.tikicdn.com/_mobile-next/static/img/dealFlashIcon.svg"--}}
+                            {{--                                --}}{{--                                     alt="flash deal" class="style__Flash-sc-eqzktw-1 eXUQVs">--}}
+                            {{--                                --}}{{--                                <img width="84" src="https://frontend.tikicdn.com/_mobile-next/static/img/homnay.svg"--}}
+                            {{--                                --}}{{--                                    alt="flash deal">--}}
+                            {{--                            </a>--}}
                             <div class="time_count">
                                 <a title="Xem tất cả Deal Hot" href="#">
                                     <div class="count-down">
@@ -248,7 +231,8 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                        <img
+                                                            src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
                                                     <div class="p_price">
                                                         <div class="promotion">
@@ -257,15 +241,16 @@
                                                         </div>
                                                         <div class="p_price">3.690.000 ₫</div>
                                                     </div>
-{{--                                                    <div class="ddiscount">-18%</div>--}}
-                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    {{--                                                    <div class="ddiscount">-18%</div>--}}
+                                                    <span class="dbrand"
+                                                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
                                                     <div class="dtag">
                                                         <span class="years">NEW 2022</span>
                                                         <span class="payment">Trả góp 0%</span>
                                                     </div>
                                                     <div class="sold">
                                                         <div class="dealsqty">
-                                                            <div class="dprogress"></div>
+                                                            <div class="dprogress" style="width: 55%"></div>
                                                             <span>Đã bán 22</span>
                                                             <img class="fire-icon"
                                                                  src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
@@ -278,7 +263,8 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                        <img
+                                                            src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
                                                     <div class="p_price">
                                                         <div class="promotion">
@@ -288,14 +274,15 @@
                                                         <div class="p_price">3.690.000 ₫</div>
                                                     </div>
                                                     {{--                                                    <div class="ddiscount">-18%</div>--}}
-                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <span class="dbrand"
+                                                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
                                                     <div class="dtag">
                                                         <span class="years">NEW 2022</span>
                                                         <span class="payment">Trả góp 0%</span>
                                                     </div>
                                                     <div class="sold">
                                                         <div class="dealsqty">
-                                                            <div class="dprogress"></div>
+                                                            <div class="dprogress" style="width: 55%"></div>
                                                             <span>Đã bán 22</span>
                                                             <img class="fire-icon"
                                                                  src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
@@ -308,7 +295,8 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                        <img
+                                                            src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
                                                     <div class="p_price">
                                                         <div class="promotion">
@@ -318,14 +306,15 @@
                                                         <div class="p_price">3.690.000 ₫</div>
                                                     </div>
                                                     {{--                                                    <div class="ddiscount">-18%</div>--}}
-                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <span class="dbrand"
+                                                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
                                                     <div class="dtag">
                                                         <span class="years">NEW 2022</span>
                                                         <span class="payment">Trả góp 0%</span>
                                                     </div>
                                                     <div class="sold">
                                                         <div class="dealsqty">
-                                                            <div class="dprogress"></div>
+                                                            <div class="dprogress" style="width: 55%"></div>
                                                             <span>Đã bán 22</span>
                                                             <img class="fire-icon"
                                                                  src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
@@ -338,7 +327,8 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                        <img
+                                                            src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
                                                     <div class="p_price">
                                                         <div class="promotion">
@@ -348,14 +338,15 @@
                                                         <div class="p_price">3.690.000 ₫</div>
                                                     </div>
                                                     {{--                                                    <div class="ddiscount">-18%</div>--}}
-                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <span class="dbrand"
+                                                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
                                                     <div class="dtag">
                                                         <span class="years">NEW 2022</span>
                                                         <span class="payment">Trả góp 0%</span>
                                                     </div>
                                                     <div class="sold">
                                                         <div class="dealsqty">
-                                                            <div class="dprogress"></div>
+                                                            <div class="dprogress" style="width: 55%"></div>
                                                             <span>Đã bán 22</span>
                                                             <img class="fire-icon"
                                                                  src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
@@ -368,7 +359,8 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                        <img
+                                                            src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
                                                     <div class="p_price">
                                                         <div class="promotion">
@@ -378,14 +370,15 @@
                                                         <div class="p_price">3.690.000 ₫</div>
                                                     </div>
                                                     {{--                                                    <div class="ddiscount">-18%</div>--}}
-                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <span class="dbrand"
+                                                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
                                                     <div class="dtag">
                                                         <span class="years">NEW 2022</span>
                                                         <span class="payment">Trả góp 0%</span>
                                                     </div>
                                                     <div class="sold">
                                                         <div class="dealsqty">
-                                                            <div class="dprogress"></div>
+                                                            <div class="dprogress" style="width: 55%"></div>
                                                             <span>Đã bán 22</span>
                                                             <img class="fire-icon"
                                                                  src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
@@ -398,7 +391,8 @@
                                             <div class="item_p">
                                                 <a class="ditem" href="#">
                                                     <div class="p_img">
-                                                        <img src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
+                                                        <img
+                                                            src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-lenovo-thinkpad-t14-gen-3-21ahs02t00-i5-1235u8gb-ram-256gb-ssd14-wuxga-dosden-1666327620.png">
                                                     </div>
                                                     <div class="p_price">
                                                         <div class="promotion">
@@ -408,14 +402,15 @@
                                                         <div class="p_price">3.690.000 ₫</div>
                                                     </div>
                                                     {{--                                                    <div class="ddiscount">-18%</div>--}}
-                                                    <span class="dbrand" style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
+                                                    <span class="dbrand"
+                                                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');"></span>
                                                     <div class="dtag">
                                                         <span class="years">NEW 2022</span>
                                                         <span class="payment">Trả góp 0%</span>
                                                     </div>
                                                     <div class="sold">
                                                         <div class="dealsqty">
-                                                            <div class="dprogress"></div>
+                                                            <div class="dprogress" style="width: 55%"></div>
                                                             <span>Đã bán 22</span>
                                                             <img class="fire-icon"
                                                                  src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">
@@ -424,117 +419,25 @@
                                                 </a>
                                             </div>
                                         </div>
-
                                         {{--                                        end item--}}
-{{--                                        <div class="round_ps">--}}
-{{--                                            <div class="item_p">--}}
-{{--                                                <a class="ditem" href="#">--}}
-{{--                                                    <div class="p_img">--}}
-{{--                                                        <img--}}
-{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
-{{--                                                    <div class="ddiscount">-18%</div>--}}
-{{--                                                    <div class="dealsqty">--}}
-{{--                                                        <div class="dprogress"></div>--}}
-{{--                                                        <span>Đã bán 22</span>--}}
-{{--                                                        <img class="fire-icon"--}}
-{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
-{{--                                                    </div>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="round_ps">--}}
-{{--                                            <div class="item_p">--}}
-{{--                                                <a class="ditem" href="#">--}}
-{{--                                                    <div class="p_img">--}}
-{{--                                                        <img--}}
-{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
-{{--                                                    <div class="ddiscount">-18%</div>--}}
-{{--                                                    <div class="dealsqty">--}}
-{{--                                                        <div class="dprogress"></div>--}}
-{{--                                                        <span>Đã bán 22</span>--}}
-{{--                                                        <img class="fire-icon"--}}
-{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
-{{--                                                    </div>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="round_ps">--}}
-{{--                                            <div class="item_p">--}}
-{{--                                                <a class="ditem" href="#">--}}
-{{--                                                    <div class="p_img">--}}
-{{--                                                        <img--}}
-{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
-{{--                                                    <div class="ddiscount">-18%</div>--}}
-{{--                                                    <div class="dealsqty">--}}
-{{--                                                        <div class="dprogress"></div>--}}
-{{--                                                        <span>Đã bán 22</span>--}}
-{{--                                                        <img class="fire-icon"--}}
-{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
-{{--                                                    </div>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="round_ps">--}}
-{{--                                            <div class="item_p">--}}
-{{--                                                <a class="ditem" href="#">--}}
-{{--                                                    <div class="p_img">--}}
-{{--                                                        <img--}}
-{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
-{{--                                                    <div class="ddiscount">-18%</div>--}}
-{{--                                                    <div class="dealsqty">--}}
-{{--                                                        <div class="dprogress"></div>--}}
-{{--                                                        <span>Đã bán 22</span>--}}
-{{--                                                        <img class="fire-icon"--}}
-{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
-{{--                                                    </div>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="round_ps">--}}
-{{--                                            <div class="item_p">--}}
-{{--                                                <a class="ditem" href="#">--}}
-{{--                                                    <div class="p_img">--}}
-{{--                                                        <img--}}
-{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
-{{--                                                    <div class="ddiscount">-18%</div>--}}
-{{--                                                    <div class="dealsqty">--}}
-{{--                                                        <div class="dprogress"></div>--}}
-{{--                                                        <span>Đã bán 22</span>--}}
-{{--                                                        <img class="fire-icon"--}}
-{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
-{{--                                                    </div>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="round_ps">--}}
-{{--                                            <div class="item_p">--}}
-{{--                                                <a class="ditem" href="#">--}}
-{{--                                                    <div class="p_img">--}}
-{{--                                                        <img--}}
-{{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
-{{--                                                    <div class="ddiscount">-18%</div>--}}
-{{--                                                    <div class="dealsqty">--}}
-{{--                                                        <div class="dprogress"></div>--}}
-{{--                                                        <span>Đã bán 22</span>--}}
-{{--                                                        <img class="fire-icon"--}}
-{{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
-{{--                                                    </div>--}}
-{{--                                                </a>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-
+                                        {{--                                        <div class="round_ps">--}}
+                                        {{--                                            <div class="item_p">--}}
+                                        {{--                                                <a class="ditem" href="#">--}}
+                                        {{--                                                    <div class="p_img">--}}
+                                        {{--                                                        <img--}}
+                                        {{--                                                            src="https://salt.tikicdn.com/cache/280x280/ts/product/a6/de/4e/e96e2035f72c97c218ba9917f4e6d5ca.jpg">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                    <div class="dprice">3.690.000 ₫</div>--}}
+                                        {{--                                                    <div class="ddiscount">-18%</div>--}}
+                                        {{--                                                    <div class="dealsqty">--}}
+                                        {{--                                                        <div class="dprogress"></div>--}}
+                                        {{--                                                        <span>Đã bán 22</span>--}}
+                                        {{--                                                        <img class="fire-icon"--}}
+                                        {{--                                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/fire_icon.svg">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </a>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                             </div>
@@ -546,24 +449,196 @@
 
 
     </div>
-{{--khuyen mai hot--}}
+    {{--khuyen mai hot--}}
     <div class="category-container">
-        <div class="prd-sale cate-box bg-white p-t-15 margin-20">
-            <div class="prd-sale p-l-15 p-r-15 margin-18">
-                <div class="title"><i class="icon-hotsale"> </i>
+        <div class="cat_box_sale">
+            <div class="cat_box_s_h">
+                <div class="title_s">
+                    <i class="fas fa-fire"></i>
                     <h2>Khuyến mãi hot</h2></div>
             </div>
-            <div class="prd-sale__product">
-                <div
-                    class="swiper-container cdt-sale-js swiper-container-initialized swiper-container-horizontal swiper-container-ios">
-                    <div class="swiper-wrapper">
+            <div class="featured-product-list">
+                {{--                item--}}
+                <div class="component-product">
+                    <div class="tag_p">
+                        <span class="years2">NEW</span>
+                        <span class="payment2">Trả góp 0%</span>
+                    </div>
+                    <span class="dbrand2"
+                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/acer-1666346916.png');">
+                    </span>
+                    <div class="p-img">
+                        <a href="#">
+                            <img
+                                src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-acer-aspire-5-a515-56g-51yl-nxa1lsv002-i5-1135g78gb-ram512gb-ssdmx350-2g156-inch-fhdwin10bac-1666337560.png"
+                                alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
+                        </a>
+                    </div>
+                    <div class="p-info">
+                        <a href="#" class="p-name">Laptop Acer Aspire 5 A515-56G-51YL (NX.A1LSV.002) (i5 1135G7/8GB
+                            RAM/512GB SSD/MX350 2G/15.6 inch FHD/Win10/Bạc)
+                        </a>
+                        <div class="promotion2">
+                            <span class="pprice2"> 18.599.000đ </span>
+                            <span class="dpercent2">- 5%</span>
+                        </div>
+                        <span class="p-price"> 19.799.000đ </span>
+                    </div>
+                    <div class="p_rev">
+                        <div class="review">
+                            <div class="rating2">
+                                <div class="rating-upper" style="width: 0%">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                </div>
+                                <div class="rating-lower">
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                </div>
+                            </div>
+                            <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán 1</div>
+                        </div>
 
                     </div>
-                    <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+                    <div class="detail-bottom">
+                        <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
+                        <div class="action">
+                            <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm"><i
+                                    class="far fa-heart"></i></a>
+                            <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart"><i
+                                    class="far fa-shopping-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {{--                end item--}}
+                {{--                item--}}
+                <div class="component-product">
+                    <div class="tag_p">
+                        <span class="years2">NEW</span>
+                        <span class="payment2">Trả góp 0%</span>
+                    </div>
+                    <span class="dbrand2"
+                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');">
+                    </span>
+                    <div class="p-img">
+                        <a href="#">
+                            <img src="https://hanoicomputercdn.com/media/product/120_60623_asus_m5401.jpg"
+                                 alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
+                        </a>
+                    </div>
+                    <div class="p-info">
+                        <a href="#" class="p-name">
+                            PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win
+                            10) (M5401WUAT-BA040T)
+                        </a>
+                        <div class="promotion2">
+                            <span class="pprice2"> 18.599.000đ </span>
+                            <span class="dpercent2">- 5%</span>
+                        </div>
+                        <span class="p-price"> 19.799.000đ </span>
+                    </div>
+                    <div class="p_rev">
+                        <div class="review">
+                            <div class="rating2">
+                                <div class="rating-upper" style="width: 0%">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                </div>
+                                <div class="rating-lower">
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                </div>
+                            </div>
+                            <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán 1</div>
+                        </div>
+
+                    </div>
+                    <div class="detail-bottom">
+                        <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
+                        <div class="action">
+                            <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm"><i
+                                    class="far fa-heart"></i></a>
+                            <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart"><i
+                                    class="far fa-shopping-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {{--                end item--}}
+                {{--                item--}}
+                <div class="component-product">
+                    <div class="tag_p">
+                        <span class="years2">NEW</span>
+                        <span class="payment2">Trả góp 0%</span>
+                    </div>
+                    <span class="dbrand2"
+                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');">
+                    </span>
+                    <div class="p-img">
+                        <a href="#">
+                            <img src="https://hanoicomputercdn.com/media/product/120_60623_asus_m5401.jpg"
+                                 alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
+                        </a>
+                    </div>
+                    <div class="p-info">
+                        <a href="#" class="p-name">
+                            PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win
+                            10) (M5401WUAT-BA040T)
+                        </a>
+                        <div class="promotion2">
+                            <span class="pprice2"> 18.599.000đ </span>
+                            <span class="dpercent2">- 5%</span>
+                        </div>
+                        <span class="p-price"> 19.799.000đ </span>
+                    </div>
+                    <div class="p_rev">
+                        <div class="review">
+                            <div class="rating2">
+                                <div class="rating-upper" style="width: 0%">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                </div>
+                                <div class="rating-lower">
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                </div>
+                            </div>
+                            <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán 1</div>
+                        </div>
+
+                    </div>
+                    <div class="detail-bottom">
+                        <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
+                        <div class="action">
+                            <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm"><i
+                                    class="far fa-heart"></i></a>
+                            <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart"><i
+                                    class="far fa-shopping-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {{--                end item--}}
             </div>
-            <div class="prd-view text-center">
-                <a href="/dien-thoai?sort=uu-dai-online">Xem tất cả
-                    <i class="icon-angle-down"></i>
+            <div class="viewall_s">
+                <a href="#">Xem tất cả
+                    <i  class="fa fa-angle-down ml-2"></i>
                 </a>
             </div>
         </div>
@@ -593,351 +668,184 @@
                 </div>
             </div>
             {{--                product--}}
-            <div class="featured-product-list" style="min-height:376px;">
+            <div class="featured-product-list">
                 {{--                item--}}
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-6% </span>
-                    <p class="p-sku">PCAS189</p>
+                <div class="component-product">
+                    <div class="tag_p">
+                        <span class="years2">NEW</span>
+                        <span class="payment2">Trả góp 0%</span>
+                    </div>
+                    <span class="dbrand2"
+                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/acer-1666346916.png');">
+                    </span>
+                    <div class="p-img">
+                        <a href="#">
+                            <img
+                                src="https://it24h.vn/tmdt_directory/public/upload/images/products/medium/laptop-acer-aspire-5-a515-56g-51yl-nxa1lsv002-i5-1135g78gb-ram512gb-ssdmx350-2g156-inch-fhdwin10bac-1666337560.png"
+                                alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
+                        </a>
+                    </div>
+                    <div class="p-info">
+                        <a href="#" class="p-name">Laptop Acer Aspire 5 A515-56G-51YL (NX.A1LSV.002) (i5 1135G7/8GB
+                            RAM/512GB SSD/MX350 2G/15.6 inch FHD/Win10/Bạc)
+                        </a>
+                        <div class="promotion2">
+                            <span class="pprice2"> 18.599.000đ </span>
+                            <span class="dpercent2">- 5%</span>
+                        </div>
+                        <span class="p-price"> 19.799.000đ </span>
+                    </div>
+                    <div class="p_rev">
+                        <div class="review">
+                            <div class="rating2">
+                                <div class="rating-upper" style="width: 0%">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                </div>
+                                <div class="rating-lower">
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                </div>
+                            </div>
+                            <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán 1</div>
+                        </div>
+
+                    </div>
+                    <div class="detail-bottom">
+                        <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
+                        <div class="action">
+                            <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm"><i
+                                    class="far fa-heart"></i></a>
+                            <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart"><i
+                                    class="far fa-shopping-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                {{--                end item--}}
+                {{--                item--}}
+                <div class="component-product">
+                    <div class="tag_p">
+                        <span class="years2">NEW</span>
+                        <span class="payment2">Trả góp 0%</span>
+                    </div>
+                    <span class="dbrand2"
+                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');">
+                    </span>
                     <div class="p-img">
                         <a href="#">
                             <img src="https://hanoicomputercdn.com/media/product/120_60623_asus_m5401.jpg"
                                  alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
                         </a>
                     </div>
-                    <div class="p-info" style="min-height:98px;">
+                    <div class="p-info">
                         <a href="#" class="p-name">
                             PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win
                             10) (M5401WUAT-BA040T)
                         </a>
-                        <span class="p-price"> 18.599.000đ </span>
-                        <span class="p-nprice"> 19.799.000đ </span>
+                        <div class="promotion2">
+                            <span class="pprice2"> 18.599.000đ </span>
+                            <span class="dpercent2">- 5%</span>
+                        </div>
+                        <span class="p-price"> 19.799.000đ </span>
                     </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty-0"> <i class="fas fa-phone fa-flip-horizontal"></i> Liên hệ </span>
+                    <div class="p_rev">
+                        <div class="review">
+                            <div class="rating2">
+                                <div class="rating-upper" style="width: 0%">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                </div>
+                                <div class="rating-lower">
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                </div>
+                            </div>
+                            <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán 1</div>
+                        </div>
 
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart"
-                           data-id=""> <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
+                    </div>
+                    <div class="detail-bottom">
+                        <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
+                        <div class="action">
+                            <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm"><i
+                                    class="far fa-heart"></i></a>
+                            <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart"><i
+                                    class="far fa-shopping-cart"></i></a>
+                        </div>
                     </div>
                 </div>
                 {{--                end item--}}
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-2% </span>
-                    <p class="p-sku">PCAC115</p>
+                {{--                item--}}
+                <div class="component-product">
+                    <div class="tag_p">
+                        <span class="years2">NEW</span>
+                        <span class="payment2">Trả góp 0%</span>
+                    </div>
+                    <span class="dbrand2"
+                          style="background-image: url('https://it24h.vn/tmdt_directory/public/upload/images/products/thumb/lenovo-1666407200.png');">
+                    </span>
                     <div class="p-img">
-                        <a href="/pc-acer-as-all-in-one-c22-963-i3-1005g1-8gb-ram-1tb-hdd-128gb-ssd-21.5-inch-fhd-wl-bt-k-m-win-10-dq.bensv.001">
-                            <img src="https://hanoicomputercdn.com/media/product/120_56788_pc_acer_as_c22.jpg"
-                                 style="min-width:150px;min-height:150px;"
-                                 alt="PC Acer AS All in One C22-963 (i3-1005G1/8GB RAM/1TB HDD+128GB SSD/21.5 inch FHD/WL+BT/K+M/Win 10) (DQ.BENSV.001)">
-                        </a>
-                    </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-acer-as-all-in-one-c22-963-i3-1005g1-8gb-ram-1tb-hdd-128gb-ssd-21.5-inch-fhd-wl-bt-k-m-win-10-dq.bensv.001"
-                           class="p-name">
-                            PC Acer AS All in One C22-963 (i3-1005G1/8GB RAM/1TB HDD+128GB SSD/21.5 inch
-                            FHD/WL+BT/K+M/Win 10) (DQ.BENSV.001)
-                        </a>
-                        <span class="p-price"> 15.699.000đ </span>
-                        <span class="p-nprice"> 15.999.000đ </span>
-                    </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty-0"> <i class="fas fa-phone fa-flip-horizontal"></i> Liên hệ </span>
-
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart"
-                           data-id=""> <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
-                    </div>
-                </div>
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-17% </span>
-                    <p class="p-sku">PCHP665</p>
-                    <div class="p-img">
-                        <a href="/pc-hp-pavilion-tp01-1003d-i3-10105-4gb-ram-256gb-ssd-dvdrw-wl-bt-k-m-win-11-46j98pa">
-                            <img
-                                src="https://hanoicomputercdn.com/media/product/120_59908_hp_pavilion_590_tp01_850x850.jpg"
-                                style="min-width:150px;min-height:150px;"
-                                alt="PC HP Pavilion TP01-1003d (i3-10105/4GB RAM/256GB SSD/DVDRW/WL+BT/K+M/Win 11) (46J98PA)">
-                        </a>
-                    </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-hp-pavilion-tp01-1003d-i3-10105-4gb-ram-256gb-ssd-dvdrw-wl-bt-k-m-win-11-46j98pa"
-                           class="p-name">
-                            PC HP Pavilion TP01-1003d (i3-10105/4GB RAM/256GB SSD/DVDRW/WL+BT/K+M/Win 11) (46J98PA)
-                        </a>
-                        <span class="p-price"> 8.799.000đ </span>
-                        <span class="p-nprice"> 10.659.000đ </span>
-                    </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty"> <i class="far fa-check"></i> Còn hàng </span>
-
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart"
-                           data-id=""> <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-featured-product">
-            {{--            list title--}}
-            <div class="product-list-title is-flex is-flex-wrap-wrap">
-                <a href="https://cellphones.com.vn/man-hinh.html" class="title"><h2>MÀN HÌNH, MÁY TÍNH ĐỂ BÀN</h2>
-                </a>
-                <a href="https://cellphones.com.vn/man-hinh.html" class="more-product">Xem tất cả</a>
-                <div class="list-related-tag">
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban.html" class="related-tag">Máy tính bàn</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/dong-bo.html" class="related-tag">PC đồng
-                        bộ</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/pc-gaming.html"
-                       class="related-tag">PC Gaming</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/do-hoa.html" class="related-tag">PC Đồ
-                        họa</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/build-pc.html" class="related-tag">Build PC</a>
-                    <a href="https://cellphones.com.vn/man-hinh/van-phong.html" class="related-tag">Màn hình văn
-                        phòng</a>
-                    <a href="https://cellphones.com.vn/man-hinh/gaming.html" class="related-tag">Màn hình Gaming</a>
-                    <a href="https://cellphones.com.vn/man-hinh.html" class="related-tag" style="display: none;">Xem tất
-                        cả</a>
-                </div>
-            </div>
-            {{--                product--}}
-            <div class="featured-product-list" style="min-height:376px;">
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-6% </span>
-                    <p class="p-sku">PCAS189</p>
-                    <div class="p-img">
-                        <a href="/pc-asus-all-in-one-m5401wu-r5-5500u-8gb-ram-512gb-ssd-23.8-inch-full-hd-touch-wl-bt-k-m-win-10-m5401wuat-ba040t">
+                        <a href="#">
                             <img src="https://hanoicomputercdn.com/media/product/120_60623_asus_m5401.jpg"
-                                 style="min-width:150px;min-height:150px;"
                                  alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
                         </a>
                     </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-asus-all-in-one-m5401wu-r5-5500u-8gb-ram-512gb-ssd-23.8-inch-full-hd-touch-wl-bt-k-m-win-10-m5401wuat-ba040t"
-                           class="p-name">
+                    <div class="p-info">
+                        <a href="#" class="p-name">
                             PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win
                             10) (M5401WUAT-BA040T)
                         </a>
-                        <span class="p-price"> 18.599.000đ </span>
-                        <span class="p-nprice"> 19.799.000đ </span>
+                        <div class="promotion2">
+                            <span class="pprice2"> 18.599.000đ </span>
+                            <span class="dpercent2">- 5%</span>
+                        </div>
+                        <span class="p-price"> 19.799.000đ </span>
                     </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty-0"> <i class="fas fa-phone fa-flip-horizontal"></i> Liên hệ </span>
+                    <div class="p_rev">
+                        <div class="review">
+                            <div class="rating2">
+                                <div class="rating-upper" style="width: 0%">
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                    <span><i class="fas fa-star"></i></span>
+                                </div>
+                                <div class="rating-lower">
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                    <span><i class="fal fa-star"></i></span>
+                                </div>
+                            </div>
+                            <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán 1</div>
+                        </div>
 
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart"
-                           data-id=""> <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
+                    </div>
+                    <div class="detail-bottom">
+                        <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
+                        <div class="action">
+                            <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm"><i
+                                    class="far fa-heart"></i></a>
+                            <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart"><i
+                                    class="far fa-shopping-cart"></i></a>
+                        </div>
                     </div>
                 </div>
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-2% </span>
-                    <p class="p-sku">PCAC115</p>
-                    <div class="p-img">
-                        <a href="/pc-acer-as-all-in-one-c22-963-i3-1005g1-8gb-ram-1tb-hdd-128gb-ssd-21.5-inch-fhd-wl-bt-k-m-win-10-dq.bensv.001">
-                            <img src="https://hanoicomputercdn.com/media/product/120_56788_pc_acer_as_c22.jpg"
-                                 style="min-width:150px;min-height:150px;"
-                                 alt="PC Acer AS All in One C22-963 (i3-1005G1/8GB RAM/1TB HDD+128GB SSD/21.5 inch FHD/WL+BT/K+M/Win 10) (DQ.BENSV.001)">
-                        </a>
-                    </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-acer-as-all-in-one-c22-963-i3-1005g1-8gb-ram-1tb-hdd-128gb-ssd-21.5-inch-fhd-wl-bt-k-m-win-10-dq.bensv.001"
-                           class="p-name">
-                            PC Acer AS All in One C22-963 (i3-1005G1/8GB RAM/1TB HDD+128GB SSD/21.5 inch
-                            FHD/WL+BT/K+M/Win 10) (DQ.BENSV.001)
-                        </a>
-                        <span class="p-price"> 15.699.000đ </span>
-                        <span class="p-nprice"> 15.999.000đ </span>
-                    </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty-0"> <i class="fas fa-phone fa-flip-horizontal"></i> Liên hệ </span>
-
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart"
-                           data-id=""> <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
-                    </div>
-                </div>
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-17% </span>
-                    <p class="p-sku">PCHP665</p>
-                    <div class="p-img">
-                        <a href="/pc-hp-pavilion-tp01-1003d-i3-10105-4gb-ram-256gb-ssd-dvdrw-wl-bt-k-m-win-11-46j98pa">
-                            <img
-                                src="https://hanoicomputercdn.com/media/product/120_59908_hp_pavilion_590_tp01_850x850.jpg"
-                                style="min-width:150px;min-height:150px;"
-                                alt="PC HP Pavilion TP01-1003d (i3-10105/4GB RAM/256GB SSD/DVDRW/WL+BT/K+M/Win 11) (46J98PA)">
-                        </a>
-                    </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-hp-pavilion-tp01-1003d-i3-10105-4gb-ram-256gb-ssd-dvdrw-wl-bt-k-m-win-11-46j98pa"
-                           class="p-name">
-                            PC HP Pavilion TP01-1003d (i3-10105/4GB RAM/256GB SSD/DVDRW/WL+BT/K+M/Win 11) (46J98PA)
-                        </a>
-                        <span class="p-price"> 8.799.000đ </span>
-                        <span class="p-nprice"> 10.659.000đ </span>
-                    </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty"> <i class="far fa-check"></i> Còn hàng </span>
-
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart" data-id="">
-                            <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="block-featured-product">
-            {{--            list title--}}
-            <div class="product-list-title is-flex is-flex-wrap-wrap">
-                <a href="https://cellphones.com.vn/man-hinh.html" class="title"><h2>MÀN HÌNH, MÁY TÍNH ĐỂ BÀN</h2>
-                </a>
-                <a href="https://cellphones.com.vn/man-hinh.html" class="more-product">Xem tất cả</a>
-                <div class="list-related-tag">
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban.html" class="related-tag">Máy tính bàn</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/dong-bo.html" class="related-tag">PC đồng
-                        bộ</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/pc-gaming.html"
-                       class="related-tag">PC Gaming</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/do-hoa.html" class="related-tag">PC Đồ
-                        họa</a>
-                    <a href="https://cellphones.com.vn/may-tinh-de-ban/build-pc.html" class="related-tag">Build PC</a>
-                    <a href="https://cellphones.com.vn/man-hinh/van-phong.html" class="related-tag">Màn hình văn
-                        phòng</a>
-                    <a href="https://cellphones.com.vn/man-hinh/gaming.html" class="related-tag">Màn hình Gaming</a>
-                    <a href="https://cellphones.com.vn/man-hinh.html" class="related-tag" style="display: none;">Xem tất
-                        cả</a>
-                </div>
-            </div>
-            {{--                product--}}
-            <div class="featured-product-list" style="min-height:376px;">
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-6% </span>
-                    <p class="p-sku">PCAS189</p>
-                    <div class="p-img">
-                        <a href="/pc-asus-all-in-one-m5401wu-r5-5500u-8gb-ram-512gb-ssd-23.8-inch-full-hd-touch-wl-bt-k-m-win-10-m5401wuat-ba040t">
-                            <img src="https://hanoicomputercdn.com/media/product/120_60623_asus_m5401.jpg"
-                                 style="min-width:150px;min-height:150px;"
-                                 alt="PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win 10) (M5401WUAT-BA040T)">
-                        </a>
-                    </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-asus-all-in-one-m5401wu-r5-5500u-8gb-ram-512gb-ssd-23.8-inch-full-hd-touch-wl-bt-k-m-win-10-m5401wuat-ba040t"
-                           class="p-name">
-                            PC Asus All in One M5401WU (R5 5500U/8GB RAM/512GB SSD/23.8 inch Full HD/Touch/WL+BT/K+M/Win
-                            10) (M5401WUAT-BA040T)
-                        </a>
-                        <span class="p-price"> 18.599.000đ </span>
-                        <span class="p-nprice"> 19.799.000đ </span>
-                    </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty-0"> <i class="fas fa-phone fa-flip-horizontal"></i> Liên hệ </span>
-
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart"
-                           data-id=""> <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
-                    </div>
-                </div>
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-2% </span>
-                    <p class="p-sku">PCAC115</p>
-                    <div class="p-img">
-                        <a href="/pc-acer-as-all-in-one-c22-963-i3-1005g1-8gb-ram-1tb-hdd-128gb-ssd-21.5-inch-fhd-wl-bt-k-m-win-10-dq.bensv.001">
-                            <img src="https://hanoicomputercdn.com/media/product/120_56788_pc_acer_as_c22.jpg"
-                                 style="min-width:150px;min-height:150px;"
-                                 alt="PC Acer AS All in One C22-963 (i3-1005G1/8GB RAM/1TB HDD+128GB SSD/21.5 inch FHD/WL+BT/K+M/Win 10) (DQ.BENSV.001)">
-                        </a>
-                    </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-acer-as-all-in-one-c22-963-i3-1005g1-8gb-ram-1tb-hdd-128gb-ssd-21.5-inch-fhd-wl-bt-k-m-win-10-dq.bensv.001"
-                           class="p-name">
-                            PC Acer AS All in One C22-963 (i3-1005G1/8GB RAM/1TB HDD+128GB SSD/21.5 inch
-                            FHD/WL+BT/K+M/Win 10) (DQ.BENSV.001)
-                        </a>
-                        <span class="p-price"> 15.699.000đ </span>
-                        <span class="p-nprice"> 15.999.000đ </span>
-                    </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty-0"> <i class="fas fa-phone fa-flip-horizontal"></i> Liên hệ </span>
-
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart" data-id="">
-                            <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
-                    </div>
-                </div>
-                <div class="component-product" style="min-height:356px;">
-                    <span class="percent">-17% </span>
-                    <p class="p-sku">PCHP665</p>
-                    <div class="p-img">
-                        <a href="/pc-hp-pavilion-tp01-1003d-i3-10105-4gb-ram-256gb-ssd-dvdrw-wl-bt-k-m-win-11-46j98pa">
-                            <img
-                                src="https://hanoicomputercdn.com/media/product/120_59908_hp_pavilion_590_tp01_850x850.jpg"
-                                style="min-width:150px;min-height:150px;"
-                                alt="PC HP Pavilion TP01-1003d (i3-10105/4GB RAM/256GB SSD/DVDRW/WL+BT/K+M/Win 11) (46J98PA)">
-                        </a>
-                    </div>
-                    <div class="p-info" style="min-height:98px;">
-                        <a href="/pc-hp-pavilion-tp01-1003d-i3-10105-4gb-ram-256gb-ssd-dvdrw-wl-bt-k-m-win-11-46j98pa"
-                           class="p-name">
-                            PC HP Pavilion TP01-1003d (i3-10105/4GB RAM/256GB SSD/DVDRW/WL+BT/K+M/Win 11) (46J98PA)
-                        </a>
-                        <span class="p-price"> 8.799.000đ </span>
-                        <span class="p-nprice"> 10.659.000đ </span>
-                    </div>
-                    <div class="p-action" style="height:24px;">
-                        <span class="p-qty"> <i class="far fa-check"></i> Còn hàng </span>
-
-                        <a href="javascript:;" style="font-size: 13px;" class="p-cart p-cart js-add-to-cart" data-id="">
-                            <i class="far fa-shopping-cart"></i> Giỏ hàng
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{--    end home--}}
-    <div class="block-endhome">
-        <div class="qvch6f">
-            <div class="r1tReH">
-                <div class="UQkGa9"><a href="https://shopee.vn/legaldoc/privacy/" target="_blank"
-                                       rel="noopener noreferrer" class="+GZ0Pb typo-r10"><img class="ITerhe"
-                                                                                              src="https://cf.shopee.vn/file/8ee559562d123cf132a7cec374784442"><span
-                            class="_1gUfY9">CHÍNH SÁCH BẢO MẬT</span></a></div>
-                <div class="UQkGa9"><a href="https://shopee.vn/legaldoc/termsOfService/" target="_blank"
-                                       rel="noopener noreferrer" class="+GZ0Pb typo-r10"><img class="ITerhe"
-                                                                                              src="https://cf.shopee.vn/file/5e2ef7014b7a5004ebc7383e115364d5"><span
-                            class="_1gUfY9">QUY CHẾ HOẠT ĐỘNG</span></a></div>
-                <div class="UQkGa9"><a href="https://mall.shopee.vn/legaldoc/shipping/" target="_blank"
-                                       rel="noopener noreferrer" class="+GZ0Pb typo-r10"><img class="ITerhe"
-                                                                                              src="https://cf.shopee.vn/file/b334ced59fb923afa9f6cc41be2c2e14"><span
-                            class="_1gUfY9">CHÍNH SÁCH VẬN CHUYỂN</span></a></div>
-                <div class="UQkGa9"><a
-                        href="https://help.shopee.vn/portal/article/77265-QUY-TRI%CC%80NH-GIA%CC%89I-QUY%C3%8A%CC%81T-TRANH-CH%C3%82%CC%81P%2F-X%C6%AF%CC%89-LY%CC%81-KHI%C3%8A%CC%81U-NA%CC%A3I?previousPage=search%20recommendation%20bar"
-                        target="_blank" rel="noopener noreferrer" class="+GZ0Pb typo-r10"><img class="ITerhe"
-                                                                                               src="https://cf.shopee.vn/file/9055ca43afee3425736586fd115cb197"><span
-                            class="_1gUfY9">QUY TRÌNH GIẢI QUYẾT TRANH CHẤP</span></a></div>
-            </div>
-            <div class="PJhg+l">
-                <div class="naT42F"><a class="D5TJiN"
-                                       href="http://online.gov.vn/HomePage/WebsiteDisplay.aspx?DocId=18375"
-                                       target="_blank" rel="noopener noreferrer"><img class="pivxyG"
-                                                                                      src="https://deo.shopeemobile.com/shopee/shopee-mobilemall-live-sg/homepage/d7a172fea14bd73f86a6e77feea33bbc.png"></a><a
-                        class="D5TJiN" href="http://online.gov.vn/HomePage/AppDisplay.aspx?DocId=29" target="_blank"
-                        rel="noopener noreferrer"><img class="pivxyG"
-                                                       src="https://deo.shopeemobile.com/shopee/shopee-mobilemall-live-sg/homepage/d7a172fea14bd73f86a6e77feea33bbc.png"></a>
-                </div>
-                <div class="naT42F"><a class="D5TJiN" href="https://shopee.vn/docs/170" target="_blank"
-                                       rel="noopener noreferrer"><img class="-p38uf"
-                                                                      src="https://deo.shopeemobile.com/shopee/shopee-mobilemall-live-sg/homepage/8bb670a16c842d5af3b7aa4cbb97f655.png"></a>
-                </div>
-            </div>
-            <div class="_2iFB03">
-                <div class="_1GYBJy typo-r10"><p class="u5-Pqi">Công ty TNHH Shopee</p>
-                    <p class="_3dS+Hd">Địa chỉ: Tầng 28, Tòa nhà trung tâm Lotte Hà Nội, 54 Liễu Giai, phường Cống Vị,
-                        Quận Ba Đình, Hà Nội</p>
-                    <p class="_3dS+Hd">Tổng đài hỗ trợ: 19001221 - Email: support@shopee.vn</p>
-                    <p class="_3dS+Hd">Mã số doanh nghiệp: 0106773786 do Sở Kế hoạch &amp; Đầu tư TP Hà Nội cấp lần đầu
-                        ngày 10/02/2015</p>
-                    <p class="_3dS+Hd">© 2015 - Bản quyền thuộc về Công ty TNHH Shopee<br></p></div>
+                {{--                end item--}}
             </div>
         </div>
     </div>
