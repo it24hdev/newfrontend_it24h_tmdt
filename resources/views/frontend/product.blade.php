@@ -307,8 +307,10 @@
                             </div>
                         {!! $products->links('frontend.pagination') !!}
 
-                            <div style="overflow: hidden">
+                            <div>
+                                @if(!empty($cat->content))
                                 {!! $cat->content !!}
+                                @endif
                             </div>
                         </div>
 

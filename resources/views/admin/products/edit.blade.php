@@ -20,6 +20,7 @@
         <form action="{{ route('products.update', ['id' => $edit->id]) }}" method="post" enctype="multipart/form-data"
             id="form-post">
             <div class="intro-y box p-5">
+
                 <div>
                     <label for="crud-form-z" class="form-label">Mã(<span
                             class="text-red-600">*</span>)</label>

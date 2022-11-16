@@ -115,7 +115,20 @@ class Products extends Model
         }
         return $result;
     }
+     public function pt_sl_daban(){
+         $total = 0;
+         $sold  =  $this->sold;
+         $quantity = $this->quantity;
+         $total = $sold/$quantity*100;
+         if($total>0)
+         {
+             $result = $total;
+         }
+         else $result = 0;
+         dd($result);
+         return $result;
 
+     }
     public function category(){
         return $this->belongsToMany(Category::class, 'category_relationships', 'product_id', 'cat_id');
     }
