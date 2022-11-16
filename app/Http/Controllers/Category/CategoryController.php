@@ -108,7 +108,7 @@ class CategoryController extends Controller
         }
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
-
+        if(empty($request->content)){$request->content = '';}
         $Category  = [
             'ma'        => $request->ma,
             'name'      => $request->name,
@@ -128,7 +128,6 @@ class CategoryController extends Controller
         try {
             DB::beginTransaction();
             Category::create($Category);
-
             DB::commit();
             //xu ly hinh anh danh muc sau khi luu
             $folder = 'upload/images/products/';
@@ -162,11 +161,6 @@ class CategoryController extends Controller
     {
         $this->authorize('update', Category::class);
         $categoryproperties_manages = Categoryproperties_manages::where('category_id',$id)->get();
-        // $listproperty = [];
-        // foreach ($categoryproperties_manages as $key => $value) {
-        //     $listproperty[] = $value->categoryproperties_id;
-        // }
-        // $arr = implode(',', $listproperty);
         $categoryproperty = Categoryproperty::where('status',1)->whereNotIn('id', function($query) use ($id) {
             $query->select('categoryproperties_id')->from('categoryproperties_manages')
             ->where('category_id',$id);
@@ -207,6 +201,7 @@ class CategoryController extends Controller
         ]);
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
+        if (empty($request->content)) {$request->content = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
 
         $Categorys = Category::find($id);
@@ -242,17 +237,16 @@ class CategoryController extends Controller
             'show_push_product'    => $request->has('show_push_product'),
             'content'   => $request->content,
         ];
-
         try {
             DB::beginTransaction();
             $Categorys->update($Category);
             DB::table('admin_menu_items')
-            ->where('category_id','<>',null)
-            ->where('category_id', $request->id)
-            ->update([
-            'ma' => $request->ma,
-            'label' => $request->name,
-            ]);
+                ->where('category_id','<>',null)
+                ->where('category_id', $request->id)
+                ->update([
+                    'ma' => $request->ma,
+                    'label' => $request->name,
+                ]);
             $folder_thumb  = 'upload/images/products/thumb/';
             $folder = 'upload/images/products';
             if ($request->thumb != null) {
@@ -261,11 +255,11 @@ class CategoryController extends Controller
 
                 //Xoá ảnh cũ khi có upload ảnh mới
                 if ($nameFileOld != Category::IMAGE && $nameFile != Category::IMAGE) {
-                        $path         = 'upload/images/products/';
-                        $path_thumb   = 'upload/images/products/thumb/';
-                        CommonHelper::deleteImage($nameFileOld, $path);
-                        CommonHelper::deleteImage($nameFileOld, $path_thumb);
-                    }
+                    $path         = 'upload/images/products/';
+                    $path_thumb   = 'upload/images/products/thumb/';
+                    CommonHelper::deleteImage($nameFileOld, $path);
+                    CommonHelper::deleteImage($nameFileOld, $path_thumb);
+                }
             }
             if ($request->banner != null) {
                 CommonHelper::cropImage2($request->banner,  $nameFileBanner, 180, 324, $folder_thumb);
@@ -273,11 +267,11 @@ class CategoryController extends Controller
 
                 //Xoá ảnh cũ khi có upload ảnh mới
                 if ($nameBannerOld != Category::IMAGE && $nameFileBanner != Category::IMAGE) {
-                        $path         = 'upload/images/products/';
-                        $path_thumb   = 'upload/images/products/thumb/';
-                        CommonHelper::deleteImage($nameBannerOld, $path);
-                        CommonHelper::deleteImage($nameBannerOld, $path_thumb);
-                    }
+                    $path         = 'upload/images/products/';
+                    $path_thumb   = 'upload/images/products/thumb/';
+                    CommonHelper::deleteImage($nameBannerOld, $path);
+                    CommonHelper::deleteImage($nameBannerOld, $path_thumb);
+                }
             }
             DB::commit();
             return redirect()->route('category.index')->with('success','Cập nhật danh mục thành công.');
