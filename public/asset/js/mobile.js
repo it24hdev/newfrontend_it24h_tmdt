@@ -29,6 +29,28 @@ $(document).ready(function () {
 
     // an hien danh muc khi chon menu
     $(document).on('click', '.fa-bars', function (){
+        if(!$('.menu-mobile').hasClass('loaded')){
+            var data = {
+                _token: _token
+            };
+            $.ajax({
+                url: base_url+"/get_menu_mobile",
+                type: "post",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    $('#menu_mobile').append(data);
+                    var colors2 = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
+                    '#e150ff80','#ff50ed80','#ff50b480','#ff507480','#fb386080','#ff16458f'];
+                    $('.label-menu-tree').each(function (){
+                        var firts_color = colors2[0];
+                        colors2.splice($.inArray(firts_color, colors2), 1);
+                        $(this).css("background-color", firts_color);
+                    })
+                }
+            });
+            $('.menu-mobile').addClass('loaded');
+        }
         if(!$('.menu-mobile').hasClass('active_mn')){
             $('.menu-mobile').addClass('active_mn');
         }
@@ -106,7 +128,7 @@ $(document).ready(function () {
             data: data,
             success: function (data) {
                 $('#load_promotion').append(data);
-            },
+            }
         })
     }
 
@@ -130,9 +152,9 @@ $(document).ready(function () {
             dataType: "json",
             data: data,
             success: function (data) {
-                console.log(data);
-                // $('#data-' + id).append(data);
-            },
+                $('#list_tag_' + id).append(data.list_child_categories);
+                $('#list_products_' + id).append(data.product);
+            }
         })
     }
 

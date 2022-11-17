@@ -55,6 +55,9 @@ class HomeController extends Controller
 
         //da ngon ngu
         $locale = config('app.locale');
+
+        // sidebar
+
         //phan biet mobile / desktop
         $agent = new Agent();
         $isMobile = "";
@@ -79,21 +82,21 @@ class HomeController extends Controller
                 }
             }
             return view('frontend.mobile.indexmobile', [
-                'get_cat_parents' => $get_cat_parents,
-                'list_cat' => $list_cat,
-                'sliders' => $sliders,
-                'locale' => $locale,
-                'get_hot_sale_mobile' => $get_hot_sale_mobile,
+                'list_cat'  => $list_cat,
+                'sliders'   => $sliders,
+                'locale'    => $locale,
                 'time_sale' => $time_sale,
+                'get_cat_parents'     => $get_cat_parents,
+                'get_hot_sale_mobile' => $get_hot_sale_mobile
             ]);
         }
         else {
+            $Sidebars = $this->getmenu('sidebar');
             $list_cat_head = Category::where('taxonomy', 0)
                 ->where('parent_id', 0)
                 ->where('status', 1)
                 ->where('show_push_product', 1)->limit(8)
                 ->get();
-            $Sidebars = $this->getmenu('sidebar');
             $recentactivity = Recentactivity::where('status', 1)->get();
             $banner_1 = DB::table('sliders')->where('location', 1)->where('status', 1)->inRandomOrder()->first();
             $banner_2 = DB::table('sliders')->where('location', 2)->where('status', 1)->inRandomOrder()->first();
@@ -792,8 +795,8 @@ class HomeController extends Controller
     public function get_promotion_mobile(Request $request)
     {
         $get_promotion_mobile = Products::where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(7)->get();
-        $view = view('frontend.mobile.getpromotionproductmobile', [
-            'get_promotion_mobile' => $get_promotion_mobile,
+        $view = view('frontend.mobile.getproductmobile', [
+            'get_product_mobile' => $get_promotion_mobile,
         ])->render();
         return response()->json($view);
     }
@@ -801,6 +804,7 @@ class HomeController extends Controller
     //lay san pham
     public function get_product_mobile(Request $request)
     {
+        $product_view = $list_child_view = '';
         if (!is_null($request->id)) {
             $cat_parent = Category::find($request->id);
             $list_cat_child =[];
@@ -808,13 +812,59 @@ class HomeController extends Controller
                 $list_cat_child[]= $cat_child->id;
             }
             $list_child = Category::whereIn('id',$list_cat_child)->get();
-            $Product_random = Products::where('status', 1)->inRandomOrder()->limit(10)->get();
-//            $view = view('frontend.get-products', [
-//                'cat_parent' => $cat_parent,
-//                'locale' => $locale,
-//            ])->render();
+            $Products = Products::leftjoin('category_relationships','category_relationships.product_id','products.id')
+                ->where('category_relationships.cat_id',$request->id)
+                ->where('products.status', 1)
+                ->groupby('products.id')
+                ->orderby('products.created_at','desc')
+                ->get();
+            $list_child_view =  view('frontend.mobile.getchildcategories', [
+                'list_child' => $list_child,
+            ])->render();
+            $product_view = view('frontend.mobile.getproductmobile', [
+                'get_product_mobile' => $Products,
+            ])->render();
         }
-//        return response()->json(view);
+      return response()->json([
+          'product' => $product_view,
+          'list_child_categories' => $list_child_view
+          ]);
+    }
+
+    // lay menu ban mobile
+    public function get_menu_mobile(){
+        $get_parent = MenuItems::select('admin_menu_items.*', DB::raw("categories.thumb as img_cat"))
+            ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
+            ->leftjoin('categories','categories.id','admin_menu_items.category_id')
+            ->where('locationmenus.sidebar_location', '<>', '0')
+            ->where('locationmenus.sidebar_location', '<>', null)
+            ->where('admin_menu_items.depth', 0)
+            ->where('admin_menu_items.status', 1)
+            ->get();
+        $get_parent_firts = $get_parent->first();
+        $get_child = MenuItems::select('admin_menu_items.*')
+            ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
+            ->where('locationmenus.sidebar_location', '<>', '0')
+            ->where('locationmenus.sidebar_location', '<>', null)
+            ->where('admin_menu_items.depth','<>', 0)
+            ->where('admin_menu_items.status', 1)
+            ->where('admin_menu_items.parent' ,$get_parent_firts->id)
+            ->get();
+        $get_child_2 = MenuItems::select('admin_menu_items.*', DB::raw("brands.image as img_brand"))
+            ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
+            ->leftjoin('brands','brands.name','admin_menu_items.filter_value')
+            ->where('locationmenus.sidebar_location', '<>', '0')
+            ->where('locationmenus.sidebar_location', '<>', null)
+            ->where('admin_menu_items.depth','<>', 0)
+            ->where('admin_menu_items.status', 1)
+            ->get();
+        $view =  view('frontend.mobile.menumobile', [
+            'current_parent' => $get_parent_firts,
+            'parent' => $get_parent,
+            'child' => $get_child,
+            'child2' => $get_child_2,
+        ])->render();
+        return response()->json($view);
     }
 
 }
