@@ -122,159 +122,145 @@ class HomeController extends Controller
         }
 
 
-    }
 
+
+    }
     //lay danh muc cho blog tren menu
-    public function getcategoryblog()
-    {
+    public function getcategoryblog(){
         $categoryblog = Category::select('*')
-            ->where('categories.taxonomy', '=', 1)
-            ->where('categories.status', '=', 1)
-            ->whereNull('deleted_at')
-            ->limit(7)
-            ->get();
+        ->where('categories.taxonomy','=',1)
+        ->where('categories.status','=',1)
+        ->whereNull('deleted_at')
+        ->limit(7)
+        ->get();
         return $categoryblog;
     }
-
     // lay memu sidebar
-    public function getmenu($location)
-    {
-        if ($location == 'sidebar') {
+    public function getmenu($location){
+        if($location == 'sidebar') {
             $location = "sidebar_location";
         }
         $getmenu = MenuItems::select('admin_menu_items.*')
-            ->leftJoin('locationmenus', 'locationmenus.' . $location, '=', 'admin_menu_items.menu')
-            ->where('locationmenus.' . $location, '<>', '0')
-            ->where('locationmenus.' . $location, '<>', null)
-            ->where('depth', 0)->get();
+            ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+            ->where('locationmenus.'.$location,'<>','0')
+            ->where('locationmenus.'.$location,'<>',null)
+            ->where('depth',0)->get();
         return $getmenu;
     }
 
-    public function getmenu_ajax($location)
-    {
-        if ($location == 'sidebar') {
+    public function getmenu_ajax($location){
+        if($location == 'sidebar') {
             $location = "sidebar_location";
         }
         $getmenu = MenuItems::select('admin_menu_items.*')
-            ->leftJoin('locationmenus', 'locationmenus.' . $location, '=', 'admin_menu_items.menu')
-            ->where('locationmenus.' . $location, '<>', '0')
-            ->where('locationmenus.' . $location, '<>', null)
-            ->where('depth', '<>', 0)->get();
+            ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
+            ->where('locationmenus.'.$location,'<>','0')
+          ->where('locationmenus.'.$location,'<>',null)
+            ->where('depth','<>',0)->get();
         return $getmenu;
     }
 
-    public function arrcategory()
-    {
-        $arrCategory = DB::table('categories')->select('id', 'name', 'name2', 'slug', 'thumb', 'banner')
-            ->where('taxonomy', Category::SAN_PHAM)
-            ->where('parent_id', 0)
-            ->where('status', 1)
-            ->where('show_push_product', '=', 1)
-            ->whereNull('deleted_at')
-            ->get();
+    public function arrcategory(){
+        $arrCategory = DB::table('categories')->select('id','name','name2','slug', 'thumb', 'banner')
+        ->where('taxonomy',Category::SAN_PHAM)
+        ->where('parent_id',0)
+        ->where('status',1)
+        ->where('show_push_product','=',1)
+        ->whereNull('deleted_at')
+        ->get();
         return $arrCategory;
     }
-
     //lay san pham
-    public function getProducts(Request $request)
-    {
-        $locale = config('app.locale');
-        if (!is_null($request->id)) {
-            $cat_parent = Category::find($request->id);
-            $view = view('frontend.get-products', [
+    public function getProducts(Request $request){
+        $locale       = config('app.locale');
+        if (!is_null($request->id)){
+            $cat_parent      = Category::find($request->id);
+            $view     = view('frontend.get-products', [
                 'cat_parent' => $cat_parent,
-                'locale' => $locale,
+                'locale'   => $locale,
             ])->render();
         }
         return response()->json($view);
     }
-
     //lay san pham deal
-    public function getdealProduct(Request $request)
-    {
-        $dealProduct = Products::where('status', 1)
-            ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d') . ' 23:59:59')
-            ->orderBy('time_deal', 'desc')->inRandomOrder()->limit(8)->get();
+    public function getdealProduct(Request $request){
+        $dealProduct = Products::where('status',1)
+        ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d').' 23:59:59')
+        ->orderBy('time_deal', 'desc')->inRandomOrder()->limit(8)->get();
         $time_deal = NULL;
-        $t = 0;
+        $t=0;
 
-        foreach ($dealProduct as $k) {
+        foreach($dealProduct as $k){
             $t++;
             $time_deal = $k->time_deal;
-            if ($t == 1) {
-                \false;
-            }
+            if($t==1){ \false;}
         }
 
-        $view2 = view('frontend.get-dealsproducts', [
+        $view2     = view('frontend.get-dealsproducts', [
             'dealProduct' => $dealProduct,
             'time_deal' => $time_deal,
         ])->render();
         return response()->json($view2);
     }
-
     // lay san pham moi
-    public function getnewProduct(Request $request)
-    {
-        $product_hot_sale = Products::where('status', 1)->where('hot_sale', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
-        $product_new = Products::where('status', 1)->where('new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
+    public function getnewProduct(Request $request){
+        $product_hot_sale    = Products::where('status',1)->where('hot_sale', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
+        $product_new    = Products::where('status',1)->where('new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
 
-        $view2 = view('frontend.get-newproducts', [
+        $view2     = view('frontend.get-newproducts', [
             'product_new' => $product_new,
             'product_hot_sale' => $product_hot_sale,
         ])->render();
         return response()->json($view2);
     }
 
-    public function loadfooter(Request $request)
-    {
+    public function loadfooter(Request $request){
 
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
 
-        $view2 = view('frontend.layouts.footer', [
+        $view2     = view('frontend.layouts.footer', [
             'posts_footer' => $posts_footer,
         ])->render();
         return response()->json($view2);
     }
 
-    public function loadsliderbottom(Request $request)
-    {
+    public function loadsliderbottom(Request $request){
 
         $list_brand = Brand::get();
 
-        $view2 = view('frontend.slider-bottom', [
+        $view2  = view('frontend.slider-bottom', [
             'list_brand' => $list_brand,
         ])->render();
         return response()->json($view2);
     }
 
     //trang blog chung
-    public function categoryBlogs(Request $request)
-    {
+    public function categoryBlogs(Request $request){
         $agent = new Agent();
         $ag = "";
-        if ($agent->isMobile()) {
+        if($agent->isMobile()){
             $ag = "mobile";
-        } else $ag = "desktop";
+        }
+        else $ag = "desktop";
         $active_menu = "post";
-        $locale = config('app.locale');
-        if ($request->input('tim-kiem')) {
+        $locale       = config('app.locale');
+        if($request->input('tim-kiem')){
             $search = $request->input('tim-kiem');
-        } else {
+        }else{
             $search = '';
         }
-        $Sidebars = $this->getmenu('sidebar');
-        $getcategoryblog = $this->getcategoryblog();
+        $Sidebars           = $this->getmenu('sidebar');
+        $getcategoryblog    = $this->getcategoryblog();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $arrCategory = DB::table('categories')->where('status', 1)
-            ->where('taxonomy', Category::BAI_VIET)
-            ->where('parent_id', 0)
-            ->whereNull('deleted_at')
-            ->get();
+        $arrCategory = DB::table('categories')->where('status',1)
+        ->where('taxonomy',Category::BAI_VIET)
+        ->where('parent_id',0)
+        ->whereNull('deleted_at')
+        ->get();
 
-        $blogs = Post::where('status', 1)
-            ->where('title', 'LIKE', "%$search%")
-            ->paginate(8)->withQueryString();
+        $blogs = Post::where('status',1)
+        ->where('title', 'LIKE', "%$search%")
+        ->paginate(8)->withQueryString();
 
         $latest_blog = DB::table('posts')->where('status',1)
         ->whereNull('deleted_at')->limit(5)->get();
