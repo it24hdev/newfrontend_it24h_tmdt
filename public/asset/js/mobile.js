@@ -29,28 +29,6 @@ $(document).ready(function () {
 
     // an hien danh muc khi chon menu
     $(document).on('click', '.fa-bars', function (){
-        if(!$('.menu-mobile').hasClass('loaded')){
-            var data = {
-                _token: _token
-            };
-            $.ajax({
-                url: base_url+"/get_menu_mobile",
-                type: "post",
-                dataType: "json",
-                data: data,
-                success: function (data) {
-                    $('#menu_mobile').append(data);
-                    var colors2 = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
-                    '#e150ff80','#ff50ed80','#ff50b480','#ff507480','#fb386080','#ff16458f'];
-                    $('.label-menu-tree').each(function (){
-                        var firts_color = colors2[0];
-                        colors2.splice($.inArray(firts_color, colors2), 1);
-                        $(this).css("background-color", firts_color);
-                    })
-                }
-            });
-            $('.menu-mobile').addClass('loaded');
-        }
         if(!$('.menu-mobile').hasClass('active_mn')){
             $('.menu-mobile').addClass('active_mn');
         }
@@ -161,7 +139,14 @@ $(document).ready(function () {
 
     // su kien cuon man hinh
     function runOnScroll() {
-        // an hien thanh tim kiem khi cuon
+
+        // if(jQuery(window).scrollTop() >80){
+        //     document.getElementById("scroll_up").style.display = "block";
+        // }
+        // if(jQuery(window).scrollTop() <80){
+        //     document.getElementById("scroll_up").style.display = "none";
+        // }
+
         if(jQuery(window).scrollTop() >30){
             document.getElementById("scroll_d").style.display="block";
             document.getElementById("scroll_h").style.display="none";

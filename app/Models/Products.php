@@ -127,7 +127,6 @@ class Products extends Model
          else $result = 0;
          return $result;
 
-     }
     public function category(){
         return $this->belongsToMany(Category::class, 'category_relationships', 'product_id', 'cat_id');
     }

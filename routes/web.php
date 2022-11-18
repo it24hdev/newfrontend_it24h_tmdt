@@ -353,10 +353,7 @@ Route::post('/submit-contact', [CartController::class, 'submit_contact'])->name(
 Route::get('/', [HomeController::class, 'index'])->name('user');
 Route::post('/', [HomeController::class, 'getProducts'])->name('getProducts');
 Route::post('/deal', [HomeController::class, 'getdealProduct'])->name('getdealProduct');
-Route::post('/get_promotion_mobile', [HomeController::class, 'get_promotion_mobile'])->name('get_promotion_mobile');
 Route::post('/new', [HomeController::class, 'getnewProduct'])->name('getnewProduct');
-Route::post('/get_product_mobile', [HomeController::class, 'get_product_mobile'])->name('get_product_mobile');
-Route::post('/get_menu_mobile', [HomeController::class, 'get_menu_mobile'])->name('get_menu_mobile');
 Route::post('/footer', [HomeController::class, 'loadfooter'])->name('loadfooter');
 Route::post('/loadsliderbottom', [HomeController::class, 'loadsliderbottom'])->name('loadsliderbottom');
 
