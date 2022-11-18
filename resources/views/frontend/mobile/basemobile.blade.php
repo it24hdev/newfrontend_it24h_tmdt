@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="{{asset('asset/css/mobile/header_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/body_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/footer_mobile.css')}}">
-@yield('css')
+    @yield('css')
 <!-- css -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {

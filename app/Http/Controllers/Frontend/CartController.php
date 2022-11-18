@@ -298,7 +298,6 @@ class CartController extends Controller
         if(Session::has('order_success')){
             $locale           = config('app.locale');
             $Sidebars         = $this->getmenu('sidebar');
-            // $Menus            = $this->getmenu('menu');
             $order_id         = Session::get('order_success');
             $order            = Order::find($order_id);
             $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();

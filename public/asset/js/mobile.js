@@ -1,11 +1,16 @@
 $(document).ready(function () {
     var _token = $('meta[name="csrf-token"]').attr('content');
     //doi mau cho danh muc
-    var colors = ['#f72a2aba', '#f7972aba', '#f7e32aba','#74f72aba','#2af75bba','#2af2f7ba','#3c2af7ba','#dd2af7ba','#f72a83ba'];
+    // var colors = ['#f72a2aba', '#f7972aba', '#f7e32aba','#74f72aba','#2af75bba','#2af2f7ba','#3c2af7ba','#dd2af7ba','#f72a83ba'];
+    var colors = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
+        '#e150ff80','#ff50ed80','#ff50b480','#ff507480','#fb386080','#ff16458f'];
+
     $('.item-categories').each(function (){
-        var random_color = colors[Math.floor(Math.random() * colors.length)];
-        colors.splice($.inArray(random_color, colors), 1);
-        $(this).css("background-color", random_color);
+        // var random_color = colors[Math.floor(Math.random() * colors.length)];
+        // colors.splice($.inArray(random_color, colors), 1);
+        var firts_color = colors[0];
+        colors.splice($.inArray(firts_color, colors), 1);
+        $(this).css("background-color", firts_color);
     })
     // slider banner
     $('#slider-show').owlCarousel({
@@ -28,7 +33,7 @@ $(document).ready(function () {
     });
 
     // an hien danh muc khi chon menu
-    $(document).on('click', '.fa-bars', function (){
+    $(document).on('click', '#menubar , #menubar2', function (){
         if(!$('.menu-mobile').hasClass('loaded')){
             var data = {
                 _token: _token
@@ -39,7 +44,8 @@ $(document).ready(function () {
                 dataType: "json",
                 data: data,
                 success: function (data) {
-                    $('#menu_mobile').append(data);
+                    $('#menu_mobile').append(data.menu_mobile);
+                    $('#menu_mobile_child').append(data.menu_mobile_child);
                     var colors2 = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
                     '#e150ff80','#ff50ed80','#ff50b480','#ff507480','#fb386080','#ff16458f'];
                     $('.label-menu-tree').each(function (){
@@ -50,13 +56,80 @@ $(document).ready(function () {
                 }
             });
             $('.menu-mobile').addClass('loaded');
-        }
-        if(!$('.menu-mobile').hasClass('active_mn')){
-            $('.menu-mobile').addClass('active_mn');
+            $(document).ajaxComplete(function() {
+                if (!$('.menu-mobile').hasClass('active_mn')) {
+                    $('.menu-mobile').addClass('active_mn');
+                }
+            });
         }
         else{
-            $('.menu-mobile').removeClass('active_mn');
+            if (!$('.menu-mobile').hasClass('active_mn')) {
+
+                $('.menu-mobile').addClass('active_mn');
+
+            } else {
+                $('.menu-mobile').removeClass('active_mn');
+            }
         }
+    });
+    // load menu con khi chon menu cha mobile
+        $(document).on('click', '.label-menu-tree', function (){
+            var id = $(this).attr('get-id');
+            var data = {
+                id: id,
+                _token: _token
+            };
+            $('.label-menu-tree').removeClass('active');
+            $(this).addClass('active');
+            $.ajax({
+                url: base_url+"/get_menu_child",
+                type: "post",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    $('#menu_mobile_child').html('');
+                    $('#menu_mobile_child').append(data.menu_mobile_child);
+                }
+            })
+        })
+
+    // chon san pham yeu thich
+    $(document).on('click', '.add-wish', function(){
+        var id  =  $(this).attr('get-id');
+        var x = this;
+        var data = {
+            id: id,
+            _token: _token
+        };
+        $.ajax({
+            url: base_url+"/add-wish",
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                $(x).html('');
+                $(x).append("<i class='fas fa-heart heart_red'></i>");
+                $('#count-wish').text(data.count_wish);
+            }
+        });
+    });
+    $(document).on('click', '.add-cart', function(){
+        var id  =  $(this).attr('get-id');
+        var x = this;
+        var data = {
+            id: id,
+            _token: _token
+        };
+        $.ajax({
+            url: base_url+"/add-cart-ajax",
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                $('#count-cart').text(data.count);
+                $('#count-cart2').text(data.count);
+            }
+        });
     });
 
     //su kien load noi dung khi cuon toi truoc vung load noi dung

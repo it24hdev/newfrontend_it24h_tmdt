@@ -91,8 +91,9 @@ body::-webkit-scrollbar{
     outline: 0px;
     width: 100%;
     padding: 0px;
-    appearance: textfield;
     outline-offset: -2px;
+    opacity: 0.8;
+    color: #3e3c3c;
 }
 .background_header{
     width: 100%;
@@ -118,6 +119,47 @@ body::-webkit-scrollbar{
     font-size: 24px;
     color: white;
     width: 30px;
+}
+.headerL1 .shop i{
+    font-size: 20px!important;
+}
+.headerL1 .shop .count{
+    display: inline-block;
+    color: #fff;
+    font-size: 12px;
+    min-width: 16px;
+    height: 15px;
+    text-align: center;
+    line-height: 1.2;
+    padding: 0;
+    position: absolute;
+    top: 16px;
+    right: 39px;
+    border-radius: 11px;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    background-color: #f78f45;
+}
+
+.headerL1 .shop .count_c{
+    display: inline-block;
+    color: #fff;
+    font-size: 12px;
+    min-width: 16px;
+    height: 15px;
+    text-align: center;
+    line-height: 1.2;
+    padding: 0;
+    position: absolute;
+    top: 16px;
+    right: 7px;
+    border-radius: 11px;
+    -moz-border-radius: 11px;
+    -webkit-border-radius: 11px;
+    background-color: #f78f45;
+}
+.heart_red{
+    color: #f00!important;
 }
 /*menu*/
 .active_mn {
@@ -185,7 +227,7 @@ body::-webkit-scrollbar{
     overflow: hidden;
     font-size: 12px;
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.2;
     text-align: center;
     text-decoration: none;
     color: #444;

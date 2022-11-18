@@ -116,7 +116,7 @@ class MenusController extends Controller
                 elseif ($filter_by == 2){
                        $filter_value = $price_from.";".$price_to;
                 }
-                elseif ($request->type_menu  == 3){
+                elseif ($filter_by  == 3){
                     if(!empty($request->brand)){
                         $filter_value  = $request->brand;
                     }
@@ -198,7 +198,7 @@ class MenusController extends Controller
                 elseif ($filter_by == 2){
                     $filter_value = $price_from.";".$price_to;
                 }
-                elseif ($request->type_menu  == 3){
+                elseif ($filter_by  == 3){
                     if(!empty($request->brand)){
                         $filter_value  = $request->brand;
                     }
