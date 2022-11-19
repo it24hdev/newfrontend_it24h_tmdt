@@ -4,12 +4,12 @@
             {{--logo--}}
             <div id="scroll_h">
                 <div class="d-flex pl-2 pr-2 pt-2">
-                    <div class="col-4 d-flex justify-content-start align-items-center">
+                    <div class="col-1 d-flex justify-content-start align-items-center">
                         <div id="menubar2">
                             <i class="far fa-bars"></i>
                         </div>
                     </div>
-                    <div class="col-4 d-flex justify-content-center align-items-center">
+                    <div class="col-7 d-flex align-items-center logo_t">
                         <div>
                             <a href="/">
                                 <img src="{{asset('asset/images/it24hvn.png')}}">
@@ -62,10 +62,8 @@
                     </div>
                 </div>
                 <div class="shop col-1 d-flex justify-content-end align-items-center">
-                        <a href="#">
-                            <i class="fal fa-shopping-cart"></i>
-                            <span class="count_c" id="count-cart2">{{Cart::count()}}</span>
-                        </a>
+                    <a href="#"> <i class="fal fa-shopping-cart"></i> </a>
+                    <span class="count_c_2" id="count-cart2">{{Cart::count()}}</span>
                 </div>
             </div>
             </div>
@@ -81,3 +79,4 @@
         <div id="menu_mobile_child" class="menu-tree-child m-0 box"></div>
     </div>
 </div>
+<div id="snackbar">Đã thêm vào giỏ hàng</div>

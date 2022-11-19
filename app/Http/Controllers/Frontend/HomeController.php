@@ -792,12 +792,22 @@ class HomeController extends Controller
         $view2 = view('frontend.subsidebarmenu', ['Sidebars' => $Sidebars, 'Sidebarid' => $Sidebarid])->render();
         return response()->json($view2);
     }
-    public function get_promotion_mobile(Request $request)
+    public function get_new_mobile(Request $request)
     {
-        $get_promotion_mobile = Products::select('products.*')
-        ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(7)->get();
+        $get_new_mobile = Products::select('products.*')
+        ->where('status', 1)->where('new', 1)->inRandomOrder()->limit(7)->get();
         $view = view('frontend.mobile.getproductmobile', [
-            'get_product_mobile' => $get_promotion_mobile,
+            'get_product_mobile' => $get_new_mobile,
+        ])->render();
+        return response()->json($view);
+    }
+
+    public function get_hot_sale_mobile(Request $request)
+    {
+        $get_new_mobile = Products::select('products.*')
+            ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(7)->get();
+        $view = view('frontend.mobile.getproductmobile', [
+            'get_product_mobile' => $get_new_mobile,
         ])->render();
         return response()->json($view);
     }

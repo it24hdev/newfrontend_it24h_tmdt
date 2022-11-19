@@ -128,8 +128,12 @@ $(document).ready(function () {
             success: function (data) {
                 $('#count-cart').text(data.count);
                 $('#count-cart2').text(data.count);
+                var x = document.getElementById("snackbar");
+                x.className = "show";
+                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
             }
         });
+
     });
 
     //su kien load noi dung khi cuon toi truoc vung load noi dung
@@ -189,13 +193,13 @@ $(document).ready(function () {
         }, 1000);
     }
 
-    // lay sp khuyen mai
-    function lay_sp_khuyen_mai() {
+    // lay sp moi
+    function lay_sp_moi() {
         var data = {
             _token: _token
         };
         $.ajax({
-            url: base_url+"/get_promotion_mobile",
+            url: base_url+"/get_new_mobile",
             type: "post",
             dataType: "json",
             data: data,
@@ -204,6 +208,53 @@ $(document).ready(function () {
             }
         })
     }
+
+    // lay sp ban chay
+    function lay_ban_chay() {
+        var data = {
+            _token: _token
+        };
+        $.ajax({
+            url: base_url+"/get_hot_sale_mobile",
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                $('#load_promotion').append(data);
+            }
+        })
+    }
+    $(document).on('click', '#new_p', function (){
+        var data = {
+            _token: _token
+        };
+        $.ajax({
+            url: base_url+"/get_new_mobile",
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                $('#load_promotion').html('');
+                $('#load_promotion').append(data);
+            }
+        })
+
+    });
+    $(document).on('click', '#hot_p', function (){
+        var data = {
+            _token: _token
+        };
+        $.ajax({
+            url: base_url+"/get_hot_sale_mobile",
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                $('#load_promotion').html('');
+                $('#load_promotion').append(data);
+            }
+        })
+    });
 
     var list_product = [];
     let list_cat_1 = $('#categories_p').attr('list-cat');
@@ -245,7 +296,7 @@ $(document).ready(function () {
         }
         //load sp khuyen mai khi cuon
         if (isOnScreen($("#load_promotion")) && ($("#load_promotion").hasClass("loaded") == false)) {
-            lay_sp_khuyen_mai();
+            lay_sp_moi();
             $("#load_promotion").addClass("loaded");
         }
 

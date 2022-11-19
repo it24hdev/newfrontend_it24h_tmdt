@@ -120,16 +120,16 @@
         <div class="cat_box_sale">
             <div class="cat_box_s_h">
                 <div class="title_s">
-                    <i class="fas fa-fire"></i>
-                    <h2>Khuyến mãi hot</h2></div>
+                    <div class="b_title" id="new_p">
+                        <i class="fas fa-sparkles"></i><h2>Sản phẩm mới</h2>
+                    </div>
+                    <div class="b_title" id="hot_p">
+                        <i class="fas fa-fire"></i><h2>Sản phẩm hot</h2>
+                    </div>
+{{--                    <a href="#" class="more-product">Xem tất cả</a>--}}
+                </div>
             </div>
-            <div class="featured-product-list" id="load_promotion">
-            </div>
-            <div class="viewall_s">
-                <a href="#">Xem tất cả
-                    <i class="fa fa-angle-down ml-2"></i>
-                </a>
-            </div>
+            <div class="featured-product-list" id="load_promotion"></div>
         </div>
     </div>
     {{--categoryproduct--}}

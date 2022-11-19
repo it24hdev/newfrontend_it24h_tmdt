@@ -1101,15 +1101,34 @@ a:active, a:hover {
     padding-bottom: 10px;
 }
 .cat_box_s_h{
-    padding: 0 15px 0px 15px;
+    padding: 0 5px;
 }
 .title_s{
     color: #f00;
-    font-size: 13px;
-    font-weight: 700;
+    /*font-size: 13px;*/
+    /*font-weight: 700;*/
+    /*display: flex;*/
+    /*text-transform: uppercase;*/
+    /*word-break: break-word;*/
+    font-weight: 500;
+    align-items: baseline;
+    display: flex!important;
+    flex-wrap: wrap!important;
+}
+.b_title{
     display: flex;
-    text-transform: uppercase;
-    word-break: break-word;
+    background: #f7f7f7;
+    color: #f00;
+    border-radius: 30px;
+    padding: 7px 10px 0px 10px;
+    margin: 0px 5px;
+}
+
+.more-product{
+    margin-left: auto;
+    color: #444;
+    line-height: 40px;
+    padding-right: 5px;
 }
 .title_s i{
     display: inline-block;
