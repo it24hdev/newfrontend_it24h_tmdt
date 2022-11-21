@@ -64,8 +64,10 @@
                 <p class="noth4">0886776286</p>
             </a>
         </li>
-        <li class="mfarow-h"><a href="//fptshop.com.vn/cua-hang" title="" target="_blank"
-            >Xem danh sách cửa hàng IT24H <i class="far fa-angle-right"></i>
+        <li class="mfarow-h">
+            <a href="/" title="" target="_blank">
+                Xem danh sách cửa hàng IT24H
+                <i class="far fa-angle-right"></i>
             </a>
         </li>
     </ul>
@@ -73,72 +75,68 @@
         <p>Thông tin khác</p>
         <ul>
             <li>
-                <a rel="nofollow noopener" target="_blank" href="http://frt.vn/">Giới thiệu về công ty</a>
-            </li>
-
-
-            <li>
-                <a target="_blank" href="http://vieclam.fptshop.com.vn/">Tin tuyển dụng</a>
+                <a target="_blank" href="/">Giới thiệu về công ty</a>
             </li>
             <li>
-                <a href="/ho-tro/chinh-sach-tra-gop">Hướng dẫn mua trả góp</a>
-            </li>
-
-
-            <li>
-                <a href="/tos">Quy chế hoạt động</a>
+                <a target="_blank" href="/">Tin tuyển dụng</a>
             </li>
             <li>
-                <a href="/ho-tro/cau-hoi-thuong-gap">Câu hỏi thường gặp</a>
+                <a href="/">Hướng dẫn mua trả góp</a>
             </li>
             <li>
-                <a href="/ho-tro/gioi-thieu-may-doi-tra">Giới thiệu máy đổi trả</a>
+                <a href="/">Quy chế hoạt động</a>
             </li>
             <li>
-                <a href="/tin-tuc/Tin-khuyen-mai">Tin khuyến mãi</a>
+                <a href="/">Câu hỏi thường gặp</a>
             </li>
             <li>
-                <a href="//hddt.fptshop.com.vn/">Kiểm tra hóa đơn điện tử</a>
+                <a href="/">Giới thiệu máy đổi trả</a>
             </li>
             <li>
-                <a href="/ho-tro/chinh-sach-bao-hanh">Hệ thống bảo hành</a>
-            </li>
-            <li><a href="https://fptshop.com.vn/ban-hang-doanh-nghiep" title="">Bán hàng doanh nghiệp</a></li>
-            <li>
-                <a href="/ho-tro/chinh-sach-tra-gop">Chính sách trả góp</a>
+                <a href="/">Tin khuyến mãi</a>
             </li>
             <li>
-                <a href="/ho-tro/chinh-sach-bao-mat">Chính sách bảo mật</a>
+                <a href="/">Kiểm tra hóa đơn điện tử</a>
             </li>
             <li>
-                <a href="/ho-tro/chinh-sach-doi-san-pham">Chính sách đổi trả</a>
+                <a href="/">Hệ thống bảo hành</a>
             </li>
             <li>
-                <a href="/ho-tro/huong-dan-mua-hang">Hướng dẫn mua online</a>
+                <a href="/" title="">Bán hàng doanh nghiệp</a>
             </li>
             <li>
-                <a href="/kiem-tra-bao-hanh?tab=thong-tin-bao-hanh">Tra cứu thông tin bảo hành</a>
+                <a href="/">Chính sách trả góp</a>
+            </li>
+            <li>
+                <a href="/">Chính sách bảo mật</a>
+            </li>
+            <li>
+                <a href="/">Chính sách đổi trả</a>
+            </li>
+            <li>
+                <a href="/">Hướng dẫn mua online</a>
+            </li>
+            <li>
+                <a href="/">Tra cứu thông tin bảo hành</a>
             </li>
         </ul>
     </ul>
     <div class="mf-ftif" style="text-align:center;padding: 15px 0;">
-        <p style="font-size:14px;color:#4a4a4a;padding: 10px 0; line-height:14px;">
-            Website cùng tập đoàn:
-        </p>
         <p>
-            <a rel="nofollow noopener" href="//nhathuoclongchau.com/" title="" target="_blank"
-               style="padding:0 10px"><img src="//fptshop.com.vn/Content/Mobile/V4/images/logo-longchau.png"
-                                           alt="LongChau" width="101" height="30"></a>
-
+            <a title="" target="_blank"
+               class="px-2">
+                <img src="{{asset('asset/images/it24h.png')}}" width="101" height="30"></a>
         </p>
     </div>
     <div class="mf-ftif">
-        <p style="text-align:center">
-            <a href="//fptshop.com.vn/ho-tro" title="" target="_blank"><img
-                    src="//fptshop.com.vn/Content/Mobile/V4/images/cnht.png" alt="cnht" width="50" height="50"></a>
-            <a rel="nofollow noopener" href="http://online.gov.vn/Home/WebDetails/21883" title="" target="_blank"><img
-                    src="//fptshop.com.vn/Content/Mobile/V4/images/dtbvbct.png" alt="dtbvbct" width="159"
-                    height="60"></a>
+        <p class="text-center">
+            <a target="_blank">
+                <img src="{{asset('asset/images/cnht.jpg')}}" alt="cnht" width="50" height="50"></a>
+            <a target="_blank">
+                <img src="{{asset('asset/images/dtbvbct.jpg')}}" alt="dtbvbct" width="159"
+                    height="60">
+            </a>
         </p>
     </div>
+    <div id="go_top"><i class="fal fa-angle-up"></i></div>
 </footer>

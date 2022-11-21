@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    
+
     public function up()
     {
         Schema::create('categoryproperties', function (Blueprint $table) {
@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('stt')->nullable();
             $table->integer('category_id')->nullable();
             $table->string('explain')->nullable();
+            $table->string('image')->default('no-images.jpg');
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

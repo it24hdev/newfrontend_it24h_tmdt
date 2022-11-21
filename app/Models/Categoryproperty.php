@@ -15,6 +15,8 @@ class Categoryproperty extends Model
         'stt',
         'category_id',
         'explain',
+        'image',
         'status',
     ];
+    const IMAGE = 'no-images.jpg';
 }

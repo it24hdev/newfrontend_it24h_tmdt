@@ -141,7 +141,6 @@ class ProductsController extends Controller
         }else{
             $specifications = NULL;
         }
-
         if(empty($request->ma)){
             $request->ma      = strtoupper(Str::random(9));
         }
@@ -179,7 +178,6 @@ class ProductsController extends Controller
 
         try {
             DB::beginTransaction();
-
             $product = Products::create($Product);
             // xu ly anh khong bi vo anh
             if ($request->thumb != null) {
@@ -774,7 +772,7 @@ class ProductsController extends Controller
         ->get();
 
         $arr = array();
-        foreach ($categoryproperties as $key => $cat){   
+        foreach ($categoryproperties as $key => $cat){
           $arr[] = $cat->id;
         }
         $detailproperty = Detailproperties::whereIn('categoryproperties_id',$arr)->get();

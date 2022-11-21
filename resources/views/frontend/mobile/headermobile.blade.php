@@ -10,10 +10,7 @@
                         </div>
                     </div>
                     <div class="col-7 d-flex align-items-center logo_t">
-                        <div>
-                            <a href="/">
-                                <img src="{{asset('asset/images/it24hvn.png')}}">
-                            </a>
+                        <div><img src="{{asset('asset/images/it24hvn.png')}}">
                         </div>
                     </div>
                     <div class="col-4 d-flex justify-content-end align-items-center">

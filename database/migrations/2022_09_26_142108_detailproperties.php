@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('categoryproperties_id')->nullable();
             $table->string('categoryproperties_code')->nullable();
             $table->string('explain')->nullable();
+            $table->string('image')->default('no-images.jpg');
             $table->timestamps();
         });
     }

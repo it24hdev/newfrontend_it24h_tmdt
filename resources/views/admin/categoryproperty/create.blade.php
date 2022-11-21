@@ -7,7 +7,7 @@
             @csrf
             <div class="grid grid-cols-12 gap-x-5">
             <div class="col-span-12 xl:col-span-6">
-            
+
             <div class="form-group mb-4">
                 <label>Tên thuộc tính</label>
                 <input type="text" class=" form-control" name='name' value="{{old('name')}} " required>
@@ -30,12 +30,28 @@
                 <label>Trạng thái</label> <br>
                  <input type="checkbox" name='status' checked="checked" class="form-check-switch">
             </div>
-            <div class="modal-footer">
-            <a type="button" class="btn btn-default" href="{{ route('category_property.index')}}">Hủy</a>
-            <input type="submit" class="btn btn-primary " value="Tạo mới">
+
             </div>
-            </div>
+                <div class="col-span-12 xl:col-span-3">
+                    <label>Ảnh thuộc tính</label><br>
+                    <div class="px-4 pb-4 flex items-center cursor-pointer relative">
+                        <i data-feather="image" class="w-4 h-4 mr-2"></i> <span
+                            class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
+                        <input name='image' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0" id="fileupload2" />
+                    </div>
+                    <div class="border-2 border-dashed dark:border-dark-5 rounded-md p-2">
+                        <div class="m-2" id="dvPreview2">
+                            @error('image')
+                            <span style="color:red">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
             <div class="col-span-12 xl:col-span-6">
+                <div class="modal-footer">
+                    <a type="button" class="btn btn-default" href="{{ route('category_property.index')}}">Hủy</a>
+                    <input type="submit" class="btn btn-primary " value="Tạo mới">
+                </div>
             </div>
         </div>
 

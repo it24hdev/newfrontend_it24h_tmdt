@@ -33,7 +33,7 @@ class admin_menu_items extends Model
 //    }
 
 
-    public static function recursive($menu, $parents = 0, $level = 1, &$listmenuitem)
+    public static function recursive($menu, $parents, &$listmenuitem)
     {
         if (count($menu)>0) {
             foreach ($menu as $key => $value) {
@@ -42,7 +42,7 @@ class admin_menu_items extends Model
                     $listmenuitem[]=$value;
                     unset($menu[$key]);
                     $parent = $value->id;
-                    self::recursive($menu, $parent, $level + 1, $listmenuitem);
+                    self::recursive($menu, $parent, $listmenuitem);
                 }
             }
         }

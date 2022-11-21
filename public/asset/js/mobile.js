@@ -1,4 +1,24 @@
 $(document).ready(function () {
+
+    jQuery.event.special.touchstart = {
+        setup: function( _, ns, handle ){
+            if ( ns.includes("noPreventDefault") ) {
+                this.addEventListener("touchstart", handle, { passive: false });
+            } else {
+                this.addEventListener("touchstart", handle, { passive: true });
+            }
+        }
+    };
+    jQuery.event.special.touchmove = {
+        setup: function( _, ns, handle ){
+            if ( ns.includes("noPreventDefault") ) {
+                this.addEventListener("touchmove", handle, { passive: false });
+            } else {
+                this.addEventListener("touchmove", handle, { passive: true });
+            }
+        }
+    };
+
     var _token = $('meta[name="csrf-token"]').attr('content');
     //doi mau cho danh muc
     // var colors = ['#f72a2aba', '#f7972aba', '#f7e32aba','#74f72aba','#2af75bba','#2af2f7ba','#3c2af7ba','#dd2af7ba','#f72a83ba'];
@@ -34,41 +54,36 @@ $(document).ready(function () {
 
     // an hien danh muc khi chon menu
     $(document).on('click', '#menubar , #menubar2', function (){
-        if(!$('.menu-mobile').hasClass('loaded')){
-            var data = {
-                _token: _token
-            };
-            $.ajax({
-                url: base_url+"/get_menu_mobile",
-                type: "post",
-                dataType: "json",
-                data: data,
-                success: function (data) {
-                    $('#menu_mobile').append(data.menu_mobile);
-                    $('#menu_mobile_child').append(data.menu_mobile_child);
-                    var colors2 = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
-                    '#e150ff80','#ff50ed80','#ff50b480','#ff507480','#fb386080','#ff16458f'];
-                    $('.label-menu-tree').each(function (){
-                        var firts_color = colors2[0];
-                        colors2.splice($.inArray(firts_color, colors2), 1);
-                        $(this).css("background-color", firts_color);
-                    })
-                }
-            });
-            $('.menu-mobile').addClass('loaded');
-            $(document).ajaxComplete(function() {
-                if (!$('.menu-mobile').hasClass('active_mn')) {
-                    $('.menu-mobile').addClass('active_mn');
-                }
-            });
+        if ($('.menu-mobile').hasClass('active_mn')) {
+            $('.menu-mobile').removeClass('active_mn');
         }
-        else{
-            if (!$('.menu-mobile').hasClass('active_mn')) {
-
+        else {
+            if(!$('.menu-mobile').hasClass('loaded')){
+                var data = {
+                    _token: _token
+                };
+                $.ajax({
+                    url: base_url+"/get_menu_mobile",
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        $('#menu_mobile').append(data.menu_mobile);
+                        $('#menu_mobile_child').append(data.menu_mobile_child);
+                        var colors2 = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
+                            '#e150ff80','#ff50ed80','#ff50b480','#ff507480','#fb386080','#ff16458f'];
+                        $('.label-menu-tree').each(function (){
+                            var firts_color = colors2[0];
+                            colors2.splice($.inArray(firts_color, colors2), 1);
+                            $(this).css("background-color", firts_color);
+                        })
+                        $('.menu-mobile').addClass('loaded');
+                        $('.menu-mobile').addClass('active_mn');
+                    }
+                });
+            }
+            else{
                 $('.menu-mobile').addClass('active_mn');
-
-            } else {
-                $('.menu-mobile').removeClass('active_mn');
             }
         }
     });
@@ -282,6 +297,11 @@ $(document).ready(function () {
         })
     }
 
+    //len dau trang
+    $(document).on("click",'#go_top',function(){
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    })
 
     // su kien cuon man hinh
     function runOnScroll() {
@@ -289,10 +309,12 @@ $(document).ready(function () {
         if(jQuery(window).scrollTop() >30){
             document.getElementById("scroll_d").style.display="block";
             document.getElementById("scroll_h").style.display="none";
+            document.getElementById("go_top").style.display="block";
         }
         else{
             document.getElementById("scroll_d").style.display="none";
             document.getElementById("scroll_h").style.display="block";
+            document.getElementById("go_top").style.display="none";
         }
         //load sp khuyen mai khi cuon
         if (isOnScreen($("#load_promotion")) && ($("#load_promotion").hasClass("loaded") == false)) {

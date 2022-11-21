@@ -7,7 +7,7 @@
             @csrf
             <div class="grid grid-cols-12 gap-x-5">
             <div class="col-span-12 xl:col-span-6">
-            
+
             <div class="form-group mb-4">
                 <label>Tên thuộc tính</label>
                 <input type="text" class=" form-control" name='name' value="{{old('name') ?? $category_property->name}}">
@@ -31,12 +31,32 @@
                  <input type="checkbox" name='status' class="form-check-switch" value="{{$category_property->status == true ? '1' : '0'}}" {{$category_property->status == true ? 'checked' : ' '}}>
             </div>
             </div>
+            <div class="col-span-12 xl:col-span-3">
+                <label>Ảnh thuộc tính</label><br>
+                <div class="px-4 pb-4 flex items-center cursor-pointer relative">
+                    <i data-feather="image" class="w-4 h-4 mr-2"></i> <span
+                        class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
+                    <input name='image' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0" id="fileupload2" />
+                </div>
+                <div class="border-2 border-dashed dark:border-dark-5 rounded-md p-2">
+                    <div class="m-2" id="dvPreview2">
+                        @if ($category_property->image === '' || $category_property->image === 'no-images.jpg')
+                            <img src="{{ asset('/upload/images/common_img/no-images.jpg') }}" style="object-fit: cover; object-position: 50% 0; width: 300px;height: 300px;">
+                        @else
+                            <img src="{{ asset('/upload/images/properties') . '/' . $category_property->image }}" style="object-fit: cover; object-position: 50% 0; width: 180px;height: auto;">
+                        @endif
+                        @error('image')
+                        <span style="color:red">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+            </div>
             <div class="col-span-12 xl:col-span-12">
             <div class="form-group mb-4">
                  <a class="btn btn-primary shadow-md mr-2" href="{{ route('detailproperty.create',[$category_property->id])}}" >Thêm chi tiết thuộc tính</a>
             </div>
-            
-           
+
+
             <table  class="table table-report -mt-2">
                 <thead>
                     <tr >

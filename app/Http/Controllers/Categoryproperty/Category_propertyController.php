@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\File;
+use App\Helpers\CommonHelper;
 use Validator;
 use Response;
 use Redirect;
@@ -26,7 +27,7 @@ class Category_propertyController extends Controller
             return $next($request);
         });
     }
-    
+
     public function index(Request $request)
     {
         $keywords =  $request->query('keywords');
@@ -62,28 +63,22 @@ class Category_propertyController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'ma'     => 'required|max:255|unique:categories,ma',
-        //     'slug'   => 'required',
-        //     'name'   => 'required',
-        //     'thumb'  => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
-        //     'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
-        // ],
-        // [
-        //     'ma.required' => 'Mã danh mục không được phép bỏ trống',
-        //     'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
-        //     'ma.unique'   => 'Mã danh mục đã tồn tại',
-        //     'name.required' => 'Tên danh mục không được phép bỏ trống',
-        //     'slug.required' => 'Tên slug không được phép bỏ trống',
-        //     'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
-        //     'banner.image'  => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
-        // ]);
-
+        $request->validate([
+            'image'  => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+        ],
+            [
+                'image.image'   => 'Ảnh không đúng định dạng! (jpg, jpeg, png)',
+            ]);
+        $nameFile = Detailproperties::IMAGE;
+        if ($request->image  != null){
+            $nameFile = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
+        }
         $Categoryproperty  = [
             'ma'        => $request->ma,
             'name'      => $request->name,
             'explain'   => $request->explain,
             'stt'       => $request->stt,
+            'image' => $nameFile,
             'status'    => $request->has('status'),
         ];
 
@@ -91,18 +86,37 @@ class Category_propertyController extends Controller
             DB::beginTransaction();
             Categoryproperty::create($Categoryproperty);
             DB::commit();
+            if ($request->image != null) {
+                $folder = 'upload/images/properties';
+                $folder_thumb    = 'upload/images/properties/thumb/';
+                $folder_medium   = 'upload/images/properties/medium/';
+                $folder_large   = 'upload/images/properties/large/';
+                CommonHelper::cropImage2($request->image, $nameFile, 150, 150, $folder_thumb);
+                CommonHelper::cropImage2($request->image, $nameFile, 300, 300, $folder_medium);
+                CommonHelper::cropImage2($request->image, $nameFile, 600, 600, $folder_large);
+                CommonHelper::uploadImage($request->image, $nameFile, $folder);
+            }
             return redirect()->route('category_property.index')->with('success','Thêm mới thành công.');
         }
         catch (\Exception $exception){
             DB::rollBack();
             return redirect()->route('category_property.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
-        }  
+        }
     }
 
     public function storedetail(Request $request, $id)
     {
-
+        $request->validate([
+            'image'  => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+        ],
+        [
+            'image.image'   => 'Ảnh không đúng định dạng! (jpg, jpeg, png)',
+        ]);
         $Categoryproperty = Categoryproperty::find($id);
+        $nameFile = Detailproperties::IMAGE;
+        if ($request->image  != null){
+            $nameFile = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
+        }
         $detailproperty  = [
             'name'  => $request->name,
             'ma'  => $request->ma,
@@ -110,27 +124,31 @@ class Category_propertyController extends Controller
             'explain'   => $request->explain,
             'categoryproperties_id' => $id,
             'categoryproperties_code' => $Categoryproperty->ma,
+            'image' => $nameFile,
         ];
 
         $detailproperties  = Detailproperties::where('categoryproperties_id',$id)->get();
-
-        // dd($detailproperties);
-
         try {
             DB::beginTransaction();
             Detailproperties::create($detailproperty);
             DB::commit();
+            // xu ly anh khong bi vo anh
+            if ($request->image != null) {
+                $folder = 'upload/images/detailproperties';
+                $folder_thumb    = 'upload/images/detailproperties/thumb/';
+                $folder_medium   = 'upload/images/detailproperties/medium/';
+                $folder_large   = 'upload/images/detailproperties/large/';
+                CommonHelper::cropImage2($request->image, $nameFile, 150, 150, $folder_thumb);
+                CommonHelper::cropImage2($request->image, $nameFile, 300, 300, $folder_medium);
+                CommonHelper::cropImage2($request->image, $nameFile, 600, 600, $folder_large);
+                CommonHelper::uploadImage($request->image, $nameFile, $folder);
+            }
             return redirect()->route('category_property.edit',$id)->with('detailproperties',$detailproperties)->with('success','Thêm mới thành công.');
         }
         catch (\Exception $exception){
             DB::rollBack();
             return redirect()->route('category_property.edit',$id)->with('detailproperties',$detailproperties)->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
-        }  
-    }
-    
-    public function show(category_property $category_property)
-    {
-        
+        }
     }
 
     public function edit(Request $request, $id)
@@ -166,34 +184,27 @@ class Category_propertyController extends Controller
 
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'ma'    => 'required|max:255|unique:categories,ma,'.$id.',id',
-        //     'slug'  => 'required',
-        //     'name'  => 'required',
-        //     'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
-        //     'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
-        // ],
-        // [
-        //     'ma.required' => 'Tên danh mục không được phép bỏ trống',
-        //     'ma.max'      => 'Tên danh mục không được phép vượt quá 255 ký tự',
-        //     'ma.unique'   => 'Mã danh mục đã tồn tại',
-        //     'slug.required' => 'Tên slug không được phép bỏ trống',
-        //     'name.required' => 'Tên danh mục không được phép bỏ trống',
-        //     // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
-        //     // 'slug.unique'   => 'Tên slug đã tồn tại',
-        //     'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
-        //     'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
-        // ]); 
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+        ],
+            [
+                'image.image'   => 'Ảnh không đúng định dạng! (jpg, jpeg, png)',
+                ]);
         $category_properties = Categoryproperty::find($id);
         if(empty($category_properties)){
             return \abort(404);
         }
-     
+        $nameFile      = Categoryproperty::IMAGE;
+        $nameFileOld   = $category_properties->image;
+        if ($request->image  != null)
+            $nameFile  = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
+        else $nameFile = $nameFileOld;
         $category_property  = [
             'ma'        => $request->ma,
             'name'      => $request->name,
             'explain'   => $request->explain,
-            'stt'      => $request->stt,
+            'stt'       => $request->stt,
+            'image'       => $nameFile,
             'status'    => $request->has('status'),
         ];
         try {
@@ -206,37 +217,92 @@ class Category_propertyController extends Controller
               ]);
             Detailproperties::where('categoryproperties_id',$id)->update(['categoryproperties_code' => $request->ma]);
             DB::commit();
+            // xu ly anh khong bi vo anh
+            if ($request->image != null) {
+                $folder = 'upload/images/properties';
+                $folder_thumb    = 'upload/images/properties/thumb/';
+                $folder_medium   = 'upload/images/properties/medium/';
+                $folder_large   = 'upload/images/properties/large/';
+                CommonHelper::cropImage2($request->image, $nameFile, 150, 150, $folder_thumb);
+                CommonHelper::cropImage2($request->image, $nameFile, 300, 300, $folder_medium);
+                CommonHelper::cropImage2($request->image, $nameFile, 600, 600, $folder_large);
+                CommonHelper::uploadImage($request->image, $nameFile, $folder);
+
+                //Xoá ảnh cũ khi có upload ảnh mới
+                if ($nameFileOld != Categoryproperty::IMAGE && $nameFile != Categoryproperty::IMAGE) {
+                    $path         = 'upload/images/properties/';
+                    $path_thumb   = 'upload/images/properties/thumb/';
+                    $path_medium  = 'upload/images/properties/medium/';
+                    $path_large  = 'upload/images/properties/large/';
+                    CommonHelper::deleteImage($nameFileOld, $path);
+                    CommonHelper::deleteImage($nameFileOld, $path_thumb);
+                    CommonHelper::deleteImage($nameFileOld, $path_medium);
+                    CommonHelper::deleteImage($nameFileOld, $path_large);
+                }
+            }
             return redirect()->route('category_property.index')->with('success','Cập nhật danh mục thuộc tính thành công.');
         }
         catch (\Exception $exception){
             DB::rollBack();
             return redirect()->route('category_property.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
-        } 
+        }
     }
 
     public function updatedetail(Request $request, $id)
     {
-
+         $request->validate([
+             'image' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+         ],
+         [
+             'image.image'   => 'Ảnh không đúng định dạng! (jpg, jpeg, png)',
+         ]);
         $Detailproperties = Detailproperties::find($id);
+        $nameFile      = Detailproperties::IMAGE;
+        $nameFileOld   = $Detailproperties->image;
+        if ($request->image  != null)
+            $nameFile  = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->image->extension();
+        else $nameFile = $nameFileOld;
         $detailproperty  = [
             'name'  => $request->name,
             'ma'  => $request->ma,
             'stt'   => $request->stt,
             'explain'   => $request->explain,
+            'image'     => $nameFile,
         ];
-
         $detailproperties_list  = Detailproperties::where('categoryproperties_id',$request->id)->get();
-
         try {
             DB::beginTransaction();
             $Detailproperties->update($detailproperty);
             DB::commit();
+            // xu ly anh khong bi vo anh
+            if ($request->image != null) {
+                $folder = 'upload/images/detailproperties';
+                $folder_thumb    = 'upload/images/detailproperties/thumb/';
+                $folder_medium   = 'upload/images/detailproperties/medium/';
+                $folder_large   = 'upload/images/detailproperties/large/';
+                CommonHelper::cropImage2($request->image, $nameFile, 150, 150, $folder_thumb);
+                CommonHelper::cropImage2($request->image, $nameFile, 300, 300, $folder_medium);
+                CommonHelper::cropImage2($request->image, $nameFile, 600, 600, $folder_large);
+                CommonHelper::uploadImage($request->image, $nameFile, $folder);
+
+                //Xoá ảnh cũ khi có upload ảnh mới
+                if ($nameFileOld != Detailproperties::IMAGE && $nameFile != Detailproperties::IMAGE) {
+                    $path         = 'upload/images/detailproperties/';
+                    $path_thumb   = 'upload/images/detailproperties/thumb/';
+                    $path_medium  = 'upload/images/detailproperties/medium/';
+                    $path_large  = 'upload/images/detailproperties/large/';
+                    CommonHelper::deleteImage($nameFileOld, $path);
+                    CommonHelper::deleteImage($nameFileOld, $path_thumb);
+                    CommonHelper::deleteImage($nameFileOld, $path_medium);
+                    CommonHelper::deleteImage($nameFileOld, $path_large);
+                }
+            }
             return redirect()->route('category_property.edit',$request->id)->with('detailproperties',$detailproperties_list)->with('success','Cập nhật thuộc tính thành công.');
         }
         catch (\Exception $exception){
             DB::rollBack();
             return redirect()->route('category_property.edit',$request->id)->with('detailproperties',$detailproperties_list)->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
-        }  
+        }
     }
 
     public function destroy(Request $request)
@@ -245,7 +311,19 @@ class Category_propertyController extends Controller
         $detailproperties = DB::table('detailproperties')->where('categoryproperties_id', $request->id);
         $Categoryproperties_manages = DB::table('categoryproperties_manages')->where('categoryproperties_id', $request->id);
         if (!is_null($Categoryproperty)){
+            $nameFileOld = $Categoryproperty->image;
             $Categoryproperty->delete();
+            if(!empty($nameFileOld))
+            {
+                $path         = 'upload/images/properties/';
+                $path_thumb   = 'upload/images/properties/thumb/';
+                $path_medium  = 'upload/images/properties/medium/';
+                $path_large  = 'upload/images/properties/large/';
+                CommonHelper::deleteImage($nameFileOld, $path);
+                CommonHelper::deleteImage($nameFileOld, $path_thumb);
+                CommonHelper::deleteImage($nameFileOld, $path_medium);
+                CommonHelper::deleteImage($nameFileOld, $path_large);
+            }
             if (!is_null($detailproperties)){
                 $detailproperties_value = $detailproperties->get();
             foreach($detailproperties_value as $value){
@@ -267,7 +345,18 @@ class Category_propertyController extends Controller
         $Detailproperty     = Detailproperties::find($request->id);
         $Propertyproducts = DB::table('propertyproducts')->where('detailproperties_id', $request->id);
         if (!is_null($Detailproperty)){
+            $nameFileOld = $Detailproperty->image;
             $Detailproperty->delete();
+            if(!empty($nameFileOld)){
+                $path         = 'upload/images/detailproperties/';
+                $path_thumb   = 'upload/images/detailproperties/thumb/';
+                $path_medium  = 'upload/images/detailproperties/medium/';
+                $path_large  = 'upload/images/detailproperties/large/';
+                CommonHelper::deleteImage($nameFileOld, $path);
+                CommonHelper::deleteImage($nameFileOld, $path_thumb);
+                CommonHelper::deleteImage($nameFileOld, $path_medium);
+                CommonHelper::deleteImage($nameFileOld, $path_large);
+            }
             if (!is_null($Propertyproducts)){
             $Propertyproducts->delete();
             }
@@ -276,15 +365,15 @@ class Category_propertyController extends Controller
         return \json_encode(array('success'=>false));
     }
 
-    public function export() 
+    public function export()
     {
         return Excel::download(new PropertyExport, 'property.xlsx');
     }
 
-    public function import() 
+    public function import()
     {
         if(!empty(request()->file('file')))
-        Excel::import(new PropertyImport,request()->file('file')); 
+        Excel::import(new PropertyImport,request()->file('file'));
         return back();
     }
 }

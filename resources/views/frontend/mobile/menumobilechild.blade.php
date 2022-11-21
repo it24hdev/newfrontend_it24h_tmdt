@@ -16,9 +16,16 @@
                                     <div class="menu-child-item menu-item">
                                         <a href="{{$item->link}}" class="label-wrapper">
                                             <div class="label-item">
-                                                @if(!empty($item->img_brand))
-                                                    <img src="{{asset('upload/images/products/thumb/'.$item->img_brand)}}" >
+                                                @if(!empty($item->img_brand) && $item->filter_by == 3)
+                                                    <img src="{{asset('upload/images/products/thumb/'.$item->img_brand)}}">
+                                                    <span>{{$item->label}}</span>
+                                                @elseif(!empty($item->img_property) && $item->filter_by == 1)
+                                                        <img src="{{asset('upload/images/products/thumb/'.$item->img_brand)}}">
+                                                        <span>{{$item->label}}</span>
                                                 @else
+                                                    @if($item->img_cat != 'no-images.jpg')
+                                                    <img src="{{asset('upload/images/products/thumb/'.$item->img_cat)}}">
+                                                    @endif
                                                     <span>{{$item->label}}</span>
                                                 @endif
                                             </div>

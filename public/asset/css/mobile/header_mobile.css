@@ -238,9 +238,9 @@ body::-webkit-scrollbar{
     vertical-align: top;
 }
 .menu-mobile .menu-tree a i.icons-cate {
-    width: 45px;
-    height: 45px;
-    /* margin-bottom: 5px; */
+    width: 40px;
+    height: 40px;
+    margin-top: 5px;
     background-size: cover;
     background-position: 50%;
     background-repeat: no-repeat;
@@ -250,14 +250,15 @@ body::-webkit-scrollbar{
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.2;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.5;
     text-align: center;
     text-decoration: none;
     color: #444;
     white-space: pre-wrap;
-    margin: 0;
+    margin: 4px 0 0 0;
+    font-family: Sans-serif;
 }
 .menu-mobile .menu-tree a.active:after {
     content: "";
@@ -390,8 +391,15 @@ body::-webkit-scrollbar{
     vertical-align: top;
 }
 .menu-mobile .menu-tree-child .menu-child-item.group .menu-item .label-wrapper .label-item span{
+    /*color: #4a4a4a !important;*/
+    /*font-size: 13px;*/
+
     color: #4a4a4a !important;
-    font-size: 13px;
+    font-size: 12px;
+    max-width: 60px;
+    max-height: 50px;
+    text-align: center;
+    overflow: hidden;
 }
 .menu-mobile .menu-tree-child .group-list::-webkit-scrollbar {
     display: none;

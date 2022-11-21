@@ -855,6 +855,9 @@ class HomeController extends Controller
             ->where('admin_menu_items.status', 1)
             ->get();
         $get_parent_firts = $get_parent->first();
+
+
+
         $get_child = MenuItems::select('admin_menu_items.*')
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->where('locationmenus.sidebar_location', '<>', '0')
@@ -863,9 +866,15 @@ class HomeController extends Controller
             ->where('admin_menu_items.status', 1)
             ->where('admin_menu_items.parent' ,$get_parent_firts->id)
             ->get();
-        $get_child_2 = MenuItems::select('admin_menu_items.*', DB::raw("brands.image as img_brand"))
+
+        $get_child_2 = MenuItems::select('admin_menu_items.*',
+            DB::raw("brands.image as img_brand"),
+            DB::raw("detailproperties.image as img_property"),
+            DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->leftjoin('brands','brands.name','admin_menu_items.filter_value')
+            ->leftjoin('detailproperties','detailproperties.name','admin_menu_items.filter_value')
+            ->leftjoin('categories','categories.id','admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
             ->where('admin_menu_items.depth','<>', 0)
@@ -875,6 +884,7 @@ class HomeController extends Controller
             'current_parent' => $get_parent_firts,
             'parent' => $get_parent,
         ])->render();
+
         $menu_mobile_child =  view('frontend.mobile.menumobilechild', [
             'current_parent' => $get_parent_firts,
             'child' => $get_child,
@@ -903,14 +913,19 @@ class HomeController extends Controller
             ->where('admin_menu_items.status', 1)
             ->where('admin_menu_items.parent' ,$request->id)
             ->get();
-        $get_child_2 = MenuItems::select('admin_menu_items.*', DB::raw("brands.image as img_brand"))
+        $get_child_2 = MenuItems::select('admin_menu_items.*', DB::raw("brands.image as img_brand"),
+            DB::raw("categories.thumb as img_cat"),
+            DB::raw("detailproperties.image as img_property"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->leftjoin('brands','brands.name','admin_menu_items.filter_value')
+            ->leftjoin('detailproperties','detailproperties.name','admin_menu_items.filter_value')
+            ->leftjoin('categories','categories.id','admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
             ->where('admin_menu_items.depth','<>', 0)
             ->where('admin_menu_items.status', 1)
             ->get();
+
         $menu_mobile_child =  view('frontend.mobile.menumobilechild', [
             'current_parent' => $get_parent_firts,
             'child' => $get_child,

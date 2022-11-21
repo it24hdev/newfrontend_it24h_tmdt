@@ -8,7 +8,7 @@
                 <span class="payment2">Trả góp 0%</span>
             @endif
         </div>
-        @if (!empty($value->brand))
+        @if (!empty($value->brands->image))
             <span class="dbrand2" style="background-image: url('{{asset("upload/images/products/thumb/".$value->brands->image)}}');"></span>
         @endif
         <div class="p-img">
