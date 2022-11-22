@@ -601,8 +601,16 @@ class HomeController extends Controller
             ->get();
 
         //////////////Tra ve//////////////////
-        return \view('frontend.product', \compact('products', 'categories',
-            'cat', 'Sidebars', 'locale', 'active_menu', 'posts_footer', 'cat_parent', 'attributes'))->with('agent', $ag);
+        if ($agent->isMobile()) {
+            //slider banner header
+            $sliders = DB::table('sliders')->where('location', 9)->where('status', 1)->orderBy('position', 'ASC')->get();
+
+            return view('frontend.mobile.productmobile', compact('sliders','products', 'categories', 'attributes','cat'));
+        }
+        else{
+            return view('frontend.product', compact('products', 'categories',
+                'cat', 'Sidebars', 'locale', 'active_menu', 'posts_footer', 'cat_parent', 'attributes'))->with('agent', $ag);
+        }
     }
 
     // lay comment
@@ -771,7 +779,6 @@ class HomeController extends Controller
     public function menucontent(Request $request)
     {
         $Sidebarid = $request->id;
-        $Sidebarmenu = $request->menu;
         $agent = new Agent();
         if ($agent->isMobile()) {
             $Sidebars = $this->getmenu('sidebar');
@@ -796,7 +803,7 @@ class HomeController extends Controller
     {
         $get_new_mobile = Products::select('products.*')
         ->where('status', 1)->where('new', 1)->inRandomOrder()->limit(7)->get();
-        $view = view('frontend.mobile.getproductmobile', [
+        $view = view('frontend.mobile.templateproductmobile', [
             'get_product_mobile' => $get_new_mobile,
         ])->render();
         return response()->json($view);
@@ -806,7 +813,7 @@ class HomeController extends Controller
     {
         $get_new_mobile = Products::select('products.*')
             ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(7)->get();
-        $view = view('frontend.mobile.getproductmobile', [
+        $view = view('frontend.mobile.templateproductmobile', [
             'get_product_mobile' => $get_new_mobile,
         ])->render();
         return response()->json($view);
@@ -830,10 +837,10 @@ class HomeController extends Controller
                 ->groupby('products.id')
                 ->orderby('products.created_at','desc')
                 ->get();
-            $list_child_view =  view('frontend.mobile.getchildcategories', [
+            $list_child_view =  view('frontend.mobile.templatechildcategories', [
                 'list_child' => $list_child,
             ])->render();
-            $product_view = view('frontend.mobile.getproductmobile', [
+            $product_view = view('frontend.mobile.templateproductmobile', [
                 'get_product_mobile' => $Products,
             ])->render();
         }
@@ -880,12 +887,12 @@ class HomeController extends Controller
             ->where('admin_menu_items.depth','<>', 0)
             ->where('admin_menu_items.status', 1)
             ->get();
-        $menu_mobile =  view('frontend.mobile.menumobile', [
+        $menu_mobile =  view('frontend.mobile.templatemenumobile', [
             'current_parent' => $get_parent_firts,
             'parent' => $get_parent,
         ])->render();
 
-        $menu_mobile_child =  view('frontend.mobile.menumobilechild', [
+        $menu_mobile_child =  view('frontend.mobile.templatemenumobilechild', [
             'current_parent' => $get_parent_firts,
             'child' => $get_child,
             'child2' => $get_child_2,
@@ -926,7 +933,7 @@ class HomeController extends Controller
             ->where('admin_menu_items.status', 1)
             ->get();
 
-        $menu_mobile_child =  view('frontend.mobile.menumobilechild', [
+        $menu_mobile_child =  view('frontend.mobile.templatemenumobilechild', [
             'current_parent' => $get_parent_firts,
             'child' => $get_child,
             'child2' => $get_child_2,

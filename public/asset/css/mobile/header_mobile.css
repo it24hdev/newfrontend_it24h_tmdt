@@ -192,7 +192,7 @@ body::-webkit-scrollbar{
 }
 .menu-mobile {
     position: fixed;
-    top: 58px;
+    top: 57px;
     z-index: 100;
     background-color: #fff;
     width: 100%;

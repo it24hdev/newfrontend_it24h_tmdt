@@ -39,9 +39,16 @@
                                     <a type="button" class="btn w-32 btn-primary w-30 ml-6" href="https://fontawesome.com/v5/search" target="_blank">Lấy icon</a>
                                 </div>
                             </div>
-                            <div class="form-group mb-4 flex-initial">
-                                <div class="form-group mb-2"><label>Trạng thái</label> <br>
-                                    <input type="checkbox" class="form-check-switch" name='status' value="{{$admin_menu_items->status == true ? '1' : '0'}}" {{$admin_menu_items->status == true ? 'checked' : ' '}}>
+                            <div class="form-group mb-4 flex-initial flex">
+                                <div class="form-group mb-2"><label>Hiển thị</label> <br>
+                                    <select name="img_caption" class="form-control img_caption w-42">
+                                        <option value="0" {{($admin_menu_items->img_caption == 0) ? 'selected' : ''}}>Chỉ hiển thị tiêu đề</option>
+                                        <option value="1" {{($admin_menu_items->img_caption == 1) ? 'selected' : ''}}>Chỉ hiển thị ảnh</option>
+                                        <option value="2" {{($admin_menu_items->img_caption == 2) ? 'selected' : ''}}>Hiển thị tiêu đề và ảnh</option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-2 ml-6 text-center"><label>Trạng thái</label> <br>
+                                    <input type="checkbox" class="form-check-switch m-2" name='status' value="{{$admin_menu_items->status == true ? '1' : '0'}}" {{$admin_menu_items->status == true ? 'checked' : ' '}}>
                                 </div>
                             </div>
                         </div>
@@ -121,7 +128,6 @@
                                     </div>
                                     <div class="brand hidden">
                                         <select name="brand" class="form-control" id="brand">
-
                                         </select>
                                     </div>
                                 </div>
@@ -354,9 +360,11 @@
                     method: "POST",
                     dataType: "json",
                     success: function (data) {
-                        $("select[name='property']").append(
-                            "<option selected get-code=" + data.selected_property.ma +"  value=" + data.selected_property.categoryproperties_id + ">" + data.selected_property.name + "</option>"
-                        );
+                        if(data.selected_property!=null){
+                            $("select[name='property']").append(
+                                "<option selected get-code=" + data.selected_property.ma +"  value=" + data.selected_property.categoryproperties_id + ">" + data.selected_property.name + "</option>"
+                            );
+                        }
                         $.each(data.listproperty, function (key, value) {
                             $("select[name='property']").append(
                                 "<option get-code=" + value.ma +"  value=" + value.categoryproperties_id + ">" + value.name + "</option>"
@@ -803,8 +811,10 @@
                     var stt = $('input[name="stt"]').val();
                     var icon = $('input[name="class"]').val();
                     var status = $('input[name="status"]').val();
+                    var img_caption = $("option:selected", 'select[name="img_caption"]').val();
                     var link = $('input[name="link"]').val();
-                    var type_menu = $('input[name="status"]').val();
+                    var type_menu = $("option:selected",'select[name="type_menu"]').val();
+
                     var parent = $("option:selected", 'select[name="parent"]').val();
                     var categories_product = $("option:selected", 'select[name="categories_product"]').val();
                     var categories_post = $("option:selected", 'select[name="categories_post"]').val();
@@ -815,6 +825,7 @@
                     var price_to = $('input[name="price_to"]').val();
                     var brand = $("option:selected", 'select[name="brand"]').val();
                     var filter_by = $("option:selected", 'select[name="filter_by"]').val();
+                console.log(filter_by);
                     var data = {
                         menu: menu,
                         label: label,
@@ -822,6 +833,7 @@
                         stt: stt,
                         class: icon,
                         status: status,
+                        img_caption: img_caption,
                         link: link,
                         type_menu: type_menu,
                         parent: parent,

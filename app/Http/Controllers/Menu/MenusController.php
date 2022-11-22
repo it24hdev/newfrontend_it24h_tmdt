@@ -98,6 +98,11 @@ class MenusController extends Controller
         if(!empty($request->price_to)){
             $price_to =  $request->price_to;
         }
+        if($request->type_menu  == 0){
+            if(!empty($request->link)){
+                $request->link = 'https://'.$request->link;
+            }
+        }
         if($request->type_menu  == 1){
             if(!empty($request->categories_product) && $request->categories_product!=0){
                 $category_code  = Category::where('id',$request->categories_product)->first();
@@ -155,6 +160,7 @@ class MenusController extends Controller
             'category_id'     => $category_id,
             'filter_by'       => $filter_by,
             'filter_value'    => $filter_value,
+            'img_caption'    =>  $request->img_caption,
             'status'          => $request->has('status'),
         ];
         try {
@@ -172,13 +178,22 @@ class MenusController extends Controller
 
     public function update(Request $request, $id)
     {
-        $category_code = $category_id = $filter_by = $filter_value = $brand = "";
+        $Menuitems = admin_menu_items::find($id);
+        $category_code = $Menuitems->category_code;
+        $category_id = $Menuitems->category_id;
+        $filter_by = $request->filter_by;
+        $filter_value = $Menuitems->filter_value;
         $price_from = $price_to = 0 ;
         if(!empty($request->price_from)){
             $price_from =  $request->price_from;
         }
         if(!empty($request->price_to)){
             $price_to =  $request->price_to;
+        }
+        if($request->type_menu  == 0){
+            if(!empty($request->link)){
+                $request->link = 'https://'.$request->link;
+            }
         }
         if($request->type_menu  == 1){
             if(!empty($request->categories_product) && $request->categories_product!=0){
@@ -224,7 +239,7 @@ class MenusController extends Controller
                 }
             }
         }
-        $Menuitems = admin_menu_items::find($id);
+
         $Menuitem  = [
             'label'           => $request->label,
             'ma'              => $request->ma,
@@ -238,8 +253,12 @@ class MenusController extends Controller
             'category_id'     => $category_id,
             'filter_by'       => $filter_by,
             'filter_value'    => $filter_value,
+            'img_caption'     =>  $request->img_caption,
             'status'          => $request->has('status'),
         ];
+
+//        dd($Menuitem);
+
         try {
             DB::beginTransaction();
             $Menuitems->update($Menuitem);
@@ -316,6 +335,8 @@ class MenusController extends Controller
         $selected_data = null;
         $detailproperties_data = null;
         $filter_value = $request->filter_value;
+
+
         if(!empty($request->filter_value)){
             if(!empty($request->cat_id)) {
                 $id_category_properties = Categoryproperty::select('categoryproperties.*')->leftjoin('detailproperties', 'categoryproperties.id', 'detailproperties.categoryproperties_id')
@@ -336,7 +357,6 @@ class MenusController extends Controller
                 $data  = Categoryproperties_manages::where('category_id',$request->cat_id)->groupby('id')->get();
             }
         }
-
         return response()->json(['listproperty' => $data,'selected_property' => $selected_data,'detailproperties_data'=>$detailproperties_data]);
     }
 

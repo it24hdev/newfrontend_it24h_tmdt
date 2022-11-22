@@ -41,9 +41,16 @@
                                     <a type="button" class="btn w-32 btn-primary w-30 ml-6" href="https://fontawesome.com/v5/search" target="_blank">Lấy icon</a>
                                     </div>
                                 </div>
-                                <div class="form-group mb-4 flex-initial">
-                                    <div class="form-group mb-2"><label>Trạng thái</label> <br>
-                                        <input type="checkbox" name='status' checked="checked" class="form-check-switch">
+                                <div class="form-group mb-4 flex-initial flex">
+                                    <div class="form-group mb-2"><label>Hiển thị</label> <br>
+                                        <select name="img_caption" class="form-control img_caption w-42">
+                                            <option value="0" selected="selected">Chỉ hiển thị tiêu đề</option>
+                                            <option value="1">Chỉ hiển thị ảnh</option>
+                                            <option value="2">Hiển thị tiêu đề và ảnh</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mb-2 ml-6 text-center"><label>Trạng thái</label> <br>
+                                        <input type="checkbox" name='status' checked="checked" class="form-check-switch m-2">
                                     </div>
                                 </div>
                             </div>

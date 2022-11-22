@@ -1259,3 +1259,217 @@ a:active, a:hover {
     padding: 14px 2px 0 2px;
     text-align: center;
 }
+
+
+/*===================trang  san pham======================*/
+
+#breadcrumbs .block-breadcrumbs.affix {
+    position: fixed;
+    top: 115px;
+    left: 0;
+}
+#breadcrumbs .block-breadcrumbs {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    z-index: 1;
+    overflow-x: auto;
+    position: relative;
+}
+#breadcrumbs {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    height: 35px;
+    z-index: 10;
+}
+.cps-container {
+    width: 1200px;
+    margin: 0 auto;
+    display: block;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+@media only screen and (max-width: 1199px){
+    .cps-container {
+        width: 100%!important;
+        max-width: 1200px!important;
+        padding: 0 10px;
+    }
+}
+#breadcrumbs .block-breadcrumbs ul li {
+    display: flex;
+    align-items: center;
+    width: auto;
+    margin-right: 7px;
+}
+#breadcrumbs .block-breadcrumbs ul {
+    width: 100%;
+    padding: 0 10px;
+    margin: 0;
+    list-style: none;
+    height: 100%;
+    display: flex;
+}
+
+#breadcrumbs .block-breadcrumbs ul li div {
+    display: flex;
+}
+#breadcrumbs .block-breadcrumbs ul li div svg {
+    margin-right: 10px;
+    fill: #707070;
+    height: 10px;
+}
+#breadcrumbs .block-breadcrumbs ul li a, #breadcrumbs .block-breadcrumbs ul li p {
+    margin-right: 10px;
+    margin-bottom: 0;
+    font-size: 12px;
+    text-decoration: none;
+    color: #707070;
+    white-space: nowrap;
+}
+
+/*banner*/
+.banner_product {
+    position: relative;-
+    top: 0px;
+}
+.banner_product .banner_top {
+    margin-top: 0;
+}
+.banner_product .border_slider .owl-item img {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: 100%;
+    border-radius: 8px;
+    height: calc(((35vw - 24px) * 116) / 180);
+    max-height: 300px;
+}
+/*thuong hieu*/
+.brand_product{
+    margin: 5px 12px;
+}
+.brands__content::-webkit-scrollbar{
+    display: none;
+}
+.block-filter-brands .brands__content {
+    overflow-x: auto;
+}
+.block-filter-brands .brands__content .list-brand {
+    flex-wrap: nowrap;
+    display: flex;
+}
+.block-filter-brands .brands__content .list-brand__item {
+    height: 34px;
+    display: flex;
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    margin: 0 10px 10px 0;
+    align-items: center;
+    justify-content: center;
+}
+.block-filter-brands .brands__content .list-brand__item img {
+    height: 15px;
+    max-width: none;
+}
+.block-filter-brands .brands__content .list-brand__item span {
+    font-weight: 700;
+    color: #111;
+    font-size: 14px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+/*bo loc*/
+.filter-sort__title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.filter-sort__list-filter {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    width: 100%;
+    display: flex;
+    margin-bottom: 5px;
+}
+.filter-sort__list-filter .filter-wrapper {
+    position: unset;
+}
+.filter-sort__list-filter .btn-filter {
+    cursor: pointer;
+    height: 34px;
+    color: #444;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #f3f4f6;
+    padding: 5px 10px;
+    margin: 0 10px 10px 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+.filter-sort__list-filter .filter-wrapper .btn-filter .icon {
+    width: 15px;
+    display: flex;
+    align-items: center;
+    margin-right: 0.25rem!important;
+    margin-left: 0!important;
+    justify-content: center;
+    height: 1.5rem;
+    font-size: 12px;
+    color: #444;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.filter_product{
+    margin: 5px 12px;
+}
+.filterall{
+    position: fixed;
+    top: 57px;
+    right: 0px;
+    z-index: 100;
+    background-color: #fff;
+    width: 70%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.3s linear;
+    transform: translateX(100%);
+}
+.header-filter-all {
+    background-color: #3991ff;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+}
+.header-filter-all .title {
+    font-size: 18px;
+    color: #fff;
+    margin-bottom: 0;
+    font-weight: 600;
+    line-height: 1.125;
+}
+.header-filter-all .btnclose {
+    color: #fff;
+    border: 0;
+    background-color: transparent;
+    font-size: 18px;
+    margin-top: -3px;
+    font-weight: 600;
+}
+.header-filter-all  .icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+.header-filter-all .title .icon svg {
+    fill: #fff;
+}
