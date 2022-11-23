@@ -295,7 +295,6 @@ class HomeController extends Controller
     // xu ly bai viet duoc tim kiem
     public function categoryBlog(Request $request, $slug)
     {
-
         $agent = new Agent();
         $ag = "";
         if ($agent->isMobile()) {
@@ -417,12 +416,19 @@ class HomeController extends Controller
         return abort(404);
     }
 
+    public function is_multi($requestall) {
+
+        $rv = array_filter($requestall, 'is_array');
+
+        if(count($rv)>0) return true;
+
+        return false;
+    }
     public function product_cat(Request $request)
     {
-
         ///////////////Tham so dau vao//////////////////]
         $val = array_values($request->all());
-        $filter = $request->all();
+        $requestall = $request->all();
         $agent = new Agent();
         $ag = "";
         if ($agent->isMobile()) {
@@ -445,17 +451,22 @@ class HomeController extends Controller
                 ->leftjoin('categories', 'categories.id', 'categoryproperties_manages.category_id')
                 ->where('categories.slug', $request->slug)
                 ->get();
-
             $filter_all = [];
-            foreach ($filter as $key => $value) {
+            if($this->is_multi($requestall)){
+                $requestall = [];
+                foreach ($request->all() as $key => $value){
+                    $requestall[$key] = implode(",", $value);
+                }
+            }
+            foreach ($requestall as $key => $value) {
                 $explode = explode(',', $value);
                 if (!empty($explode)) {
                     $value = $explode;
                 }
                 $filter_all = array_merge($filter_all, $value);
             }
-            $origin_url = $request->url();
 
+            $origin_url = $request->url();
             foreach ($attributes as $key_attr => $attr) {
                 $count_attr = 0;
                 $detailproperties = Detailproperties::where('categoryproperties_id', $attr->id)->get();
@@ -469,7 +480,7 @@ class HomeController extends Controller
                     $attr_detail->setAttribute('count_product', $Propertyproducts);
                     $count_attr = $count_attr + $Propertyproducts;
                     $url = "";
-                    $value_url = $request->all();
+                    $value_url = $requestall;
                     foreach ($value_url as $key => $value) {
                         $explode = explode(',', $value);
                         if (!empty($explode)) {
@@ -495,8 +506,12 @@ class HomeController extends Controller
                                 $value_url[$key] = $implode;
                             }
                         }
+                        $this_attr = $attr->ma;
+                        $this_attr_detail = $attr_detail->ma;
                         $url = $origin_url . '?' . http_build_query($value_url);
                         $attr_detail->setAttribute('fullurl', trim($url, '?'));
+                        $attr_detail->setAttribute('this_attr', $this_attr);
+                        $attr_detail->setAttribute('this_attr_detail', $this_attr_detail);
                     } else {
                         $attr_detail->setAttribute('attr_checked', 0);
                         foreach ($value_url2 as $key => $subArr) {
@@ -515,6 +530,7 @@ class HomeController extends Controller
                         if (($value_url2) == []) {
                             $value_url2[$attr->ma] = $attr_detail->ma;
                         }
+
                         foreach ($value_url2 as $key => $value) {
                             if (is_array($value)) {
                                 $implode = implode(',', $value);
@@ -524,9 +540,14 @@ class HomeController extends Controller
                             } else {
                                 $value_url2[$key] = $value;
                             }
+
                         }
+                        $this_attr = $attr->ma;
+                        $this_attr_detail = $attr_detail->ma;
                         $url = $origin_url . '?' . http_build_query($value_url2);
                         $attr_detail->setAttribute('fullurl', trim($url, '?'));
+                        $attr_detail->setAttribute('this_attr', $this_attr);
+                        $attr_detail->setAttribute('this_attr_detail', $this_attr_detail);
                     }
                 }
                 $attr->setAttribute('detailproperty', $detailproperties);
@@ -534,7 +555,7 @@ class HomeController extends Controller
             }
             $price = "";
             $brand = "";
-            $property = $request->all();
+            $property = $requestall;
             if (!empty($request->p)) {
                 $price = $request->p;
             }
@@ -862,9 +883,6 @@ class HomeController extends Controller
             ->where('admin_menu_items.status', 1)
             ->get();
         $get_parent_firts = $get_parent->first();
-
-
-
         $get_child = MenuItems::select('admin_menu_items.*')
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->where('locationmenus.sidebar_location', '<>', '0')

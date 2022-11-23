@@ -20,7 +20,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10.633" viewBox="0 0 12 10.633">
                                 <path
                                     d="M13.2,9.061H12.1v3.965a.6.6,0,0,1-.661.661H8.793V9.721H6.15v3.965H3.507a.6.6,0,0,1-.661-.661V9.061h-1.1c-.4,0-.311-.214-.04-.494L7,3.259a.634.634,0,0,1,.936,0l5.3,5.307c.272.281.356.495-.039.495Z"
-                                    transform="translate(-1.471 -3.053)" fill="#d70018">
+                                    transform="translate(-1.471 -3.053)" fill="#3991ff">
                                 </path>
                             </svg>
                         </div>
@@ -115,7 +115,7 @@
         <div id="filterModule">
             <div class="filter-sort__list-filter">
                 <div class="filter-wrapper">
-                    <button class="btn-filter active">
+                    <button class="btn-filter btn-f">
                         <div class="icon mr-1 ml-0">
                             <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                                 <path
@@ -124,19 +124,53 @@
                         </div>
                         Bộ lọc
                     </button>
-                    <div class="filterall active_mn">
+                    <form action="{{route('product_cat',['slug'=> $cat->slug])}}" method="get" enctype="multipart/form-data">
+                    <div class="filterall">
+                        <div>
                         <div class="header-filter-all">
                             <div class="title">
                                 <div class="icon">
                                     <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                        <path d="M3.853 54.87C10.47 40.9 24.54 32 40 32H472C487.5 32 501.5 40.9 508.1 54.87C514.8 68.84 512.7 85.37 502.1 97.33L320 320.9V448C320 460.1 313.2 471.2 302.3 476.6C291.5 482 278.5 480.9 268.8 473.6L204.8 425.6C196.7 419.6 192 410.1 192 400V320.9L9.042 97.33C-.745 85.37-2.765 68.84 3.854 54.87L3.853 54.87z"></path>
+                                        <path
+                                            d="M3.853 54.87C10.47 40.9 24.54 32 40 32H472C487.5 32 501.5 40.9 508.1 54.87C514.8 68.84 512.7 85.37 502.1 97.33L320 320.9V448C320 460.1 313.2 471.2 302.3 476.6C291.5 482 278.5 480.9 268.8 473.6L204.8 425.6C196.7 419.6 192 410.1 192 400V320.9L9.042 97.33C-.745 85.37-2.765 68.84 3.854 54.87L3.853 54.87z"></path>
                                     </svg>
                                 </div>
                                 Bộ lọc
                             </div>
                             <button class="btnclose">x</button>
                         </div>
+                        </div>
+                        <div class="listFilter">
+                            <div>
+                            @if(!empty($attributes))
+                                @foreach($attributes as $key => $value)
+                                    @if($value->count_attr>0)
+                                    <div class="filter-wrapper">
+                                        <div class="is-flex title-filter">
+                                            <p>{{$value->name}}</p>
+                                        </div>
+                                        <ul>
+                                            @foreach($value->detailproperty as $property)
+                                                @if($property->count_product>0)
+                                                <li>
+                                                    <a>
+                                                    <input type="text" name="{{$property->this_attr}}[]" value="{{$property->this_attr_detail}}" class="btn-filter btn-filter-item"  @if($property->attr_checked == 1) style="background: #3991ff;color: #f9fafb;" @endif>
+                                                        {{$property->name}}
+                                                    </input>
+                                                    </a>
+                                                </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                    @endif
+                                @endforeach
+                            @endif
+                            </div>
+                        </div>
+                            <input style="position: relative; top: -55px;" type="submit" class="btn btn-primary" value="Lọc">
                     </div>
+                    </form>
                 </div>
                 <div class="filter-wrapper">
                     <button class="btn-filter" id="filter_by_price">
@@ -161,8 +195,8 @@
                         </div>
                         <div class="col-sm-12 d-flex justify-content-center">
                             {{--                            <form>--}}
-                            <input type="hidden" name="min-value" value="">
-                            <input type="hidden" name="max-value" value="">
+                            <input type="hidden" name="min-value" class="min-value">
+                            <input type="hidden" name="max-value" class="max-value">
                             <button class="btn btn-primary mx-1 close_p">Đóng</button>
                             <button class="btn btn-primary mx-1">Lọc</button>
                             {{--                            </form>--}}
@@ -176,6 +210,21 @@
 @endsection
 @section('js')
     <script src="{{asset('asset/js/filter-price-2.js')}}"></script>
+    <script>
+        $(document).ready(function () {
+            function runOnScroll() {
+                if (jQuery(window).scrollTop() > 30) {
+                    document.getElementById("affix_h").style.top = "60px";
+                } else {
+                    document.getElementById("affix_h").style.top = "115px";
+                }
+            }
+            $(window).scroll(runOnScroll);
+            // $(document).on('click','#submitfilter', function (){
+            //
+            // })
+        })
+    </script>
 @endsection
 @section('footer')
     @include('frontend.mobile.footermobile')

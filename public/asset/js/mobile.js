@@ -304,7 +304,16 @@ $(document).ready(function () {
         else{
             $('.p_filter').addClass('d-none');
         }
-    })
+    });
+
+    $(document).on("click", '.btn-f, .btnclose', function (){
+        if($('.filterall').hasClass('active_mn')){
+            $('.filterall').removeClass('active_mn');
+        }
+        else{
+            $('.filterall').addClass('active_mn');
+        }
+    });
 
     //len dau trang
     $(document).on("click",'#go_top',function(){
@@ -319,14 +328,11 @@ $(document).ready(function () {
             document.getElementById("scroll_d").style.display="block";
             document.getElementById("scroll_h").style.display="none";
             document.getElementById("go_top").style.display="block";
-            document.getElementById("affix_h").style.top="60px";
-
         }
         else{
             document.getElementById("scroll_d").style.display="none";
             document.getElementById("scroll_h").style.display="block";
             document.getElementById("go_top").style.display="none";
-            document.getElementById("affix_h").style.top="115px";
         }
         //load sp khuyen mai khi cuon
         if (isOnScreen($("#load_promotion")) && ($("#load_promotion").hasClass("loaded") == false)) {

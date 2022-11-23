@@ -800,7 +800,7 @@ $(document).ready(function() {
         function fixEvent(e, pageOffset) {
             // Prevent scrolling and panning on touch events, while
             // attempting to slide. The tap event also depends on this.
-            e.preventDefault();
+            // e.preventDefault();
             // Filter the event to register the type, which can be
             // touch, mouse or pointer. Offset changes need to be
             // made on an event specific basis.
@@ -1273,7 +1273,7 @@ $(document).ready(function() {
                 }
             }
             // Fix #551, where a handle gets selected instead of dragged.
-            event.preventDefault();
+            // event.preventDefault();
             // A drag should never propagate up to the 'tap' event.
             event.stopPropagation();
             // Attach the move and end events.

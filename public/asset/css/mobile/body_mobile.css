@@ -1441,12 +1441,14 @@ a:active, a:hover {
     overflow: hidden;
     transition: transform 0.3s linear;
     transform: translateX(100%);
+    padding-bottom: 100px;
 }
 .header-filter-all {
     background-color: #3991ff;
     display: flex;
     padding: 10px;
     justify-content: space-between;
+    border-top: 1px solid #fff;
 }
 .header-filter-all .title {
     font-size: 18px;
@@ -1472,4 +1474,29 @@ a:active, a:hover {
 }
 .header-filter-all .title .icon svg {
     fill: #fff;
+}
+
+.listFilter{
+    margin: 5px 10px;
+    overflow: auto;
+    min-height: 100px;
+    height: 100%;
+    padding-bottom: 100px;
+}
+.listFilter .filter-wrapper {
+    width: 100%;
+    position: unset;
+}
+.listFilter .filter-wrapper p {
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+.listFilter ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+.listFilter::-webkit-scrollbar{
+    display: none;
 }
