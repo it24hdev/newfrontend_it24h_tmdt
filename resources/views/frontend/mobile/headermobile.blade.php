@@ -70,10 +70,5 @@
 {{--background header--}}
 <div class="background_header">
 </div>
-<div>
-    <div class="menu-mobile" >
-        <div id="menu_mobile" class="menu-tree"></div>
-        <div id="menu_mobile_child" class="menu-tree-child m-0 box"></div>
-    </div>
-</div>
+
 <div id="snackbar">Đã thêm vào giỏ hàng</div>

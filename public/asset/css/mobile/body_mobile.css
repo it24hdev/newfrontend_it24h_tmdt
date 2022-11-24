@@ -1500,3 +1500,26 @@ a:active, a:hover {
 .listFilter::-webkit-scrollbar{
     display: none;
 }
+.listFilter li.active{
+    background: #3991ff;
+    color: #f9fafb;
+}
+#submitfilter{
+    position: relative;
+    top: -55px;
+    width: 100%;
+}
+.ac{
+    border: 1px solid #ff1919!important;
+    background: #ffe6e6!important;
+    color: #fd0d0d!important;
+
+}
+.acsgv{
+    fill: #fc0000;
+}
+.btn-filter.ac .icon svg{
+    fill: #d70018;
+    width: 12px;
+    margin-right: 5px;
+}

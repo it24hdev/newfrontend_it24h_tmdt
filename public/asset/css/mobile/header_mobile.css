@@ -201,12 +201,15 @@ body::-webkit-scrollbar{
     transition: transform 0.3s linear;
     transform: translateX(-100%);
 }
-
+.mgb_cat_m{
+    margin-bottom: 50px;
+}
 
 .menu-mobile .menu-tree {
     width: 80px;
     float: left;
-    overflow: auto;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
     height: 100%;
 }
 .menu-mobile .menu-tree a.active {
@@ -277,6 +280,7 @@ body::-webkit-scrollbar{
     float: left;
     border-radius: 0;
     overflow-y: auto;
+    overscroll-behavior-y: contain;
     height: 100%;
     padding: 10px;
 }

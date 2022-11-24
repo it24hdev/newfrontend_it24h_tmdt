@@ -426,6 +426,7 @@ class HomeController extends Controller
     }
     public function product_cat(Request $request)
     {
+//        dd($request->all());
         ///////////////Tham so dau vao//////////////////]
         $val = array_values($request->all());
         $requestall = $request->all();
@@ -507,12 +508,18 @@ class HomeController extends Controller
                             }
                         }
                         $this_attr = $attr->ma;
+                        $this_attr_name = $attr->name;
                         $this_attr_detail = $attr_detail->ma;
+                        $this_attr_detail_name = $attr_detail->name;
                         $url = $origin_url . '?' . http_build_query($value_url);
                         $attr_detail->setAttribute('fullurl', trim($url, '?'));
-                        $attr_detail->setAttribute('this_attr', $this_attr);
-                        $attr_detail->setAttribute('this_attr_detail', $this_attr_detail);
-                    } else {
+                        $attr->setAttribute('attr_name_code', $this_attr);
+                        $attr_detail->setAttribute('this_attr_code', $this_attr);
+                        $attr_detail->setAttribute('this_attr_detail_code', $this_attr_detail);
+                        $attr_detail->setAttribute('this_attr_name',  $this_attr_name);
+                        $attr_detail->setAttribute('this_attr_detail_name',  $this_attr_detail_name);
+                    }
+                    else {
                         $attr_detail->setAttribute('attr_checked', 0);
                         foreach ($value_url2 as $key => $subArr) {
                             foreach ($subArr as $key2 => $value2) {
@@ -530,7 +537,6 @@ class HomeController extends Controller
                         if (($value_url2) == []) {
                             $value_url2[$attr->ma] = $attr_detail->ma;
                         }
-
                         foreach ($value_url2 as $key => $value) {
                             if (is_array($value)) {
                                 $implode = implode(',', $value);
@@ -540,18 +546,25 @@ class HomeController extends Controller
                             } else {
                                 $value_url2[$key] = $value;
                             }
-
                         }
+
                         $this_attr = $attr->ma;
+                        $this_attr_name = $attr->name;
                         $this_attr_detail = $attr_detail->ma;
+                        $this_attr_detail_name = $attr_detail->name;
                         $url = $origin_url . '?' . http_build_query($value_url2);
                         $attr_detail->setAttribute('fullurl', trim($url, '?'));
-                        $attr_detail->setAttribute('this_attr', $this_attr);
-                        $attr_detail->setAttribute('this_attr_detail', $this_attr_detail);
+                        $attr->setAttribute('attr_name_code', $this_attr);
+                        $attr_detail->setAttribute('this_attr_code', $this_attr);
+                        $attr_detail->setAttribute('this_attr_detail_code', $this_attr_detail);
+                        $attr_detail->setAttribute('this_attr_name',  $this_attr_name);
+                        $attr_detail->setAttribute('this_attr_detail_name',  $this_attr_detail_name);
                     }
                 }
                 $attr->setAttribute('detailproperty', $detailproperties);
                 $attr->setAttribute('count_attr', $count_attr);
+
+
             }
             $price = "";
             $brand = "";
@@ -905,19 +918,12 @@ class HomeController extends Controller
             ->where('admin_menu_items.depth','<>', 0)
             ->where('admin_menu_items.status', 1)
             ->get();
-        $menu_mobile =  view('frontend.mobile.templatemenumobile', [
-            'current_parent' => $get_parent_firts,
-            'parent' => $get_parent,
-        ])->render();
-
-        $menu_mobile_child =  view('frontend.mobile.templatemenumobilechild', [
-            'current_parent' => $get_parent_firts,
+        return response()->json([
             'child' => $get_child,
             'child2' => $get_child_2,
-        ])->render();
-        return response()->json([
-            'menu_mobile' => $menu_mobile,
-            'menu_mobile_child' => $menu_mobile_child
+            'menu_mobile_child' => $menu_mobile_child,
+            'menu_mobile' => $get_parent,
+            'current_parent' => $get_parent_firts,
         ]);
     }
     public function get_menu_child(Request $request){
@@ -957,7 +963,9 @@ class HomeController extends Controller
             'child2' => $get_child_2,
         ])->render();
         return response()->json([
-            'menu_mobile_child' => $menu_mobile_child
+            'current_parent' => $get_parent_firts,
+            'child' => $get_child,
+            'child2' => $get_child_2,
         ]);
     }
 }
