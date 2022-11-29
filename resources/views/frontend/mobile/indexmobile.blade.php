@@ -62,9 +62,7 @@
                                     <a title="Xem tất cả Deal Hot" href="#">
                                         <div class="count-down" id="timesale" get-time-sale="{{$time_sale}}">
                                             <span id="d"></span> &nbsp;<span id="h"></span>&nbsp;:&nbsp;<span id="m"></span>&nbsp;:&nbsp;<span id="s"></span></div>
-                                        <img width="20" height="20"
-                                             src="https://frontend.tikicdn.com/_mobile-next/static/img/iconsChevronRight.png"
-                                             alt="see_more">
+                                        <img width="20" height="20" src="{{asset('upload/images/common_img/iconright.png')}}" alt="see_more">
                                     </a>
                                 </div>
                             </div>
@@ -78,6 +76,19 @@
                                     <div class="round_ps">
                                         <div class="item_p">
                                             <a class="ditem" href="{{ route('detailproduct', $value->slug)}}">
+                                                <div class="p_brand">
+                                                    @if (!empty($value->brands->image))
+                                                        <span class="dbrand" style="background-image: url('{{asset("upload/images/products/thumb/".$value->brands->image)}}');"></span>
+                                                    @endif
+                                                    <div class="dtag">
+                                                        @if (!empty($value->year))
+                                                            <span class="years">NEW 2022</span>
+                                                        @endif
+                                                        @if (!empty($value->installment))
+                                                            <span class="payment">Trả góp 0%</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
                                                 <div class="p_img">
                                                     <img src="{{asset('upload/images/products/thumb/'.$value->thumb)}}">
                                                 </div>
@@ -94,17 +105,6 @@
                                                             <div class="dprice dpercent">- 0%</div>
                                                         </div>
                                                         <div class="p_price">{{number_format($value->price,0,',','.')}} đ</div>
-                                                    @endif
-                                                </div>
-                                                @if (!empty($value->brands->image))
-                                                    <span class="dbrand" style="background-image: url('{{asset("upload/images/products/thumb/".$value->brands->image)}}');"></span>
-                                                @endif
-                                                <div class="dtag">
-                                                    @if (!empty($value->year))
-                                                        <span class="years">NEW 2022</span>
-                                                    @endif
-                                                    @if (!empty($value->installment))
-                                                        <span class="payment">Trả góp 0%</span>
                                                     @endif
                                                 </div>
                                                 <div class="sold">

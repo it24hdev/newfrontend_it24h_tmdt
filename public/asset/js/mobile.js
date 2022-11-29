@@ -2,13 +2,10 @@ $(document).ready(function () {
 
     var _token = $('meta[name="csrf-token"]').attr('content');
     //doi mau cho danh muc
-    // var colors = ['#f72a2aba', '#f7972aba', '#f7e32aba','#74f72aba','#2af75bba','#2af2f7ba','#3c2af7ba','#dd2af7ba','#f72a83ba'];
-    var colors = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
-        '#e150ff80','#ff50ed80','#ff50b480','#ff507480','#fb386080','#ff16458f'];
+    var colors =  ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
+                                '#e150ff80', '#ff50ed80', '#ff50b480', '#ff507480',  '#fb386080',  '#ff16458f','#fb385080','#fb385080','#ff50b380','#ff50ed70','#e150ff70','#9050ff70','#5069ff70','#5089ff70','#50ffb370','#6eff408f','#e0ff408f','#ffee408f','#ffb5408f','#ff8d408f'];;
 
     $('.item-categories').each(function (){
-        // var random_color = colors[Math.floor(Math.random() * colors.length)];
-        // colors.splice($.inArray(random_color, colors), 1);
         var firts_color = colors[0];
         colors.splice($.inArray(firts_color, colors), 1);
         $(this).css("background-color", firts_color);

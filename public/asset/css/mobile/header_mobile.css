@@ -10,7 +10,10 @@ html::-webkit-scrollbar {
 body::-webkit-scrollbar{
     display: none;
 }
-
+.disable_scoll{
+    height: 100%;
+    overflow: hidden;
+}
 .header_mobile{
     height: 112px;
 }
@@ -200,6 +203,7 @@ body::-webkit-scrollbar{
     overflow: hidden;
     transition: transform 0.3s linear;
     transform: translateX(-100%);
+    padding-bottom: 60px;
 }
 .mgb_cat_m{
     margin-bottom: 50px;
@@ -382,7 +386,10 @@ body::-webkit-scrollbar{
     padding: 1.25rem;
 }
 .menu-mobile .menu-tree-child .menu-child-item {
-    display: flex;
+    display: -webkit-box;;
+}
+.tpl_3{
+    height: 100%;
 }
 .tabs a {
     align-items: center;
@@ -400,10 +407,13 @@ body::-webkit-scrollbar{
 
     color: #4a4a4a !important;
     font-size: 12px;
-    max-width: 60px;
-    max-height: 50px;
+   /* max-width: 60px;
+    max-height: 50px;*/
     text-align: center;
     overflow: hidden;
+}
+.menu-mobile .menu-tree-child .menu-child-item.group .menu-item .label-wrapper .label-item img+span {
+    width: 65px;
 }
 .menu-mobile .menu-tree-child .group-list::-webkit-scrollbar {
     display: none;
