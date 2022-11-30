@@ -1,104 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    @yield('title')
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"  media='screen and (min-width: 1024px)'>
-    <link rel="stylesheet" href="{{asset('asset/lib/bootstrap/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.carousel.min.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="/asset/lib/fontawesomePro5/css/all.min.css">
-    <link rel="stylesheet" href="{{asset('asset/css/mobile/header_mobile.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/css/mobile/body_mobile.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/css/mobile/footer_mobile.css')}}">
-    @yield('css')
-<!-- css -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-            let active = false;
+<div class="menu-mobile" >
+    <div id="menu_mobile" class="menu-tree"></div>
+    <div class="menu-tree-child m-0 box">
+        <div class="mgb_cat_m">
+            <div class="box-title">
+                <a  target="_self" class="box-title__title"></a>
+                <a target="_self" class="box-title__btn-show-all">Xem tất
+                    cả</a>
+            </div>
+            <div id="menu_mobile_child">
 
-            const lazyLoad = function() {
-                if (active === false) {
-                    active = true;
-
-                    setTimeout(function() {
-                        lazyImages.forEach(function(lazyImage) {
-                            if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
-                                lazyImage.src = lazyImage.dataset.src;
-                                lazyImage.classList.remove("lazy");
-
-                                lazyImages = lazyImages.filter(function(image) {
-                                    return image !== lazyImage;
-                                });
-
-                                if (lazyImages.length === 0) {
-                                    document.removeEventListener("scroll", lazyLoad);
-                                    window.removeEventListener("resize", lazyLoad);
-                                    window.removeEventListener("orientationchange", lazyLoad);
-                                }
-                            }
-                        });
-
-                        active = false;
-                    }, 200);
-                }
-            };
-            document.addEventListener("scroll", lazyLoad);
-            window.addEventListener("resize", lazyLoad);
-            window.addEventListener("orientationchange", lazyLoad);
-        });
-    </script>
-</head>
-<body>
-<div class="col-12 contentt" style="z-index: 1">
-    @yield('header_mobile')
-    @yield('content')
-    @yield('footer')
-</div>
-<div>
-    <div class="menu-mobile" >
-        <div id="menu_mobile" class="menu-tree"></div>
-        <div class="menu-tree-child m-0 box">
-            <div class="mgb_cat_m">
-                <div class="box-title">
-                    <a  target="_self" class="box-title__title"></a>
-                    <a target="_self" class="box-title__btn-show-all">Xem tất
-                        cả</a>
-                </div>
-                <div id="menu_mobile_child">
-
-                </div>
+            </div>
         </div>
     </div>
 </div>
 @include('frontend.mobile.templatemenumobile')
 @include('frontend.mobile.templatemenumobilechild')
 @include('frontend.mobile.template_chose_label_img_menu')
-@include('frontend.mobile.templatechildcategories')
-@include('frontend.mobile.templateproductmobile')
-<!-- javascript -->
-    <script src="{{ asset('lib/jquery360.min.js') }}"></script>
-    <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('asset/js/mobile.js') }}"></script>
-    <script type="text/javascript">
-        var base_url = '{{route('user')}}';
-        var add_cart_ajax = '{{route('add_cart_ajax')}}';
-        var get_menu_mobile = '{{route('get_menu_mobile')}}';
-        var get_menu_child = '{{route('get_menu_child')}}';
-        var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
-        var get_new_mobile = '{{route('get_new_mobile')}}';
-        var get_product_mobile = '{{route('get_product_mobile')}}';
-        var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';
-        var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
-        var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';
-        var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
-    </script>
 <script>
     $(document).ready(function (){
         var _token = $('meta[name="csrf-token"]').attr('content');
@@ -113,7 +30,6 @@
             }
             else {
                 $('body').addClass('disable_scoll');
-                $('.menu-mobile').addClass('active_mn');
                 if(!$('.menu-mobile').hasClass('loaded')){
                     var data = {
                         _token: _token
@@ -132,7 +48,7 @@
                                     $(item).find('.label-menu-tree').addClass('active')
                                 }
                                 var img_name = v.img_cat;
-                                var imageUrl = 'url({{ URL::asset('upload/images/products/thumb/img_name')}})';
+                                var imageUrl = 'url('+img_product_mobile+')';
                                 if(img_name !=null && img_name !=''){
 
                                     imageUrl = imageUrl.replace('img_name', img_name);
@@ -166,7 +82,7 @@
                                             else if(v2.img_caption == 1){
                                                 if(v2.img_brand!=null && v2.filter_by == 3){
                                                     var img_name = v2.img_brand;
-                                                    var imageUrl ='{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                    var imageUrl = img_product_mobile;
                                                     if(img_name != null && img_name != ''){
                                                         imageUrl = imageUrl.replace('img_name', img_name);
                                                     }
@@ -180,7 +96,7 @@
                                                 }
                                                 else if(v2.img_property!=null && v2.filter_by == 1){
                                                     var img_name = v2.img_property;
-                                                    var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                    var imageUrl = img_product_mobile;
                                                     if(img_name != null && img_name != ''){
                                                         imageUrl = imageUrl.replace('img_name', img_name);
                                                     }
@@ -194,7 +110,7 @@
                                                 else{
                                                     if(v2.img_cat != 'no-images.jpg'){
                                                         var img_name = v2.img_cat;
-                                                        var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                        var imageUrl = img_product_mobile;
                                                         if(img_name != null && img_name != ''){
                                                             imageUrl = imageUrl.replace('img_name', img_name);
                                                         }
@@ -211,7 +127,7 @@
 
                                                 if(v2.img_brand!=null && v2.filter_by == 3){
                                                     var img_name = v2.img_brand;
-                                                    var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                    var imageUrl = img_product_mobile;
                                                     if(img_name != null && img_name != ''){
                                                         imageUrl = imageUrl.replace('img_name', img_name);
                                                     }
@@ -225,7 +141,7 @@
                                                 }
                                                 else if(v2.img_property!=null && v2.filter_by == 1){
                                                     var img_name = v2.img_property;
-                                                    var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                    var imageUrl = img_product_mobile;
                                                     if(img_name != null && img_name != ''){
                                                         imageUrl = imageUrl.replace('img_name', img_name);
                                                     }
@@ -239,7 +155,7 @@
                                                 else{
                                                     if(v2.img_cat != 'no-images.jpg'){
                                                         var img_name = v2.img_cat;
-                                                        var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                        var imageUrl = img_product_mobile;
                                                         if(img_name != null && img_name != ''){
                                                             imageUrl = imageUrl.replace('img_name', img_name);
                                                         }
@@ -259,7 +175,7 @@
                                     $(item).find('.label-menu-tree').addClass('active')
                                 }
                                 var img_name = v.img_cat;
-                                var imageUrl = 'url({{ URL::asset('upload/images/products/thumb/img_name')}})';
+                                var imageUrl = 'url('+img_product_mobile+')';
                                 if(img_name != null && img_name != ''){
                                     imageUrl = imageUrl.replace('img_name', img_name);
                                 }
@@ -277,9 +193,10 @@
                                 colors2.splice($.inArray(firts_color, colors2), 1);
                                 $(this).css("background-color", firts_color);
                             })
+                            $('.menu-mobile').addClass('loaded');
+                            $('.menu-mobile').addClass('active_mn');
                         }
                     });
-                    $('.menu-mobile').addClass('loaded');
                 }
                 else{
                     $('.menu-mobile').addClass('active_mn');
@@ -326,7 +243,7 @@
                                     else if(v2.img_caption == 1){
                                         if(v2.img_brand!=null && v2.filter_by == 3){
                                             var img_name = v2.img_brand;
-                                            var imageUrl ='{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                            var imageUrl = img_product_mobile;
                                             if(img_name != null && img_name != ''){
                                                 imageUrl = imageUrl.replace('img_name', img_name);
                                             }
@@ -339,7 +256,7 @@
                                         }
                                         else if(v2.img_property!=null && v2.filter_by == 1){
                                             var img_name = v2.img_property;
-                                            var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                            var imageUrl =  img_product_mobile;
                                             if(img_name != null && img_name != ''){
                                                 imageUrl = imageUrl.replace('img_name', img_name);
                                             }
@@ -353,7 +270,7 @@
                                         else{
                                             if(v2.img_cat != 'no-images.jpg'){
                                                 var img_name = v2.img_cat;
-                                                var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                var imageUrl = img_product_mobile;
                                                 if(img_name != null && img_name != ''){
                                                     imageUrl = imageUrl.replace('img_name', img_name);
                                                 }
@@ -370,7 +287,7 @@
 
                                         if(v2.img_brand!=null && v2.filter_by == 3){
                                             var img_name = v2.img_brand;
-                                            var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                            var imageUrl = img_product_mobile;
                                             if(img_name != null && img_name != ''){
                                                 imageUrl = imageUrl.replace('img_name', img_name);
                                             }
@@ -384,7 +301,7 @@
                                         }
                                         else if(v2.img_property!=null && v2.filter_by == 1){
                                             var img_name = v2.img_property;
-                                            var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                            var imageUrl = img_product_mobile;
                                             if(img_name != null && img_name != ''){
                                                 imageUrl = imageUrl.replace('img_name', img_name);
                                             }
@@ -399,7 +316,7 @@
 
                                             if(v2.img_cat != 'no-images.jpg'){
                                                 var img_name = v2.img_cat;
-                                                var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
+                                                var imageUrl = img_product_mobile;
                                                 if(img_name != null && img_name != ''){
                                                     imageUrl = imageUrl.replace('img_name', img_name);
                                                 }
@@ -419,7 +336,7 @@
                             $(item).find('.label-menu-tree').addClass('active')
                         }
                         var img_name = v.img_cat;
-                        var imageUrl = 'url({{ URL::asset('upload/images/products/thumb/img_name')}})';
+                        var imageUrl = 'url('+img_product_mobile+')';
                         if(img_name != null && img_name != ''){
                             imageUrl = imageUrl.replace('img_name', img_name);
                         }
@@ -428,7 +345,7 @@
                         }
                         $(item).find('.icons-cate').css('background-image',imageUrl);
                         $(item).find('.name_menu').html(v.label);
-                         $('#menu_mobile_child').append(item.html());
+                        $('#menu_mobile_child').append(item.html());
                     });
                     var colors2 = ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
                         '#e150ff80', '#ff50ed80', '#ff50b480', '#ff507480',  '#fb386080',  '#ff16458f','#fb385080','#fb385080','#ff50b380','#ff50ed70','#e150ff70','#9050ff70','#5069ff70','#5089ff70','#50ffb370','#6eff408f','#e0ff408f','#ffee408f','#ffb5408f','#ff8d408f'];
@@ -442,6 +359,3 @@
         });
     })
 </script>
-@yield('js')
-</body>
-</html>

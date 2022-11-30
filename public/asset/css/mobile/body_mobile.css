@@ -1436,6 +1436,9 @@ a:active, a:hover {
     align-items: center;
     white-space: nowrap;
 }
+.filter-sort__list-filter::-webkit-scrollbar{
+    display: none;
+}
 .filter-sort__list-filter .filter-wrapper .btn-filter .icon {
     width: 15px;
     display: flex;
@@ -1449,6 +1452,13 @@ a:active, a:hover {
     cursor: pointer;
     white-space: nowrap;
 }
+.filter-sort__list-filter .filter-wrapper .btn-filter .icon2 {
+    margin-left: 6px;
+    margin-right: 0;
+    width: 15px;
+    display: flex;
+    align-items: center;
+}
 .filter_product{
     margin: 5px 12px;
 }
@@ -1458,7 +1468,7 @@ a:active, a:hover {
     right: 0px;
     z-index: 100;
     background-color: #fff;
-    width: 70%;
+    width: 80%;
     height: 100%;
     overflow: hidden;
     transition: transform 0.3s linear;
@@ -1544,4 +1554,78 @@ a:active, a:hover {
     fill: #d70018;
     width: 12px;
     margin-right: 5px;
+}
+.list-filter-child{
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 20px rgb(0 0 0 / 50%);
+    padding: 10px 10px 0;
+    width: 350px;
+    transition: .5s;
+    right: 50%;
+}
+.list-filter-child.active{
+    opacity: 1;
+    z-index: 5;
+    width: 350px;
+    transform: translateX(50%);
+}
+.list-filter-child ul{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+    list-style: none;
+}
+.list-filter-child .btn-filter-group{
+    justify-content: space-between;
+    margin-bottom: 10px;
+    display: flex;
+}
+.list-filter-child .button_submit{
+    background-color: #d70018;
+    width: calc(50% - 5px);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 2px;
+    color: #fff;
+    cursor: pointer;
+    justify-content: center;
+    padding: calc(0.5em - 1px) 1em;
+    text-align: center;
+    height: 2.5em;
+    position: relative;
+    vertical-align: top;
+    -webkit-appearance: none;
+    line-height: 1.5;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid transparent;
+    white-space: nowrap;
+}
+.list-filter-child .button_close{
+    width: calc(50% - 5px);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: 2px;
+    background-color: #feecf0;
+    color: #cc0f35;
+    border-color: transparent;
+    cursor: pointer;
+    justify-content: center;
+    padding: calc(0.5em - 1px) 1em;
+    text-align: center;
+    border-width: 1px;
+    white-space: nowrap;
+}
+.sort_by .icon svg{
+    margin-right: 6px;
+    width: 15px;
+    display: flex;
+    align-items: center;
 }

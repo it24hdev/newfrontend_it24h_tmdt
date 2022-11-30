@@ -427,7 +427,6 @@ class HomeController extends Controller
     }
     public function product_cat(Request $request)
     {
-//        dd($request->all());
         ///////////////Tham so dau vao//////////////////]
         $val = array_values($request->all());
         $requestall = $request->all();
@@ -467,10 +466,11 @@ class HomeController extends Controller
                 }
                 $filter_all = array_merge($filter_all, $value);
             }
-
+            $detailproperties ='';
             $origin_url = $request->url();
             foreach ($attributes as $key_attr => $attr) {
                 $count_attr = 0;
+                $count_attr_active = 0;
                 $detailproperties = Detailproperties::where('categoryproperties_id', $attr->id)->get();
                 foreach ($detailproperties as $key_attr_dt => $attr_detail) {
                     $Propertyproducts = Propertyproducts::select('propertyproducts.*', 'detailproperties.ma as ma')
@@ -492,6 +492,7 @@ class HomeController extends Controller
                     $value_url2 = $value_url;
                     if (in_array($attr_detail->ma, $filter_all)) {
                         $attr_detail->setAttribute('attr_checked', 1);
+                        $count_attr_active = $count_attr_active + 1;
                         foreach ($value_url as $key => $subArr) {
                             foreach ($subArr as $key2 => $value2) {
                                 if (($value_url[$key][$key2]) == $attr_detail->ma) {
@@ -548,7 +549,6 @@ class HomeController extends Controller
                                 $value_url2[$key] = $value;
                             }
                         }
-
                         $this_attr = $attr->ma;
                         $this_attr_name = $attr->name;
                         $this_attr_detail = $attr_detail->ma;
@@ -564,17 +564,29 @@ class HomeController extends Controller
                 }
                 $attr->setAttribute('detailproperty', $detailproperties);
                 $attr->setAttribute('count_attr', $count_attr);
-
-
+                $attr->setAttribute('count_attr_active', $count_attr_active);
             }
-            $price = "";
-            $brand = "";
+            $price = $brand = $filter_price = "";
             $property = $requestall;
             if (!empty($request->p)) {
                 $price = $request->p;
+                $filter = explode(';', $request->p);
+                $filter_price = "từ ".number_format($filter[0],0,',','.')." đến ".number_format($filter[1],0,',','.');
             }
             if (!empty($request->brand)) {
                 $brand = $request->brand;
+            }
+            $orderby = "ASC";
+            $order_name ="id";
+            if(!empty($request->order)){
+                if($request->order == "gia_cao_den_thap"){
+                    $order_name = "price";
+                    $orderby ="ASC";
+                }
+                if($request->order == "gia_thap_den_cao"){
+                    $order_name = "price";
+                    $orderby ="DESC";
+                }
             }
             $products = Products::select('products.*', 'detailproperties.ma as matt', 'categories.slug as url')
                 ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
@@ -620,6 +632,7 @@ class HomeController extends Controller
                 })
                 ->where('products.status', 1)
                 ->groupBy('products.id')
+                ->orderby($order_name,$orderby)
                 ->paginate(20)->withQueryString();
         } else {
             // Neu khong co danh muc thi lay san pham moi
@@ -639,8 +652,7 @@ class HomeController extends Controller
         if ($agent->isMobile()) {
             //slider banner header
             $sliders = DB::table('sliders')->where('location', 9)->where('status', 1)->orderBy('position', 'ASC')->get();
-
-            return view('frontend.mobile.productmobile', compact('sliders','products', 'categories', 'attributes','cat'));
+            return view('frontend.mobile.productmobile', compact('sliders','products', 'categories', 'attributes','cat','filter_price'));
         }
         else{
             return view('frontend.product', compact('products', 'categories',

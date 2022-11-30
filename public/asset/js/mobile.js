@@ -3,7 +3,7 @@ $(document).ready(function () {
     var _token = $('meta[name="csrf-token"]').attr('content');
     //doi mau cho danh muc
     var colors =  ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
-                                '#e150ff80', '#ff50ed80', '#ff50b480', '#ff507480',  '#fb386080',  '#ff16458f','#fb385080','#fb385080','#ff50b380','#ff50ed70','#e150ff70','#9050ff70','#5069ff70','#5089ff70','#50ffb370','#6eff408f','#e0ff408f','#ffee408f','#ffb5408f','#ff8d408f'];;
+                                '#e150ff80', '#ff50ed80', '#ff50b480', '#ff507480',  '#fb386080',  '#ff16458f','#fb385080','#fb385080','#ff50b380','#ff50ed70','#e150ff70','#9050ff70','#5069ff70','#5089ff70','#50ffb370','#6eff408f','#e0ff408f','#ffee408f','#ffb5408f','#ff8d408f'];
 
     $('.item-categories').each(function (){
         var firts_color = colors[0];
@@ -176,9 +176,9 @@ $(document).ready(function () {
                         $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
                     }
                     else{
-                        var price = new Intl.NumberFormat().format(v.price);
+                        var prices = new Intl.NumberFormat().format(v.price);
                         $(tmp).find('.price_p_2').removeClass('d-none');
-                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                        $(tmp).find('.price_p_2 .p-price').html(prices+' đ');
                     }
                     $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
                     if(v.sold != null && v.sold != ''){
@@ -269,9 +269,9 @@ $(document).ready(function () {
                         $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
                     }
                     else{
-                        var price = new Intl.NumberFormat().format(v.price);
+                        var prices = new Intl.NumberFormat().format(v.price);
                         $(tmp).find('.price_p_2').removeClass('d-none');
-                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                        $(tmp).find('.price_p_2 .p-price').html(prices+' đ');
                     }
                     $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
                     if(v.sold != null && v.sold != ''){
@@ -345,9 +345,9 @@ $(document).ready(function () {
                         $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
                     }
                     else{
-                        var price = new Intl.NumberFormat().format(v.price);
+                        var prices = new Intl.NumberFormat().format(v.price);
                         $(tmp).find('.price_p_2').removeClass('d-none');
-                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                        $(tmp).find('.price_p_2 .p-price').html(prices+' đ');
                     }
                     $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
                     if(v.sold != null && v.sold != ''){
@@ -384,7 +384,7 @@ $(document).ready(function () {
         list_product.push(element);
     });
 
-    //lay san pham
+    // lay san pham
     function laySp(category_id) {
         var id = category_id;
         var data = {
@@ -439,9 +439,9 @@ $(document).ready(function () {
                         $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
                     }
                     else{
-                        var price = new Intl.NumberFormat().format(v.price);
+                        var prices = new Intl.NumberFormat().format(v.price);
                         $(tmp).find('.price_p_2').removeClass('d-none');
-                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                        $(tmp).find('.price_p_2 .p-price').html(prices+' đ');
                     }
                     $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
                     if(v.sold != null && v.sold != ''){
@@ -470,25 +470,7 @@ $(document).ready(function () {
         })
     }
 
-    // chon button loc
-    $(document).on("click", '#filter_by_price, .close_p', function (){
-        if($('.p_filter').hasClass('d-none')){
-            $('.p_filter').removeClass('d-none');
-        }
-        else{
-            $('.p_filter').addClass('d-none');
-        }
-    });
 
-    // dong button loc
-    $(document).on("click", '.btn-f, .btnclose', function (){
-        if($('.filterall').hasClass('active_mn')){
-            $('.filterall').removeClass('active_mn');
-        }
-        else{
-            $('.filterall').addClass('active_mn');
-        }
-    });
 
     //len dau trang
     $(document).on("click",'#go_top',function(){
