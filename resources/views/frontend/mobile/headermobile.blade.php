@@ -5,13 +5,10 @@
             <div id="scroll_h">
                 <div class="d-flex pl-2 pr-2 pt-2">
                     <div class="col-1 d-flex justify-content-start align-items-center">
-                        <div id="menubar2">
-                            <i class="far fa-bars"></i>
-                        </div>
+                        <a id="menubar2"><i  class="far fa-bars"></i></a>
                     </div>
                     <div class="col-7 d-flex align-items-center logo_t">
-                        <div><img src="{{asset('asset/images/it24hvn.png')}}">
-                        </div>
+                        <div><img src="{{asset('asset/images/it24hvn.png')}}"></div>
                     </div>
                     <div class="col-4 d-flex justify-content-end align-items-center">
                         <div class="shop">
@@ -45,9 +42,7 @@
             <div id="scroll_d">
                 <div class="d-flex pl-2 pr-2 pt-2">
                 <div class="col-1 d-flex justify-content-start align-items-center">
-                    <div id="menubar">
-                        <i class="far fa-bars"></i>
-                    </div>
+                   <a id="menubar"><i class="far fa-bars"></i></a>
                 </div>
                 <div class="col-9 d-flex justify-content-center mx-3 align-items-center">
                     <div class="w-100">

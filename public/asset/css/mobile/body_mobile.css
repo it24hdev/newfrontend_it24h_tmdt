@@ -57,9 +57,7 @@
 /*hot sale*/
 .block_hot_sale{
     border-radius: 8px;
-    margin: 12px;
-    background: rgb(38, 27, 94);
-    width: calc(100vw - 24px);
+    width: calc(100vw - 30px);
     height: auto;
     display: flex;
     flex-direction: column;
@@ -105,16 +103,20 @@
 .h_inner .count-down span {
     padding: 1px;
     display: inline-block;
-    width: 20px;
-    height: 15px;
+    width: 40px;
+    height: 30px;
     text-align: center;
     color: rgb(255, 255, 255);
     font-weight: 500;
     background-color: rgb(255, 66, 78);
     border-radius: 4px;
 }
+#timesale{
+    font-size: 16px;
+    line-height: 25px;
+}
 .h_inner .count-down #d {
-    width: 20px!important;
+    /*width: 20px!important;*/
 }
 .time_count {
     color: rgb(199, 199, 199);
@@ -634,13 +636,10 @@ a {
 .featured-product-list {
     width: 100%;
     padding: 10px 5px 10px 5px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     overflow-y: hidden;
     overflow-x: scroll;
     background-color: #fff;
-    -webkit-overflow-scrolling: touch;
 }
 .component-product {
     background: #fff;
@@ -655,6 +654,23 @@ a {
     border-radius: 10px;
     min-height: 330px;
 }
+.component-product .tag_cpn{
+    width: 100%;
+    height: auto;
+    display: block;
+    float: left;
+    min-height: 40px;
+}
+.component-product .info_cpn, .component-product .detail_cpn{
+    display:block;
+    float: left;
+}
+.component-product .action{
+    position: absolute;
+    right: 0;
+    margin: 0 5px;
+}
+
 .component-product .percent {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -703,7 +719,7 @@ a {
     height: 135px;
 }
 .component-product .p-info{
-    min-height: 98px;
+    min-height: 110px;
     float: left;
     display: block;
 }
@@ -716,6 +732,7 @@ a {
     color: #111;
     height: 40px;
     overflow: hidden;
+    width: 95%;
 }
 .component-product .p-info .p-price {
     font-size: 16px;
@@ -859,8 +876,10 @@ a:active, a:hover {
     background: #efefef;
 }
 .hot_sale {
-    border-top: 2px solid #ebebeb;
-    margin-top: 15px;
+    border-radius: 6px;
+    margin: 15px 5px 10px 5px;
+    padding: 7px;
+    border: 2px solid #169fd8;
 }
 
 /*khuyen mai hot*/
@@ -1029,6 +1048,9 @@ a:active, a:hover {
 .p_rev{
     margin-top: 0px !important;
 }
+.p_rev .review{
+    float:left;
+}
 .review{
     display: block;
     margin-bottom: 2px;
@@ -1096,9 +1118,9 @@ a:active, a:hover {
     color: #ff1e00 !important;
 }
 .cat_box_sale{
-    border-radius: 6px;
+   /* border-radius: 6px;
     -webkit-box-shadow: 0 0 3px 0 #dee2e6;
-    box-shadow: 0 0 3px 0 #dee2e6;
+    box-shadow: 0 0 3px 0 #dee2e6;*/
     background-color: white;
     padding-top: 15px;
     margin-bottom: 20px;
@@ -1117,11 +1139,13 @@ a:active, a:hover {
 .b_title{
     display: flex;
     background: #f7f7f7;
-    color: #f00;
+    color: #fff;
     border-radius: 30px;
     padding: 7px 10px 0px 10px;
     min-width: 150px;
+    border: 1px solid;
     margin: 2px 7px;
+    background-image: linear-gradient(to left bottom, #ff0000ed, #ff00005e);
 }
 
 .more-product{

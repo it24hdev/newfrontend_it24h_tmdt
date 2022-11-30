@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
 use App\Http\Controllers\laravelmenu\src\Models\Menus;
 use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
+use Illuminate\Support\Facades\Cookie;
 
 class HomeController extends Controller
 {
@@ -835,22 +836,22 @@ class HomeController extends Controller
     }
     public function get_new_mobile(Request $request)
     {
-        $get_new_mobile = Products::select('products.*')
+        $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
+        ->leftjoin('brands','products.brand','brands.id')
         ->where('status', 1)->where('new', 1)->inRandomOrder()->limit(7)->get();
-        $view = view('frontend.mobile.templateproductmobile', [
-            'get_product_mobile' => $get_new_mobile,
-        ])->render();
-        return response()->json($view);
+        return response()->json([
+            'data_product_mobile' => $get_new_mobile
+        ]);
     }
 
     public function get_hot_sale_mobile(Request $request)
     {
-        $get_new_mobile = Products::select('products.*')
-            ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(7)->get();
-        $view = view('frontend.mobile.templateproductmobile', [
-            'get_product_mobile' => $get_new_mobile,
-        ])->render();
-        return response()->json($view);
+        $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
+        ->leftjoin('brands','products.brand','brands.id')
+        ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(7)->get();
+        return response()->json([
+            'data_product_mobile' => $get_new_mobile
+        ]);
     }
 
     //lay san pham
@@ -863,24 +864,23 @@ class HomeController extends Controller
             foreach ($cat_parent->cat_child as $cat_child){
                 $list_cat_child[]= $cat_child->id;
             }
-            $list_child = Category::whereIn('id',$list_cat_child)->get();
-            $Products = Products::select('products.*')
+            $list_cat_childs = Category::whereIn('id',$list_cat_child)->get();
+            $Products = Products::select('products.*', DB::raw("brands.image as img_brands"))
                 ->leftjoin('category_relationships','category_relationships.product_id','products.id')
+                ->leftjoin('brands','products.brand','brands.id')
                 ->where('category_relationships.cat_id',$request->id)
                 ->where('products.status', 1)
                 ->groupby('products.id')
                 ->orderby('products.created_at','desc')
                 ->get();
-            $list_child_view =  view('frontend.mobile.templatechildcategories', [
-                'list_child' => $list_child,
-            ])->render();
-            $product_view = view('frontend.mobile.templateproductmobile', [
-                'get_product_mobile' => $Products,
-            ])->render();
+            foreach($Products as $value){
+                $value->setAttribute('count_vote',$value->count_vote());
+                $value->setAttribute('list_wish',explode(' ', Cookie::get('list_wish')));
+            }
         }
       return response()->json([
-          'product' => $product_view,
-          'list_child_categories' => $list_child_view
+          'list_cat_childs' => $list_cat_childs,
+          'data_product_mobile' => $Products,
           ]);
     }
 
@@ -966,12 +966,6 @@ class HomeController extends Controller
             ->where('admin_menu_items.status', 1)
             ->whereIn('admin_menu_items.parent',$list_cat_lv_2)
             ->get();
-
-        // $menu_mobile_child =  view('frontend.mobile.templatemenumobilechild', [
-        //     'current_parent' => $get_parent_firts,
-        //     'child' => $get_child,
-        //     'child2' => $get_child_2,
-        // ])->render();
         return response()->json([
             'current_parent' => $get_parent_firts,
             'child' => $get_child,

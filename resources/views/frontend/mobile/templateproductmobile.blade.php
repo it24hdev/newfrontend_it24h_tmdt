@@ -1,46 +1,33 @@
-@foreach($get_product_mobile as $value)
+<script id="template_product_mobile" type="text/x-custom-template">
+<div>
     <div class="component-product">
-        <div style="width: 100%;
-    height: auto;
-    display: block;
-    float: left;
-    min-height: 30px;">
+        <div class="tag_cpn">
             <div class="tag_p">
-                @if (!empty($value->year))
-                    <span class="years2">{{$value->year}}</span>
-                @endif
-                @if (!empty($value->installment))
-                    <span class="payment2">Trả góp 0%</span>
-                @endif
+                <span class="years2 d-none"></span>
+                <span class="payment2 d-none">Trả góp 0%</span>
             </div>
-            @if (!empty($value->brands->image))
-                <span class="dbrand2" style="background-image: url('{{asset("upload/images/products/thumb/".$value->brands->image)}}');"></span>
-            @endif
+            <span class="dbrand2 d-none"></span>
         </div>
         <div class="p-img">
-            <a href="{{ route('detailproduct', $value->slug)}}">
-                <img src="{{asset('upload/images/products/thumb/'.$value->thumb)}}" alt="{{$value->name}}">
-            </a>
+            <a><img src=""></a>
         </div>
-        <div style="display:block; float: left;">
-        <div class="p-info">
-            <a href="{{ route('detailproduct', $value->slug)}}" class="p-name">{{$value->name}}</a>
-            @if (!empty($item->onsale))
-                <div class="promotion2">
-                    <span class="pprice2">{{number_format($value->price,0,',','.')}} đ</span>
-                    <span class="dpercent2">- {{$value->onsale}}%</span>
+        <div class="info_cpn">
+            <div class="p-info">
+                <a class="p-name"></a>
+                <div class="price_p d-none">
+                    <div class="promotion2">
+                        <span class="pprice2"></span>
+                        <span class="dpercent2"></span>
+                    </div>
+                    <span class="p-price"></span>
                 </div>
-                <span class="p-price">{{number_format($value->price_onsale,0,',','.')}} đ</span>
-            @else
-                <span class="p-price">{{number_format($value->price,0,',','.')}} đ</span>
-            @endif
+                <div class="price_p_2 d-none"> <span class="p-price"></span></div>
+            </div>
         </div>
-        </div>
-        
         <div class="p_rev">
-            <div class="review" style="float:left;">
+            <div class="review">
                 <div class="rating2">
-                    <div class="rating-upper" style="width: {{$value->count_vote()}}%">
+                    <div class="rating-upper">
                         <span><i class="fas fa-star"></i></span>
                         <span><i class="fas fa-star"></i></span>
                         <span><i class="fas fa-star"></i></span>
@@ -55,31 +42,22 @@
                         <span><i class="fal fa-star"></i></span>
                     </div>
                 </div>
-                @if(!empty($value->sold))
-                    <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán {{$value->sold}}</div>
-                @endif
+                <div class="sold2 d-none"><i class="fas fa-badge-check"></i><span></span></div>
             </div>
         </div>
-    <div style="display:block; float:left;">
+    <div class="detail_cpn">
         <div class="detail-bottom">
-            @if (($value->quantity - $value->sold > 0))
-                <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
-            @else
-                <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng</div>
-            @endif
-            <div class="action" style="position: absolute;right: 0;">
-                <a href="javascript:;" get-id="{{$value->id}}" class="heart add-wish" title="Lưu sản phẩm">
-                    @if(in_array($value->id,explode(' ', Cookie::get('list_wish'))))
-                        <i class="fas fa-heart heart_red"></i>
-                    @else
-                        <i class="far fa-heart"></i>
-                    @endif
+            <div class="qty"></div>
+            <div class="action">
+                <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm">
+                    <i class="like"></i>
                 </a>
-                <a href="javascript:;" get-id="{{$value->id}}"  title="Thêm vào giỏ hàng" class="add-cart">
+                <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart">
                     <i class="far fa-shopping-cart"></i>
                 </a>
             </div>
         </div>
     </div>
     </div>
-@endforeach
+</div>
+</script>

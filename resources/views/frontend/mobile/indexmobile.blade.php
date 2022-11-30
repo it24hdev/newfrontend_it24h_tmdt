@@ -47,7 +47,7 @@
             </div>
         </div>
         {{--    hotsale --}}
-        <div class="hot_sale col-12">
+        <div class="hot_sale">
             <div class="block_hot_sale">
                 <div class="hot_sale_l1">
                     {{--                header-time sale--}}
@@ -62,7 +62,7 @@
                                     <a title="Xem tất cả Deal Hot" href="#">
                                         <div class="count-down" id="timesale" get-time-sale="{{$time_sale}}">
                                             <span id="d"></span> &nbsp;<span id="h"></span>&nbsp;:&nbsp;<span id="m"></span>&nbsp;:&nbsp;<span id="s"></span></div>
-                                        <img width="20" height="20" src="{{asset('upload/images/common_img/iconright.png')}}" alt="see_more">
+                                       {{--  <img width="20" height="20" src="{{asset('upload/images/common_img/iconright.png')}}" alt="see_more"> --}}
                                     </a>
                                 </div>
                             </div>

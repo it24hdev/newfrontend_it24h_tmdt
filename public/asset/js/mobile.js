@@ -10,6 +10,7 @@ $(document).ready(function () {
         colors.splice($.inArray(firts_color, colors), 1);
         $(this).css("background-color", firts_color);
     })
+
     // slider banner
     $('#slider-show').owlCarousel({
         autoplay: true,
@@ -50,6 +51,8 @@ $(document).ready(function () {
             }
         });
     });
+
+    // them san pham vao gio hang
     $(document).on('click', '.add-cart', function(){
         var id  =  $(this).attr('get-id');
         var x = this;
@@ -58,7 +61,7 @@ $(document).ready(function () {
             _token: _token
         };
         $.ajax({
-            url: base_url+"/add-cart-ajax",
+            url: add_cart_ajax,
             method: 'POST',
             data: data,
             dataType: 'json',
@@ -70,7 +73,6 @@ $(document).ready(function () {
                 setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
             }
         });
-
     });
 
     //su kien load noi dung khi cuon toi truoc vung load noi dung
@@ -136,12 +138,72 @@ $(document).ready(function () {
             _token: _token
         };
         $.ajax({
-            url: base_url+"/get_new_mobile",
+            url: get_new_mobile,
             type: "post",
             dataType: "json",
             data: data,
             success: function (data) {
-                $('#load_promotion').append(data);
+                var template_product_mobile = $('#template_product_mobile').html();
+                $.each(data.data_product_mobile, function(k,v) {
+                    var tmp = $(template_product_mobile).clone();
+                    if(v.year != null && v.year != ''){
+                        $(tmp).find('.years2').removeClass('d-none');
+                        $(tmp).find('.years2').html(v.year);
+                    }
+                    if(v.installment != null && v.installment != '' && v.installment != 0){
+                        $(tmp).find('.payment2').removeClass('d-none');
+                    }
+                    if(v.img_brands != null && v.img_brands != ''){
+                        var url_img_brands = img_product_mobile;
+                        $(tmp).find('.dbrand2').removeClass('d-none');
+                        img = 'url('+url_img_brands+')';
+                        img = img.replace('img_name', v.img_brands);
+                        $(tmp).find('.dbrand2').css('background-image',img);
+                    }
+                    detailproduct = detailproduct.replace('slug_code', v.slug);
+                    $(tmp).find('.p-img a').attr('href',detailproduct);
+                    var url_img_product = img_product_mobile;
+                    url_img_product = url_img_product.replace('img_name', v.thumb);
+                    $(tmp).find('.p-img img').attr('src',url_img_product);
+                    $(tmp).find('.p-info a').attr('href',detailproduct);
+                    $(tmp).find('.p-name').html(v.name);
+                    if(v.onsale != null && v.onsale != ''){
+                        $(tmp).find('.price_p').removeClass('d-none');
+                        var price = new Intl.NumberFormat().format(v.price);
+                        var price_onsale = new Intl.NumberFormat().format(v.price_onsale);
+                        $(tmp).find('.promotion2 .pprice2').html(price+' đ');
+                        $(tmp).find('.promotion2 .dpercent2').html('- '+v.onsale+'%');
+                        $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
+                    }
+                    else{
+                        var price = new Intl.NumberFormat().format(v.price);
+                        $(tmp).find('.price_p_2').removeClass('d-none');
+                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                    }
+                    $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
+                    if(v.sold != null && v.sold != ''){
+                        $(tmp).find('.sold2').removeClass('d-none');
+                        $(tmp).find('.sold2 span').html('Đã bán '+v.sold);
+                    }
+                    if(v.quantity - v.sold > 0){
+                        $(tmp).find('.qty').html('Còn hàng');
+                        $(tmp).find('.qty').css({"color":"#01aa42", "background-color": "#dbf8e1"});
+                    }
+                    else{
+                        $(tmp).find('.qty').html('Hết hàng');
+                        $(tmp).find('.qty').css({"color":"#ffffff", "background-color": "#fb0000"});
+                    }
+                    $(tmp).find('.add-wish').attr('get-id',v.id);
+                    if($.inArray(''+v.id+'',v.list_wish) > -1){
+                        $(tmp).find('.action .add-wish .like').addClass('fas fa-heart heart_red');
+                    }
+                    else{
+                        $(tmp).find('.action .add-wish .like').addClass('far fa-heart');
+                    }
+                    $(tmp).find('.add-cart').attr('get-id',v.id);
+                    $('#load_promotion').append(tmp.html());
+                    // $('#list_products_' + id).append(tmp.html());
+                })
             }
         })
     }
@@ -151,44 +213,165 @@ $(document).ready(function () {
         var data = {
             _token: _token
         };
-        $.ajax({
-            url: base_url+"/get_hot_sale_mobile",
-            type: "post",
-            dataType: "json",
-            data: data,
-            success: function (data) {
-                $('#load_promotion').append(data);
-            }
-        })
+        // $.ajax({
+        //     url: get_hot_sale_mobile,
+        //     type: "post",
+        //     dataType: "json",
+        //     data: data,
+        //     success: function (data) {
+        //         $('#load_promotion').append(data);
+        //     }
+        // })
     }
+
+    // click chon san pham moi
     $(document).on('click', '#new_p', function (){
         var data = {
             _token: _token
         };
         $.ajax({
-            url: base_url+"/get_new_mobile",
+            url: get_new_mobile,
             type: "post",
             dataType: "json",
             data: data,
             success: function (data) {
                 $('#load_promotion').html('');
-                $('#load_promotion').append(data);
+                var template_product_mobile = $('#template_product_mobile').html();
+                $.each(data.data_product_mobile, function(k,v) {
+                    var tmp = $(template_product_mobile).clone();
+                    if(v.year != null && v.year != ''){
+                        $(tmp).find('.years2').removeClass('d-none');
+                        $(tmp).find('.years2').html(v.year);
+                    }
+                    if(v.installment != null && v.installment != '' && v.installment != 0){
+                        $(tmp).find('.payment2').removeClass('d-none');
+                    }
+                    if(v.img_brands != null && v.img_brands != ''){
+                        var url_img_brands = img_product_mobile;
+                        $(tmp).find('.dbrand2').removeClass('d-none');
+                        img = 'url('+url_img_brands+')';
+                        img = img.replace('img_name', v.img_brands);
+                        $(tmp).find('.dbrand2').css('background-image',img);
+                    }
+                    detailproduct = detailproduct.replace('slug_code', v.slug);
+                    $(tmp).find('.p-img a').attr('href',detailproduct);
+                    var url_img_product = img_product_mobile;
+                    url_img_product = url_img_product.replace('img_name', v.thumb);
+                    $(tmp).find('.p-img img').attr('src',url_img_product);
+                    $(tmp).find('.p-info a').attr('href',detailproduct);
+                    $(tmp).find('.p-name').html(v.name);
+                    if(v.onsale != null && v.onsale != ''){
+                        $(tmp).find('.price_p').removeClass('d-none');
+                        var price = new Intl.NumberFormat().format(v.price);
+                        var price_onsale = new Intl.NumberFormat().format(v.price_onsale);
+                        $(tmp).find('.promotion2 .pprice2').html(price+' đ');
+                        $(tmp).find('.promotion2 .dpercent2').html('- '+v.onsale+'%');
+                        $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
+                    }
+                    else{
+                        var price = new Intl.NumberFormat().format(v.price);
+                        $(tmp).find('.price_p_2').removeClass('d-none');
+                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                    }
+                    $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
+                    if(v.sold != null && v.sold != ''){
+                        $(tmp).find('.sold2').removeClass('d-none');
+                        $(tmp).find('.sold2 span').html('Đã bán '+v.sold);
+                    }
+                    if(v.quantity - v.sold > 0){
+                        $(tmp).find('.qty').html('Còn hàng');
+                        $(tmp).find('.qty').css({"color":"#01aa42", "background-color": "#dbf8e1"});
+                    }
+                    else{
+                        $(tmp).find('.qty').html('Hết hàng');
+                        $(tmp).find('.qty').css({"color":"#ffffff", "background-color": "#fb0000"});
+                    }
+                    $(tmp).find('.add-wish').attr('get-id',v.id);
+                    if($.inArray(''+v.id+'',v.list_wish) > -1){
+                        $(tmp).find('.action .add-wish .like').addClass('fas fa-heart heart_red');
+                    }
+                    else{
+                        $(tmp).find('.action .add-wish .like').addClass('far fa-heart');
+                    }
+                    $(tmp).find('.add-cart').attr('get-id',v.id);
+                    $('#load_promotion').append(tmp.html());
+                })
             }
         })
-
     });
+
+    // click chon san pham hot
     $(document).on('click', '#hot_p', function (){
         var data = {
             _token: _token
         };
         $.ajax({
-            url: base_url+"/get_hot_sale_mobile",
+            url: get_hot_sale_mobile,
             type: "post",
             dataType: "json",
             data: data,
             success: function (data) {
                 $('#load_promotion').html('');
-                $('#load_promotion').append(data);
+                var template_product_mobile = $('#template_product_mobile').html();
+                $.each(data.data_product_mobile, function(k,v) {
+                    var tmp = $(template_product_mobile).clone();
+                    if(v.year != null && v.year != ''){
+                        $(tmp).find('.years2').removeClass('d-none');
+                        $(tmp).find('.years2').html(v.year);
+                    }
+                    if(v.installment != null && v.installment != '' && v.installment != 0){
+                        $(tmp).find('.payment2').removeClass('d-none');
+                    }
+                    if(v.img_brands != null && v.img_brands != ''){
+                        var url_img_brands = img_product_mobile;
+                        $(tmp).find('.dbrand2').removeClass('d-none');
+                        img = 'url('+url_img_brands+')';
+                        img = img.replace('img_name', v.img_brands);
+                        $(tmp).find('.dbrand2').css('background-image',img);
+                    }
+                    detailproduct = detailproduct.replace('slug_code', v.slug);
+                    $(tmp).find('.p-img a').attr('href',detailproduct);
+                    var url_img_product = img_product_mobile;
+                    url_img_product = url_img_product.replace('img_name', v.thumb);
+                    $(tmp).find('.p-img img').attr('src',url_img_product);
+                    $(tmp).find('.p-info a').attr('href',detailproduct);
+                    $(tmp).find('.p-name').html(v.name);
+                    if(v.onsale != null && v.onsale != ''){
+                        $(tmp).find('.price_p').removeClass('d-none');
+                        var price = new Intl.NumberFormat().format(v.price);
+                        var price_onsale = new Intl.NumberFormat().format(v.price_onsale);
+                        $(tmp).find('.promotion2 .pprice2').html(price+' đ');
+                        $(tmp).find('.promotion2 .dpercent2').html('- '+v.onsale+'%');
+                        $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
+                    }
+                    else{
+                        var price = new Intl.NumberFormat().format(v.price);
+                        $(tmp).find('.price_p_2').removeClass('d-none');
+                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                    }
+                    $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
+                    if(v.sold != null && v.sold != ''){
+                        $(tmp).find('.sold2').removeClass('d-none');
+                        $(tmp).find('.sold2 span').html('Đã bán '+v.sold);
+                    }
+                    if(v.quantity - v.sold > 0){
+                        $(tmp).find('.qty').html('Còn hàng');
+                        $(tmp).find('.qty').css({"color":"#01aa42", "background-color": "#dbf8e1"});
+                    }
+                    else{
+                        $(tmp).find('.qty').html('Hết hàng');
+                        $(tmp).find('.qty').css({"color":"#ffffff", "background-color": "#fb0000"});
+                    }
+                    $(tmp).find('.add-wish').attr('get-id',v.id);
+                    if($.inArray(''+v.id+'',v.list_wish) > -1){
+                        $(tmp).find('.action .add-wish .like').addClass('fas fa-heart heart_red');
+                    }
+                    else{
+                        $(tmp).find('.action .add-wish .like').addClass('far fa-heart');
+                    }
+                    $(tmp).find('.add-cart').attr('get-id',v.id);
+                    $('#load_promotion').append(tmp.html());
+                })
             }
         })
     });
@@ -201,6 +384,7 @@ $(document).ready(function () {
         list_product.push(element);
     });
 
+    //lay san pham
     function laySp(category_id) {
         var id = category_id;
         var data = {
@@ -208,17 +392,85 @@ $(document).ready(function () {
             _token: _token
         };
         $.ajax({
-            url: base_url+"/get_product_mobile",
+            url: get_product_mobile,
             type: "post",
             dataType: "json",
             data: data,
             success: function (data) {
-                $('#list_tag_' + id).append(data.list_child_categories);
-                $('#list_products_' + id).append(data.product);
+                var template_child_categories = $('#template_child_categories').html();
+                var template_product_mobile = $('#template_product_mobile').html();
+                $.each(data.list_cat_childs, function(k,v) {
+                    var tmp = $(template_child_categories).clone();
+                    $url = '';
+                    $url = product_cat.replace('slug_code', v.slug);
+                    $(tmp).find('a').html(v.name);
+                    $(tmp).find('a').attr('href',$url);
+                    $('#list_tag_' + id).append(tmp.html());
+                })
+                $.each(data.data_product_mobile, function(k,v) {
+                    var tmp = $(template_product_mobile).clone();
+                    if(v.year != null && v.year != ''){
+                        $(tmp).find('.years2').removeClass('d-none');
+                        $(tmp).find('.years2').html(v.year);
+                    }
+                    if(v.installment != null && v.installment != '' && v.installment != 0){
+                        $(tmp).find('.payment2').removeClass('d-none');
+                    }
+                    if(v.img_brands != null && v.img_brands != ''){
+                        var url_img_brands = img_product_mobile;
+                        $(tmp).find('.dbrand2').removeClass('d-none');
+                        img = 'url('+url_img_brands+')';
+                        img = img.replace('img_name', v.img_brands);
+                        $(tmp).find('.dbrand2').css('background-image',img);
+                    }
+                    detailproduct = detailproduct.replace('slug_code', v.slug);
+                    $(tmp).find('.p-img a').attr('href',detailproduct);
+                    var url_img_product = img_product_mobile;
+                    url_img_product = url_img_product.replace('img_name', v.thumb);
+                    $(tmp).find('.p-img img').attr('src',url_img_product);
+                    $(tmp).find('.p-info a').attr('href',detailproduct);
+                    $(tmp).find('.p-name').html(v.name);
+                    if(v.onsale != null && v.onsale != ''){
+                        $(tmp).find('.price_p').removeClass('d-none');
+                        var price = new Intl.NumberFormat().format(v.price);
+                        var price_onsale = new Intl.NumberFormat().format(v.price_onsale);
+                        $(tmp).find('.promotion2 .pprice2').html(price+' đ');
+                        $(tmp).find('.promotion2 .dpercent2').html('- '+v.onsale+'%');
+                        $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
+                    }
+                    else{
+                        var price = new Intl.NumberFormat().format(v.price);
+                        $(tmp).find('.price_p_2').removeClass('d-none');
+                        $(tmp).find('.price_p_2 .p-price').html(price+' đ');
+                    }
+                    $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
+                    if(v.sold != null && v.sold != ''){
+                        $(tmp).find('.sold2').removeClass('d-none');
+                        $(tmp).find('.sold2 span').html('Đã bán '+v.sold);
+                    }
+                    if(v.quantity - v.sold > 0){
+                        $(tmp).find('.qty').html('Còn hàng');
+                        $(tmp).find('.qty').css({"color":"#01aa42", "background-color": "#dbf8e1"});
+                    }
+                    else{
+                        $(tmp).find('.qty').html('Hết hàng');
+                        $(tmp).find('.qty').css({"color":"#ffffff", "background-color": "#fb0000"});
+                    }
+                    $(tmp).find('.add-wish').attr('get-id',v.id);
+                    if($.inArray(''+v.id+'',v.list_wish) > -1){
+                        $(tmp).find('.action .add-wish .like').addClass('fas fa-heart heart_red');
+                    }
+                    else{
+                        $(tmp).find('.action .add-wish .like').addClass('far fa-heart');
+                    }
+                    $(tmp).find('.add-cart').attr('get-id',v.id);
+                    $('#list_products_' + id).append(tmp.html());
+                })
             }
         })
     }
 
+    // chon button loc
     $(document).on("click", '#filter_by_price, .close_p', function (){
         if($('.p_filter').hasClass('d-none')){
             $('.p_filter').removeClass('d-none');
@@ -228,6 +480,7 @@ $(document).ready(function () {
         }
     });
 
+    // dong button loc
     $(document).on("click", '.btn-f, .btnclose', function (){
         if($('.filterall').hasClass('active_mn')){
             $('.filterall').removeClass('active_mn');
@@ -269,5 +522,6 @@ $(document).ready(function () {
             }
         });
     }
+
     $(window).scroll(runOnScroll);
 });

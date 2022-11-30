@@ -1,3 +1,5 @@
-@foreach($list_child as $value)
-<a href="{{route('product_cat', ['slug' =>  $value->slug])}}" class="related-tag">{{$value->name}}</a>
-@endforeach
+<script id="template_child_categories" type="text/x-custom-template">
+	<div>
+		<a class="related-tag"></a>
+	</div>
+</script>

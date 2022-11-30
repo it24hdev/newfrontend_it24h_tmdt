@@ -210,7 +210,7 @@
     <div class="filter_product">
         <div class="filter-sort__title">Đang lọc theo</div>
         <div class="filter-sort__list-filter">
-
+            {{-- @foreach() --}}
             <button class="btn-filter ac">
                 <div class="icon">
                     <svg width="40" height="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -218,7 +218,7 @@
                     </svg>
                 </div>Bộ nhớ trong:<span class="item-value-filter"> &nbsp;Trên 512GB&nbsp; </span>
             </button>
-
+            {{-- @endforeach --}}
             <button class="btn-filter active">× Bỏ chọn tất cả </button>
         </div>
     </div>

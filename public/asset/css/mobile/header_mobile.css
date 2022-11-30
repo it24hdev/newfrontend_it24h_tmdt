@@ -16,6 +16,7 @@ body::-webkit-scrollbar{
 }
 .header_mobile{
     height: 112px;
+    z-index: 99;
 }
 .headerL1{
     padding: 8px 12px 12px 12px;

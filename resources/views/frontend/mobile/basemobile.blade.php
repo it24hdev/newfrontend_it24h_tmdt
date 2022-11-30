@@ -79,6 +79,8 @@
 @include('frontend.mobile.templatemenumobile')
 @include('frontend.mobile.templatemenumobilechild')
 @include('frontend.mobile.template_chose_label_img_menu')
+@include('frontend.mobile.templatechildcategories')
+@include('frontend.mobile.templateproductmobile')
 <!-- javascript -->
     <script src="{{ asset('lib/jquery360.min.js') }}"></script>
     <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
@@ -86,6 +88,16 @@
     <script src="{{ asset('asset/js/mobile.js') }}"></script>
     <script type="text/javascript">
         var base_url = '{{route('user')}}';
+        var add_cart_ajax = '{{route('add_cart_ajax')}}';
+        var get_menu_mobile = '{{route('get_menu_mobile')}}';
+        var get_menu_child = '{{route('get_menu_child')}}';
+        var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
+        var get_new_mobile = '{{route('get_new_mobile')}}';
+        var get_product_mobile = '{{route('get_product_mobile')}}';
+        var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';
+        var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
+        var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';
+        var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
     </script>
 <script>
     $(document).ready(function (){
@@ -95,6 +107,7 @@
         var template_menu_child = $('#template-menu-child').html();
         var template_chose_label_img_menu = $('#template_chose_label_img_menu').html();
         $(document).on('click', '#menubar , #menubar2', function (){
+            console.log(1);
             if ($('.menu-mobile').hasClass('active_mn')) {
                 $('.menu-mobile').removeClass('active_mn');
                 $('body').removeClass('disable_scoll');
@@ -107,7 +120,7 @@
                         _token: _token
                     };
                     $.ajax({
-                        url: base_url+"/get_menu_mobile",
+                        url: get_menu_mobile,
                         type: "post",
                         dataType: "json",
                         data: data,
@@ -121,30 +134,31 @@
                                 }
                                 var img_name = v.img_cat;
                                 var imageUrl = 'url({{ URL::asset('upload/images/products/thumb/img_name')}})';
-                                imageUrl = imageUrl.replace('img_name', img_name);
+                                if(img_name !=null && img_name !=''){
+
+                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                }
+                                else{
+                                    imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                }
                                 $(item).find('.icons-cate').css('background-image',imageUrl);
                                 $(item).find('.name_menu').html(v.label);
                                 $('#menu_mobile').append(item.html());
                             });
-                            
-
                             //cap 2
                             $('.box-title__title').attr('href',data.current_parent.link);
                             $('.box-title__title').html(data.current_parent.label);
                             $('.box-title__btn-show-all').attr('href',data.current_parent.link);
-
                             //cap 3
                             $.each(data.child, function(k,v) {
                                 var item = $(template_menu_child).clone();
                                 if(v.parent == data.current_parent.id){
                                     $(item).find('.group-title').html(v.label);
-
                                     //cap 4
                                     $.each(data.child2, function(k2,v2) {
                                         var item_label_img = $(template_chose_label_img_menu).clone();
                                         if(v2.parent == v.id){
                                             $(item_label_img).find('.label-wrapper').attr('href',v2.link);
-
                                             if(v2.img_caption == 0){
                                                 $(item_label_img).find('.label-item>img').remove();
                                                 $(item_label_img).find('.label-item span').html(v2.label);
@@ -154,7 +168,13 @@
                                                 if(v2.img_brand!=null && v2.filter_by == 3){
                                                     var img_name = v2.img_brand;
                                                     var imageUrl ='{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                                    if(img_name != null && img_name != ''){
+                                                        imageUrl = imageUrl.replace('img_name', img_name);
+                                                    }
+                                                    else{
+                                                        imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                    }
+                                                    
                                                     $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                                     $(item_label_img).find('.label-item>span').remove();
                                                     $(item).find('.menu-item').append(item_label_img.html());
@@ -162,7 +182,12 @@
                                                 else if(v2.img_property!=null && v2.filter_by == 1){
                                                     var img_name = v2.img_property;
                                                     var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                                    if(img_name != null && img_name != ''){
+                                                        imageUrl = imageUrl.replace('img_name', img_name);
+                                                    }
+                                                    else{
+                                                        imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                    }
                                                     $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                                     $(item_label_img).find('.label-item>span').remove();
                                                     $(item).find('.menu-item').append(item_label_img.html());
@@ -170,9 +195,13 @@
                                                 else{
                                                     if(v2.img_cat != 'no-images.jpg'){
                                                         var img_name = v2.img_cat;
-
                                                         var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                        imageUrl = imageUrl.replace('img_name', img_name);
+                                                        if(img_name != null && img_name != ''){
+                                                            imageUrl = imageUrl.replace('img_name', img_name);
+                                                        }
+                                                        else{
+                                                            imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                        }
                                                         $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                                         $(item_label_img).find('.label-item span').remove();
                                                         $(item).find('.menu-item').append(item_label_img.html());
@@ -184,7 +213,12 @@
                                                 if(v2.img_brand!=null && v2.filter_by == 3){
                                                     var img_name = v2.img_brand;
                                                     var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                                    if(img_name != null && img_name != ''){
+                                                        imageUrl = imageUrl.replace('img_name', img_name);
+                                                    }
+                                                    else{
+                                                        imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                    }
                                                     $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                                     $(item_label_img).find('.label-item span').html(v2.label);
                                                     $(item).find('.menu-item').append(item_label_img.html());
@@ -193,17 +227,26 @@
                                                 else if(v2.img_property!=null && v2.filter_by == 1){
                                                     var img_name = v2.img_property;
                                                     var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                                    if(img_name != null && img_name != ''){
+                                                        imageUrl = imageUrl.replace('img_name', img_name);
+                                                    }
+                                                    else{
+                                                        imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                    }
                                                     $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                                     $(item_label_img).find('.label-item span').html(v2.label);
                                                     $(item).find('.menu-item').append(item_label_img.html());
                                                 }
                                                 else{
-
                                                     if(v2.img_cat != 'no-images.jpg'){
                                                         var img_name = v2.img_cat;
                                                         var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                        imageUrl = imageUrl.replace('img_name', img_name);
+                                                        if(img_name != null && img_name != ''){
+                                                            imageUrl = imageUrl.replace('img_name', img_name);
+                                                        }
+                                                        else{
+                                                            imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                        }
                                                         $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                                     }
                                                     $(item_label_img).find('.label-item span').html(v2.label);
@@ -218,7 +261,12 @@
                                 }
                                 var img_name = v.img_cat;
                                 var imageUrl = 'url({{ URL::asset('upload/images/products/thumb/img_name')}})';
-                                imageUrl = imageUrl.replace('img_name', img_name);
+                                if(img_name != null && img_name != ''){
+                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                }
+                                else{
+                                    imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                }
                                 $(item).find('.icons-cate').css('background-image',imageUrl);
                                 $(item).find('.name_menu').html(v.label);
                                 $('#menu_mobile_child').append(item.html());
@@ -250,7 +298,7 @@
             $('.label-menu-tree').removeClass('active');
             $(this).addClass('active');
             $.ajax({
-                url: base_url+"/get_menu_child",
+                url: get_menu_child,
                 type: "post",
                 dataType: "json",
                 data: data,
@@ -281,7 +329,12 @@
                                         if(v2.img_brand!=null && v2.filter_by == 3){
                                             var img_name = v2.img_brand;
                                             var imageUrl ='{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                            imageUrl = imageUrl.replace('img_name', img_name);
+                                            if(img_name != null && img_name != ''){
+                                                imageUrl = imageUrl.replace('img_name', img_name);
+                                            }
+                                            else{
+                                                imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                            }
                                             $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                             $(item_label_img).find('.label-item>span').remove();
                                             $(item).find('.menu-item').append(item_label_img.html());
@@ -289,7 +342,12 @@
                                         else if(v2.img_property!=null && v2.filter_by == 1){
                                             var img_name = v2.img_property;
                                             var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                            imageUrl = imageUrl.replace('img_name', img_name);
+                                            if(img_name != null && img_name != ''){
+                                                imageUrl = imageUrl.replace('img_name', img_name);
+                                            }
+                                            else{
+                                                imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                            }
                                             $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                             $(item_label_img).find('.label-item>span').remove();
                                             $(item).find('.menu-item').append(item_label_img.html());
@@ -297,9 +355,13 @@
                                         else{
                                             if(v2.img_cat != 'no-images.jpg'){
                                                 var img_name = v2.img_cat;
-
                                                 var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                imageUrl = imageUrl.replace('img_name', img_name);
+                                                if(img_name != null && img_name != ''){
+                                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                                }
+                                                else{
+                                                    imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                }
                                                 $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                                 $(item_label_img).find('.label-item span').remove();
                                                 $(item).find('.menu-item').append(item_label_img.html());
@@ -311,7 +373,12 @@
                                         if(v2.img_brand!=null && v2.filter_by == 3){
                                             var img_name = v2.img_brand;
                                             var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                            imageUrl = imageUrl.replace('img_name', img_name);
+                                            if(img_name != null && img_name != ''){
+                                                imageUrl = imageUrl.replace('img_name', img_name);
+                                            }
+                                            else{
+                                                imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                            }
                                             $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                             $(item_label_img).find('.label-item span').html(v2.label);
                                             $(item).find('.menu-item').append(item_label_img.html());
@@ -320,7 +387,12 @@
                                         else if(v2.img_property!=null && v2.filter_by == 1){
                                             var img_name = v2.img_property;
                                             var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                            imageUrl = imageUrl.replace('img_name', img_name);
+                                            if(img_name != null && img_name != ''){
+                                                imageUrl = imageUrl.replace('img_name', img_name);
+                                            }
+                                            else{
+                                                imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                            }
                                             $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                             $(item_label_img).find('.label-item span').html(v2.label);
                                             $(item).find('.menu-item').append(item_label_img.html());
@@ -330,7 +402,12 @@
                                             if(v2.img_cat != 'no-images.jpg'){
                                                 var img_name = v2.img_cat;
                                                 var imageUrl = '{{ URL::asset('upload/images/products/thumb/img_name')}}';
-                                                imageUrl = imageUrl.replace('img_name', img_name);
+                                                if(img_name != null && img_name != ''){
+                                                    imageUrl = imageUrl.replace('img_name', img_name);
+                                                }
+                                                else{
+                                                    imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                                                }
                                                 $(item_label_img).find('.label-item img').attr('src',imageUrl);
                                             }
                                             $(item_label_img).find('.label-item span').html(v2.label);
@@ -345,7 +422,12 @@
                         }
                         var img_name = v.img_cat;
                         var imageUrl = 'url({{ URL::asset('upload/images/products/thumb/img_name')}})';
-                        imageUrl = imageUrl.replace('img_name', img_name);
+                        if(img_name != null && img_name != ''){
+                            imageUrl = imageUrl.replace('img_name', img_name);
+                        }
+                        else{
+                            imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
+                        }
                         $(item).find('.icons-cate').css('background-image',imageUrl);
                         $(item).find('.name_menu').html(v.label);
                          $('#menu_mobile_child').append(item.html());
@@ -357,8 +439,6 @@
                         colors2.splice($.inArray(firts_color, colors2), 1);
                         $(this).css("background-color", firts_color);
                     })
-                    $('.menu-mobile').addClass('loaded');
-                    $('.menu-mobile').addClass('active_mn');
                 }
             })
         });
