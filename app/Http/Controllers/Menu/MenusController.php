@@ -147,12 +147,18 @@ class MenusController extends Controller
                 }
             }
         }
+        $depth = 0;
+        if(!empty($request->parent)){
+            $depth = admin_menu_items::find($request->parent);
+            $depth= $depth->depth+1;
+        }
         $Menuitem  = [
             'label'           => $request->label,
             'ma'              => $request->ma,
             'class'           => $request->class,
             'stt'             => $request->stt,
             'parent'          => $request->parent,
+            'depth'           => $depth,
             'link'            => $request->link,
             'menu'            => $request->menu,
             'type_menu'       => $request->type_menu,
@@ -239,6 +245,11 @@ class MenusController extends Controller
                 }
             }
         }
+        $depth = 0;
+        if(!empty($request->parent)){
+            $depth = admin_menu_items::find($request->parent);
+            $depth= $depth->depth+1;
+        }
 
         $Menuitem  = [
             'label'           => $request->label,
@@ -253,12 +264,10 @@ class MenusController extends Controller
             'category_id'     => $category_id,
             'filter_by'       => $filter_by,
             'filter_value'    => $filter_value,
+            'depth'           => $depth,
             'img_caption'     =>  $request->img_caption,
             'status'          => $request->has('status'),
         ];
-
-//        dd($Menuitem);
-
         try {
             DB::beginTransaction();
             $Menuitems->update($Menuitem);

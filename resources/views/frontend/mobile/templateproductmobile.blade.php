@@ -21,7 +21,12 @@
                     </div>
                     <span class="p-price"></span>
                 </div>
-                <div class="price_p_2 d-none"> <span class="p-price"></span></div>
+                <div class="price_p_2 d-none">
+                    <div class="promotion2">
+                        <span></span>
+                    </div>
+                    <span class="p-price"></span>
+                </div>
             </div>
         </div>
         <div class="p_rev">

@@ -17,9 +17,7 @@
                     <div class="owl-carousel owl-theme owl-loaded owl-drag" id="slider-show">
                         @foreach ($sliders as $item)
                             <a href="{{$item->link_target}}">
-                                <img class="owl-lazy"
-                                     data-src="{{asset('upload/images/slider/thumb/'.$item->image)}}"
-                                     alt="">
+                                <img src="{{asset('upload/images/slider/thumb/'.$item->image)}}">
                             </a>
                         @endforeach
                     </div>
@@ -157,7 +155,6 @@
                     </div>
                     {{--                product--}}
                     <div class="featured-product-list" id="list_products_{{$item->id}}">
-
                     </div>
                 </div>
             @endforeach

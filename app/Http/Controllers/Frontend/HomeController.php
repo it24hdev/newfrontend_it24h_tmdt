@@ -425,13 +425,12 @@ class HomeController extends Controller
 
         return false;
     }
+
     public function product_cat(Request $request)
     {
         ///////////////Tham so dau vao//////////////////]
-        $val = array_values($request->all());
         $requestall = $request->all();
         $agent = new Agent();
-        $ag = "";
         if ($agent->isMobile()) {
             $ag = "mobile";
         } else $ag = "desktop";
@@ -439,7 +438,6 @@ class HomeController extends Controller
         $locale = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
-        $products = "";
         $cat = Category::where('slug', $request->slug)->first();
         if (!empty($cat)) {
             //neu co danh muc thi loc theo danh muc
@@ -466,7 +464,6 @@ class HomeController extends Controller
                 }
                 $filter_all = array_merge($filter_all, $value);
             }
-            $detailproperties ='';
             $origin_url = $request->url();
             foreach ($attributes as $key_attr => $attr) {
                 $count_attr = 0;
@@ -481,7 +478,6 @@ class HomeController extends Controller
                         ->count();
                     $attr_detail->setAttribute('count_product', $Propertyproducts);
                     $count_attr = $count_attr + $Propertyproducts;
-                    $url = "";
                     $value_url = $requestall;
                     foreach ($value_url as $key => $value) {
                         $explode = explode(',', $value);
@@ -577,15 +573,15 @@ class HomeController extends Controller
                 $brand = $request->brand;
             }
             $orderby = "ASC";
-            $order_name ="id";
+            $order_name ="products.id";
             if(!empty($request->order)){
                 if($request->order == "gia_cao_den_thap"){
-                    $order_name = "price";
-                    $orderby ="ASC";
+                    $order_name = "NULLIF(products.price_onsale, 0), products.price";
+                    $orderby ="DESC";
                 }
                 if($request->order == "gia_thap_den_cao"){
-                    $order_name = "price";
-                    $orderby ="DESC";
+                    $order_name = "NULLIF(products.price_onsale, 0), products.price";
+                    $orderby ="ASC";
                 }
             }
             $products = Products::select('products.*', 'detailproperties.ma as matt', 'categories.slug as url')
@@ -597,7 +593,7 @@ class HomeController extends Controller
                 ->where('categories.slug', $request->slug)
                 ->where(function ($query) use ($property) {
                     foreach ($property as $key => $value) {
-                        if ($key == 'p' || $key == 'brand') {
+                        if ($key == 'p' || $key == 'brand' || $key == 'order') {
                             unset($property[$key]);
                         }
                     }
@@ -612,6 +608,7 @@ class HomeController extends Controller
                     if ($properties != []) {
                         $query->whereIn('detailproperties.ma', $properties);
                     } else {
+                        $query->where('products.status',1);
                     }
                 })
                 ->where(function ($query) use ($price) {
@@ -622,17 +619,19 @@ class HomeController extends Controller
                         $max_price = $p[1];
                         $query->whereBetween('products.price_onsale', [$min_price, $max_price]);
                     } else {
+                        $query->where('products.status',1);
                     }
                 })
                 ->where(function ($query) use ($brand) {
                     if ($brand != "") {
                         $query->where('brands.name', trim($brand));
                     } else {
+                        $query->where('products.status',1);
                     }
                 })
                 ->where('products.status', 1)
                 ->groupBy('products.id')
-                ->orderby($order_name,$orderby)
+                ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
                 ->paginate(20)->withQueryString();
         } else {
             // Neu khong co danh muc thi lay san pham moi
@@ -647,6 +646,7 @@ class HomeController extends Controller
             ->where('parent_id', 0)
             ->where('status', 1)
             ->get();
+
 
         //////////////Tra ve//////////////////
         if ($agent->isMobile()) {
@@ -717,7 +717,6 @@ class HomeController extends Controller
         }
         return response()->json(['html' => $view]);
     }
-
     //lien he
     public function contact()
     {
@@ -822,7 +821,7 @@ class HomeController extends Controller
         $Sidebars = $this->getmenu('sidebar');
         return \view('frontend.page.about-us', compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
-
+    //lay menu  desktop
     public function menucontent(Request $request)
     {
         $Sidebarid = $request->id;
@@ -837,7 +836,7 @@ class HomeController extends Controller
         }
         return response()->json($view2);
     }
-
+    //lay menu con desktop
     public function menucontent2(Request $request)
     {
         $Sidebarid = $request->id;
@@ -846,6 +845,7 @@ class HomeController extends Controller
         $view2 = view('frontend.subsidebarmenu', ['Sidebars' => $Sidebars, 'Sidebarid' => $Sidebarid])->render();
         return response()->json($view2);
     }
+    //lay san pham moi
     public function get_new_mobile(Request $request)
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
@@ -855,7 +855,7 @@ class HomeController extends Controller
             'data_product_mobile' => $get_new_mobile
         ]);
     }
-
+    // lay san pham hot
     public function get_hot_sale_mobile(Request $request)
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
@@ -865,7 +865,6 @@ class HomeController extends Controller
             'data_product_mobile' => $get_new_mobile
         ]);
     }
-
     //lay san pham
     public function get_product_mobile(Request $request)
     {
@@ -895,7 +894,6 @@ class HomeController extends Controller
           'data_product_mobile' => $Products,
           ]);
     }
-
     // lay menu ban mobile
     public function get_menu_mobile(){
         $menu_mobile = $menu_mobile_child = '';
@@ -926,7 +924,7 @@ class HomeController extends Controller
             DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->leftjoin('brands','brands.name','admin_menu_items.filter_value')
-            ->leftjoin('detailproperties','detailproperties.name','admin_menu_items.filter_value')
+            ->leftjoin('detailproperties','detailproperties.ma','admin_menu_items.filter_value')
             ->leftjoin('categories','categories.id','admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
@@ -942,6 +940,7 @@ class HomeController extends Controller
             'current_parent' => $get_parent_firts,
         ]);
     }
+    // lay menu con khi chon menu cha mobile
     public function get_menu_child(Request $request){
         $get_parent_firts = MenuItems::select('admin_menu_items.*', DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
@@ -970,7 +969,7 @@ class HomeController extends Controller
             DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->leftjoin('brands','brands.name','admin_menu_items.filter_value')
-            ->leftjoin('detailproperties','detailproperties.name','admin_menu_items.filter_value')
+            ->leftjoin('detailproperties','detailproperties.ma','admin_menu_items.filter_value')
             ->leftjoin('categories','categories.id','admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)

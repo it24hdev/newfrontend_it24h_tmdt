@@ -107,7 +107,7 @@
             <div class="mt-3">
                 <label>Mô tả</label>
                 <div class="mt-2">
-                    <textarea name="content" id="tiny-editor" rows="7"></textarea>
+                    <textarea name="content_category" id="tiny-editor" rows="7"></textarea>
                 </div>
             </div>
         <div class="modal-footer">

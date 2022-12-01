@@ -48,15 +48,11 @@ class CategoryController extends Controller
         if($sort    ==null) {$sort    ='asc';}
         if($keywords==null) {$keywords="";}
         if($orderby ==null) {$orderby ="id";}
-
-
         $data = Category::where('taxonomy', 0)
         ->where('name', 'like', '%' . $keywords . '%')
         ->orderby($orderby,$sort)->get();
-
         $listcategories = [];
         Category::recursive($data, $parents = 0, $level = 1, $listcategories);
-
         return view('admin.category.index',[
             'Categories' => $listcategories,
             'title'    => 'Danh mục sản phẩm',
@@ -81,7 +77,6 @@ class CategoryController extends Controller
             'ma'     => 'required|max:255|unique:categories,ma',
             'slug'   => 'required',
             'name'   => 'required',
-            // |max:255|unique:categories,slug,'.$slug,
             'thumb'  => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
         ],
@@ -90,8 +85,6 @@ class CategoryController extends Controller
             'ma.max'      => 'Mã danh mục không được phép vượt quá 255 ký tự',
             'ma.unique'   => 'Mã danh mục đã tồn tại',
             'name.required' => 'Tên danh mục không được phép bỏ trống',
-            // 'slug.unique'   => 'Tên slug đã tồn tại',
-            // 'slug.max'      => 'Tên slug không được phép vượt quá 255 ký tự',
             'slug.required' => 'Tên slug không được phép bỏ trống',
             'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             'banner.image'  => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
@@ -108,7 +101,7 @@ class CategoryController extends Controller
         }
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
-        if(empty($request->content)){$request->content = '';}
+        if(empty($request->content_category)){$request->content_category = '';}
         $Category  = [
             'ma'        => $request->ma,
             'name'      => $request->name,
@@ -122,9 +115,8 @@ class CategoryController extends Controller
             'banner'    => $nameFileBanner,
             'status'    => $request->has('status'),
             'show_push_product'    => $request->has('show_push_product'),
-            'content'      => $request->content,
+            'content'      => $request->content_category,
         ];
-
         try {
             DB::beginTransaction();
             Category::create($Category);
@@ -201,7 +193,7 @@ class CategoryController extends Controller
         ]);
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
-        if (empty($request->content)) {$request->content = '';}
+        if (empty($request->content_category)) {$request->content_category = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
 
         $Categorys = Category::find($id);
@@ -235,8 +227,9 @@ class CategoryController extends Controller
             'banner'    => $nameFileBanner,
             'status'    => $request->has('status'),
             'show_push_product'    => $request->has('show_push_product'),
-            'content'   => $request->content,
+            'content'   => $request->content_category,
         ];
+
         try {
             DB::beginTransaction();
             $Categorys->update($Category);

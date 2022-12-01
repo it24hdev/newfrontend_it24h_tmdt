@@ -69,7 +69,7 @@
                     <div class="mt-3">
                         <label>Nội dung</label>
                         <div class="mt-2">
-                            <textarea name="content" id="tiny-editor" rows="7">{{old('content') ?? $post->content}}</textarea>
+                            <textarea name="content_post" id="tiny-editor" rows="7">{{old('content') ?? $post->content}}</textarea>
                         </div>
                     </div>
                     <div class="text-right mt-5">
