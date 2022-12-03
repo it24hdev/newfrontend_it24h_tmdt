@@ -447,11 +447,12 @@
         </div>
     @endif
     {{--comment--}}
-    <div product-id="29003" class="comment-container">
-        <div class="comment-form"><p id="total_comment" class="comment-form-title title is-5 p-0 mb-1">Hỏi và đáp</p>
-            <div class="comment-form-content is-flex is-justify-content-space-between">
+    <div class="comment-container">
+        <div class="comment-form">
+            <p class="comment-form-title">Hỏi và đáp</p>
+            <div class="comment-form-content">
                 <div class="textarea-comment">
-                    <textarea id="" placeholder="Xin mời để lại câu hỏi, CellphoneS sẽ trả lời lại trong 1h, các câu hỏi sau 22h - 8h sẽ được trả lời vào sáng hôm sau" class="textarea"></textarea>
+                    <textarea placeholder="Xin mời để lại câu hỏi, IT24H sẽ trả lời lại trong 1h, các câu hỏi sau 22h - 8h sẽ được trả lời vào sáng hôm sau" class="textarea"></textarea>
                     <button class="button">
                         <div class="icon-paper-plane">
                             <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -464,13 +465,8 @@
                 </div>
             </div>
         </div>
-        <div class="block-comment__box-list-comment"><p style="opacity: 0; height: 0;">
-                Xin mời để lại câu hỏi, CellphoneS sẽ trả lời lại trong 1h, các câu hỏi sau 22h - 8h sẽ được trả lời vào
-                sáng hôm
-                sau
-            </p>
-            <div id="page_comment_list" class="list-comment">
-                <hr>
+        <div class="block-comment__box-list-comment">
+            <div class="list-comment">
                 <div class="item-comment">
                     <div class="item-comment__box-cmt">
                         <div class="box-cmt__box-info">
@@ -496,13 +492,12 @@
                             <div class="content">
                                 <div>Con này khi nào có thì liên hệ em qua ZAlo *****239 nha ạ, em cám ơn nhiều</div>
                             </div>
-                            <button class="btn-rep-cmt respondent">
+                            <button class="btn-rep-cmt">
                                 <div>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12"
                                          viewBox="0 0 12 10.8">
-                                        <path id="chat"
-                                              d="M3.48,8.32V4.6H1.2A1.2,1.2,0,0,0,0,5.8V9.4a1.2,1.2,0,0,0,1.2,1.2h.6v1.8l1.8-1.8h3A1.2,1.2,0,0,0,7.8,9.4V8.308a.574.574,0,0,1-.12.013H3.48ZM10.8,1.6H5.4A1.2,1.2,0,0,0,4.2,2.8V7.6H8.4l1.8,1.8V7.6h.6A1.2,1.2,0,0,0,12,6.4V2.8a1.2,1.2,0,0,0-1.2-1.2Z"
-                                              transform="translate(0 -1.6)" fill="#707070">
+                                        <path d="M3.48,8.32V4.6H1.2A1.2,1.2,0,0,0,0,5.8V9.4a1.2,1.2,0,0,0,1.2,1.2h.6v1.8l1.8-1.8h3A1.2,1.2,0,0,0,7.8,9.4V8.308a.574.574,0,0,1-.12.013H3.48ZM10.8,1.6H5.4A1.2,1.2,0,0,0,4.2,2.8V7.6H8.4l1.8,1.8V7.6h.6A1.2,1.2,0,0,0,12,6.4V2.8a1.2,1.2,0,0,0-1.2-1.2Z"
+                                              transform="translate(0 -1.6)" fill="#2490ff">
                                         </path>
                                     </svg>
                                 </div>&nbsp;Trả lời
@@ -516,19 +511,7 @@
                                             <div class="box-info__avatar">
                                                 <span class="icon-cps">
                                                     <div>
-                                                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"  xmlns:xlink="http://www.w3.org/1999/xlink">
-                                                            <rect width="40" height="40" fill="url(#pattern111)">
-                                                            </rect>
-                                                            <defs>
-                                                                <pattern id="pattern111" patternContentUnits="objectBoundingBox" width="1"
-                                                                    height="1">
-                                                                    <use xlink:href="#image0_119_16" transform="scale(0.00333333)"></use>
-                                                                </pattern>
-                                                                <image
-                                                                    id="image0_119_16" width="300" height="300" xlink:href="">
-
-                                                                </image>
-                                                            </defs>
+                                                        <svg viewBox="0 0 40 40" fill="#fff" xmlns="http://www.w3.org/2000/svg">
                                                         </svg>
                                                     </div>
                                                 </span>
@@ -570,7 +553,7 @@
                                                      viewBox="0 0 12 10.8">
                                                     <path id="chat"
                                                           d="M3.48,8.32V4.6H1.2A1.2,1.2,0,0,0,0,5.8V9.4a1.2,1.2,0,0,0,1.2,1.2h.6v1.8l1.8-1.8h3A1.2,1.2,0,0,0,7.8,9.4V8.308a.574.574,0,0,1-.12.013H3.48ZM10.8,1.6H5.4A1.2,1.2,0,0,0,4.2,2.8V7.6H8.4l1.8,1.8V7.6h.6A1.2,1.2,0,0,0,12,6.4V2.8a1.2,1.2,0,0,0-1.2-1.2Z"
-                                                          transform="translate(0 -1.6)" fill="#707070">
+                                                          transform="translate(0 -1.6)" fill="#2490ff">
 
                                                     </path>
                                                 </svg>
@@ -583,42 +566,14 @@
                 </div>
             </div>
             <button class="btn-show-more">
-                Xem thêm 66 bình luận 
-                <div class="is-inline-block">
+                Xem thêm 66 bình luận
+                <div class="inline-block-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="10" height="10">
                         <path
                             d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"></path>
                     </svg>
                 </div>
             </button>
-        </div>
-        <div class="modal">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <svg width="138" height="138" viewBox="0 0 138 138" fill="none" xmlns="http://www.w3.org/2000/svg"
-                         xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <rect width="138" height="138" fill="url(#pattern0)"></rect>
-                        <defs>
-                            <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                                <use xlink:href="#image0_34_138" transform="scale(0.000925926)"></use>
-                            </pattern>
-                        </defs>
-                    </svg>
-                    <button aria-label="close" class="delete"></button>
-                    <button class="button">Đăng nhập để bình luận
-                    </button>
-                    <p class="cps-devider-text"><span>Hoặc</span></p></header>
-                <section class="modal-card-body">
-                    <form id="commentForm" class="popup_cmt_form"><input id="nickname_field" type="text" name="nickname" placeholder="Họ tên (bắt buộc)" value="" class="cps-input required-entry">
-                        <input id="phone_field" type="text" name="phone" maxlength="10" placeholder="Số điện thoại" value="" class="cps-input">
-                        <input id="email_field" type="email" name="email" placeholder="Email (để nhận phản hồi qua email)" value="" class="cps-input">
-                    </form>
-                </section>
-                <footer class="modal-card-foot is-justify-content-end">
-                    <button id="cps_comment_post" class="button"><strong>Gửi bình luận</strong></button>
-                </footer>
-            </div>
         </div>
     </div>
 @endsection
@@ -633,157 +588,7 @@
                     document.getElementById("affix_h").style.top = "115px";
                 }
             }
-
             $(window).scroll(runOnScroll);
-
-            $(document).on('click', '.listFilter li', function () {
-                var target = $(this).attr('data-target');
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active');
-                    $(target).removeClass('ac');
-                } else {
-                    $(this).addClass('active');
-                    $(target).addClass('ac');
-                }
-            });
-            // chon button loc
-            $(document).on("click", '#filter_by_price, .close_p', function () {
-                if ($('.p_filter').hasClass('d-none')) {
-                    $('.p_filter').removeClass('d-none');
-                } else {
-                    $('.p_filter').addClass('d-none');
-                }
-                $('.list-filter-child').removeClass('active');
-            });
-
-            // dong button loc
-            $(document).on("click", '.btn-f, .btnclose', function () {
-                if ($('.filterall').hasClass('active_mn')) {
-                    $('.filterall').removeClass('active_mn');
-                } else {
-                    $('.filterall').addClass('active_mn');
-                }
-                $('.list-filter-child').removeClass('active');
-                $('.p_filter').addClass('d-none');
-            });
-
-            $(document).on('click', '#submitfilter, .button_submit, #filter_price', function () {
-                filter();
-            });
-
-            $(document).on('click', '#filter_price', function () {
-                if (!$('#active_price').hasClass('active')) {
-                    $('#active_price').addClass('active')
-                }
-                filter();
-            });
-
-            // an hien thuoc tinh dang loc
-            if (window.location.search != "") {
-                $('.filtering_by').removeClass('d-none');
-            }
-
-            //xoa thuoc tinh
-            $(document).on('click', '.cancel_filter', function () {
-                var url = $(this).attr('get-url-cancel');
-                window.location = url;
-            });
-
-            //xoa gia
-            $(document).on('click', '.cancel_price', function () {
-                var parth = window.location.search.split('?')[1];
-                const params = Object.fromEntries(new URLSearchParams(parth));
-                delete params.p;
-                const url2 = new URLSearchParams(params).toString();
-                window.location = window.location.origin + window.location.pathname + '?' + url2;
-            })
-
-            //xoa tat ca loc
-            $(document).on('click', '.cancel_all', function () {
-                window.location = window.location.origin + window.location.pathname;
-            })
-
-            //loc thuoc tinh con - loc theo tieu chi
-            $(document).on('click', '.btn-filter-child', function () {
-                if (!$('.p_filter ').hasClass('d-none')) {
-                    $('.p_filter ').addClass('d-none');
-                }
-                var target = $(this).attr('data-target');
-                if ($(target).hasClass('active')) {
-                    $(target).removeClass('active');
-                } else {
-                    $('.list-filter-child').removeClass('active');
-                    $(target).addClass('active');
-                }
-            });
-
-            $(document).on('click', '.chose_f', function () {
-                var target = $(this).attr('data-target');
-                if ($(this).hasClass('ac')) {
-                    $(this).removeClass('ac');
-                } else {
-                    $(this).addClass('ac');
-                    $(target).addClass('active');
-                }
-            })
-
-            //dong form loc thuoc tinh con
-            $(document).on('click', '.button_close', function () {
-                var target = $(this).attr('data-target');
-                $(target).removeClass('active');
-            });
-
-            // Sap xep
-            $(document).on('click', '.btn-sort', function () {
-                if ($(this).hasClass('ac')) {
-                    $('.btn-sort').removeClass('ac');
-                } else {
-                    $('.btn-sort').removeClass('ac');
-                    $(this).addClass('ac');
-                }
-                filter();
-                // var attr =  $(this).attr('data-target-attr');
-                // var parth = window.location.search.split('?')[1];
-                // const params = Object.fromEntries(new URLSearchParams(parth));
-                // params.order = attr;
-                // const url2 = new URLSearchParams(params).toString();
-                // window.location = window.location.origin + window.location.pathname + '?' + url2;
-            });
-
-            //loc thuoc tinh
-            function filter() {
-                let params = new URLSearchParams();
-                var arr = [];
-                //thuoc tinh
-                $('.listFilter .filter-wrapper').each(function (index) {
-                    var name_attrs = $(this).attr('get-name-attrs');
-                    arr = [];
-                    $('.filter-wrapper li').each(function (index) {
-                        var name_attr = $(this).attr('get-name-attr');
-                        if ($(this).hasClass('active')) {
-                            if (name_attrs == name_attr) {
-                                var attr = $(this).attr('get-attr');
-                                arr.push(attr);
-                            }
-                        }
-                    });
-                    if (arr != '')
-                        params.append(name_attrs, arr);
-                });
-                //gia
-                if ($('#active_price').hasClass('active')) {
-                    var min_price = document.getElementsByName('min-value').value;
-                    var max_price = document.getElementsByName('max-value').value;
-                    var between = min_price + ';' + max_price;
-                    params.append('p', between);
-                }
-
-                if ($('.btn-sort').hasClass('ac')) {
-                    var attr = $('.btn-sort.ac').attr('data-target-attr');
-                    params.append('order', attr);
-                }
-                window.location = window.location.origin + window.location.pathname + '?' + params.toString();
-            }
         })
     </script>
 @endsection

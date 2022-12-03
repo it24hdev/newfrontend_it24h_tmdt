@@ -1,16 +1,8 @@
 $(document).ready(function () {
 
     var _token = $('meta[name="csrf-token"]').attr('content');
-    //doi mau cho danh muc
-    var colors =  ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
-                                '#e150ff80', '#ff50ed80', '#ff50b480', '#ff507480',  '#fb386080',  '#ff16458f','#fb385080','#fb385080','#ff50b380','#ff50ed70','#e150ff70','#9050ff70','#5069ff70','#5089ff70','#50ffb370','#6eff408f','#e0ff408f','#ffee408f','#ffb5408f','#ff8d408f'];
 
-    $('.item-categories').each(function (){
-        var firts_color = colors[0];
-        colors.splice($.inArray(firts_color, colors), 1);
-        $(this).css("background-color", firts_color);
-    })
-
+    //================================ trang chu =============================
     // slider banner
     $('#slider-show').owlCarousel({
         autoplay: true,
@@ -29,6 +21,16 @@ $(document).ready(function () {
                 items: 1
             },
         }
+    });
+
+    //doi mau cho danh muc
+    var colors =  ['#ff8d508f', '#ffb5508f', '#ffee508f','#e0ff508f','#6eff508f','#50ffb380','#5089ff80','#5069ff80','#9050ff80',
+        '#e150ff80', '#ff50ed80', '#ff50b480', '#ff507480',  '#fb386080',  '#ff16458f','#fb385080','#fb385080','#ff50b380','#ff50ed70','#e150ff70','#9050ff70','#5069ff70','#5089ff70','#50ffb370','#6eff408f','#e0ff408f','#ffee408f','#ffb5408f','#ff8d408f'];
+
+    $('.item-categories').each(function (){
+        var firts_color = colors[0];
+        colors.splice($.inArray(firts_color, colors), 1);
+        $(this).css("background-color", firts_color);
     });
 
     // chon san pham yeu thich
@@ -68,9 +70,7 @@ $(document).ready(function () {
             success: function (data) {
                 $('#count-cart').text(data.count);
                 $('#count-cart2').text(data.count);
-                var x = document.getElementById("snackbar");
-                x.className = "show";
-                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                $( "#snackbar" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
             }
         });
     });
@@ -85,7 +85,7 @@ $(document).ready(function () {
         var viewport_height = $window.height()  // chiều cao màn hình
         var viewport_bottom = viewport_top + viewport_height
         var $elem = jQuery(elem)
-        var top = $elem.offset().top - 400
+        var top = $elem.offset().top - 1000
         var height = $elem.height()
         var bottom = top + height + 400
 
@@ -342,6 +342,7 @@ $(document).ready(function () {
             $(id_append).append(tmp.html());
         })
     }
+
     //memu
     var template_menu_parent = $('#template-menu-parent').html();
     $(document).on('click', '#menubar , #menubar2', function (){
@@ -587,4 +588,179 @@ $(document).ready(function () {
     }
 
     $(window).scroll(runOnScroll);
+
+    // =========================trang danh sach san pham===============================
+    $(document).on('click', '.listFilter li', function () {
+        var target = $(this).attr('data-target');
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+            $(target).removeClass('ac');
+        } else {
+            $(this).addClass('active');
+            $(target).addClass('ac');
+        }
+    });
+    // chon button loc
+    $(document).on("click", '#filter_by_price, .close_p', function () {
+        if ($('.p_filter').hasClass('d-none')) {
+            $('.p_filter').removeClass('d-none');
+        } else {
+            $('.p_filter').addClass('d-none');
+        }
+        $('.list-filter-child').removeClass('active');
+    });
+
+    // dong button loc
+    $(document).on("click", '.btn-f, .btnclose', function () {
+        if ($('.filterall').hasClass('active_mn')) {
+            $('.filterall').removeClass('active_mn');
+        } else {
+            $('.filterall').addClass('active_mn');
+        }
+        $('.list-filter-child').removeClass('active');
+        $('.p_filter').addClass('d-none');
+    });
+
+    $(document).on('click', '#submitfilter, .button_submit, #filter_price', function () {
+        filter();
+    });
+
+    $(document).on('click', '#filter_price', function () {
+        if (!$('#active_price').hasClass('active')) {
+            $('#active_price').addClass('active')
+        }
+        filter();
+    });
+
+    // an hien thuoc tinh dang loc
+    if (window.location.search != "") {
+        $('.filtering_by').removeClass('d-none');
+    }
+
+    //xoa thuoc tinh
+    $(document).on('click', '.cancel_filter', function () {
+        var url = $(this).attr('get-url-cancel');
+        window.location = url;
+    });
+
+    //xoa gia
+    $(document).on('click', '.cancel_price', function () {
+        var parth = window.location.search.split('?')[1];
+        const params = Object.fromEntries(new URLSearchParams(parth));
+        delete params.p;
+        const url2 = new URLSearchParams(params).toString();
+        window.location = window.location.origin + window.location.pathname + '?' + url2;
+    })
+
+    //xoa tat ca loc
+    $(document).on('click', '.cancel_all', function () {
+        window.location = window.location.origin + window.location.pathname;
+    })
+
+    //loc thuoc tinh con - loc theo tieu chi
+    $(document).on('click', '.btn-filter-child', function () {
+        if (!$('.p_filter ').hasClass('d-none')) {
+            $('.p_filter ').addClass('d-none');
+        }
+        var target = $(this).attr('data-target');
+        if ($(target).hasClass('active')) {
+            $(target).removeClass('active');
+        } else {
+            $('.list-filter-child').removeClass('active');
+            $(target).addClass('active');
+        }
+    });
+
+    $(document).on('click', '.chose_f', function () {
+        var target = $(this).attr('data-target');
+        if ($(this).hasClass('ac')) {
+            $(this).removeClass('ac');
+        } else {
+            $(this).addClass('ac');
+            $(target).addClass('active');
+        }
+    })
+
+    //dong form loc thuoc tinh con
+    $(document).on('click', '.button_close', function () {
+        var target = $(this).attr('data-target');
+        $(target).removeClass('active');
+    });
+
+    // Sap xep
+    $(document).on('click', '.btn-sort', function () {
+        if ($(this).hasClass('ac')) {
+            $('.btn-sort').removeClass('ac');
+        } else {
+            $('.btn-sort').removeClass('ac');
+            $(this).addClass('ac');
+        }
+        filter();
+        // var attr =  $(this).attr('data-target-attr');
+        // var parth = window.location.search.split('?')[1];
+        // const params = Object.fromEntries(new URLSearchParams(parth));
+        // params.order = attr;
+        // const url2 = new URLSearchParams(params).toString();
+        // window.location = window.location.origin + window.location.pathname + '?' + url2;
+    });
+
+    //loc thuoc tinh
+    function filter() {
+        let params = new URLSearchParams();
+        var arr = [];
+        //thuoc tinh
+        $('.listFilter .filter-wrapper').each(function (index) {
+            var name_attrs = $(this).attr('get-name-attrs');
+            arr = [];
+            $('.filter-wrapper li').each(function (index) {
+                var name_attr = $(this).attr('get-name-attr');
+                if ($(this).hasClass('active')) {
+                    if (name_attrs == name_attr) {
+                        var attr = $(this).attr('get-attr');
+                        arr.push(attr);
+                    }
+                }
+            });
+            if (arr != '')
+                params.append(name_attrs, arr);
+        });
+        //gia
+        if ($('#active_price').hasClass('active')) {
+            var min_price = document.getElementsByName('min-value').value;
+            var max_price = document.getElementsByName('max-value').value;
+            var between = min_price + ';' + max_price;
+            params.append('p', between);
+        }
+
+        if ($('.btn-sort').hasClass('ac')) {
+            var attr = $('.btn-sort.ac').attr('data-target-attr');
+            params.append('order', attr);
+        }
+        window.location = window.location.origin + window.location.pathname + '?' + params.toString();
+    }
+
+    //===============================trang chi tiet san pham====================================
+
+    //mua ngay san pham
+    $(document).on('click','.add-cart-now',function(){
+        var id = $(this).data('id');
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        var data = {
+            id: id,
+            _token: _token
+        };
+        $.ajax({
+            url: add_cart_ajax,
+            method: 'POST',
+            data: data,
+            dataType: "json",
+            success: function(data) {
+                $('#count-cart').text(data.count);
+                $('#count-cart2').text(data.count);
+                window.location = list_cart;
+            },
+        });
+    });
+
+
 });

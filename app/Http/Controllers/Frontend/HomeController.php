@@ -57,15 +57,12 @@ class HomeController extends Controller
         //da ngon ngu
         $locale = config('app.locale');
 
-        // sidebar
-
         //phan biet mobile / desktop
         $agent = new Agent();
         $isMobile = "";
         if ($agent->isPhone()) {
             $isMobile = "phone";
         }
-
 
         if ($agent->isMobile()) {
             //lay sp hot sale
@@ -292,7 +289,6 @@ class HomeController extends Controller
 
         ]);
     }
-
     // xu ly bai viet duoc tim kiem
     public function categoryBlog(Request $request, $slug)
     {
@@ -779,8 +775,6 @@ class HomeController extends Controller
             'fileupload' => $request->fileupload,
             'status' => 0,
         ];
-
-
         try {
             DB::beginTransaction();
             Recruit_register::create($recruit_register);
@@ -868,7 +862,6 @@ class HomeController extends Controller
     //lay san pham
     public function get_product_mobile(Request $request)
     {
-        $product_view = $list_child_view = '';
         if (!is_null($request->id)) {
             $cat_parent = Category::find($request->id);
             $list_cat_child =[];
@@ -883,7 +876,7 @@ class HomeController extends Controller
                 ->where('products.status', 1)
                 ->groupby('products.id')
                 ->orderby('products.created_at','desc')
-                ->get();
+                ->limit(7)->get();
             foreach($Products as $value){
                 $value->setAttribute('count_vote',$value->count_vote());
                 $value->setAttribute('list_wish',explode(' ', Cookie::get('list_wish')));
@@ -896,7 +889,7 @@ class HomeController extends Controller
     }
     // lay menu ban mobile
     public function get_menu_mobile(){
-        $menu_mobile = $menu_mobile_child = '';
+        $menu_mobile_child = '';
         $get_parent = MenuItems::select('admin_menu_items.*', DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->leftjoin('categories','categories.id','admin_menu_items.category_id')

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{asset('asset/css/mobile/header_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/body_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/footer_mobile.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/css/mobile/detailproduct.css')}}">
     @yield('css')
 <!-- css -->
     <script>
@@ -85,22 +86,23 @@
     <script src="{{ asset('lib/jquery360.min.js') }}"></script>
     <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('asset/js/mobile.js') }}"></script>
     <script type="text/javascript">
         var base_url = '{{route('user')}}';
         var add_cart_ajax = '{{route('add_cart_ajax')}}';
+        var list_cart = '{{route('list_cart')}}';
         var get_menu_mobile = '{{route('get_menu_mobile')}}';
         var get_menu_child = '{{route('get_menu_child')}}';
         var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
         var get_new_mobile = '{{route('get_new_mobile')}}';
         var get_product_mobile = '{{route('get_product_mobile')}}';
         var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';
+        var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
         var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
         var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';
         var img_category = '{{asset('upload/images/products/thumb/img_name')}}';
         var img_detailproperties = '{{asset('upload/images/detailproperties/thumb/img_name')}}';
-        var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
     </script>
+    <script src="{{ asset('asset/js/mobile.js') }}"></script>
 @yield('js')
 </body>
 </html>

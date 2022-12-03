@@ -275,7 +275,7 @@ class ProductsController extends Controller
 
             // xu ly anh abum
             $oldimage = $Products->image;
-            if ($request->images == null){
+            if ($request->image == null){
                 $imgs = $oldimage;
             } else{
                 $imgs = $this->saveimg($request, $oldimage);
@@ -287,6 +287,7 @@ class ProductsController extends Controller
             }else{
                 $specifications = NULL;
             }
+
             $Product  = [
                 'ma'           => $request->ma,
                 'name'         => $request->name,

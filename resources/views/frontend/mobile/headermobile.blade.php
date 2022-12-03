@@ -66,4 +66,9 @@
 <div class="background_header">
 </div>
 
-<div id="snackbar">Đã thêm vào giỏ hàng</div>
+<div id="snackbar">
+    <div class="d-grid">
+        <i class="far fa-check-circle"></i>
+        <span>Đã thêm vào giỏ hàng</span>
+    </div>
+</div>

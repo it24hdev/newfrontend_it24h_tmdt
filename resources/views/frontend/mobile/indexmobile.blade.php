@@ -150,8 +150,9 @@
                         <a href="{{route('product_cat', ['slug' =>  $item->slug])}}" class="title"><h2>{{$item->name}}</h2>
                         </a>
                         <a href="{{route('product_cat', ['slug' =>  $item->slug])}}" class="more-product">Xem tất cả</a>
-                        <div class="list-related-tag" id="list_tag_{{$item->id}}">
-                        </div>
+                    </div>
+                    <div class="item_tag">
+                        <div class="list-related-tag" id="list_tag_{{$item->id}}"></div>
                     </div>
                     {{--                product--}}
                     <div class="featured-product-list" id="list_products_{{$item->id}}">

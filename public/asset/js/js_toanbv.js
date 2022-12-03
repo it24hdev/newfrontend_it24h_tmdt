@@ -11,7 +11,7 @@ $(document).ready(function () {
         id = "sub-"+id;
         $('#'+id).slideToggle();
     });
-    // button an hien menu con sub_sidebar moblie 
+    // button an hien menu con sub_sidebar moblie
     $(".angledown2").on("click", function() {
         var id = $(this).attr('id');
         id = "sub-"+id;
@@ -56,7 +56,7 @@ $(document).ready(function () {
     document.getElementById('iconmenumobile').style.opacity= "1";
     document.getElementsByClassName('backgroundmobile')[0].style= "top: 0px;left: 0px; position: fixed;width: 100%;height: 100%;z-index: 9999;background-color: rgba(0,0,0,.7);";
     });
-     
+
 
     // zoom anh trang chi tiet san pham
     $("#img-zoomer-box").mousemove(function(e) {
@@ -191,7 +191,6 @@ $(document).ready(function () {
 
     //Cong so luong san pham
     $(".plus").on("click",function(){
-        console.log(1);
         $(this).prev().val(+$(this).prev().val() + 1);
     });
 

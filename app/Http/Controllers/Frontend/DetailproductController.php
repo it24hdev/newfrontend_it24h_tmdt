@@ -31,62 +31,70 @@ class DetailproductController extends Controller
         }
         else $ag = "desktop";
         try{
-        $active_menu = "product";
-        $Sidebars           = $this->getmenu('sidebar');
-
-        // $Menus              = $this->getmenu('menu');
-        $getcategoryblog    = $this->getcategoryblog();
-        $product           = Products::where('slug','=',$slug)->first();
-        $locale             = config('app.locale');
-        $posts = Post::where('status', 1)->orderBy('id', 'DESC')->limit(5)->get();
-        // $attrs              = \json_decode($product->attr);
-        // if(empty($attrs)){$attrs = [];}
-        // $colors = Attribute_product::where('attr', 'color')->whereIn('id', $attrs)->orderBy('name', 'ASC')->get();
-        // $sizes  = Attribute_product::where('attr', 'size')->whereIn('id', $attrs)->get();
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $products_id= array();
-
-
-        foreach($product->category as $k){
-            foreach($k->product as $pro){
-                $products_id[]= $pro->id;
+            $active_menu = "product";
+            $Sidebars           = $this->getmenu('sidebar');
+            $getcategoryblog    = $this->getcategoryblog();
+            $product           = Products::where('slug',$slug)->first();
+            $imgs        = json_decode($product->image);
+            $property   = $this->xulychuoi_thongsosanpham($product->property);
+            $locale             = config('app.locale');
+            $posts = Post::where('status', 1)->orderBy('id', 'DESC')->limit(5)->get();
+            $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+            $products_id= array();
+            foreach($product->category as $k){
+                foreach($k->product as $pro){
+                    $products_id[]= $pro->id;
+                }
             }
-        }
-        if(empty($products_id)){
-            $product_related = Products::where('status', 1)->limit(10)->get();
-        }else{
-            $product_related = Products::whereIn('id', $products_id)->where('status', 1)->limit(10)->get();
-        }
+            if(empty($products_id)){
+                $product_related = Products::where('status', 1)->limit(10)->get();
+            }else{
+                $product_related = Products::whereIn('id', $products_id)->where('status', 1)->limit(10)->get();
+            }
 
-        $imgs        = json_decode($product->image);
 
-        $property   = $this->xulychuoi_thongsosanpham($product->property);
-        
-        /* XỬ LÝ LƯU SP ĐÃ XEM */
-        $id = $product->id;
-        $get_cookie = Session::get('list_watched');
-        $list_id_watched = explode(' ', $get_cookie);
-        if(!in_array($id, $list_id_watched)){
-            $list_id_watched[] = $id;
-        }
-        $list_watched = \implode(' ', $list_id_watched);
-        Session::put('list_watched', $list_watched);
-        $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
-        return view('frontend.detailproduct',[
-            'Sidebars'        => $Sidebars,
-            // 'Menus'           => $Menus,
-            'product'        => $product,
-            'imgs'             => $imgs,
-            'property'        => $property,
-            'product_related' => $product_related,
-            'getcategoryblog' => $getcategoryblog,
-            'locale'          => $locale,
-            'posts' => $posts,
-            'product_watched' => $product_watched,
-            'active_menu' => $active_menu,
-            'posts_footer' => $posts_footer,
-            'agent' => $ag,
-        ]);
+            /* XỬ LÝ LƯU SP ĐÃ XEM */
+            $id = $product->id;
+            $get_cookie = Session::get('list_watched');
+            $list_id_watched = explode(' ', $get_cookie);
+            if(!in_array($id, $list_id_watched)){
+                $list_id_watched[] = $id;
+            }
+            $list_watched = \implode(' ', $list_id_watched);
+            Session::put('list_watched', $list_watched);
+            $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
+            if($agent->isMobile()){
+                return view('frontend.mobile.detailproductmobile',[
+                    'Sidebars'        => $Sidebars,
+                    'product'        => $product,
+                    'imgs'             => $imgs,
+                    'property'        => $property,
+                    'product_related' => $product_related,
+                    'getcategoryblog' => $getcategoryblog,
+                    'locale'          => $locale,
+                    'posts' => $posts,
+                    'product_watched' => $product_watched,
+                    'active_menu' => $active_menu,
+                    'posts_footer' => $posts_footer,
+                    'agent' => $ag,
+                ]);
+            }
+            else{
+                return view('frontend.detailproduct',[
+                    'Sidebars'        => $Sidebars,
+                    'product'        => $product,
+                    'imgs'             => $imgs,
+                    'property'        => $property,
+                    'product_related' => $product_related,
+                    'getcategoryblog' => $getcategoryblog,
+                    'locale'          => $locale,
+                    'posts' => $posts,
+                    'product_watched' => $product_watched,
+                    'active_menu' => $active_menu,
+                    'posts_footer' => $posts_footer,
+                    'agent' => $ag,
+                ]);
+            }
         }
         catch(\Exception $exception){
             \abort(404);
@@ -94,7 +102,6 @@ class DetailproductController extends Controller
     }
 
     public function xulychuoi_thongsosanpham($String){
-
         //loaibo space va enter
         if($String !=null){
         $String =  preg_replace("/[\n\r]/", "", $String);
