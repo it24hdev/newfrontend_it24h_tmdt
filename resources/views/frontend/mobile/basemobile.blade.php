@@ -56,12 +56,12 @@
     </script>
 </head>
 <body>
-<div class="col-12 contentt" style="z-index: 1">
+<div class="contentt">
     @yield('header_mobile')
     @yield('content')
     @yield('footer')
 </div>
-<div>
+<div class="frame-w">
     <div class="menu-mobile" >
         <div id="menu_mobile" class="menu-tree"></div>
         <div class="menu-tree-child m-0 box">
@@ -95,6 +95,8 @@
         var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
         var get_new_mobile = '{{route('get_new_mobile')}}';
         var get_product_mobile = '{{route('get_product_mobile')}}';
+        var get_product_watched = '{{route('get_product_watched')}}';
+        var get_product_similar = '{{route('get_product_similar')}}';
         var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';
         var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
         var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';

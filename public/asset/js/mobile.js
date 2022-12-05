@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     var _token = $('meta[name="csrf-token"]').attr('content');
 
     //================================ trang chu =============================
@@ -202,7 +201,6 @@ $(document).ready(function () {
                     }
                     $(tmp).find('.add-cart').attr('get-id',v.id);
                     $('#load_promotion').append(tmp.html());
-                    // $('#list_products_' + id).append(tmp.html());
                 })
             }
         })
@@ -579,6 +577,12 @@ $(document).ready(function () {
             $("#load_promotion").addClass("loaded");
         }
 
+        //load sp khuyen mai khi cuon
+        if (isOnScreen($("#load_p_detail")) && ($("#load_p_detail").hasClass("loaded") == false)) {
+            sptuongtu();
+            $("#load_p_detail").addClass("loaded");
+        }
+
         list_product.forEach(function (category_id) {
             if (isOnScreen($("#category_product_" + category_id)) && ($("#category_product_" + category_id).hasClass("loaded") == false)) {
                 laySp(category_id);
@@ -646,9 +650,9 @@ $(document).ready(function () {
     //xoa gia
     $(document).on('click', '.cancel_price', function () {
         var parth = window.location.search.split('?')[1];
-        const params = Object.fromEntries(new URLSearchParams(parth));
+        var params = Object.fromEntries(new URLSearchParams(parth));
         delete params.p;
-        const url2 = new URLSearchParams(params).toString();
+        var url2 = new URLSearchParams(params).toString();
         window.location = window.location.origin + window.location.pathname + '?' + url2;
     })
 
@@ -706,7 +710,7 @@ $(document).ready(function () {
 
     //loc thuoc tinh
     function filter() {
-        let params = new URLSearchParams();
+        var params = new URLSearchParams();
         var arr = [];
         //thuoc tinh
         $('.listFilter .filter-wrapper').each(function (index) {
@@ -762,5 +766,49 @@ $(document).ready(function () {
         });
     });
 
-
+    //ham lay san pham da xem
+    $(document).on('click', '#load_p_watched', function (){
+        var id = $('#load_p_watched').attr('data-target');
+        var data = {
+            _token: _token,
+            id: id
+        };
+        $.ajax({
+            url: get_product_watched,
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                $('#load_p_detail').html('');
+                var template_product_mobile = $('#template_product_mobile').html();
+                get_list_product(data.data_product_mobile, template_product_mobile,'#load_p_detail');
+            }
+        })
+    });
+    //ham lay san pham da xem
+    $(document).on('click', '#load_p_similar', function (){
+        sptuongtu();
+    });
+     function sptuongtu(){
+         var slug = $('#load_p_similar').attr('data-target');
+        var data = {
+            _token: _token,
+            slug: slug
+        };
+        $.ajax({
+            url: get_product_similar,
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                $('#load_p_detail').html('');
+                var template_product_mobile = $('#template_product_mobile').html();
+                get_list_product(data.data_product_mobile, template_product_mobile,'#load_p_detail');
+            }
+        })
+    }
+    $(document).on('click', '.btn_view_content_all', function () {
+        $(this).addClass('d-none');
+        $('#des_show').css({"max-height":"9999px"});
+    });
 });

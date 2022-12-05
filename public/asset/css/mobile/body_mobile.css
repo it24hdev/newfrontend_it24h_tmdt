@@ -3,6 +3,10 @@
 .contentt{
     overflow-x: hidden;
     overflow-y: auto;
+    margin-right: auto;
+    max-width: 1000px;
+    margin-left: auto;
+    width: 100%;
 }
 .banner_top{
     position: relative;
@@ -573,7 +577,7 @@ a {
     margin-bottom: 20px;
     width: 111px;
 }
-.b_cate .content_cat .content_cat_w .item-categories-outer:not(:nth-of-type(10n)) {
+.b_cate .content_cat .content_cat_w .item-categories-outer:not(:nth-of-type(50n)) {
     margin-right: 10px;
 }
 
@@ -1165,6 +1169,9 @@ a:active, a:hover {
     border: 1px solid;
     margin: 2px 7px;
     background-image: linear-gradient(to left bottom, #ff0000ed, #ff00005e);
+}
+.bg_tt{
+    background-image: linear-gradient(to bottom left, #009dffed, #ff00c35e);
 }
 
 .more-product{
@@ -1934,5 +1941,15 @@ a:active, a:hover {
     width: 100%!important;
     max-width: 1200px!important;
     padding: 0 10px;
+}
+
+@media screen and (max-width: 450px){
+    .tt_center{
+        width: calc(50% - 10px);
+        margin: 5px;
+        justify-content: center;
+        overflow-x: hidden;
+        white-space: nowrap;
+    }
 }
 

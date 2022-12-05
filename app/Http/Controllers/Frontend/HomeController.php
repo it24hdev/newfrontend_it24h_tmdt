@@ -63,8 +63,7 @@ class HomeController extends Controller
         if ($agent->isPhone()) {
             $isMobile = "phone";
         }
-
-        if ($agent->isMobile()) {
+        if ($isMobile) {
             //lay sp hot sale
             $get_hot_sale_mobile = Products::where('status', 1)
                 ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d') . ' 23:59:59')
@@ -430,6 +429,7 @@ class HomeController extends Controller
         if ($agent->isMobile()) {
             $ag = "mobile";
         } else $ag = "desktop";
+        $price = $brand = $filter_price = "";
         $active_menu = "product";
         $locale = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
@@ -558,7 +558,6 @@ class HomeController extends Controller
                 $attr->setAttribute('count_attr', $count_attr);
                 $attr->setAttribute('count_attr_active', $count_attr_active);
             }
-            $price = $brand = $filter_price = "";
             $property = $requestall;
             if (!empty($request->p)) {
                 $price = $request->p;
@@ -609,7 +608,6 @@ class HomeController extends Controller
                 })
                 ->where(function ($query) use ($price) {
                     if ($price != "") {
-                        $p = [];
                         $p = explode(';', $price);
                         $min_price = $p[0];
                         $max_price = $p[1];
@@ -629,13 +627,46 @@ class HomeController extends Controller
                 ->groupBy('products.id')
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
                 ->paginate(20)->withQueryString();
-        } else {
+        }
+        else {
             // Neu khong co danh muc thi lay san pham moi
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
                 ->where('parent_id', 0)
                 ->where('status', 1)
                 ->get();
-            $products = Products::where('status', 1)->where('hot_sale', 1)->whereNull('deleted_at')->paginate(40)->withQueryString();
+            if (!empty($request->p)) {
+                $price = $request->p;
+                $filter = explode(';', $request->p);
+                $filter_price = "từ ".number_format($filter[0],0,',','.')." đến ".number_format($filter[1],0,',','.');
+            }
+            if (!empty($request->brand)) {
+                $brand = $request->brand;
+            }
+            $orderby = "ASC";
+            $order_name ="id";
+            if(!empty($request->order)){
+                if($request->order == "gia_cao_den_thap"){
+                    $order_name = "NULLIF(price_onsale, 0), price";
+                    $orderby ="DESC";
+                }
+                if($request->order == "gia_thap_den_cao"){
+                    $order_name = "NULLIF(price_onsale, 0), price";
+                    $orderby ="ASC";
+                }
+            }
+            $products = Products::where('status', 1)->where('hot_sale', 1)
+                ->where(function ($query) use ($price) {
+                    if ($price != "") {
+                        $p = explode(';', $price);
+                        $min_price = $p[0];
+                        $max_price = $p[1];
+                        $query->whereBetween('price_onsale', [$min_price, $max_price]);
+                    } else {
+                        $query->where('products.status',1);
+                    }
+                })
+                ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
+                ->paginate(40)->withQueryString();
             $attributes = "";
         }
         $cat_parent = Category::where('taxonomy', Category::SAN_PHAM)
@@ -844,7 +875,7 @@ class HomeController extends Controller
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
         ->leftjoin('brands','products.brand','brands.id')
-        ->where('status', 1)->where('new', 1)->inRandomOrder()->limit(7)->get();
+        ->where('status', 1)->where('new', 1)->inRandomOrder()->limit(6)->get();
         return response()->json([
             'data_product_mobile' => $get_new_mobile
         ]);
@@ -854,7 +885,7 @@ class HomeController extends Controller
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
         ->leftjoin('brands','products.brand','brands.id')
-        ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(7)->get();
+        ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(6)->get();
         return response()->json([
             'data_product_mobile' => $get_new_mobile
         ]);
@@ -876,7 +907,7 @@ class HomeController extends Controller
                 ->where('products.status', 1)
                 ->groupby('products.id')
                 ->orderby('products.created_at','desc')
-                ->limit(7)->get();
+                ->limit(6)->get();
             foreach($Products as $value){
                 $value->setAttribute('count_vote',$value->count_vote());
                 $value->setAttribute('list_wish',explode(' ', Cookie::get('list_wish')));
@@ -887,6 +918,7 @@ class HomeController extends Controller
           'data_product_mobile' => $Products,
           ]);
     }
+
     // lay menu ban mobile
     public function get_menu_mobile(){
         $menu_mobile_child = '';

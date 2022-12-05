@@ -376,6 +376,8 @@ Route::post('/get_menu_mobile', [HomeController::class, 'get_menu_mobile'])->nam
 Route::post('/get_menu_child', [HomeController::class, 'get_menu_child'])->name('get_menu_child');
 Route::post('/get_new_mobile', [HomeController::class, 'get_new_mobile'])->name('get_new_mobile');
 Route::post('/get_hot_sale_mobile', [HomeController::class, 'get_hot_sale_mobile'])->name('get_hot_sale_mobile');
+Route::post('/get_product_watched', [DetailproductController::class, 'get_product_watched'])->name('get_product_watched');
+Route::post('/get_product_similar', [DetailproductController::class, 'get_product_similar'])->name('get_product_similar');
 
 //Login facebook
 Route::get('/login-facebook',[FrontendUserController::class, 'login_facebook'])->name('login-facebook');

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
 use App\Http\Controllers\laravelmenu\src\Models\Menus;
 use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
+use Illuminate\Support\Facades\DB;
 
 
 class DetailproductController extends Controller
@@ -65,34 +66,27 @@ class DetailproductController extends Controller
             $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
             if($agent->isMobile()){
                 return view('frontend.mobile.detailproductmobile',[
-                    'Sidebars'        => $Sidebars,
                     'product'        => $product,
-                    'imgs'             => $imgs,
-                    'property'        => $property,
-                    'product_related' => $product_related,
-                    'getcategoryblog' => $getcategoryblog,
-                    'locale'          => $locale,
-                    'posts' => $posts,
-                    'product_watched' => $product_watched,
-                    'active_menu' => $active_menu,
-                    'posts_footer' => $posts_footer,
-                    'agent' => $ag,
+                    'imgs'           => $imgs,
+                    'locale'         => $locale,
+                    'agent'          => $ag,
+                    'property'       => $property,
                 ]);
             }
             else{
                 return view('frontend.detailproduct',[
                     'Sidebars'        => $Sidebars,
-                    'product'        => $product,
-                    'imgs'             => $imgs,
+                    'product'         => $product,
+                    'imgs'            => $imgs,
                     'property'        => $property,
                     'product_related' => $product_related,
                     'getcategoryblog' => $getcategoryblog,
                     'locale'          => $locale,
-                    'posts' => $posts,
+                    'posts'           => $posts,
                     'product_watched' => $product_watched,
-                    'active_menu' => $active_menu,
-                    'posts_footer' => $posts_footer,
-                    'agent' => $ag,
+                    'active_menu'     => $active_menu,
+                    'posts_footer'    => $posts_footer,
+                    'agent'           => $ag,
                 ]);
             }
         }
@@ -167,4 +161,44 @@ class DetailproductController extends Controller
         }
     }
 
+    //lay san pham da xem mobile ajax
+    public  function get_product_watched(Request $request){
+        $get_cookie = Session::get('list_watched');
+        $list_id_watched = explode(' ', $get_cookie);
+        if(!in_array($request->id, $list_id_watched)){
+            $list_id_watched[] = $id;
+        }
+        $list_watched = \implode(' ', $list_id_watched);
+        Session::put('list_watched', $list_watched);
+        $product_watched = Products::select('products.*', DB::raw("brands.image as img_brands"))
+            ->leftjoin('brands','products.brand','brands.id')
+            ->whereIn('products.id', $list_id_watched)->where('products.status', 1)->inRandomOrder()->limit(6)->get();
+        foreach($product_watched as $value){
+            $value->setAttribute('count_vote',$value->count_vote());
+            $value->setAttribute('list_wish',explode(' ', Cookie::get('list_wish')));
+        }
+        return response()->json([
+            'data_product_mobile' => $product_watched,
+        ]);
+    }
+    public  function get_product_similar(Request $request){
+        $product = Products::where('slug',$request->slug)->first();
+        $products_id = array();
+        foreach($product->category as $k){
+            foreach($k->product as $pro){
+                $products_id[]= $pro->id;
+            }
+        }
+        if(!empty($products_id)){
+            $product_related = Products::select('products.*', DB::raw("brands.image as img_brands"))
+                ->leftjoin('brands','products.brand','brands.id')
+                ->whereIn('products.id', $products_id)->where('products.status', 1)->limit(6)->get();
+        }
+        else{
+            $product_related = "";
+        }
+        return response()->json([
+            'data_product_mobile' => $product_related,
+        ]);
+    }
 }
