@@ -440,15 +440,32 @@ color: #f00!important;
     top: 40%;
     height: auto;
 }
-#snackbar i{
+#snackbar i, #success_cm i{
     font-size: 28px;
     color: white;
 }
-#snackbar span{
+#snackbar span, #success_cm span{
     font-size: 13px;
     margin-top: 5px;
 }
 .frame-w{
     margin-right: auto;
     margin-left: auto;
+}
+#success_cm {
+    display: none;
+    min-width: 170px;
+    font-size: 12px;
+    margin-left: -100px;
+    background-color: rgb(32 31 31 / 74%);
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px 10px;
+    position: fixed;
+    font-weight: 700;
+    z-index: 10;
+    left: 45%;
+    top: 40%;
+    height: auto;
 }

@@ -82,6 +82,7 @@
 @include('frontend.mobile.template_chose_label_img_menu')
 @include('frontend.mobile.templatechildcategories')
 @include('frontend.mobile.templateproductmobile')
+@include('frontend.mobile.templatereviewmobile')
 <!-- javascript -->
     <script src="{{ asset('lib/jquery360.min.js') }}"></script>
     <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
@@ -98,8 +99,11 @@
         var get_product_watched = '{{route('get_product_watched')}}';
         var get_product_similar = '{{route('get_product_similar')}}';
         var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';
+        var commentProduct = '{{route('commentProduct')}}';
         var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
         var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
+        var  url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
+        var  url_img_large_product= '{{asset('upload/images/products/large/')}}';
         var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';
         var img_category = '{{asset('upload/images/products/thumb/img_name')}}';
         var img_detailproperties = '{{asset('upload/images/detailproperties/thumb/img_name')}}';

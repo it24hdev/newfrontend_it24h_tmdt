@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('parent_id')->default(0)->nullable();
+            $table->boolean('status')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });

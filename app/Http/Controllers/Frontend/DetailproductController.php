@@ -25,8 +25,6 @@ class DetailproductController extends Controller
     {
 
         $agent = new Agent();
-        $ag = "";
-
         if($agent->isMobile()){
             $ag = "mobile";
         }
@@ -64,7 +62,11 @@ class DetailproductController extends Controller
             $list_watched = \implode(' ', $list_id_watched);
             Session::put('list_watched', $list_watched);
             $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
+            $isphone ="";
             if($agent->isMobile()){
+                $isphone = "phone";
+            }
+            if($isphone){
                 return view('frontend.mobile.detailproductmobile',[
                     'product'        => $product,
                     'imgs'           => $imgs,
@@ -153,11 +155,22 @@ class DetailproductController extends Controller
                 'name_user' => $data['author'],
                 'user_id'   => null,
                 'email'     => $data['email'],
-                'parent_id' => 0
+                'parent_id' => 0,
+                'status'    => 0
             ];
             $item = Vote::create($input);
-            $view = \view('frontend.content-comment-ajax', \compact('item'))->render();
-            return \response()->json($view);
+            $agent = new Agent();
+            if($agent->isMobile()){
+                $isphone = "phone";
+            }
+            if($isphone){
+                return \json_encode(array('success'=>true));
+            }
+            else{
+                $view = \view('frontend.content-comment-ajax', \compact('item'))->render();
+                return \response()->json($view);
+            }
+
         }
     }
 

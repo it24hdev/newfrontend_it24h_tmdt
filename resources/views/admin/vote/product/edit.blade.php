@@ -35,34 +35,38 @@
                         <span style="color:red">{{$message}}</span>
                         @enderror
                     </div>
-                    <div class="mt-3">
-                        <label for="crud-form-2" class="form-label">Đánh giá</label>
+                    <div class="mt-3 flex">
+                        <div>
+                            <label for="crud-form-2" class="form-label">Đánh giá</label>
+                            <div class="flex flex-col sm:flex-row mt-2">
+                                <div class="form-check mr-2 rating-selection">
 
-                        <div class="flex flex-col sm:flex-row mt-2">
-                            <div class="form-check mr-2 rating-selection">
+                                    <input id="radio-switch-5" class="form-check-input rating-input" type="radio" name="level"
+                                           value="5" {{(old('level') == 5 || (old('level') == null && $vote->level == 5)) ? 'checked' : false}}>
+                                    <label class="form-check-label rating-star" for="radio-switch-5"></label>
 
-                                <input id="radio-switch-5" class="form-check-input rating-input" type="radio" name="level"
-                                       value="5" {{(old('level') == 5 || (old('level') == null && $vote->level == 5)) ? 'checked' : false}}>
-                                <label class="form-check-label rating-star" for="radio-switch-5"></label>
+                                    <input id="radio-switch-4" class="form-check-input rating-input" type="radio" name="level"
+                                           value="4" {{(old('level') == 4 || (old('level') == null && $vote->level == 4)) ? 'checked' : false}}>
+                                    <label class="form-check-label rating-star" for="radio-switch-4"></label>
 
-                                <input id="radio-switch-4" class="form-check-input rating-input" type="radio" name="level"
-                                       value="4" {{(old('level') == 4 || (old('level') == null && $vote->level == 4)) ? 'checked' : false}}>
-                                <label class="form-check-label rating-star" for="radio-switch-4"></label>
+                                    <input id="radio-switch-3" class="form-check-input rating-input" type="radio" name="level"
+                                           value="3" {{(old('level') == 3 || (old('level') == null && $vote->level == 3)) ? 'checked' : false}}>
+                                    <label class="form-check-label rating-star" for="radio-switch-3"></label>
 
-                                <input id="radio-switch-3" class="form-check-input rating-input" type="radio" name="level"
-                                       value="3" {{(old('level') == 3 || (old('level') == null && $vote->level == 3)) ? 'checked' : false}}>
-                                <label class="form-check-label rating-star" for="radio-switch-3"></label>
+                                    <input id="radio-switch-2" class="form-check-input rating-input" type="radio" name="level"
+                                           value="2" {{(old('level') == 2 || (old('level') == null && $vote->level == 2)) ? 'checked' : false}}>
+                                    <label class="form-check-label rating-star" for="radio-switch-2"></label>
 
-                                <input id="radio-switch-2" class="form-check-input rating-input" type="radio" name="level"
-                                       value="2" {{(old('level') == 2 || (old('level') == null && $vote->level == 2)) ? 'checked' : false}}>
-                                <label class="form-check-label rating-star" for="radio-switch-2"></label>
-
-                                <input id="radio-switch-1" class="form-check-input rating-input" type="radio" name="level"
-                                       value="1" {{(old('level') == 1 || (old('level') == null && $vote->level == 1)) ? 'checked' : false}}>
-                                <label class="form-check-label rating-star" for="radio-switch-1"></label>
-
+                                    <input id="radio-switch-1" class="form-check-input rating-input" type="radio" name="level"
+                                           value="1" {{(old('level') == 1 || (old('level') == null && $vote->level == 1)) ? 'checked' : false}}>
+                                    <label class="form-check-label rating-star" for="radio-switch-1"></label>
+                                </div>
                             </div>
-
+                        </div>
+                        <div class="form-group ml-4">
+                            <label>Trạng thái</label><br>
+                            <input type="checkbox" class="form-check-switch mt-2" name='status'
+                                   value="{{$vote->status == true ? '1' : '0'}}" {{$vote->status == true ? 'checked' : ' '}}>
                         </div>
                     </div>
                     <div class="mt-3">
@@ -75,7 +79,6 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="text-right mt-5">
                         @can('viewProduct',\App\Models\Vote::class)
                             <a type="button" href="{{route('vote.indexProduct')}}"

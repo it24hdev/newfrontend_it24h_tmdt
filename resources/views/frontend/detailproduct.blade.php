@@ -45,7 +45,6 @@
                                     <div class="product-brand">
                                         @if(!empty($product->brands->image))
                                             <img src="{{asset('upload/images/products/medium/'.$product->brands->image)}}" alt="">
-                                        
                                         @endif
                                     </div>
                                 @endif
@@ -122,14 +121,14 @@
                             </div>
                             <div class="warranty_flex">
                                 @if(!empty($product->tax) && $product->tax==1)
-                                
+
                                 <div class="warranty">Giá đã có VAT</div>
-                                
+
                                 @endif
                                 @if(!empty($product->warranty))
-      
+
                                 <div class="warranty">Bảo hành {{$product->warranty}}</div>
-                    
+
                                 @endif
                             </div>
                             @if (!empty($product->gift))
@@ -265,7 +264,7 @@
                                     @endforeach
                                     @endif
 
-                                   
+
                                 </tbody>
                             </table>
                         </div>
@@ -448,7 +447,7 @@
                                     </tr>
                                     @endforeach
                                     @endif
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -700,11 +699,9 @@
         $('.thumb-small').click(function(){
             let src = $(this).find('img').attr('src');
             let picture_src = src.replace('{{asset("upload/images/products/thumb/")}}', '');
-            // alert(picture_src);
             $('.product-thumb .image img').attr('src', '{{asset("upload/images/products/large/")}}' + picture_src);
             $('.thumb-small').removeClass('active');
             $(this).addClass('active');
-
             return false;
         });
         $('span.next').click(function(){

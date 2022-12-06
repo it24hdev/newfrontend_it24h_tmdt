@@ -59,7 +59,7 @@ class Products extends Model
     }
 
     public function votes(){
-        return $this->hasMany(Vote::class, 'product_id');
+        return $this->hasMany(Vote::class, 'product_id')->where('status', 1)->orderBy('created_at','desc');
     }
 
     public function brands(){
@@ -70,19 +70,19 @@ class Products extends Model
     }
 
     public function vote_1(){
-        return $this->hasMany(Vote::class, 'product_id')->where('level', 1);
+        return $this->hasMany(Vote::class, 'product_id')->where('level', 1)->where('status', 1);
     }
     public function vote_2(){
-        return $this->hasMany(Vote::class, 'product_id')->where('level', 2);
+        return $this->hasMany(Vote::class, 'product_id')->where('level', 2)->where('status', 1);
     }
     public function vote_3(){
-        return $this->hasMany(Vote::class, 'product_id')->where('level', 3);
+        return $this->hasMany(Vote::class, 'product_id')->where('level', 3)->where('status', 1);
     }
     public function vote_4(){
-        return $this->hasMany(Vote::class, 'product_id')->where('level', 4);
+        return $this->hasMany(Vote::class, 'product_id')->where('level', 4)->where('status', 1);
     }
     public function vote_5(){
-        return $this->hasMany(Vote::class, 'product_id')->where('level', 5);
+        return $this->hasMany(Vote::class, 'product_id')->where('level', 5)->where('status', 1);
     }
 
     public function trungbinhsao(){

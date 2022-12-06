@@ -811,4 +811,94 @@ $(document).ready(function () {
         $(this).addClass('d-none');
         $('#des_show').css({"max-height":"9999px"});
     });
+    $(document).on('click', '.btn_review', function () {
+        $('#author_customer_review').val('');
+        $('#contact_customer_review').val('');
+        $('#comment_customer_review').val('');
+        $('.modal-review').removeClass('d-none');
+    });
+    $(document).on('click', '#close-review', function () {
+        $('.modal-review').addClass('d-none');
+    });
+    $(document).on('click', '#star1, #star2, #star3, #star4, #star5', function () {
+        var value_star = $(this).val();
+        $('#lb_star').html('');
+        if(value_star == 5){
+            $('#lb_star').html('Tuyệt vời')
+        }
+        if(value_star == 4){
+            $('#lb_star').html('Hài lòng')
+        }
+        if(value_star == 3){
+            $('#lb_star').html('Bình thường')
+        }
+        if(value_star == 2){
+            $('#lb_star').html('Không hài lòng')
+        }
+        if(value_star == 1){
+            $('#lb_star').html('Tệ')
+        }
+    });
+
+    //Đánh giá và bình luận
+    $(document).on('click','#submit_review',function(){
+        var rating  = $(".check-rate:checked").val();
+        var author  = $("#author_customer_review").val();
+        var contact = $("#contact_customer_review").val();
+        var comment = $("#comment_customer_review").val();
+        var id      = $(this).attr('data-target');
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        var data = {rating: rating, author: author, email:contact, comment:comment, id:id, _token:_token};
+        if ($.trim(author) == ''){
+            $('.rv_name').removeClass('d-none');
+        }
+        else{
+            $('.rv_name').addClass('d-none');
+        }
+        if ($.trim(contact) == ''){
+            $('.rv_contact').removeClass('d-none');
+        }
+        else{
+            $('.rv_contact').addClass('d-none');
+        }
+        if ($.trim(comment) == ''){
+            $('.rv_comment').removeClass('d-none');
+        }
+        else{
+            $('.rv_comment').addClass('d-none');
+        }
+        $.ajax({
+            url: commentProduct,
+            method: 'POST',
+            data: data,
+            dataType: "json",
+            success: function(data) {
+                if(data.success){
+                    var template_review_mobile = $('#template_review_mobile').html();
+                    var tmp = $(template_review_mobile).clone();
+                        if(author != ''){
+                            $(tmp).find('.first_k').html(author.substring(0, 1));
+                            $(tmp).find('.name_c').html(author);
+                        }
+                        var time =  new Date().toLocaleDateString();
+                        $(tmp).find('.time_comment').html(time);
+                        $(tmp).find('.rating-upper').css({"width":""+rating*20+""+"%"});
+                        $(tmp).find('.cment').html(comment);
+                        $('.list_cm').prepend(tmp);
+                        if(!$('.modal-review').hasClass('d-none')){
+                            $('.modal-review').addClass('d-none');
+                        }
+                    $( "#success_cm" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
+                }
+            },
+        });
+    });
+
+    $(document).on('click','.ac_img_p',function(){
+        let src = $(this).find('img').attr('src');
+        let picture_src = src.replace(url_img_thumb_product, '');
+        $('.box-ksp img').attr('src', url_img_large_product + picture_src);
+        $('.ac_img_p').removeClass('active');
+        $(this).addClass('active');
+    });
 });

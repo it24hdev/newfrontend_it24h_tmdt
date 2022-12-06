@@ -242,6 +242,7 @@ class VoteController extends Controller
             'post_id'=> null,
             'product_id'=> $request->product,
             'name_user' => $request->name_user,
+            'status'    => $request->has('status'),
             'user_id'=> Auth::id(),
         ];
         try {
@@ -296,6 +297,7 @@ class VoteController extends Controller
                 'comment' => $request->comment,
                 'product_id'=> $request->product,
                 'name_user' => $request->name_user,
+                'status'    => $request->has('status'),
                 'user_id'=> Auth::id(),
             ];
             try {

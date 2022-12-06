@@ -12,12 +12,7 @@ class Vote extends Model
     use SoftDeletes;
     protected $table = 'votes';
 
-    protected $fillable = [
-        'level',
-        'comment',
-        'name_user',
-        'post_id', 'product_id', 'user_id','parent_id', 'email',
-    ];
+    protected $fillable = [  'level','comment', 'name_user', 'post_id', 'product_id', 'user_id','parent_id', 'email', 'status'];
 
     public function getUser(){
         return $this->belongsTo(User::class,'user_id');

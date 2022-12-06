@@ -8,6 +8,7 @@
             <th class="text-center whitespace-nowrap">Ngày tạo</th>
             <th class="text-center whitespace-nowrap">Người tạo</th>
             <th class="text-center whitespace-nowrap">Email</th>
+            <th class="text-center whitespace-nowrap">Trạng thái</th>
             <th class="text-center whitespace-nowrap">Chức năng</th>
         </tr>
         </thead>
@@ -32,7 +33,13 @@
                 <td>
                     <div class="text-center">{{is_null($vote->email) ? '' : $vote->email}}</div>
                 </td>
-
+                <td>
+                    @if($vote->status == '1')
+                        <div class="flex items-center justify-center text-theme-9 mr-3" data-bs-toggle="tooltip" title="Kích hoạt"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
+                    @else
+                        <div class="flex items-center justify-center text-theme-6 mr-3"data-bs-toggle="tooltip" title="Vô hiệu hóa"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
+                    @endif
+                </td>
                 <td class="table-report__action w-10">
                     <div class="flex justify-center items-center">
                         @can('updateProduct',\App\Models\Vote::class)

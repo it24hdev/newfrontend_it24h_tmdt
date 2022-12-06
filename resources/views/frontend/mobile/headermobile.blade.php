@@ -72,3 +72,9 @@
         <span>Đã thêm vào giỏ hàng</span>
     </div>
 </div>
+<div id="success_cm">
+    <div class="d-grid">
+        <i class="far fa-check-circle"></i>
+        <span>Đánh giá của bạn đã được ghi nhận.</span>
+    </div>
+</div>

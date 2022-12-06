@@ -37,10 +37,10 @@
                     </div>
                     <div class="mt-3">
                         <div class="col-span-12 xl:col-span-6">
+                        <div>
                             <label for="crud-form-2" class="form-label">Đánh giá</label>
                             <div class="flex flex-col sm:flex-row mt-2">
                                 <div class="form-check mr-2 rating-selection">
-
                                     <input id="radio-switch-5" class="form-check-input rating-input" type="radio" name="level"
                                            value="5" {{(old('level') == 5) ? 'checked' : false}}>
                                     <label class="form-check-label rating-star" for="radio-switch-5"></label>
@@ -63,6 +63,11 @@
 
                                 </div>
                             </div>
+                        </div>
+                        <div class="form-group ml-4">
+                            <label>Trạng thái</label><br>
+                            <input type="checkbox" class="form-check-switch mt-2" name='status' checked>
+                        </div>
                         </div>
                     </div>
                     <div class="mt-3">
