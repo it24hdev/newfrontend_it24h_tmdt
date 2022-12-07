@@ -583,6 +583,11 @@ $(document).ready(function () {
             $("#load_p_detail").addClass("loaded");
         }
 
+        if (isOnScreen($("#load_p_watched")) && ($("#load_p_watched").hasClass("loaded") == false)) {
+            spdaxem();
+            $("#load_p_watched").addClass("loaded");
+        }
+
         list_product.forEach(function (category_id) {
             if (isOnScreen($("#category_product_" + category_id)) && ($("#category_product_" + category_id).hasClass("loaded") == false)) {
                 laySp(category_id);
@@ -744,7 +749,7 @@ $(document).ready(function () {
     }
 
     //===============================trang chi tiet san pham====================================
-
+    $("table").addClass('table table-bordered table-striped table_boder');
     //mua ngay san pham
     $(document).on('click','.add-cart-now',function(){
         var id = $(this).data('id');
@@ -767,7 +772,7 @@ $(document).ready(function () {
     });
 
     //ham lay san pham da xem
-    $(document).on('click', '#load_p_watched', function (){
+    function spdaxem() {
         var id = $('#load_p_watched').attr('data-target');
         var data = {
             _token: _token,
@@ -779,16 +784,13 @@ $(document).ready(function () {
             dataType: "json",
             data: data,
             success: function (data) {
-                $('#load_p_detail').html('');
+                $('#load_p_detail2').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
-                get_list_product(data.data_product_mobile, template_product_mobile,'#load_p_detail');
+                get_list_product(data.data_product_mobile, template_product_mobile, '#load_p_detail2');
             }
         })
-    });
+    }
     //ham lay san pham da xem
-    $(document).on('click', '#load_p_similar', function (){
-        sptuongtu();
-    });
      function sptuongtu(){
          var slug = $('#load_p_similar').attr('data-target');
         var data = {
@@ -807,19 +809,74 @@ $(document).ready(function () {
             }
         })
     }
+
+    //xem them
     $(document).on('click', '.btn_view_content_all', function () {
         $(this).addClass('d-none');
-        $('#des_show').css({"max-height":"9999px"});
+        $('#des_show').css({"max-height":"6000px","overflow-y":"auto"});
+    });
+    $(document).on('click', '.btn_view_ttsp_all', function () {
+        $(this).addClass('d-none');
+        $('.ttsp_cnt').css({"max-height":"300px","overflow-y":"auto"});
     });
     $(document).on('click', '.btn_review', function () {
         $('#author_customer_review').val('');
         $('#contact_customer_review').val('');
         $('#comment_customer_review').val('');
         $('.modal-review').removeClass('d-none');
+        $('body').addClass('disable_scoll');
     });
     $(document).on('click', '#close-review', function () {
         $('.modal-review').addClass('d-none');
+        $('body').removeClass('disable_scoll');
     });
+    $(document).on('click', '.btn_view_detail_p', function () {
+        $('.modal-tskt').removeClass('d-none');
+        $('body').addClass('disable_scoll');
+    });
+
+    $(document).on('click', '.bnt-close-tskt', function () {
+        $('.modal-tskt').addClass('d-none');
+        $('body').removeClass('disable_scoll');
+    });
+    $(document).on('click', '.btn-show-more-review', function () {
+        if($('.list_cm').hasClass('max_list_cm')){
+            $('.list_cm').removeClass('max_list_cm');
+        }
+        else{
+            const current_page = $(this).attr('data-target');
+            const next_page = parseInt(current_page) + 1;
+            var product_id = $(this).attr('data-id');
+            var data = {page:next_page, product_id:product_id, _token:_token};
+            $.ajax({
+                url: get_review_more,
+                type: "post",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    if(data.last_page==1){
+                        $('.btn-show-more-review').addClass('d-none');
+                    }
+                    if(data.comments.data != null){
+                        var template_review_mobile = $('#template_review_mobile').html();
+                        $.each(data.comments.data, function(k,v) {
+                            var item = $(template_review_mobile).clone();
+                            var name_user = v.name_user;
+                            $(item).find('.first_k').html(name_user.substring(0, 1));
+                            $(item).find('.name_c').html(name_user);
+                            var time = new Date(v.created_at).toLocaleDateString();
+                            $(item).find('.time_comment').html(time);
+                            $(item).find('.rating-upper').css({"width":""+v.level*20+""+"%"});
+                            $(item).find('.cment').html(v.comment);
+                            $('.list_cm').append(item);
+                        });
+                        $('.btn-show-more-review').attr('data-target',next_page);
+                    }
+                }
+            })
+        }
+    });
+
     $(document).on('click', '#star1, #star2, #star3, #star4, #star5', function () {
         var value_star = $(this).val();
         $('#lb_star').html('');

@@ -23,7 +23,6 @@ class DetailproductController extends Controller
 
     public function index($slug)
     {
-
         $agent = new Agent();
         if($agent->isMobile()){
             $ag = "mobile";
@@ -35,7 +34,6 @@ class DetailproductController extends Controller
             $getcategoryblog    = $this->getcategoryblog();
             $product           = Products::where('slug',$slug)->first();
             $imgs        = json_decode($product->image);
-            $property   = $this->xulychuoi_thongsosanpham($product->property);
             $locale             = config('app.locale');
             $posts = Post::where('status', 1)->orderBy('id', 'DESC')->limit(5)->get();
             $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
@@ -50,8 +48,6 @@ class DetailproductController extends Controller
             }else{
                 $product_related = Products::whereIn('id', $products_id)->where('status', 1)->limit(10)->get();
             }
-
-
             /* XỬ LÝ LƯU SP ĐÃ XEM */
             $id = $product->id;
             $get_cookie = Session::get('list_watched');
@@ -62,6 +58,7 @@ class DetailproductController extends Controller
             $list_watched = \implode(' ', $list_id_watched);
             Session::put('list_watched', $list_watched);
             $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
+            $comments = Vote::where('product_id',$product->id)->where('status', 1)->orderby('created_at','desc')->orderby('level', 'asc')->paginate(10);
             $isphone ="";
             if($agent->isMobile()){
                 $isphone = "phone";
@@ -72,7 +69,7 @@ class DetailproductController extends Controller
                     'imgs'           => $imgs,
                     'locale'         => $locale,
                     'agent'          => $ag,
-                    'property'       => $property,
+                    'comments'       => $comments,
                 ]);
             }
             else{
@@ -80,7 +77,6 @@ class DetailproductController extends Controller
                     'Sidebars'        => $Sidebars,
                     'product'         => $product,
                     'imgs'            => $imgs,
-                    'property'        => $property,
                     'product_related' => $product_related,
                     'getcategoryblog' => $getcategoryblog,
                     'locale'          => $locale,
@@ -96,7 +92,18 @@ class DetailproductController extends Controller
             \abort(404);
         }
     }
-
+    public function  get_review_more(Request $request){
+        $number_page = $request->page;
+        $last_page ="";
+        $comments = Vote::where('product_id',$request->product_id)->where('status', 1)->orderby('created_at','desc')->orderby('level', 'asc')->paginate(10);
+        if($number_page == $comments->lastPage()){
+            $last_page = 1;
+        }
+        return response()->json([
+            'comments' => $comments,
+            'last_page' => $last_page
+        ]);
+    }
     public function xulychuoi_thongsosanpham($String){
         //loaibo space va enter
         if($String !=null){
@@ -116,7 +123,6 @@ class DetailproductController extends Controller
         }
         //ghep chuoi
         $property   = array_combine($arr1 , $arr2);
-
         return $property;
         }
     }

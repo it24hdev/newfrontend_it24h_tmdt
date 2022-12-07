@@ -245,28 +245,10 @@
                     <div class="product-specifications-mobile">
                         <div class="header-content">Thông số kỹ thuật</div>
                         <div class="specifications-info">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align: center;"><strong>Sản phẩm</strong></td>
-                                        <td style="text-align: center;"><strong>Chi tiết</strong></td>
-                                        <td style="text-align: center;"><strong>Bảo hành</strong></td>
-                                    </tr>
-
-
-                                    @if($property !=null)
-                                    @foreach($property as $key => $val)
-                                    <tr>
-                                        <td style="text-align: center;">{{ $key }}</td>
-                                        <td style="text-align: center;">{{ $val }}</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    @endforeach
-                                    @endif
-
-
-                                </tbody>
-                            </table>
+{{--                            <table class="table table-bordered">--}}
+{{--                                --}}
+{{--                            </table>--}}
+                            {!! $product->property !!}
                         </div>
                     </div>
                     <div class="comment-vote">
@@ -431,25 +413,10 @@
                     <div class="product-specifications">
                         <div class="header-content">Thông số kỹ thuật</div>
                         <div class="specifications-info">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <td style="text-align: center;"><strong>Sản phẩm</strong></td>
-                                        <td style="text-align: center;"><strong>Chi tiết</strong></td>
-                                        <td style="text-align: center;"><strong>Bảo hành</strong></td>
-                                    </tr>
-                                    @if($property !=null)
-                                    @foreach($property as $key => $val)
-                                    <tr>
-                                        <td style="text-align: center;">{{$key}}</td>
-                                        <td style="text-align: center;">{{$val}}</td>
-                                        <td style="text-align: center;">36T</td>
-                                    </tr>
-                                    @endforeach
-                                    @endif
-
-                                </tbody>
-                            </table>
+{{--                            <table class="table table-bordered">--}}
+{{--                               --}}
+{{--                            </table>--}}
+                            {!! $product->property !!}
                         </div>
                     </div>
                     <div class="wp-list-post">
@@ -696,6 +663,7 @@
 @section('js')
     <script>
         $(document).ready(function(){
+        $("table").addClass('table table-bordered table-striped table_boder');
         $('.thumb-small').click(function(){
             let src = $(this).find('img').attr('src');
             let picture_src = src.replace('{{asset("upload/images/products/thumb/")}}', '');

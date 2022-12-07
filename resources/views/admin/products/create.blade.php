@@ -147,7 +147,7 @@
                     </select>
                     </div>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3 hidden">
                         <label for="">Màu sản phẩm</label>
                         <select name="attr_id[]"  class="tom-select w-full" multiple>
                             @foreach ($colors as $color)
@@ -155,7 +155,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mt-3">
+                    <div class="mt-3 hidden">
                         <label for="">Size sản phẩm</label>
                         <select name="attr_id[]"  class="tom-select w-full" multiple>
                             @foreach ($sizes as $size)
@@ -197,16 +197,9 @@
 
                 </div>
                 <div class="col-span-12 xl:col-span-4">
-                    <div class="mt-3">
-                        <label>Thuộc tính sản phẩm</label>
-                        <p><i>( Màu sắc: đen, trắng; Chiều cao: 15 inch; )</i></p>
-                        <div class="mt-2">
-                       <textarea class="form-control" name="property" rows="7">{{ old('property') }}</textarea>
-                   </div>
-                    </div>
                      <div class="mt-3">
                         <div class="mt-3">
-                            <label for="time_deal" class="form-label">Thời hạn ưu đã cho sản phẩm</label>
+                            <label for="time_deal" class="form-label">Thời hạn ưu đãi</label>
                             <input type="date" name="time_deal" class="form-control w-56 block mx-auto"
                                 id="time_deal" value="{{ old('time_deal') }}">
                         </div>
@@ -258,20 +251,29 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-3">
-                <label>Mô tả ngắn</label>
-                <div class="mt-2">
-                    <textarea name="short_content" id="tiny-editor2" rows="2">{{old('short_content')}}</textarea>
+
+            <div class="grid grid-cols-12 gap-x-5">
+                <div class="mt-3 col-span-12 xl:col-span-6">
+                    <label>Mô tả ngắn</label>
+                    <div class="mt-2">
+                        <textarea name="short_content" id="tiny-editor2" rows="2">{{old('short_content')}}</textarea>
+                    </div>
+                </div>
+                <div class="mt-3 col-span-12 xl:col-span-6">
+                    <label>Khuyến mại</label>
+                    <div class="mt-2">
+                        <textarea name="gift" id="tiny-editor3" rows="2">{{old('gift')}}</textarea>
+                    </div>
                 </div>
             </div>
             <div class="mt-3">
-                <label>Nội dung quà tặng ưu đãi</label>
+                <label>Thông số kỹ thuật</label>
                 <div class="mt-2">
-                    <textarea name="gift" id="tiny-editor3" rows="2">{{old('gift')}}</textarea>
+                    <textarea class="form-control" name="property" id="tiny-editor4" rows="7">{{ old('property') }}</textarea>
                 </div>
             </div>
             <div class="mt-3">
-                <label>Nội dung chi tiết</label>
+                <label>Mô tả chi tiết</label>
                 <div class="mt-2">
                     <textarea name="content_product" id="tiny-editor" rows="7">{{old('content')}}</textarea>
                 </div>

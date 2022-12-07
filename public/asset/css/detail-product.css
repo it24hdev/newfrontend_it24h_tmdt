@@ -790,3 +790,7 @@ ul.list-post li a .desc{
         width: 20%;
     }
 }
+.table_boder{
+    border-radius: 10px;
+    border-color: #e1e1e1!important;
+}

@@ -362,7 +362,6 @@ class ProductsController extends Controller
         } else \abort(404);
     }
 
-
     public function saveimg($request, $oldimage)
     {
         $image = \json_decode($oldimage);

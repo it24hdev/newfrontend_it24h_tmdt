@@ -101,6 +101,7 @@
         var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';
         var commentProduct = '{{route('commentProduct')}}';
         var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
+        var get_review_more = '{{route('get_review_more')}}';
         var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
         var  url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
         var  url_img_large_product= '{{asset('upload/images/products/large/')}}';

@@ -95,44 +95,6 @@
                                     @if(!empty($product->name))
                                         <h1>{{$product->name}}</h1>
                                     @endif
-                                    {{--                                    <div class="box-rating">--}}
-                                    {{--                                        <div icon="star" class="icon is-active">--}}
-                                    {{--                                            <svg style="fill: #f59e0b;" height="15" xmlns="http://www.w3.org/2000/svg"--}}
-                                    {{--                                                 viewBox="0 0 576 512">--}}
-                                    {{--                                                <path--}}
-                                    {{--                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>--}}
-                                    {{--                                            </svg>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                        <div icon="star" class="icon is-active">--}}
-                                    {{--                                            <svg style="fill: #f59e0b;" height="15" xmlns="http://www.w3.org/2000/svg"--}}
-                                    {{--                                                 viewBox="0 0 576 512">--}}
-                                    {{--                                                <path--}}
-                                    {{--                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>--}}
-                                    {{--                                            </svg>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                        <div icon="star" class="icon is-active">--}}
-                                    {{--                                            <svg style="fill: #f59e0b;" height="15" xmlns="http://www.w3.org/2000/svg"--}}
-                                    {{--                                                 viewBox="0 0 576 512">--}}
-                                    {{--                                                <path--}}
-                                    {{--                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>--}}
-                                    {{--                                            </svg>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                        <div icon="star" class="icon is-active">--}}
-                                    {{--                                            <svg style="fill: #f59e0b;" height="15" xmlns="http://www.w3.org/2000/svg"--}}
-                                    {{--                                                 viewBox="0 0 576 512">--}}
-                                    {{--                                                <path--}}
-                                    {{--                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>--}}
-                                    {{--                                            </svg>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                        <div icon="star" class="icon is-active">--}}
-                                    {{--                                            <svg style="fill: #f59e0b;" height="15" xmlns="http://www.w3.org/2000/svg"--}}
-                                    {{--                                                 viewBox="0 0 576 512">--}}
-                                    {{--                                                <path--}}
-                                    {{--                                                    d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z"></path>--}}
-                                    {{--                                            </svg>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                        &nbsp;1 đánh giá--}}
-                                    {{--                                    </div>--}}
                                     <div class="review d-flex">
                                         <div class="rating2">
                                             <div class="rating-upper" style="width: {{$product->count_vote()}}%">
@@ -151,6 +113,10 @@
                                             </div>
                                         </div>
                                         <div class="count-review">{{$product->votes->count()}} đánh giá</div>
+                                        <p class="mx-2">|</p>
+                                        @if(!empty($product->sold))
+                                            <div class=""><i class="fas fa-badge-check mx-1"></i>Đã bán {{$product->sold}}</div>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="block-box-price">
@@ -223,321 +189,40 @@
                         @if(!empty($product->short_content))
                             <div class="box-warranty-info">
                                 <div class="box-title"><p>Thông tin sản phẩm</p></div>
-                                {!! $product->short_content !!}
+                                <div class="ttsp_cnt">{!! $product->short_content !!}</div>
+                                <button class="btn_view_ttsp_all">Xem thêm
+                                    <div class="d-flex">
+                                        <i class="far fa-angle-down"></i>
+                                    </div>
+                                </button>
                             </div>
                         @endif
-                        @if($property !=null)
+                        @if(!empty($product->property))
                             <div class="technicalInfo">
                                 <h2 class="title">Thông số kỹ thuật</h2>
-                                <ul class="technical-content">
-                                    @php
-                                        $count_ = 0
-                                    @endphp
-                                    @foreach($property as $key => $val)
-                                        <li class="technical-content-item item_list_attr"
-                                            @if($count_%2) style="background-color: #fff" @endif>
-
-                                            <p>{{ $key }}</p>
-                                            <div class="lineproperty">{{ $val }}</div>
-                                        </li>
-                                        @php
-                                            $count_ =  $count_ + 1
-                                        @endphp
-                                    @endforeach
-
-                                </ul>
+                                <div class="tskt_cnt">{!! $product->property !!}</div>
                                 <button class="btn_view_detail_p">Xem
                                     cấu hình chi
                                     tiết
                                     <div class="d-flex">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="10"
-                                             height="10">
-                                            <path
-                                                d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"></path>
-                                        </svg>
+                                        <i class="far fa-angle-down"></i>
                                     </div>
                                 </button>
-                                <div class="modal" data-v-4e304e03="">
-                                    <div class="modal-background" data-v-4e304e03=""></div>
-                                    <div class="modal-card" data-v-4e304e03="">
-                                        <header
-                                            class="modal-card-head technical-title-modal is-flex is-justify-content-space-between is-align-items-center px-4"
-                                            data-v-4e304e03=""><p
-                                                class="modal-card-title title is-5 p-0 m-0 has-text-white"
-                                                data-v-4e304e03="">Thông số kỹ thuật</p>
-                                            <button aria-label="close" class="delete" data-v-4e304e03=""></button>
-                                        </header>
-                                        <section class="modal-card-body" data-v-4e304e03="">
-                                            <div class="modal-content" data-v-4e304e03="">
-                                                <ul class="technical-content-modal" data-v-4e304e03="">
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Màn hình</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Kích thước
-                                                                    màn hình</p>
-                                                                <div data-v-4e304e03="">6.5 inches</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Công nghệ
-                                                                    màn hình</p>
-                                                                <div data-v-4e304e03="">Super AMOLED</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Độ phân
-                                                                    giải màn hình</p>
-                                                                <div data-v-4e304e03="">1080 x 2400 pixels
-                                                                    (FullHD+)
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Tính năng
-                                                                    màn hình</p>
-                                                                <div data-v-4e304e03="">120Hz, HDR10+, 800 nits,
-                                                                    Always-on display
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Tần số
-                                                                    quét </p>
-                                                                <div data-v-4e304e03="">120Hz</div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Camera sau</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Camera
-                                                                    sau</p>
-                                                                <div data-v-4e304e03="">Camera chính góc rộng: 64
-                                                                    MP, f/1.8, PDAF, OIS <br> Camera góc siêu rộng:
-                                                                    12 MP, f/2.2, 123˚ <br>Camera macro: 5 MP, f/2.4
-                                                                    <br> Cảm biến độ sâu: 5 MP, f/2.4
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Quay
-                                                                    video</p>
-                                                                <div data-v-4e304e03="">4K@30fps, 1080p@30/60fps;
-                                                                    gyro-EIS
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Tính năng
-                                                                    camera</p>
-                                                                <div data-v-4e304e03="">Chống rung quang học
-                                                                    (OIS)<br>Góc rộng (Wide) <br> Góc siêu rộng
-                                                                    (Ultrawide) <br> HDR <br> Siêu cận (Macro)<br>
-                                                                    Toàn cảnh (Panorama)
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Camera
-                                                            trước</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Camera
-                                                                    trước</p>
-                                                                <div data-v-4e304e03="">32 MP, f/2.2</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Quay video
-                                                                    trước</p>
-                                                                <div data-v-4e304e03="">4K@30fps, 1080p@30fps</div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Vi xử lý &amp;
-                                                            đồ họa</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Chipset</p>
-                                                                <div data-v-4e304e03="">Exynos 1280 8 nhân</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Loại
-                                                                    CPU</p>
-                                                                <div data-v-4e304e03="">Octa-core (2x2.4 GHz &amp;
-                                                                    6x2.0 GHz)
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">GPU</p>
-                                                                <div data-v-4e304e03="">Mali-G68</div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">RAM &amp; lưu
-                                                            trữ</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Dung lượng
-                                                                    RAM</p>
-                                                                <div data-v-4e304e03="">8 GB</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Bộ nhớ
-                                                                    trong</p>
-                                                                <div data-v-4e304e03="">128 GB</div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Pin &amp; công
-                                                            nghệ sạc</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Pin</p>
-                                                                <div data-v-4e304e03="">Li-Po 5000 mAh</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Công nghệ
-                                                                    sạc</p>
-                                                                <div data-v-4e304e03="">Sạc nhanh 25W</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Cổng
-                                                                    sạc</p>
-                                                                <div data-v-4e304e03="">USB Type-C</div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Giao tiếp &amp;
-                                                            kết nối</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Thẻ SIM</p>
-                                                                <div data-v-4e304e03="">2 SIM (Nano-SIM)</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Hệ điều
-                                                                    hành</p>
-                                                                <div data-v-4e304e03="">Android 12, One UI 4</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Hỗ trợ
-                                                                    mạng</p>
-                                                                <div data-v-4e304e03="">5G</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Wi-Fi</p>
-                                                                <div data-v-4e304e03="">Wi-Fi 802.11 a/b/g/n/ac,
-                                                                    dual-band, Wi-Fi Direct, hotspot
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">
-                                                                    Bluetooth</p>
-                                                                <div data-v-4e304e03="">5.2, A2DP, LE</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">GPS</p>
-                                                                <div data-v-4e304e03="">A-GPS, GLONASS, GALILEO,
-                                                                    BDS
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Thiết kế &amp;
-                                                            Trọng lượng</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Trọng
-                                                                    lượng</p>
-                                                                <div data-v-4e304e03="">190 g</div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Thông số
-                                                            khác</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Chỉ số
-                                                                    kháng nước, bụi</p>
-                                                                <div data-v-4e304e03="">IP67</div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Kiểu màn
-                                                                    hình</p>
-                                                                <div data-v-4e304e03="">Đục lỗ (Nốt ruồi)</div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                    <li class="technical-content-modal-item m-3" data-v-4e304e03="">
-                                                        <p class="title is-6 m-2" data-v-4e304e03="">Tiện ích
-                                                            khác</p>
-                                                        <div class="modal-item-description mx-2" data-v-4e304e03="">
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Cảm biến
-                                                                    vân tay</p>
-                                                                <div data-v-4e304e03="">Cảm biến vân tay trong màn
-                                                                    hình
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Các loại
-                                                                    cảm biến</p>
-                                                                <div data-v-4e304e03="">Cảm biến gia tốc, La bàn,
-                                                                    Con quay hồi chuyển
-                                                                </div>
-                                                            </div>
-                                                            <div
-                                                                class="px-3 py-2 is-flex is-align-items-center is-justify-content-space-between"
-                                                                data-v-4e304e03=""><p data-v-4e304e03="">Tính năng
-                                                                    đặc biệt</p>
-                                                                <div data-v-4e304e03="">Hỗ trợ 5G, Bảo mật vân tay,
-                                                                    Nhận diện khuôn mặt, Kháng nước, kháng bụi
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                <div class="modal modal-tskt d-none">
+                                    <div class="modal-background"></div>
+                                    <div class="modal-content-tskt">
+                                        <div>
+                                            <div class="header_tskt">
+                                                <p class="title_tskt">Thông số kỹ thuật</p>
+                                                <button class="bnt-close-tskt"><i class="fas fa-times-circle"></i></button>
                                             </div>
-                                        </section>
-                                        <footer class="modal-card-foot" data-v-4e304e03="">
-                                            <button class="button close-button-modal is-flex is-align-items-center"
-                                                    data-v-4e304e03="">
-                                                ×
-                                                Đóng
-                                            </button>
-                                        </footer>
+                                        </div>
+                                        <div class="modal-tskt-content px-2 pt-2 pb-0">
+                                            {!! $product->property !!}
+                                        </div>
+                                        <div class="close_tskt">
+                                            <button class="bnt-close-tskt">Đóng</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -546,13 +231,8 @@
                             <div class="dt_description">
                                 <div class="ctn_des" id="des_show"> {!! $product->content !!} </div>
                                 <button class="btn_view_content_all">Xem thêm
-
                                     <div class="d-flex">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="10"
-                                             height="10">
-                                            <path
-                                                d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"></path>
-                                        </svg>
+                                        <i class="far fa-angle-down"></i>
                                     </div>
                                 </button>
                             </div>
@@ -696,8 +376,8 @@
                             </div>
                             {{--                            danh sach danh gia--}}
                             <div class="boxReview-comment">
-                                <div class="list_cm">
-                                    @foreach ($product->votes as $comment)
+                                <div class="list_cm max_list_cm">
+                                    @foreach ($comments as $comment)
                                         <div class="boxReview-comment-item">
                                             <div
                                                 class="boxReview-comment-item-title">
@@ -737,14 +417,10 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <button class="btn-show-more-review">
+                                <button class="btn-show-more-review" data-target="{{$comments->currentPage()}}" data-id="{{$product->id}}">
                                     Xem thêm
                                     <div class="inline-block-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="10"
-                                             height="10">
-                                            <path
-                                                d="M224 416c-8.188 0-16.38-3.125-22.62-9.375l-192-192c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L224 338.8l169.4-169.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-192 192C240.4 412.9 232.2 416 224 416z"></path>
-                                        </svg>
+                                        <i class="far fa-angle-down"></i>
                                     </div>
                                 </button>
                             </div>
@@ -891,6 +567,19 @@
                                         </svg>
                                     </div>
                                 </button>
+                            </div>
+                        </div>
+                        <div class="category-container p-0">
+                            <div class="cat_box_sale">
+                                <div class="cat_box_s_h">
+                                    <div class="title_s">
+                                        <div class="p_similar_tt" id="load_p_watched"
+                                             data-target="{{$product->id}}">
+                                            <h2>Sản phẩm đã xem</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="featured-product-list" id="load_p_detail2"></div>
                             </div>
                         </div>
                     </div>
