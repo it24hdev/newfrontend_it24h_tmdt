@@ -345,8 +345,9 @@ Route::post('/thanh-toan', [CartController::class, 'sendmail'])->name('sendmail'
 Route::get('/thanks', [CartController::class, 'thanks'])->name('thanks');
 Route::get('/yeu-thich', [CartController::class, 'list_wish'])->name('list_wish');
 Route::post('/add-wish', [CartController::class, 'add_wish'])->name('add_wish');
+Route::post('/add_cart_cookie', [CartController::class, 'add_cart_cookie'])->name('add_cart_cookie');
+Route::post('/remove_cart_cookie', [CartController::class, 'remove_cart_cookie'])->name('remove_cart_cookie');
 Route::post('/delete-wish', [CartController::class, 'remove_product_wish'])->name('remove_product_wish');
-
 Route::post('/submit-contact', [CartController::class, 'submit_contact'])->name('submit_contact');
 
 /** Frontend */

@@ -15,7 +15,8 @@
     <link rel="stylesheet" href="{{asset('asset/css/mobile/header_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/body_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/footer_mobile.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/css/mobile/detailproduct.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/css/mobile/detailproduct_mobile.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/css/mobile/cart_mobile.css')}}">
     @yield('css')
 <!-- css -->
     <script>
@@ -72,7 +73,6 @@
                         cả</a>
                 </div>
                 <div id="menu_mobile_child">
-
                 </div>
         </div>
     </div>
@@ -83,32 +83,11 @@
 @include('frontend.mobile.templatechildcategories')
 @include('frontend.mobile.templateproductmobile')
 @include('frontend.mobile.templatereviewmobile')
+@include('frontend.mobile.route')
 <!-- javascript -->
     <script src="{{ asset('lib/jquery360.min.js') }}"></script>
     <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-    <script type="text/javascript">
-        var base_url = '{{route('user')}}';
-        var add_cart_ajax = '{{route('add_cart_ajax')}}';
-        var list_cart = '{{route('list_cart')}}';
-        var get_menu_mobile = '{{route('get_menu_mobile')}}';
-        var get_menu_child = '{{route('get_menu_child')}}';
-        var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
-        var get_new_mobile = '{{route('get_new_mobile')}}';
-        var get_product_mobile = '{{route('get_product_mobile')}}';
-        var get_product_watched = '{{route('get_product_watched')}}';
-        var get_product_similar = '{{route('get_product_similar')}}';
-        var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';
-        var commentProduct = '{{route('commentProduct')}}';
-        var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
-        var get_review_more = '{{route('get_review_more')}}';
-        var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
-        var  url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
-        var  url_img_large_product= '{{asset('upload/images/products/large/')}}';
-        var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';
-        var img_category = '{{asset('upload/images/products/thumb/img_name')}}';
-        var img_detailproperties = '{{asset('upload/images/detailproperties/thumb/img_name')}}';
-    </script>
     <script src="{{ asset('asset/js/mobile.js') }}"></script>
 @yield('js')
 </body>

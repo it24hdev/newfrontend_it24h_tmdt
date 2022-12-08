@@ -9,7 +9,7 @@
 @endsection
 @section('content')
     <div class="component-dt-container">
-        <div data-fetch-key="product-detail:0">
+        <div>
             <div id="breadcrumbs">
                 <div class="block-breadcrumbs affix" id="affix_h">
                     <div class="cps-container">
@@ -603,6 +603,6 @@
         })
     </script>
 @endsection
-@section('footer')
-    @include('frontend.mobile.footermobile')
-@endsection
+{{--@section('footer')--}}
+{{--    @include('frontend.mobile.footermobile')--}}
+{{--@endsection--}}

@@ -68,7 +68,6 @@ class DetailproductController extends Controller
                     'product'        => $product,
                     'imgs'           => $imgs,
                     'locale'         => $locale,
-                    'agent'          => $ag,
                     'comments'       => $comments,
                 ]);
             }

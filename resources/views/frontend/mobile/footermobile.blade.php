@@ -94,5 +94,4 @@
             </a>
         </p>
     </div>
-    <div id="go_top"><i class="fal fa-angle-up"></i></div>
 </footer>

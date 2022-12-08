@@ -51,12 +51,15 @@
                                         <a href="javascript:;" class="remove-cart" data-rowid="{{$row->rowId}}" onclick="return confirm('@lang('lang.Areyousureremoveproduct')')"><i class="fal fa-times"></i></a>
                                     </td>
                                     <td class="product-thumbnail">
-                                        <a href="@php
-                                            foreach($product_carts as $item){
-                                                if($item->id == $row->id){
+                                        <a href="
+                                        @php
+                                        foreach($product_carts as $item)
+                                        {
+                                                if($item->id == $row->id)
+                                                {
                                                     echo route('detailproduct', $item->slug);
                                                 }
-                                            }
+                                        }
                                         @endphp">
                                             <img width="300" height="300" src="upload/images/products/thumb/{{$row->options->thumbnail}}" alt="">
                                         </a>

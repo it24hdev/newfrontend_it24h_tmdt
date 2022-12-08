@@ -8,7 +8,7 @@
     @include('frontend.mobile.headermobile')
 @endsection
 @section('css')
-    <link rel="stylesheet" href="{{asset('asset/css/mobile/filter_price.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/css/mobile/filterprice_mobile.css')}}">
 @endsection
 @section('content')
     <div id="breadcrumbs">
@@ -597,6 +597,6 @@
         })
     </script>
 @endsection
-@section('footer')
-    @include('frontend.mobile.footermobile')
-@endsection
+{{--@section('footer')--}}
+{{--    @include('frontend.mobile.footermobile')--}}
+{{--@endsection--}}

@@ -24,9 +24,15 @@
                             </a>
                         </div>
                         <div class="shop">
-                            <a href="#">
+                            <a href="{{route('list_cart')}}">
                                 <i class="fal fa-shopping-cart"></i>
-                                <span class="count_c" id="count-cart">{{Cart::count()}}</span>
+                                <span class="count_c" id="count-cart">
+                                    @if (!empty(Cookie::get('count_cart')))
+                                        {{Cookie::get('count_cart')}}
+                                    @else
+                                        0
+                                    @endif
+                                </span>
                             </a>
                         </div>
                     </div>
@@ -54,22 +60,31 @@
                     </div>
                 </div>
                 <div class="shop col-1 d-flex justify-content-end align-items-center">
-                    <a href="#"> <i class="fal fa-shopping-cart"></i> </a>
-                    <span class="count_c_2" id="count-cart2">{{Cart::count()}}</span>
+                    <a href="{{route('list_cart')}}"> <i class="fal fa-shopping-cart"></i> </a>
+                    <span class="count_c_2" id="count-cart2">
+                        @if (!empty(Cookie::get('count_cart')))
+                            {{Cookie::get('count_cart')}}
+                        @else
+                            0
+                        @endif
+                    </span>
                 </div>
             </div>
             </div>
         </div>
     </div>
 </header>
-{{--background header--}}
-<div class="background_header">
-</div>
-
+<div id="go_top"><i class="fal fa-angle-up"></i></div>
 <div id="snackbar">
     <div class="d-grid">
         <i class="far fa-check-circle"></i>
         <span>Đã thêm vào giỏ hàng</span>
+    </div>
+</div>
+<div id="snackbar_false">
+    <div class="d-grid">
+        <i class="far fa-check-circle"></i>
+        <span>Đã đã trong giỏ hàng</span>
     </div>
 </div>
 <div id="success_cm">

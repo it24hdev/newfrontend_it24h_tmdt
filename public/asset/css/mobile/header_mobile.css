@@ -423,7 +423,7 @@ color: #f00!important;
 .menu-mobile .menu-tree-child::-webkit-scrollbar{
     display: none;
 }
-#snackbar {
+#snackbar, #snackbar_false {
     display: none;
     min-width: 150px;
     font-size: 12px;

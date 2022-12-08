@@ -53,26 +53,6 @@ $(document).ready(function () {
         });
     });
 
-    // them san pham vao gio hang
-    $(document).on('click', '.add-cart', function(){
-        var id  =  $(this).attr('get-id');
-        var x = this;
-        var data = {
-            id: id,
-            _token: _token
-        };
-        $.ajax({
-            url: add_cart_ajax,
-            method: 'POST',
-            data: data,
-            dataType: 'json',
-            success: function (data) {
-                $('#count-cart').text(data.count);
-                $('#count-cart2').text(data.count);
-                $( "#snackbar" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
-            }
-        });
-    });
 
     //su kien load noi dung khi cuon toi truoc vung load noi dung
     function isOnScreen(elem) {
@@ -246,7 +226,6 @@ $(document).ready(function () {
                 $(tmp).find('.dbrand2').css('background-image',img);
             }
             var dt_p = detail_p.replace('slug_code', v.slug);
-            console.log(dt_p,detail_p,v.slug);
             $(tmp).find('.p-img a').attr('href',dt_p);
             var url_img_product = img_product_mobile;
             url_img_product = url_img_product.replace('img_name', v.thumb);
@@ -833,6 +812,7 @@ $(document).ready(function () {
         }
     });
 
+    //chon sao danh gia
     $(document).on('click', '#star1, #star2, #star3, #star4, #star5', function () {
         var value_star = $(this).val();
         $('#lb_star').html('');
@@ -907,6 +887,7 @@ $(document).ready(function () {
         });
     });
 
+    //thay doi anh khi chon anh con
     $(document).on('click','.ac_img_p',function(){
         let src = $(this).find('img').attr('src');
         let picture_src = src.replace(url_img_thumb_product, '');
@@ -914,4 +895,116 @@ $(document).ready(function () {
         $('.ac_img_p').removeClass('active');
         $(this).addClass('active');
     });
+    // ===============================trang gio hang============================
+    // them san pham vao gio hang
+    $(document).on('click', '.add-cart', function(){
+        var id  =  $(this).attr('get-id');
+        var data = {
+            id: id,
+            _token: _token
+        };
+        $.ajax({
+            url: add_cart_cookie,
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                if(data.success){
+                    $('#count-cart').text(data.count);
+                    $('#count-cart2').text(data.count);
+                    $( "#snackbar" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
+                }
+                else{
+                    $( "#snackbar_false" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
+                }
+            }
+        });
+    });
+
+    count_cart();
+    checkall();
+    function checkall(){
+
+        $('input[name="check_cart"]').each(function(index) {
+            $(this).attr('checked','true');
+        });
+        total_cart();
+    }
+    function count_cart(){
+        if($('.block-cart-product').attr('data-target')>0){
+            $('.block-cart-product').removeClass('d-none');
+            $('.cnt_empty_cart').addClass('d-none');
+        }
+        else{
+            if(!$('.block-cart-product').hasClass('d-none')){
+                $('.block-cart-product').addClass('d-none');
+            }
+            if($('.cnt_empty_cart').hasClass('d-none')){
+                $('.cnt_empty_cart').removeClass('d-none');
+            }
+        }
+    }
+
+
+    // xoa san pham khoi gio hang
+    $(document).on('click', '.cart_delete', function(){
+        var id  =  $(this).attr('data-target');
+        var data = {
+            id: id,
+            _token: _token
+        };
+        $.ajax({
+            url: remove_cart_cookie,
+            method: 'POST',
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                if(data.success){
+                    $('#count-cart').text(data.count);
+                    $('#count-cart2').text(data.count);
+                    $('#cart_'+id).remove();
+                }
+                total_cart();
+                var number_cart = $('.block-cart-product').attr('data-target');
+                $('.block-cart-product').attr('data-target',parseInt(number_cart)-1);
+                count_cart();
+            }
+        });
+    });
+    //Cong so luong san pham
+    $('.plus_cart').on('click',function(){
+        $(this).prev().val(+$(this).prev().val() + 1);
+        total_cart();
+    });
+
+    //tru sl san pham
+    $('.minus_cart').click('click',function(){
+        if ($(this).next().val() > 1){
+            $(this).next().val(+$(this).next().val() - 1);
+        }
+        total_cart();
+    });
+    $(document).on('change', '.check_cart', function() {
+        total_cart();
+    });
+    function total_cart(){
+        let total = price = sale_price = 0;
+        $('.product-item-cart').each(function(index) {
+             price = $(this).find('.regular-price').attr('data-target');
+             sale_price = $(this).find('.sale-price').attr('data-target');
+             qty_cart = $(this).find('input[name="qty_cart"]').val();
+            if($(this).find('input[name="check_cart"]').is(":checked")){
+                if(sale_price !=null){
+                    total = total + (sale_price*qty_cart);
+                }
+                else{
+                    if (price !=null){
+                        total = total + (price*qty_cart);
+                    }
+                }
+            }
+        });
+        var total_cart = new Intl.NumberFormat().format(total);
+        $('.total').html(total_cart+" đ");
+    }
 });

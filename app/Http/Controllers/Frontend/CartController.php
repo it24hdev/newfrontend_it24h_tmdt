@@ -39,47 +39,82 @@ class CartController extends Controller
     }
 
      public function index(){
-        $agent = new Agent();
-        $ag = "";
-        if($agent->isMobile()){
-            $ag = "mobile";
-        }
-        else $ag = "desktop";
-
-        $active_menu = "cart";
-        if(Cart::count()>0){
-            $products_id = array();
-            foreach(Cart::content() as $item){
-                $product = Products::find($item->id);
-                foreach($product->category as $k){
-                    foreach($k->product as $pro){
-                        $products_id[]= $pro->id;
-                    }
-                }
-            }
-            $products = Products::where('status', 1)->whereIn('id', $products_id)->inRandomOrder()->limit(6)->get();
-        }else{
-            $products = 0;
-        }
-        $locale           = config('app.locale');
-        $Sidebars         = $this->getmenu('sidebar');
-        // $Menus            = $this->getmenu('menu');
-        // $Sub_menus        = $this->getmenu('submenu');
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        $product_carts    = \collect();
-        foreach(Cart::content() as $item){
-            $product_carts[] = Products::find($item->id);
-        }
-
-        return \view('frontend.cart', \compact('products', 'Sidebars',  'product_carts', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+         try {
+             $locale = config('app.locale');
+             $agent = new Agent();
+             $isphone = "";
+             if ($agent->isMobile()) {
+                 $isphone = "phone";
+             }
+             if ($isphone=="phone") {
+                 $get_cookie = Cookie::get('list_cart');
+                 $list_cart = explode(' ', $get_cookie);
+                 $product_cart = Products::whereIn('id',$list_cart)->where('status',1)->get();
+                 return \view('frontend.mobile.cartmobile', \compact('product_cart', 'locale',));
+             } else {
+                 if ($agent->isMobile()) {
+                     $ag = "mobile";
+                 } else $ag = "desktop";
+                 $active_menu = "cart";
+                 $Sidebars = $this->getmenu('sidebar');
+                 $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+                 $product_carts = collect();
+                 foreach (Cart::content() as $item) {
+                     $product_carts[] = Products::find($item->id);
+                 }
+                 if (Cart::count() > 0) {
+                     $products_id = array();
+                     foreach (Cart::content() as $item) {
+                         $product = Products::find($item->id);
+                         foreach ($product->category as $k) {
+                             foreach ($k->product as $pro) {
+                                 $products_id[] = $pro->id;
+                             }
+                         }
+                     }
+                     $products = Products::where('status', 1)->whereIn('id', $products_id)->inRandomOrder()->limit(6)->get();
+                 } else {
+                     $products = 0;
+                 }
+                 return \view('frontend.cart', \compact('products', 'Sidebars', 'product_carts', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+             }
+         }
+         catch(\Exception $exception){
+             \abort(404);
+         }
     }
-    public function getcategoryblog(){
-        $categoryblog = Category::select('*')
-        ->where('taxonomy','=', 1)
-        ->where('status','=',1)
-        ->limit(7)
-        ->get();
-        return $categoryblog;
+
+    public function add_cart_cookie(Request $request){
+        $id = $request->id;
+        $get_cookie = Cookie::get('list_cart');
+        $list_id_cart = explode(' ', $get_cookie);
+        if(!in_array($id, $list_id_cart)){
+            $list_id_cart[] = $id;
+            $add_to_cookie = implode(' ', $list_id_cart);
+            Cookie::queue('list_cart', $add_to_cookie, 1051200);
+            $count_product = Products::whereIn('id', $list_id_cart)->where('status', 1)->count();
+            Cookie::queue('count_cart', $count_product, 1051200);
+            return response()->json(['success' => true,'count' => $count_product]);
+        }
+        else{
+            return response()->json(['success' => false]);
+        }
+    }
+
+    public function remove_cart_cookie(Request $request){
+        $id = $request->id;
+        $get_cookie = Cookie::get('list_cart');
+        $list_id_cart = explode(' ', $get_cookie);
+        foreach($list_id_cart as $k => $v){
+            if($v == $id){
+                unset($list_id_cart[$k]);
+            }
+        }
+        $add_to_cookie = implode(' ', $list_id_cart);
+        Cookie::queue('list_cart', $add_to_cookie, 1051200);
+        $count_product = Products::whereIn('id', $list_id_cart)->where('status', 1)->count();
+        Cookie::queue('count_cart', $count_product, 1051200);
+        return response()->json(['success' => true,'count' => $count_product]);
     }
 
     public function add_cart_ajax(Request $request){
