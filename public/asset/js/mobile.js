@@ -143,65 +143,10 @@ $(document).ready(function () {
             data: data,
             success: function (data) {
                 var template_product_mobile = $('#template_product_mobile').html();
-                $.each(data.data_product_mobile, function(k,v) {
-                    var tmp = $(template_product_mobile).clone();
-                    if(v.year != null && v.year != ''){
-                        $(tmp).find('.years2').removeClass('d-none');
-                        $(tmp).find('.years2').html(v.year);
-                    }
-                    if(v.installment != null && v.installment != '' && v.installment != 0){
-                        $(tmp).find('.payment2').removeClass('d-none');
-                    }
-                    if(v.img_brands != null && v.img_brands != ''){
-                        var url_img_brands = img_product_mobile;
-                        $(tmp).find('.dbrand2').removeClass('d-none');
-                        img = 'url('+url_img_brands+')';
-                        img = img.replace('img_name', v.img_brands);
-                        $(tmp).find('.dbrand2').css('background-image',img);
-                    }
-                    detailproduct = detailproduct.replace('slug_code', v.slug);
-                    $(tmp).find('.p-img a').attr('href',detailproduct);
-                    var url_img_product = img_product_mobile;
-                    url_img_product = url_img_product.replace('img_name', v.thumb);
-                    $(tmp).find('.p-img img').attr('src',url_img_product);
-                    $(tmp).find('.p-info a').attr('href',detailproduct);
-                    $(tmp).find('.p-name').html(v.name);
-                    if(v.onsale != null && v.onsale != ''){
-                        $(tmp).find('.price_p').removeClass('d-none');
-                        var price = new Intl.NumberFormat().format(v.price);
-                        var price_onsale = new Intl.NumberFormat().format(v.price_onsale);
-                        $(tmp).find('.promotion2 .pprice2').html(price+' đ');
-                        $(tmp).find('.promotion2 .dpercent2').html('- '+v.onsale+'%');
-                        $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
-                    }
-                    else{
-                        var prices = new Intl.NumberFormat().format(v.price);
-                        $(tmp).find('.price_p_2').removeClass('d-none');
-                        $(tmp).find('.price_p_2 .p-price').html(prices+' đ');
-                    }
-                    $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
-                    if(v.sold != null && v.sold != ''){
-                        $(tmp).find('.sold2').removeClass('d-none');
-                        $(tmp).find('.sold2 span').html('Đã bán '+v.sold);
-                    }
-                    if(v.quantity - v.sold > 0){
-                        $(tmp).find('.qty').html('Còn hàng');
-                        $(tmp).find('.qty').css({"color":"#01aa42", "background-color": "#dbf8e1"});
-                    }
-                    else{
-                        $(tmp).find('.qty').html('Hết hàng');
-                        $(tmp).find('.qty').css({"color":"#ffffff", "background-color": "#fb0000"});
-                    }
-                    $(tmp).find('.add-wish').attr('get-id',v.id);
-                    if($.inArray(''+v.id+'',v.list_wish) > -1){
-                        $(tmp).find('.action .add-wish .like').addClass('fas fa-heart heart_red');
-                    }
-                    else{
-                        $(tmp).find('.action .add-wish .like').addClass('far fa-heart');
-                    }
-                    $(tmp).find('.add-cart').attr('get-id',v.id);
-                    $('#load_promotion').append(tmp.html());
-                })
+                if(!$('#load_promotion').hasClass('active')){
+                    get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
+                    $('#load_promotion').addClass('active');
+                }
             }
         })
     }
@@ -221,7 +166,7 @@ $(document).ready(function () {
                 var template_product_mobile = $('#template_product_mobile').html();
                 get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
             }
-        })
+        });
     });
 
     // click chon san pham hot
@@ -273,7 +218,10 @@ $(document).ready(function () {
                     $(tmp).find('a').attr('href',$url);
                     $('#list_tag_' + id).append(tmp.html());
                 })
-                get_list_product(data.data_product_mobile, template_product_mobile,'#list_products_'+id);
+                if(!$('#list_products_'+id).hasClass('active')){
+                    get_list_product(data.data_product_mobile, template_product_mobile,'#list_products_'+id);
+                    $('#list_products_'+id).addClass('active');
+                }
             }
         })
     }
@@ -281,6 +229,7 @@ $(document).ready(function () {
     // ham template san pham
     function get_list_product(data,template, id_append){
         $.each(data, function(k,v) {
+            var detail_p = detailproduct;
             var tmp = $(template).clone();
             if(v.year != null && v.year != ''){
                 $(tmp).find('.years2').removeClass('d-none');
@@ -296,12 +245,13 @@ $(document).ready(function () {
                 img = img.replace('img_name', v.img_brands);
                 $(tmp).find('.dbrand2').css('background-image',img);
             }
-            detailproduct = detailproduct.replace('slug_code', v.slug);
-            $(tmp).find('.p-img a').attr('href',detailproduct);
+            var dt_p = detail_p.replace('slug_code', v.slug);
+            console.log(dt_p,detail_p,v.slug);
+            $(tmp).find('.p-img a').attr('href',dt_p);
             var url_img_product = img_product_mobile;
             url_img_product = url_img_product.replace('img_name', v.thumb);
             $(tmp).find('.p-img img').attr('src',url_img_product);
-            $(tmp).find('.p-info a').attr('href',detailproduct);
+            $(tmp).find('.p-info a').attr('href',dt_p);
             $(tmp).find('.p-name').html(v.name);
             if(v.onsale != null && v.onsale != ''){
                 $(tmp).find('.price_p').removeClass('d-none');
@@ -786,7 +736,10 @@ $(document).ready(function () {
             success: function (data) {
                 $('#load_p_detail2').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
-                get_list_product(data.data_product_mobile, template_product_mobile, '#load_p_detail2');
+                if(!$('#load_p_detail2').hasClass('active')){
+                    get_list_product(data.data_product_mobile, template_product_mobile, '#load_p_detail2');
+                    $('#load_p_detail2').addClass('active');
+                }
             }
         })
     }
@@ -805,7 +758,10 @@ $(document).ready(function () {
             success: function (data) {
                 $('#load_p_detail').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
-                get_list_product(data.data_product_mobile, template_product_mobile,'#load_p_detail');
+                if(!$('#load_p_detail').hasClass('active')){
+                    get_list_product(data.data_product_mobile, template_product_mobile,'#load_p_detail');
+                    $('#load_p_detail').addClass('active');
+                }
             }
         })
     }
