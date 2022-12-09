@@ -3,7 +3,9 @@
 @section('title')
     <title>IT24H - Chi tiết sản phẩm</title>
 @endsection
-
+@section('css')
+    <link rel="stylesheet" href="{{asset('asset/css/mobile/detailproduct_mobile.css')}}">
+@endsection
 @section('header_mobile')
     @include('frontend.mobile.headermobile')
 @endsection

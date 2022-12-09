@@ -1,0 +1,127 @@
+.block-info{
+    background: #fef2f2;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 15px;
+
+}
+.block-box{
+    font-size: 16px;
+    font-weight: 400;
+    font-family: "SegoeUI",sans-serif;
+}
+.container{
+    background: #fff;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    padding: 10px;
+    position: relative;
+    margin: 0.5rem 0;
+}
+.info {
+    background: #d4edda;
+    border-radius: 15px;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    padding: 10px;
+    position: relative;
+}
+.bottom-button-success a.btn{
+    border-radius: 15px;
+    width: 50%;
+    margin: 0 5px;
+}
+.bottom-button-success svg{
+    width: 30px;
+}
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+.QRcode_payment{
+    margin: 10px 0;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    padding: 10px;
+    position: relative;
+}
+.QRcode_payment p{
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 700;
+    color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.QRcode_payment img{
+    max-width: 200px;
+    border: 2px solid #3991ff;
+}
+.qr_img{
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.block-box-p{
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    padding: 10px;
+    position: relative;
+    margin-top: 1rem!important;
+}
+.product-item{
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+.product-img{
+    width: calc(25% - 5px);
+}
+.product-img img{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    display: block;
+    vertical-align: middle;
+    border-style: none;
+}
+.product-info{
+    width: calc(75% - 5px);
+}
+.product-info p{
+    font-weight: 600;
+    margin: 5px 0;
+}
+.strong_text{
+    font-weight: 500;
+    font-family: "SegoeUI",sans-serif;
+    color: #0e2431;
+    font-size: .938rem;
+}
+.bold_text{
+    font-weight: 700;
+    font-family: "SegoeUI",sans-serif;
+    color: #155724;
+}
+.info h4{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.info-rules{
+    padding: 3px 10px;
+    background: #d4edda;
+    margin: 10px 0;
+    border-radius: 15px;
+}

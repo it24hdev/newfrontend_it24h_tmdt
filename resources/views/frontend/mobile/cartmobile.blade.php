@@ -4,6 +4,10 @@
     <title>IT24H - Giỏ hàng</title>
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="{{asset('asset/css/mobile/cart_mobile.css')}}">
+@endsection
+
 @section('header_mobile')
     @include('frontend.mobile.headermobile')
 @endsection

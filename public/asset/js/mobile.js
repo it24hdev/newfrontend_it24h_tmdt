@@ -945,7 +945,6 @@ $(document).ready(function () {
         }
     }
 
-
     // xoa san pham khoi gio hang
     $(document).on('click', '.cart_delete', function(){
         var id  =  $(this).attr('data-target');
@@ -1007,4 +1006,19 @@ $(document).ready(function () {
         var total_cart = new Intl.NumberFormat().format(total);
         $('.total').html(total_cart+" đ");
     }
+    // tien hanh dat hang
+    $(document).on('click', '.btn-sm-cart', function(){
+    });
+
+    // ==============================Thong tin dat hang==============================
+    $(document).on('click', '#VAT', function(){
+        if($(this).is(':checked')){
+            if($('.receipt_ip').hasClass('d-none')){
+                $('.receipt_ip').removeClass('d-none');
+            }
+        }
+        else{
+            $('.receipt_ip').addClass('d-none');
+        }
+    });
 });

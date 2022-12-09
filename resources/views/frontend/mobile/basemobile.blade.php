@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="{{asset('asset/css/mobile/header_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/body_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/footer_mobile.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/css/mobile/detailproduct_mobile.css')}}">
-    <link rel="stylesheet" href="{{asset('asset/css/mobile/cart_mobile.css')}}">
     @yield('css')
 <!-- css -->
     <script>

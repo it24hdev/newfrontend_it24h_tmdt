@@ -220,8 +220,6 @@ class CartController extends Controller
 
     public function update_cart(Request $request)
     {
-        // \dd($request->all());
-
         $data = $request->get('qty');
         foreach ($data as $k => $v) {
             Cart::update($k, $v);
@@ -229,25 +227,36 @@ class CartController extends Controller
         return \redirect()->route('list_cart');
     }
 
-    public function checkout(){
+    public function checkout(Request $request){
         $agent = new Agent();
-        $ag = "";
-        if($agent->isMobile()){
-            $ag = "mobile";
+        $isphone = "";
+        if ($agent->isMobile()) {
+            $isphone = "phone";
         }
-        else $ag = "desktop";
-        $active_menu = "cart";
-        if(Session::has('is_login') && Session::get('is_login') == true){
-            $customer_id = Session::get('user_id');
-            $customer = Customer::find($customer_id);
-        }else{
-            $customer = NULL;
+        if ($isphone=="phone") {
+            return view('frontend.mobile.orderinfomobile');
         }
-        $locale           = config('app.locale');
-        $Sidebars = $this->getmenu('sidebar');
-        // $Menus = $this->getmenu('menu');
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        return \view('frontend.checkout', \compact('customer', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        else{
+            if($agent->isMobile()){
+                $ag = "mobile";
+            }
+            else $ag = "desktop";
+            $active_menu = "cart";
+            if(Session::has('is_login') && Session::get('is_login') == true){
+                $customer_id = Session::get('user_id');
+                $customer = Customer::find($customer_id);
+            }else{
+                $customer = NULL;
+            }
+            $locale           = config('app.locale');
+            $Sidebars = $this->getmenu('sidebar');
+            $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
+            return \view('frontend.checkout', \compact('customer', 'Sidebars','locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        }
+    }
+
+    public  function successorder(Request $request){
+        return view('frontend.mobile.successorder');
     }
 
     public function sendmail(Request $request){
@@ -313,10 +322,10 @@ class CartController extends Controller
             'info_order' => $info_order,
             'orders' => $orders
         ];
-        if (!empty($info_order['email'])) {
-            Mail::to($info_order['email'])->send(new OrderMail($data));
-            Mail::to(\env('MAIL_ADMIN'))->send(new ThongBaoCoDonHangMoi($data));
-        }
+//        if (!empty($info_order['email'])) {
+//            Mail::to($info_order['email'])->send(new OrderMail($data));
+//            Mail::to(\env('MAIL_ADMIN'))->send(new ThongBaoCoDonHangMoi($data));
+//        }
         Cart::destroy();
         Session::put('order_success', $order->id);
         return \redirect()->route('thanks');

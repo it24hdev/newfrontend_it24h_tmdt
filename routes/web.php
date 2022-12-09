@@ -341,6 +341,7 @@ Route::post('/remove-cart', [CartController::class, 'remove_cart'])->name('remov
 Route::post('/updateAjax-cart', [CartController::class, 'update_ajax'])->name('update_ajax');
 Route::post('/update-cart', [CartController::class, 'update_cart'])->name('cart.update');
 Route::get('/thanh-toan', [CartController::class, 'checkout'])->name('checkout');
+Route::get('/successorder', [CartController::class, 'successorder'])->name('successorder');
 Route::post('/thanh-toan', [CartController::class, 'sendmail'])->name('sendmail');
 Route::get('/thanks', [CartController::class, 'thanks'])->name('thanks');
 Route::get('/yeu-thich', [CartController::class, 'list_wish'])->name('list_wish');

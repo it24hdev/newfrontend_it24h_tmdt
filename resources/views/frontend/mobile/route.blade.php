@@ -15,9 +15,11 @@
     var get_review_more = '{{route('get_review_more')}}';
     var add_cart_cookie = '{{route('add_cart_cookie')}}';
     var remove_cart_cookie = '{{route('remove_cart_cookie')}}';
+    var checkout = '{{route('checkout')}}';
+    var successorder = '{{route('successorder')}}';
     var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
-    var  url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
-    var  url_img_large_product= '{{asset('upload/images/products/large/')}}';
+    var url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
+    var url_img_large_product= '{{asset('upload/images/products/large/')}}';
     var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';
     var img_category = '{{asset('upload/images/products/thumb/img_name')}}';
     var img_detailproperties = '{{asset('upload/images/detailproperties/thumb/img_name')}}';
