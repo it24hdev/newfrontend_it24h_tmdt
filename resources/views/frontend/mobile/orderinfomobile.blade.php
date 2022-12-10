@@ -8,38 +8,20 @@
     <link rel="stylesheet" href="{{asset('asset/css/mobile/orderinfo_mobile.css')}}">
 @endsection
 
-@section('header_mobile')
-    @include('frontend.mobile.headermobile')
-@endsection
 @section('content')
     <div class="component-orderinfo-container">
-        <div id="breadcrumbs">
-            <div class="block-breadcrumbs affix" id="affix_h">
-                <div class="cps-container">
-                    <ul>
-                        <li>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10.633"
-                                     viewBox="0 0 12 10.633">
-                                    <path
-                                        d="M13.2,9.061H12.1v3.965a.6.6,0,0,1-.661.661H8.793V9.721H6.15v3.965H3.507a.6.6,0,0,1-.661-.661V9.061h-1.1c-.4,0-.311-.214-.04-.494L7,3.259a.634.634,0,0,1,.936,0l5.3,5.307c.272.281.356.495-.039.495Z"
-                                        transform="translate(-1.471 -3.053)" fill="#3991ff"></path>
-                                </svg>
-                            </div>
-                            <a href="/">Trang chủ</a></li>
-                        <li>
-                            <div>
-                                <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                    <path
-                                        d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
-                                </svg>
-                            </div>
-                            <p>
-                                Thông tin đặt hàng
-                            </p>
-                        </li>
-                    </ul>
-                </div>
+        <div class="header_cart d-flex align-items-center justify-content-center">
+            <div class="back">
+                <a href="/" class="d-flex align-items-center">
+                    <i class="fal fa-angle-left"></i>
+                    <p> Trở về</p>
+                </a>
+            </div>
+            <p class="title_cart title m-auto">Giỏ hàng</p>
+            <div class="plus_p">
+                <a href="/" class="d-flex align-items-center">
+                    <i class="fal fa-plus-circle"></i>
+                </a>
             </div>
         </div>
         <section class="block-info">
@@ -51,7 +33,7 @@
                                class="mb-2">
                         <input type="text" placeholder="Số điện thoại (bắt buộc)" maxlength="10" autocomplete="off"
                                class="mb-2">
-                        <input type="email" placeholder="Email (Vui lòng điền email để nhận hoá đơn VAT)" name="email"
+                        <input type="email" placeholder="Email" name="email"
                                maxlength="100" autocomplete="off">
                     </div>
                 </div>
@@ -118,13 +100,15 @@
                         </a>
                     </div>
                     <div class="mb-3 receipt_ip d-none">
-                        <input type="text" placeholder="Tên công ty" autocomplete="off" class="mb-2">
-                        <input type="text" placeholder="Địa chỉ công ty" autocomplete="off" class="mb-2">
-                        <input type="text" placeholder="Mã số thuế" autocomplete="off"></div>
+                        <input type="text" placeholder="Tên công ty (*)" autocomplete="off" class="mb-2">
+                        <input type="text" placeholder="Địa chỉ công ty (*)" autocomplete="off" class="mb-2">
+                        <input type="text" placeholder="Mã số thuế (*)" autocomplete="off" class="mb-2">
+                        <input type="text" placeholder="Email công ty (*)" autocomplete="off">
+                    </div>
                 </div>
                 <i>
                     <input type="checkbox" class="check_rules" checked="checked">
-                    <a href="" target="_blank" class="text-danger">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
+                    <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
                 </i>
                 <div class="container-total-box">
                     <div class="bottom-bar">
@@ -136,11 +120,12 @@
                         </div>
                         <div class="sm_cart">
                             <a href="{{route('successorder')}}" class="btn-sm-cart">
-                                Tiếp tục
+                                Đặt Hàng
                             </a>
-                            <a href="/" class="btn-add-another-p">
-                                Chọn thêm sản phẩm khác
-                            </a></div>
+{{--                            <a href="/" class="btn-add-another-p">--}}
+{{--                                Chọn thêm sản phẩm khác--}}
+{{--                            </a>--}}
+                        </div>
                     </div>
                 </div>
             </div>

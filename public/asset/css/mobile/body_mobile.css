@@ -826,7 +826,6 @@ a:active, a:hover {
     line-height: 1rem;
 }
 .typo-r10 {
-    font-family: -apple-system,Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif;
     font-weight: 400;
     font-size: .625rem;
 }
@@ -878,7 +877,6 @@ a:active, a:hover {
     width: 100%;
 }
 .typo-r10 {
-    font-family: -apple-system,Helvetica Neue,Helvetica,Roboto,Droid Sans,Arial,sans-serif;
     font-weight: 400;
     font-size: .625rem;
 }
@@ -1745,7 +1743,6 @@ a:active, a:hover {
     vertical-align: top;
     line-height: 1.5;
     height: 2.5em;
-    font-family: sans-serif!important;
 }
 .textarea-comment button{
     width: 70px;

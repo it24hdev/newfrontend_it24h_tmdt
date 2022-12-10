@@ -16,13 +16,13 @@ input{
     border-radius: 15px;
     padding-bottom: 0.1px;
     margin-bottom: 0.5rem!important;
-    margin-top: 0.5rem!important;
+    margin-top: 3rem!important;
 }
 .box-info-customer{
     background: #fff;
     max-width: 600px;
     border-radius: 15px;
-    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    /*box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);*/
     padding: 10px;
     position: relative;
     margin-right: auto;
@@ -59,7 +59,6 @@ input{
     border-radius: 10px;
     width: 50%;
     box-sizing: border-box;
-    font-family: inherit;
     position: relative;
     margin-right: 0.25rem!important;
     background-color: #fff!important;
@@ -137,9 +136,9 @@ input{
     font-size: 16px;
     overflow: visible;
     margin: 0;
-    font-family: inherit;
 }
 .payment-item{
+    color: #737373;
     background: #fff;
     border-radius: 15px;
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
@@ -189,6 +188,7 @@ input{
     margin-bottom: 0.5rem;
     position: relative;
     cursor: pointer;
+    color: #424141;
 }
 .receipt_ip input{
     width: 100%;
@@ -201,7 +201,7 @@ input{
     width: 100%;
     margin-right: auto;
     margin-left: auto;
-    margin-bottom: 2rem!important;
+    /*margin-bottom: 2rem!important;*/
     margin-top: 1rem!important;
 }
 .bottom-bar {
@@ -226,6 +226,7 @@ input{
 .title-temp {
     font-weight: 600;
     margin: 0;
+    color: #424141;
 }
 .price-tt {
     align-items: flex-end!important;
@@ -292,7 +293,13 @@ input{
 .payment-group input:checked+label{
     border: 1px solid #3991ff;
     overflow: hidden;
+    color: #3991ff;
 }
 .check_rules{
     width: auto!important;
+    transform: scale(1.3);
+    margin: 5px;
+}
+.font-rules{
+    font-size: 14px!important;
 }

@@ -7,45 +7,26 @@
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/mobile/successorder_mobile.css')}}">
 @endsection
-
-@section('header_mobile')
-    @include('frontend.mobile.headermobile')
-@endsection
 @section('content')
     <div class="component-orderinfo-container">
-        <div id="breadcrumbs">
-            <div class="block-breadcrumbs affix" id="affix_h">
-                <div class="cps-container">
-                    <ul>
-                        <li>
-                            <div>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10.633"
-                                     viewBox="0 0 12 10.633">
-                                    <path
-                                        d="M13.2,9.061H12.1v3.965a.6.6,0,0,1-.661.661H8.793V9.721H6.15v3.965H3.507a.6.6,0,0,1-.661-.661V9.061h-1.1c-.4,0-.311-.214-.04-.494L7,3.259a.634.634,0,0,1,.936,0l5.3,5.307c.272.281.356.495-.039.495Z"
-                                        transform="translate(-1.471 -3.053)" fill="#3991ff"></path>
-                                </svg>
-                            </div>
-                            <a href="/">Trang chủ</a></li>
-                        <li>
-                            <div>
-                                <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                    <path
-                                        d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
-                                </svg>
-                            </div>
-                            <p>
-                                Hoàn tất thanh toán
-                            </p>
-                        </li>
-                    </ul>
-                </div>
+        <div class="header_cart d-flex align-items-center justify-content-center">
+            <div class="back">
+                <a href="/" class="d-flex align-items-center">
+                    <i class="fal fa-angle-left"></i>
+                    <p> Trở về</p>
+                </a>
+            </div>
+            <p class="title_cart title m-auto">Giỏ hàng</p>
+            <div class="plus_p">
+                <a href="/" class="d-flex align-items-center">
+                    <i class="fal fa-plus-circle"></i>
+                </a>
             </div>
         </div>
         <section class="block-info">
             <div class="container">
                 <p class="mx-2 mb-2">
-                    <span class="strong_text">Cảm ơn Quý khách hàng đã chọn mua hàng tại CellphoneS. Trong 15 phút, CellphoneS sẽ SMS hoặc gọi để xác nhận đơn hàng.</span><br>
+                    <span class="strong_text">Cảm ơn Quý khách hàng đã chọn mua hàng tại IT24H. Trong 15 phút, IT24H sẽ SMS hoặc gọi để xác nhận đơn hàng.</span><br>
                     <em>* Các đơn hàng từ 21h30 tối tới 8h sáng hôm sau. CellphoneS sẽ liên hệ với Quý khách trước 10h trưa cùng ngày</em>
                 </p>
                 <div class="block-box info alert-success">
@@ -79,23 +60,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="product_list_success">
-                    <div class="block-box-p">
-                        <div class="product-list">
-                            <div class="product-item">
-                                <div class="product-img">
-                                    <img src="https://image.cellphones.com.vn/200x/media/catalog/product/p/h/photo_2022-09-28_21-58-54_1.jpg">
-                                </div>
-                                <div class="product-info">
-                                    <p>iPhone 14 128GB | Chính hãng VN/A-Đỏ</p>
-                                    <p><span>Giá: </span>20.990.000&nbsp;₫<del data-v-34c42bd9="">24.990.000&nbsp;₫</del></p>
-                                    <p><span>Số lượng: </span>1</p>
-                                    <p><span>Tổng tiền: </span>20.990.000&nbsp;₫</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="product_list_success">--}}
+{{--                    <div class="block-box-p">--}}
+{{--                        <div class="product-list">--}}
+{{--                            <div class="product-item">--}}
+{{--                                <div class="product-img">--}}
+{{--                                    <img src="https://image.cellphones.com.vn/200x/media/catalog/product/p/h/photo_2022-09-28_21-58-54_1.jpg">--}}
+{{--                                </div>--}}
+{{--                                <div class="product-info">--}}
+{{--                                    <p>iPhone 14 128GB | Chính hãng VN/A-Đỏ</p>--}}
+{{--                                    <p><span>Giá: </span>20.990.000&nbsp;₫<del data-v-34c42bd9="">24.990.000&nbsp;₫</del></p>--}}
+{{--                                    <p><span>Số lượng: </span>1</p>--}}
+{{--                                    <p><span>Tổng tiền: </span>20.990.000&nbsp;₫</p>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
                 <div class="bottom-button-success">
                     <div class="my-3 d-flex">
                         <a href="#" class="btn btn-primary mr-2">Kiểm tra đơn hàng <br>
@@ -117,9 +98,6 @@
                             </svg>
                         </a>
                     </div>
-                    <a href="#" target="_blank" class="w-100 btn btn-success">
-                        <i class="pl-2">Góp ý về trải nghiệm trong việc đặt hàng và thanh toán</i>
-                    </a>
                 </div>
             </div>
         </section>

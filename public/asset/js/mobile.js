@@ -250,7 +250,7 @@ $(document).ready(function () {
                 $(tmp).find('.sold2').removeClass('d-none');
                 $(tmp).find('.sold2 span').html('Đã bán '+v.sold);
             }
-            if(v.quantity - v.sold > 0){
+            if(v.quantity > 0){
                 $(tmp).find('.qty').html('Còn hàng');
                 $(tmp).find('.qty').css({"color":"#01aa42", "background-color": "#dbf8e1"});
             }
@@ -752,7 +752,7 @@ $(document).ready(function () {
     });
     $(document).on('click', '.btn_view_ttsp_all', function () {
         $(this).addClass('d-none');
-        $('.ttsp_cnt').css({"max-height":"300px","overflow-y":"auto"});
+        $('.ttsp_cnt').css({"max-height":"6000px","overflow-y":"auto"});
     });
     $(document).on('click', '.btn_review', function () {
         $('#author_customer_review').val('');
@@ -881,7 +881,7 @@ $(document).ready(function () {
                         if(!$('.modal-review').hasClass('d-none')){
                             $('.modal-review').addClass('d-none');
                         }
-                    $( "#success_cm" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
+                    $( "#success_cm" ).fadeIn( 300 ).delay( 500 ).fadeOut( 400 );
                 }
             },
         });
@@ -912,10 +912,10 @@ $(document).ready(function () {
                 if(data.success){
                     $('#count-cart').text(data.count);
                     $('#count-cart2').text(data.count);
-                    $( "#snackbar" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
+                    $( "#snackbar" ).fadeIn( 300 ).delay( 500 ).fadeOut( 400 );
                 }
                 else{
-                    $( "#snackbar_false" ).fadeIn( 300 ).delay( 2500 ).fadeOut( 400 );
+                    $( "#snackbar_false" ).fadeIn( 300 ).delay( 500 ).fadeOut( 400 );
                 }
             }
         });

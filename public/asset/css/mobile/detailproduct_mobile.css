@@ -408,7 +408,6 @@ title_dtp ul{
     flex-direction: column;
     align-items: center!important;
     padding-bottom: 10px;
-    font-family: sans-serif!important;
     justify-content: center!important;
 }
 .order-button strong{
@@ -464,7 +463,6 @@ title_dtp ul{
     white-space: nowrap;
     cursor: pointer;
     user-select: none;
-    font-family: sans-serif!important;
     line-height: 1.5;
     font-style: inherit;
     display: inline-flex;
@@ -580,7 +578,8 @@ color: #000;
     max-width: 100%;
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
     border-radius: 10px;
-    margin-left: 0!important;
+    margin-left: 1px;
+    margin-right: 1px;
     padding-bottom: 0.25rem!important;
     padding-top: 1rem!important;
     padding-right: 1rem!important;
@@ -1014,7 +1013,6 @@ progress {color: #3991ff;}
     border-radius: 4px;
     color: #363636;
     -webkit-appearance: none;
-    font-family: sans-serif!important;
     font-size: 1rem;
     position: relative;
     vertical-align: top;
@@ -1239,4 +1237,61 @@ progress {color: #3991ff;}
 .table_boder{
     border-radius: 10px;
     border-color: #e1e1e1!important;
+}
+.code_p{
+    margin-right: 10px;
+}
+.detail-price-all{
+    width: 100%;
+    float: left;
+    border: dashed 1px #4267b2;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f7f9fb;
+    margin-bottom: 10px;
+}
+.detail-old-price{
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+    display: flex;
+    -webkit-box-align: baseline;
+    align-items: baseline;
+}
+ .txt{
+    width: 112px;
+    float: left;
+    font-size: 14px;
+}
+.detail-old-price .price{
+    font-size: 16px;
+    font-weight: 700;
+    color: #666666;
+    text-decoration: line-through;
+}
+.detail-discount{
+    font-size: 12px;
+    color: #ed1b24;
+    font-weight: 700;
+}
+.detail-price{
+    width: 100%;
+    float: left;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+}
+.detail-price .price{
+    font-size: 20px;
+    margin-right: 5px;
+    color: #0f5b9a;
+    font-weight: 700;
+}
+.detail-discount{
+    font-size: 12px;
+    color: #ed1b24;
+    font-weight: 700;
 }

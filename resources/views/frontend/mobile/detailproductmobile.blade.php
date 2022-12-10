@@ -63,9 +63,11 @@
                                             <div class="ksp-gallery">
                                                 <div class="box-ksp">
                                                     @if(!empty($product->thumb))
-                                                        <img src="{{asset('upload/images/products/large/'.$product->thumb)}}">
+                                                        <img
+                                                            src="{{asset('upload/images/products/large/'.$product->thumb)}}">
                                                     @else
-                                                        <img src="{{asset('upload/images/products/large/no-images.png')}}">
+                                                        <img
+                                                            src="{{asset('upload/images/products/large/no-images.png')}}">
                                                     @endif
                                                 </div>
                                             </div>
@@ -75,7 +77,9 @@
                                         <div class="slide-wrapper">
                                             <div class="img-wrp">
                                                 <a href="javascript:;" class="ac_img_p active">
-                                                    <img src="{{asset('upload/images/products/thumb/'.$product->thumb)}}" width="58" height="58">
+                                                    <img
+                                                        src="{{asset('upload/images/products/thumb/'.$product->thumb)}}"
+                                                        width="58" height="58">
                                                 </a>
                                             </div>
                                         </div>
@@ -83,7 +87,9 @@
                                             @foreach ($imgs as $img)
                                                 <div class="slide-wrapper">
                                                     <div class="img-wrp">
-                                                        <a href="javascript:;" class="ac_img_p"> <img src="{{asset('upload/images/products/thumb/'.$img)}}" width="58" height="58">
+                                                        <a href="javascript:;" class="ac_img_p"> <img
+                                                                src="{{asset('upload/images/products/thumb/'.$img)}}"
+                                                                width="58" height="58">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -98,6 +104,8 @@
                                         <h1>{{$product->name}}</h1>
                                     @endif
                                     <div class="review d-flex">
+                                        <span>Mã SP:</span><span class="code_p">{{$product->ma}}</span>
+                                        <p class="mx-2 my-0">|</p>
                                         <div class="rating2">
                                             <div class="rating-upper" style="width: {{$product->count_vote()}}%">
                                                 <span><i class="fas fa-star"></i></span>
@@ -115,26 +123,67 @@
                                             </div>
                                         </div>
                                         <div class="count-review">{{$product->votes->count()}} đánh giá</div>
-                                        <p class="mx-2">|</p>
+                                        <p class="mx-2 my-0">|</p>
                                         @if(!empty($product->sold))
-                                            <div class=""><i class="fas fa-badge-check mx-1"></i>Đã bán {{$product->sold}}</div>
+                                            <div class=""><i class="fas fa-badge-check mx-1"></i>Đã
+                                                bán {{$product->sold}}</div>
                                         @endif
                                     </div>
+                                    <div class="review d-flex">
+                                        <span>Bình luận: 11</span>
+                                        <p class="mx-2 my-0">|</p><span>Lượt xem: 1234</span>
+                                        <p class="mx-2 my-0">|</p><span class="mx-2">like</span><span>Share</span>
+                                    </div>
                                 </div>
-                                <div class="block-box-price">
-                                    <div class="box-info-price">
-                                        @if ($product->price_onsale != 0 && $product->price_onsale !=null)
-                                            <p class="price_show">
-                                                {{number_format($product->price_onsale,0,',','.')}} đ
-                                            </p>
-                                            <p class="price_through">
-                                                {{number_format($product->price,0,',','.')}} đ
-                                            </p>
+                                @if(!empty($product->short_content))
+                                    <div class="box-warranty-info">
+                                        <div class="box-title"><p>Thông tin sản phẩm</p></div>
+                                        <div class="ttsp_cnt">{!! $product->short_content !!}</div>
+                                        <button class="btn_view_ttsp_all">Xem thêm
+                                            <div class="d-flex">
+                                                <i class="far fa-angle-down"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                @endif
+                                {{--                                <div class="block-box-price">--}}
+                                {{--                                    <div class="box-info-price">--}}
+                                {{--                                        @if ($product->price_onsale != 0 && $product->price_onsale !=null)--}}
+                                {{--                                            <p class="price_show">--}}
+                                {{--                                                {{number_format($product->price_onsale,0,',','.')}} đ--}}
+                                {{--                                            </p>--}}
+                                {{--                                            <p class="price_through">--}}
+                                {{--                                                {{number_format($product->price,0,',','.')}} đ--}}
+                                {{--                                            </p>--}}
+                                {{--                                        @else--}}
+                                {{--                                            <p class="price_show">--}}
+                                {{--                                                {{number_format($product->price,0,',','.')}} đ--}}
+                                {{--                                            </p>--}}
+                                {{--                                        @endif--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
+                                <div class="d-flex">
+                                    <div>
+                                        <span>Tình trạng:</span>
+                                        @if($product->quantity > 0)
+                                            <span>Còn hàng</span>
                                         @else
-                                            <p class="price_show">
-                                                {{number_format($product->price,0,',','.')}} đ
-                                            </p>
+                                            <span>Liên hệ</span>
                                         @endif
+                                        <p class="mx-2 my-0">|</p>
+                                        <span>Bảo hành: 36 tháng</span>
+                                    </div>
+                                </div>
+                                <div class="detail-price-all">
+                                    <div class="detail-old-price">
+                                        <span class="txt">Giá bán:</span>
+                                        <span class="price">21.990.000đ</span>
+                                    </div>
+
+                                    <div class="detail-price">
+                                        <span class="txt">Giá khuyến mại:</span>
+                                        <span class="price">20.990.000đ</span>
+                                        <span class="detail-discount">(Tiết kiệm 1.000.000đ)</span>
                                     </div>
                                 </div>
                                 @if(!empty($product->gift))
@@ -188,17 +237,6 @@
 
                             </div>
                         </div>
-                        @if(!empty($product->short_content))
-                            <div class="box-warranty-info">
-                                <div class="box-title"><p>Thông tin sản phẩm</p></div>
-                                <div class="ttsp_cnt">{!! $product->short_content !!}</div>
-                                <button class="btn_view_ttsp_all">Xem thêm
-                                    <div class="d-flex">
-                                        <i class="far fa-angle-down"></i>
-                                    </div>
-                                </button>
-                            </div>
-                        @endif
                         @if(!empty($product->property))
                             <div class="technicalInfo">
                                 <h2 class="title">Thông số kỹ thuật</h2>
@@ -216,7 +254,8 @@
                                         <div>
                                             <div class="header_tskt">
                                                 <p class="title_tskt">Thông số kỹ thuật</p>
-                                                <button class="bnt-close-tskt"><i class="fas fa-times-circle"></i></button>
+                                                <button class="bnt-close-tskt"><i class="fas fa-times-circle"></i>
+                                                </button>
                                             </div>
                                         </div>
                                         <div class="modal-tskt-content px-2 pt-2 pb-0">
@@ -247,10 +286,10 @@
                                              data-target="{{$product->slug}}">
                                             <h2>Sản phẩm tương tự</h2>
                                         </div>
-{{--                                        <div class="b_title tt_center bg_tt" id="load_p_watched"--}}
-{{--                                             data-target="{{$product->id}}">--}}
-{{--                                            <h2>Sản phẩm đã xem</h2>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="b_title tt_center bg_tt" id="load_p_watched"--}}
+                                        {{--                                             data-target="{{$product->id}}">--}}
+                                        {{--                                            <h2>Sản phẩm đã xem</h2>--}}
+                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                                 <div class="featured-product-list" id="load_p_detail"></div>
@@ -287,7 +326,9 @@
                                             <strong><span>5</span></strong>
                                             <div class="start_co w-100"><span><i class="fas fa-star"></i></span></div>
                                         </div>
-                                        <progress max="89" value="{{($product->vote_5->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}" class="progress_s"></progress>
+                                        <progress max="89"
+                                                  value="{{($product->vote_5->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}"
+                                                  class="progress_s"></progress>
                                         <span class="number_ev">{{$product->vote_5->count()}} đánh giá</span>
                                     </div>
                                     <div class="rating-level">
@@ -295,7 +336,9 @@
                                             <strong><span>4</span></strong>
                                             <div class="start_co w-100"><span><i class="fas fa-star"></i></span></div>
                                         </div>
-                                        <progress max="89" value="{{($product->vote_4->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}" class="progress_s"></progress>
+                                        <progress max="89"
+                                                  value="{{($product->vote_4->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}"
+                                                  class="progress_s"></progress>
                                         <span class="number_ev">{{$product->vote_4->count()}} đánh giá</span>
                                     </div>
                                     <div class="rating-level">
@@ -303,7 +346,9 @@
                                             <strong><span>3</span></strong>
                                             <div class="start_co w-100"><span><i class="fas fa-star"></i></span></div>
                                         </div>
-                                        <progress max="89" value="{{($product->vote_3->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}" class="progress_s"></progress>
+                                        <progress max="89"
+                                                  value="{{($product->vote_3->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}"
+                                                  class="progress_s"></progress>
                                         <span class="number_ev">{{$product->vote_3->count()}} đánh giá</span>
                                     </div>
                                     <div class="rating-level">
@@ -311,7 +356,9 @@
                                             <strong><span>2</span></strong>
                                             <div class="start_co w-100"><span><i class="fas fa-star"></i></span></div>
                                         </div>
-                                        <progress max="89" value="{{($product->vote_2->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}" class="progress_s"></progress>
+                                        <progress max="89"
+                                                  value="{{($product->vote_2->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}"
+                                                  class="progress_s"></progress>
                                         <span class="number_ev">{{$product->vote_2->count()}} đánh giá</span>
                                     </div>
                                     <div class="rating-level">
@@ -319,7 +366,9 @@
                                             <strong><span>1</span></strong>
                                             <div class="start_co w-100"><span><i class="fas fa-star"></i></span></div>
                                         </div>
-                                        <progress max="89" value="{{($product->vote_1->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}" class="progress_s"></progress>
+                                        <progress max="89"
+                                                  value="{{($product->vote_1->count()/(($product->votes->count() == 0) ? 5 : $product->votes->count()))*89}}"
+                                                  class="progress_s"></progress>
                                         <span class="number_ev">{{$product->vote_1->count()}} đánh giá</span>
                                     </div>
                                 </div>
@@ -339,40 +388,54 @@
                                     </div>
                                     <div class="modal-review-content p-4">
                                         <div>
-                                            <input type="text" id="author_customer_review" placeholder="Họ và tên" class="input input__file my-2">
-                                            <label class="rp_review rv_name d-none"><i>Bạn vui lòng nhập họ tên.</i></label>
+                                            <input type="text" id="author_customer_review" placeholder="Họ và tên"
+                                                   class="input input__file my-2">
+                                            <label class="rp_review rv_name d-none"><i>Bạn vui lòng nhập họ
+                                                    tên.</i></label>
                                         </div>
                                         <div>
-                                            <input type="text" id="contact_customer_review" placeholder="Email/Sđt" class="input input__file my-2">
-                                            <label class="rp_review rv_contact d-none"><i>Bạn vui lòng nhập thông tin liên hệ</i></label>
+                                            <input type="text" id="contact_customer_review" placeholder="Email/Sđt"
+                                                   class="input input__file my-2">
+                                            <label class="rp_review rv_contact d-none"><i>Bạn vui lòng nhập thông tin
+                                                    liên hệ</i></label>
                                         </div>
-                                        <textarea id="comment_customer_review" placeholder="Xin mời chia sẻ một số cảm nhận về sản phẩm" class="textarea-review" ></textarea>
-                                        <label class="rp_review rv_comment d-none"><i>Bạn vui lòng nhập nhận xét</i></label>
+                                        <textarea id="comment_customer_review"
+                                                  placeholder="Xin mời chia sẻ một số cảm nhận về sản phẩm"
+                                                  class="textarea-review"></textarea>
+                                        <label class="rp_review rv_comment d-none"><i>Bạn vui lòng nhập nhận
+                                                xét</i></label>
                                         <div class="modal-review-star my-3 p-2">
                                             <p class="my-2 title-review">Bạn thấy sản phẩm này như thế nào?</p>
                                             <div class="comment-form-rating">
                                                 <label for="rating"></label>
                                                 <div id="rating">
-                                                    <input id="star1" name="rating" class="check-rate" type="radio" value="5" checked>
+                                                    <input id="star1" name="rating" class="check-rate" type="radio"
+                                                           value="5" checked>
                                                     <label class="full" for="star1">
                                                     </label>
-                                                    <input id="star2" name="rating" class="check-rate" type="radio" value="4">
+                                                    <input id="star2" name="rating" class="check-rate" type="radio"
+                                                           value="4">
                                                     <label class="full" for="star2">
                                                     </label>
-                                                    <input id="star3" name="rating" class="check-rate" type="radio" value="3">
+                                                    <input id="star3" name="rating" class="check-rate" type="radio"
+                                                           value="3">
                                                     <label class="full" for="star3">
                                                     </label>
-                                                    <input id="star4" name="rating" class="check-rate" type="radio" value="2">
+                                                    <input id="star4" name="rating" class="check-rate" type="radio"
+                                                           value="2">
                                                     <label class="full" for="star4">
                                                     </label>
-                                                    <input id="star5" name="rating" class="check-rate" type="radio" value="1">
+                                                    <input id="star5" name="rating" class="check-rate" type="radio"
+                                                           value="1">
                                                     <label class="full" for="star5">
                                                     </label>
                                                 </div>
                                             </div>
                                             <span id="lb_star" class="d-flex justify-content-center">Tuyệt vời</span>
                                         </div>
-                                        <button type="button" id="submit_review" class="submit-review" data-target="{{$product->id}}">GỬI ĐÁNH GIÁ</button>
+                                        <button type="button" id="submit_review" class="submit-review"
+                                                data-target="{{$product->id}}">GỬI ĐÁNH GIÁ
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -392,7 +455,8 @@
                                                 <div class="item-review-rating"><strong>Đánh giá: </strong>
                                                     <div class="d-flex mx-2">
                                                         <div class="rating2">
-                                                            <div class="rating-upper" style="width: {{$comment->level * 20}}%">
+                                                            <div class="rating-upper"
+                                                                 style="width: {{$comment->level * 20}}%">
                                                                 <span><i class="fas fa-star"></i></span>
                                                                 <span><i class="fas fa-star"></i></span>
                                                                 <span><i class="fas fa-star"></i></span>
@@ -419,7 +483,8 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <button class="btn-show-more-review" data-target="{{$comments->currentPage()}}" data-id="{{$product->id}}">
+                                <button class="btn-show-more-review" data-target="{{$comments->currentPage()}}"
+                                        data-id="{{$product->id}}">
                                     Xem thêm
                                     <div class="inline-block-icon">
                                         <i class="far fa-angle-down"></i>

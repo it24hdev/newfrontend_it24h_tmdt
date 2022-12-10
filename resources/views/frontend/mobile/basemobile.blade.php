@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.theme.default.min.css')}}">
     <link rel="stylesheet" href="/asset/lib/fontawesomePro5/css/all.min.css">
+{{--    <link rel="stylesheet" href="{{asset('asset/css/mobile/html.css')}}">--}}
     <link rel="stylesheet" href="{{asset('asset/css/mobile/header_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/body_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/footer_mobile.css')}}">

@@ -3,12 +3,11 @@
     max-width: 600px;
     margin: auto;
     border-radius: 15px;
-
+    margin-top: 3.5rem
 }
 .block-box{
     font-size: 16px;
     font-weight: 400;
-    font-family: "SegoeUI",sans-serif;
 }
 .container{
     background: #fff;
@@ -106,13 +105,11 @@
 }
 .strong_text{
     font-weight: 500;
-    font-family: "SegoeUI",sans-serif;
     color: #0e2431;
     font-size: .938rem;
 }
 .bold_text{
     font-weight: 700;
-    font-family: "SegoeUI",sans-serif;
     color: #155724;
 }
 .info h4{

@@ -64,9 +64,6 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-wrapper" >
-{{--                                    <span class="icon-wrapper" >--}}
-{{--                                        <i class="fal fa-comment-alt-edit"></i>--}}
-{{--                                    </span>--}}
                                     <span class="position-relative">
                                     <textarea class="form-control " name="customer_request" rows="3" placeholder="Nhập yêu cầu.." required></textarea>
                                     <span class="required_request text-danger d-none"><i>Bạn chưa nhập yêu cầu.</i></span>
@@ -88,48 +85,6 @@
 
                     </div>
                     <div class="block-services mb-5">
-{{--                        <ul class="clearfix">--}}
-{{--                            <li>--}}
-{{--                                <div class="item">--}}
-{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-5.png')}}"--}}
-{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
-{{--                                    <div class="sv-info">--}}
-{{--                                        <div class="top-sv">Miễn phí vận chuyển</div>--}}
-{{--                                        <div class="bottom-sv">Áp dụng cho đơn hàng 2 sản phẩm</div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </li>--}}
-{{--                            <li>--}}
-{{--                                <div class="item">--}}
-{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-6.png')}}"--}}
-{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
-{{--                                    <div class="sv-info">--}}
-{{--                                        <div class="top-sv">Thanh toán dễ dàng</div>--}}
-{{--                                        <div class="bottom-sv">Trả tiền mặt, Banking, trả góp 0%</div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </li>--}}
-{{--                            <li>--}}
-{{--                                <div class="item">--}}
-{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-7.png')}}"--}}
-{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
-{{--                                    <div class="sv-info">--}}
-{{--                                        <div class="top-sv">Hỗ trợ 24/7</div>--}}
-{{--                                        <div class="bottom-sv">Tư vấn giải đáp mọi thắc mắc</div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </li>--}}
-{{--                            <li>--}}
-{{--                                <div class="item">--}}
-{{--                                    <div class="sv-icon"><img src="{{asset('/asset/images/item-8.png')}}"--}}
-{{--                                                              alt="Slide Image" width="57" height="57"></div>--}}
-{{--                                    <div class="sv-info">--}}
-{{--                                        <div class="top-sv">Quà tặng hấp dẫn</div>--}}
-{{--                                        <div class="bottom-sv">Nhiều chính sách quà tặng lớn</div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
                     </div>
                     <div class="wp-supper-deal p-1">
                         <div class="title_activity form-control">Hoạt động gần đây</div>
