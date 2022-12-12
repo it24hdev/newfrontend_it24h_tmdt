@@ -219,4 +219,14 @@ class DetailproductController extends Controller
             'data_product_mobile' => $product_related,
         ]);
     }
+
+    public  function product_views(Request $request){
+        $product = Products::find($request->id);
+        $data = [
+            'view' => $request->view,
+        ];
+        $product->update($data);
+        return response()->json(['success' => true]);
+    }
+
 }

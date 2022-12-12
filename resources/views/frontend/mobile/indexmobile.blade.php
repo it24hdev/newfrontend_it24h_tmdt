@@ -60,7 +60,6 @@
                                     <a title="Xem tất cả Deal Hot" href="#">
                                         <div class="count-down" id="timesale" get-time-sale="{{$time_sale}}">
                                             <span id="d"></span> &nbsp;<span id="h"></span>&nbsp;:&nbsp;<span id="m"></span>&nbsp;:&nbsp;<span id="s"></span></div>
-                                       {{--  <img width="20" height="20" src="{{asset('upload/images/common_img/iconright.png')}}" alt="see_more"> --}}
                                     </a>
                                 </div>
                             </div>
@@ -126,7 +125,7 @@
         </div>
         {{--khuyen mai hot--}}
         <div class="category-container">
-            <div class="cat_box_sale">
+            <div class="cat_box_sale mg-box-p">
                 <div class="cat_box_s_h">
                     <div class="title_s">
                         <div class="b_title tt_center" id="new_p">
@@ -135,7 +134,9 @@
                         <div class="b_title tt_center" id="hot_p">
                             <i class="fas fa-fire"></i><h2>Sản phẩm hot</h2>
                         </div>
-                        {{--                    <a href="#" class="more-product">Xem tất cả</a>--}}
+                        <div class="b_title tt_center" id="promotion_p">
+                            <i class="far fa-diploma"></i><h2>Khuyến mại</h2>
+                        </div>
                     </div>
                 </div>
                 <div class="featured-product-list" id="load_promotion"></div>

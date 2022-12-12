@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('unit',32)->nullable();
             $table->integer('onsale')->default(0)->nullable();
             $table->bigInteger('price_onsale')->default(0)->nullable();
-            $table->integer('new')->default(0)->nullable();
-            $table->integer('hot_sale')->default(0)->nullable();
+            $table->boolean('is_new')->default(0)->nullable();
+            $table->boolean('is_hot')->default(0)->nullable();
             $table->timestamp('time_deal')->nullable();
             $table->text('specifications')->nullable();
             $table->string('event')->nullable();
@@ -44,10 +44,12 @@ return new class extends Migration
             $table->longtext('property_short')->nullable();
             $table->text('attr')->nullable();
             $table->string('still_stock')->nullable();
-            $table->string('youtube')->nullable();
+            $table->longtext('youtube')->nullable();
             $table->string('detailproperty')->nullable();
             $table->integer('tax')->nullable();
             $table->string('warranty')->nullable();
+            $table->boolean('is_promotion')->default(0)->nullable();
+            $table->integer('view')->default(0)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -20,7 +20,7 @@
             <p class="title_cart title m-auto">Giỏ hàng</p>
             <div class="plus_p">
                 <a href="/" class="d-flex align-items-center">
-                    <i class="fal fa-plus-circle"></i>
+                    <i class="fal fa-plus"></i>
                 </a>
             </div>
         </div>

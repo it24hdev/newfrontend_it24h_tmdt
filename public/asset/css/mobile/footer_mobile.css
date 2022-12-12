@@ -54,22 +54,3 @@
     padding-bottom: 4px;
 }
 
-#go_top{
-    display: block;
-    border-radius: 50px;
-    background: #ededed;
-    color: #8d8989;
-    font-size: 22px;
-    height: 40px;
-    width: 40px;
-    font-weight: 900;
-    position: fixed;
-    right: 25px;
-    bottom: 34px;
-    z-index:10;
-    line-height: 25px;
-    text-align: center;
-    padding-top: 6px;
-    -webkit-transition: all .2s ease-in-out;
-    cursor: pointer;
-}

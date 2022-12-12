@@ -28,6 +28,7 @@
     .box-info-cnt{
         margin: 0;
     }
+
 }
 
 .gallery-product-detail{
@@ -144,9 +145,7 @@ title_dtp ul{
 }
 .slide-wrapper{
     transition-timing-function: ease-out;
-    /*margin: 0 auto;*/
     position: relative;
-    /*width: 100%;*/
     min-height: 50px;
     z-index: 1;
     display: flex;
@@ -174,6 +173,8 @@ title_dtp ul{
 }
 .box-header .review{
     align-items: baseline;
+    font-size: 12px;
+    color: #383838;
 }
 .box-header .count-review{
     margin-left: 5px;
@@ -582,8 +583,8 @@ color: #000;
     margin-right: 1px;
     padding-bottom: 0.25rem!important;
     padding-top: 1rem!important;
-    padding-right: 1rem!important;
-    padding-left: 1rem!important;
+    padding-right: 0.5rem!important;
+    padding-left: 0.5rem!important;
     margin-bottom: 1rem!important;
 }
 .tskt_cnt{
@@ -691,6 +692,8 @@ color: #000;
     border-radius: 10px;
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
     padding: 0.5rem!important;
+    /*position: relative;*/
+    /*z-index: 10;*/
 }
 .evaluation h2{
     line-height: 1.5;
@@ -1132,12 +1135,8 @@ progress {color: #3991ff;}
     margin: 0;
 }
 .ttsp_cnt{
-    max-height: 150px;
-    overflow-y: hidden;
     margin-bottom: 10px;
-}
-.ttsp_cnt::-webkit-scrollbar{
-    display: none;
+    font-size: 14px;
 }
 .modal-content-tskt{
     opacity: inherit;
@@ -1193,9 +1192,9 @@ progress {color: #3991ff;}
 .close_tskt{
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
-    border-top: 1px solid #dbdbdb;
+    border-top: 1px solid #ffffff;
     align-items: center;
-    background-color: #f5f5f5;
+    background-color: #f9fafb;
     display: flex;
     flex-shrink: 0;
     justify-content: flex-start;
@@ -1234,9 +1233,14 @@ progress {color: #3991ff;}
 .modal-tskt-content::-webkit-scrollbar{
     display: none;
 }
-.table_boder{
+.table_border{
     border-radius: 10px;
-    border-color: #e1e1e1!important;
+    border-color: #f8f9fa!important;
+    font-size: 14px;
+}
+.table_border td{
+    width: 50%!important;
+
 }
 .code_p{
     margin-right: 10px;
@@ -1289,9 +1293,208 @@ progress {color: #3991ff;}
     margin-right: 5px;
     color: #0f5b9a;
     font-weight: 700;
+    white-space: nowrap;
 }
 .detail-discount{
     font-size: 12px;
     color: #ed1b24;
     font-weight: 700;
+}
+.detail-offer{
+    width: 100%;
+    float: left;
+    padding: 12px;
+    border-radius: 10px;
+    border: solid 1px #3991ff;
+    padding-top: 25px;
+    position: relative;
+    margin-top: 20px;
+    margin-bottom: 12px;
+}
+.detail-offer .title{
+    width: 160px;
+    line-height: 40px;
+    float: left;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    position: absolute;
+    top: -20px;
+    left: 20px;
+    transform: skew(-20deg);
+    background: #3991ff;
+    border-radius: 6px;
+}
+.detail-offer span{
+    white-space: pre-line;
+    width: 100%;
+    float: left;
+    line-height: 1.5;
+    font-size: 14px;
+}
+.status_warranty {
+    width: 100%;
+    float: left;
+    margin-bottom: 10px;
+}
+.status_warranty_item{
+    float: left;
+    margin-right: calc(50% - 135px);
+    position: relative;
+    font-size: 14px;
+    font-weight: 700;
+}
+.green{
+    color: #13dd64;
+}
+.red{
+    color: #e35050;
+}
+.blue{
+    color: #0000c9;
+}
+.call{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+.location_store tr{
+    display: flex;
+    width: 100%!important;
+    border-radius: 10px;
+}
+.location_color{
+    color: #0864c1;
+    margin: 0 5px;
+}
+.location_store td{
+    width: 100%!important;
+    border-radius: 10px;
+}
+.location_store a{
+    color: #0864c1;
+    text-decoration:underline;
+}
+.link_youtube{
+    display: block;
+    max-width: 100%;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+    border-radius: 10px;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding-bottom: 1rem!important;
+    padding-top: 1rem!important;
+    padding-right: 0.5rem!important;
+    padding-left: 0.5rem!important;
+    margin-bottom: 1rem!important;
+}
+
+.link_youtube h2{
+    font-size: 20px;
+}
+.link_youtube iframe{
+    width: 100%;
+    display: block;
+    height: auto!important;
+    margin: 0;
+    padding: 0;
+}
+.box_sale{
+    margin-bottom: 10px!important;
+    padding-bottom: 0!important;
+}
+.product-bottom-panel{
+    height: 48px;
+    max-height: 100%;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    z-index: 101;
+    border: solid rgba(0,0,0,.09)!important;
+    border-width: 1px 0 0!important;
+    box-shadow: 0 0 6px 0 rgb(0 0 0 / 9%);
+    position: fixed;
+    bottom: 0;
+    background-color: #fff;
+}
+.product-bottom-panel__chat-now{
+    background-color: #fff;
+    color: rgba(0,0,0,.87);
+    flex-direction: column;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .625rem;
+    max-height: 3rem;
+    cursor: pointer;
+    user-select: none;
+}
+.product-bottom-panel__chat-now-icon{
+    color: #d0011b;
+    flex: 0 1 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    stroke: currentColor;
+    fill: currentColor;
+    font-size: .625rem;
+}
+.product-bottom-panel__chat-now-text {
+    flex: 0 1 auto;
+    white-space: nowrap;
+}
+.product-cart-and-buy-buttons {
+    display: flex;
+    flex-direction: row;
+    flex: 3;
+}
+.product-bottom-panel__add-to-cart{
+    background-color: #fff;
+    color: rgba(0,0,0,.87);
+    flex-direction: column;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: .625rem;
+    max-height: 3rem;
+    cursor: pointer;
+}
+.stardust-icon{
+    flex: 0 1 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-bottom: 0.25rem;
+    fill: #3991ff;
+    color: #3991ff;
+    stroke: #3991ff;
+    overflow: hidden;
+}
+.product-bottom-panel__add-to-cart-text{
+    flex: 0 1 auto;
+    white-space: nowrap;
+    color: rgba(0,0,0,.87);
+}
+.product-bottom-panel__buy-now{
+    background-color: #3991ff;
+    font-size: .875rem;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    max-height: 3rem;
+    cursor: pointer;
+}
+.product-bottom-panel__buy-now a{
+    color: #fff;
+}
+.product-bottom-panel__add-to-cart-text a, .product-bottom-panel__chat-now-text a{
+    color: #000000de;
+}
+.box_watched{
+    margin-bottom: 40px!important;
 }

@@ -109,17 +109,12 @@ class ProductsController extends Controller
                 'thumb'         => 'image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
             ],
             [
-                // 'ma.required' => 'Mã sản phẩm không được để bỏ trống.',
                 'ma.max'      => 'Mã sản phẩm có độ dài tối đa :max ký tự.',
                 'ma.unique'   => 'Mã sản phẩm đã tồn tại trong hệ thống',
                 'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
             ]
         );
-
-        $status   = Products::ACTIVE;
         $nameFile = Products::IMAGE;
-        if ($request->status == null)
-            $status   = Products::DISABLE;
         if ($request->thumb  != null){
             $nameFile = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->thumb->extension();
         }
@@ -156,24 +151,27 @@ class ProductsController extends Controller
             'content'      => $request->content_product,
             'short_content'=> $request->short_content,
             'thumb'        => $nameFile,
-            'status'       => $status,
+            'status'       => $request->has('status'),
             'user_id'      => Auth::id(),
             'image'        => $imgs,
             'brand'        => $request->brand,
             'cat_id'       => $cat_id,
             'property'     => $request->property,
             'attr'         => $attr_id,
-            'new'        => $request->new,
-            'hot_sale'        => $request->hot_sale,
-            'gift'        => $request->gift,
-            'sold'        => $request->sold,
+            'is_new'       => $request->has('is_new'),
+            'is_hot'       => $request->has('is_hot'),
+            'is_promotion' => $request->has('is_promotion'),
+            'warranty'     => $request->warranty,
+            'gift'         => $request->gift,
+            'sold'         => $request->sold,
             'specifications'    => $specifications,
-            'installment' => $request->installment,
-            'year' => $request->year,
-            'event' => $request->event,
-            'still_stock' => $request->still_stock,
-            'time_deal'    => $request->time_deal,
-            'youtube' => $request->youtube,
+            'installment'       => $request->installment,
+            'year'              => $request->year,
+            'event'             => $request->event,
+            'still_stock'       => $request->still_stock,
+            'time_deal'         => $request->time_deal,
+            'youtube'           => $request->youtube,
+            'view'              => $request->view,
         ];
 
         try {
@@ -256,11 +254,8 @@ class ProductsController extends Controller
         );
         $Products = Products::find($id);
         if (!is_null($Products)) {
-            $status        = Products::ACTIVE;
             $nameFile      = Products::IMAGE;
             $nameFileOld   = $Products->thumb;
-            if ($request->status == null)
-                $status    = Products::DISABLE;
             if ($request->thumb  != null)
                 $nameFile  = CommonHelper::convertTitleToSlug($request->name, '-') . '-' . time() . '.' . $request->thumb->extension();
             else $nameFile = $nameFileOld;
@@ -300,24 +295,27 @@ class ProductsController extends Controller
                 'content'      => $request->content_product,
                 'short_content'=> $request->short_content,
                 'thumb'        => $nameFile,
-                'status'       => $status,
+                'status'       => $request->has('status'),
                 'user_id'      => Auth::id(),
                 'image'        => $imgs,
                 'brand'        => $request->brand,
                 'cat_id'       => $cat_id,
                 'property'     => $request->property,
                 'attr'         => $attr_id,
-                'new'        => $request->new,
-                'hot_sale'        => $request->hot_sale,
-                'gift'        => $request->gift,
-                'sold'        => $request->sold,
+                'is_new'       => $request->has('is_new'),
+                'is_hot'       => $request->has('is_hot'),
+                'is_promotion' => $request->has('is_promotion'),
+                'warranty'     => $request->warranty,
+                'gift'         => $request->gift,
+                'sold'         => $request->sold,
                 'specifications'    => $specifications,
-                'installment' => $request->installment,
-                'year' => $request->year,
-                'event' => $request->event,
-                'still_stock' => $request->still_stock,
-                'time_deal'    => $request->time_deal,
-                'youtube' => $request->youtube,
+                'installment'   => $request->installment,
+                'year'          => $request->year,
+                'event'         => $request->event,
+                'still_stock'   => $request->still_stock,
+                'time_deal'     => $request->time_deal,
+                'youtube'       => $request->youtube,
+                'view'          => $request->view,
             ];
             try {
                 DB::beginTransaction();

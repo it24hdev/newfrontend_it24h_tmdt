@@ -44,9 +44,7 @@
                                             d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
                                     </svg>
                                 </div>
-                                <p>
-                                    {{$product->name}}
-                                </p>
+                                <p> {{$product->name}} </p>
                             </li>
                         </ul>
                     </div>
@@ -87,9 +85,9 @@
                                             @foreach ($imgs as $img)
                                                 <div class="slide-wrapper">
                                                     <div class="img-wrp">
-                                                        <a href="javascript:;" class="ac_img_p"> <img
-                                                                src="{{asset('upload/images/products/thumb/'.$img)}}"
-                                                                width="58" height="58">
+                                                        <a href="javascript:;" class="ac_img_p">
+                                                            <img src="{{asset('upload/images/products/thumb/'.$img)}}"
+                                                                 width="58" height="58">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -104,7 +102,7 @@
                                         <h1>{{$product->name}}</h1>
                                     @endif
                                     <div class="review d-flex">
-                                        <span>Mã SP:</span><span class="code_p">{{$product->ma}}</span>
+                                        <span>Mã SP:&nbsp;</span><span class="code_p"><strong>{{$product->ma}}</strong></span>
                                         <p class="mx-2 my-0">|</p>
                                         <div class="rating2">
                                             <div class="rating-upper" style="width: {{$product->count_vote()}}%">
@@ -131,111 +129,107 @@
                                     </div>
                                     <div class="review d-flex">
                                         <span>Bình luận: 11</span>
-                                        <p class="mx-2 my-0">|</p><span>Lượt xem: 1234</span>
+                                        <p class="mx-2 my-0">|</p><span>Lượt xem: {{$product->view}}</span>
                                         <p class="mx-2 my-0">|</p><span class="mx-2">like</span><span>Share</span>
                                     </div>
                                 </div>
                                 @if(!empty($product->short_content))
                                     <div class="box-warranty-info">
-                                        <div class="box-title"><p>Thông tin sản phẩm</p></div>
                                         <div class="ttsp_cnt">{!! $product->short_content !!}</div>
-                                        <button class="btn_view_ttsp_all">Xem thêm
-                                            <div class="d-flex">
-                                                <i class="far fa-angle-down"></i>
-                                            </div>
-                                        </button>
                                     </div>
                                 @endif
-                                {{--                                <div class="block-box-price">--}}
-                                {{--                                    <div class="box-info-price">--}}
-                                {{--                                        @if ($product->price_onsale != 0 && $product->price_onsale !=null)--}}
-                                {{--                                            <p class="price_show">--}}
-                                {{--                                                {{number_format($product->price_onsale,0,',','.')}} đ--}}
-                                {{--                                            </p>--}}
-                                {{--                                            <p class="price_through">--}}
-                                {{--                                                {{number_format($product->price,0,',','.')}} đ--}}
-                                {{--                                            </p>--}}
-                                {{--                                        @else--}}
-                                {{--                                            <p class="price_show">--}}
-                                {{--                                                {{number_format($product->price,0,',','.')}} đ--}}
-                                {{--                                            </p>--}}
-                                {{--                                        @endif--}}
-                                {{--                                    </div>--}}
-                                {{--                                </div>--}}
-                                <div class="d-flex">
-                                    <div>
-                                        <span>Tình trạng:</span>
-                                        @if($product->quantity > 0)
-                                            <span>Còn hàng</span>
+                                <div class="status_warranty">
+                                    <span class="status_warranty_item item_status">
+                                        Tình trạng:
+                                         @if($product->quantity > 0)
+                                            <span class="green">Còn hàng</span>
                                         @else
-                                            <span>Liên hệ</span>
+                                            <span class="blue">Liên hệ</span>
                                         @endif
-                                        <p class="mx-2 my-0">|</p>
-                                        <span>Bảo hành: 36 tháng</span>
-                                    </div>
+                                    </span>
+                                    @if($product->warranty)
+                                        <span class="pro-warrantry status_warranty_item">
+                                        Bảo hành: <span class="red">{{$product->warranty}} </span>
+                                    </span>
+                                    @endif
                                 </div>
                                 <div class="detail-price-all">
-                                    <div class="detail-old-price">
-                                        <span class="txt">Giá bán:</span>
-                                        <span class="price">21.990.000đ</span>
-                                    </div>
-
-                                    <div class="detail-price">
-                                        <span class="txt">Giá khuyến mại:</span>
-                                        <span class="price">20.990.000đ</span>
-                                        <span class="detail-discount">(Tiết kiệm 1.000.000đ)</span>
-                                    </div>
+                                    @if ($product->price_onsale != 0 && $product->price_onsale !=null)
+                                        <div class="detail-old-price">
+                                            <span class="txt">Giá bán:</span>
+                                            <span class="price">{{number_format($product->price,0,',','.')}} đ</span>
+                                        </div>
+                                        <div class="detail-price">
+                                            <span class="txt">Giá khuyến mại:</span>
+                                            <span
+                                                class="price">  {{number_format($product->price_onsale,0,',','.')}} đ</span>
+                                            <span class="detail-discount">(Tiết kiệm {{number_format($product->price - $product->price_onsale,0,',','.')}})</span>
+                                        </div>
+                                    @else
+                                        <div class="detail-price">
+                                            <span class="txt">Giá khuyến mại:</span>
+                                            <span class="price">  {{number_format($product->price,0,',','.')}} đ</span>
+                                        </div>
+                                    @endif
                                 </div>
                                 @if(!empty($product->gift))
-                                    <div class="box-promotion">
-                                        <div class="box-product-promotion">
-                                            <div
-                                                class="box-product-promotion-header">
-                                                <div class="icon">
-                                                    <svg height="15" xmlns="http://www.w3.org/2000/svg"
-                                                         viewBox="0 0 512 512">
-                                                        <path
-                                                            d="M152 0H154.2C186.1 0 215.7 16.91 231.9 44.45L256 85.46L280.1 44.45C296.3 16.91 325.9 0 357.8 0H360C408.6 0 448 39.4 448 88C448 102.4 444.5 115.1 438.4 128H480C497.7 128 512 142.3 512 160V224C512 241.7 497.7 256 480 256H32C14.33 256 0 241.7 0 224V160C0 142.3 14.33 128 32 128H73.6C67.46 115.1 64 102.4 64 88C64 39.4 103.4 0 152 0zM190.5 68.78C182.9 55.91 169.1 48 154.2 48H152C129.9 48 112 65.91 112 88C112 110.1 129.9 128 152 128H225.3L190.5 68.78zM360 48H357.8C342.9 48 329.1 55.91 321.5 68.78L286.7 128H360C382.1 128 400 110.1 400 88C400 65.91 382.1 48 360 48V48zM32 288H224V512H80C53.49 512 32 490.5 32 464V288zM288 512V288H480V464C480 490.5 458.5 512 432 512H288z"></path>
-                                                    </svg>
-                                                </div>
-                                                <p>Khuyến mãi</p>
-                                            </div>
-                                            <div class="box-product-promotion-content">
-                                                {!! $product->gift !!}
-                                            </div>
+                                    <div class="detail-offer">
+                                        <div class="title"><i class="fa fa-gift" aria-hidden="true"></i> Khuyến mại
+                                        </div>
+                                        <div class="list">
+
+                                            <span>{!! $product->gift !!}</span>
                                         </div>
                                     </div>
                                 @endif
-                                <div class="box-buy">
-                                    <div class="box-order-button-container">
-                                        <div class="box-between">
-                                            <a href="javascript:;" class="order-button add-cart-now"
-                                               data-id="{{$product->id}}">
-                                                <strong>MUA NGAY</strong>
-                                                <span>(Giao tận nơi hoặc lấy tại cửa hàng)</span>
-                                            </a>
-                                            <a href="javascript:;" get-id="{{$product->id}}"
-                                               class="button-add-to-cart add-cart">
-                                                <img
-                                                    src="https://static-product.cellphones.com.vn/img/add-to-cart.97145ab.png"
-                                                    alt="cart-icon">
-                                                <span>Thêm vào giỏ</span>
-                                            </a>
-                                        </div>
-                                        <div class="box-between">
-                                            <button class="installment-button">
-                                                <strong>TRẢ GÓP 0%</strong><br>
-                                                <span>(Xét duyệt qua điện thoại)</span>
-                                            </button>
-                                            <button class="installment-button">
-                                                <strong>TRẢ GÓP QUA THẺ</strong><br>
-                                                <span>(Visa, Mastercard, JCB)</span>
-                                            </button>
+                                <div class="float-start d-block w-100">
+                                    <div class="box-buy">
+                                        <div class="box-order-button-container">
+                                            <div class="box-between">
+                                                <a href="javascript:;" class="order-button add-cart-now"
+                                                   data-id="{{$product->id}}">
+                                                    <strong>MUA NGAY</strong>
+                                                    <span>(Giao tận nơi hoặc lấy tại cửa hàng)</span>
+                                                </a>
+                                                <a href="javascript:;" get-id="{{$product->id}}"
+                                                   class="button-add-to-cart add-cart">
+                                                    <img
+                                                        src="https://static-product.cellphones.com.vn/img/add-to-cart.97145ab.png"
+                                                        alt="cart-icon">
+                                                    <span>Thêm vào giỏ</span>
+                                                </a>
+                                            </div>
+                                            <div class="box-between">
+                                                <button class="installment-button">
+                                                    <strong>TRẢ GÓP 0%</strong><br>
+                                                    <span>(Xét duyệt qua điện thoại)</span>
+                                                </button>
+                                                <button class="installment-button">
+                                                    <strong>TRẢ GÓP QUA THẺ</strong><br>
+                                                    <span>(Visa, Mastercard, JCB)</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
+                        </div>
+                        <div class="d-flex align-items-baseline justify-content-center call">
+                            <i class="fas fa-phone-alt mx-2 red"></i><span>Gọi mua hàng: <tel class="red"><strong>0886776286</strong></tel></span>
+                        </div>
+                        <p class="fw-bold">Sản phẩm có sẵn tại:</p>
+                        <div class="location_store">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <i class="fas fa-phone-alt mx-2 red"></i><strong class="red">0886776286</strong>
+                                        &nbsp;-&nbsp;
+                                        <i class="fas fa-map-marker-alt location_color"></i>
+                                        <a href="https://www.google.com/maps/place/C%E1%BB%ADa+H%C3%A0ng+M%C3%A1y+T%C3%ADnh+IT24H/@20.8528405,106.6782152,17z/data=!3m1!4b1!4m5!3m4!1s0x314a7b21e08e9cc3:0x601afb677eb0524e!8m2!3d20.8528416!4d106.68045">Số
+                                            81C Mê Linh - An Biên - Lê Chân - Hải Phòng</a>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                         @if(!empty($product->property))
                             <div class="technicalInfo">
@@ -278,18 +272,20 @@
                                 </button>
                             </div>
                         @endif
+                        @if($product->youtube)
+                        <div class="link_youtube">
+                            <h2>Video sản phẩm</h2>
+                            {!! $product->youtube !!}
+                        </div>
+                        @endif
                         <div class="category-container p-0">
-                            <div class="cat_box_sale">
+                            <div class="cat_box_sale box_sale">
                                 <div class="cat_box_s_h">
                                     <div class="title_s">
                                         <div class="p_similar_tt" id="load_p_similar"
                                              data-target="{{$product->slug}}">
                                             <h2>Sản phẩm tương tự</h2>
                                         </div>
-                                        {{--                                        <div class="b_title tt_center bg_tt" id="load_p_watched"--}}
-                                        {{--                                             data-target="{{$product->id}}">--}}
-                                        {{--                                            <h2>Sản phẩm đã xem</h2>--}}
-                                        {{--                                        </div>--}}
                                     </div>
                                 </div>
                                 <div class="featured-product-list" id="load_p_detail"></div>
@@ -495,7 +491,7 @@
                         {{--                            comment hoi dap--}}
                         <div class="comment-container mx-0">
                             <div class="comment-form">
-                                <p class="comment-form-title">Hỏi và đáp</p>
+                                <p class="comment-form-title">Bình Luận</p>
                                 <div class="comment-form-content">
                                     <div class="textarea-comment">
                                         <textarea
@@ -637,7 +633,7 @@
                             </div>
                         </div>
                         <div class="category-container p-0">
-                            <div class="cat_box_sale">
+                            <div class="cat_box_sale box_watched">
                                 <div class="cat_box_s_h">
                                     <div class="title_s">
                                         <div class="p_similar_tt" id="load_p_watched"
@@ -654,10 +650,59 @@
             </section>
         </div>
     </div>
+    <div class="product-bottom-panel">
+        <div class="product-bottom-panel__chat-now">
+            <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" role="img"
+                 class="stardust-icon stardust-icon-web-chat product-bottom-panel__chat-now-icon">
+                <g stroke="none">
+                    <path
+                        d="m11.2 4.1c-1.1-1.3-3-2.2-5-2.2-3.4 0-6.2 2.3-6.2 5.2 0 1.7.9 3.2 2.4 4.2l-.7 1.4s-.2.4.1.6c.3.3 1.1-.1 1.1-.1l2.4-.9c.3.1.6.1.9.1.7 0 1.5-.1 2.1-.3.5.2 1 .2 1.6.2h.6l2.1 1.5c.6.4.8.1.8-.4v-2.2c.9-.8 1.5-1.8 1.5-3 0-2-1.6-3.6-3.7-4.1zm-5.6 7.3h-.5-.2l-1.8.7.5-1.1-.7-.5c-1.3-.8-2-2-2-3.4 0-2.3 2.3-4.2 5.2-4.2 2.8 0 5.2 1.9 5.2 4.2s-2.4 4.3-5.2 4.3c-.2 0-.4 0-.5 0zm6.8-.8v1.2c0 .6-.1.4-.4.2l-1-.8c-.4.1-.8.1-1.2.1 1.5-1 2.5-2.5 2.5-4.2 0-.6-.1-1.1-.3-1.7 1.2.6 1.9 1.6 1.9 2.7 0 1-.5 1.9-1.5 2.5z"></path>
+                    <circle cx="3.1" cy="7.1" r=".8"></circle>
+                    <circle cx="9.1" cy="7.1" r=".8"></circle>
+                    <circle cx="6.1" cy="7.1" r=".8"></circle>
+                </g>
+            </svg>
+            <div class="product-bottom-panel__chat-now-text"><a href="http://zalo.me/365142974135838194">Chat ngay</a></div>
+        </div>
+        <div class="product-cart-and-buy-buttons">
+            <div class="product-bottom-panel__add-to-cart">
+                <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" role="img"
+                     class="stardust-icon stardust-icon-add-to-cart product-bottom-panel__add-to-cart-icon">
+                    <path d="m .5.5h2.2l2.5 10.5h7.2l2.1-7.5h-10.8" fill="none" stroke-linecap="round"
+                          stroke-linejoin="round" stroke-miterlimit="10"></path>
+                    <circle cx="6" cy="13.5" r="1"></circle>
+                    <circle cx="11.5" cy="13.5" r="1"></circle>
+                    <path d="m7.5 7h3" fill="none" stroke-linecap="round" stroke-miterlimit="10"></path>
+                    <path d="m9 8.5v-3" fill="none" stroke-linecap="round" stroke-miterlimit="10"></path>
+                </svg>
+                <div class="product-bottom-panel__add-to-cart-text">
+                    <span class=""><a href="javascript:;" get-id="{{$product->id}}" class="add-cart">Thêm vào Giỏ hàng</a></span></div>
+            </div>
+            <div class="product-bottom-panel__buy-now">
+                <span class=""><a href="javascript:;" class="add-cart-now" data-id="{{$product->id}}">Mua ngay</a></span></div>
+        </div>
+    </div>
 @endsection
 @section('js')
     <script>
         $(document).ready(function () {
+            var view = parseInt('{{$product->view}}') + 1;
+            console.log(view);
+            var id = '{{$product->id}}';
+            var _token = $('meta[name="csrf-token"]').attr('content');
+            var data = {
+                view: view,
+                id: id,
+                _token: _token
+            };
+            $.ajax({
+                url: product_views,
+                type: "post",
+                data: data,
+                success: function (data) {
+                }
+            });
+
             function runOnScroll() {
                 if (jQuery(window).scrollTop() > 30) {
                     document.getElementById("affix_h").style.top = "60px";
@@ -670,6 +715,3 @@
         })
     </script>
 @endsection
-{{--@section('footer')--}}
-{{--    @include('frontend.mobile.footermobile')--}}
-{{--@endsection--}}

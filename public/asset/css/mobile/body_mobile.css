@@ -1139,9 +1139,6 @@ a:active, a:hover {
     color: #ff1e00 !important;
 }
 .cat_box_sale{
-   /* border-radius: 6px;
-    -webkit-box-shadow: 0 0 3px 0 #dee2e6;
-    box-shadow: 0 0 3px 0 #dee2e6;*/
     background-color: white;
     padding-top: 15px;
     margin-bottom: 20px;
@@ -1709,7 +1706,7 @@ a:active, a:hover {
     padding: 0!important;
     margin-bottom: 0.25rem!important;
     color: #363636;
-    font-size: 2rem;
+    font-size: 23px;
     font-weight: 600;
     line-height: 1.125;
 }
@@ -1950,3 +1947,7 @@ a:active, a:hover {
     }
 }
 
+.mg-box-p{
+    margin-bottom: 0!important;
+    padding-bottom: 0!important;
+}

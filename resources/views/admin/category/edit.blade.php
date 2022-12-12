@@ -25,7 +25,7 @@
                                    id="typinginput">
                             @error('name') <span style="color: rgb(239 68 68);">{{ $message }}</span>@enderror
                         </div>
-                        <div class="form-group mb-4" style="display:none;">
+                        <div class="form-group mb-4 hidden">
                             <label>Tên danh mục(ngoại ngữ)</label>
                             <input type="text" class="form-control" name='name2'
                                    value="{{old('name2') ?? $edit->name2}}">
@@ -103,7 +103,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group mb-4" style="display:none;">
+                        <div class="form-group mb-4 hidden">
                             <label>Banner danh mục trang chủ (<span class="italic">Danh mục cha</span>)</label><br>
                             <div class="px-4 pb-4 flex items-center cursor-pointer relative">
                                 <i data-feather="image" class="w-4 h-4 mr-2"></i> <span
@@ -133,7 +133,6 @@
                         <div class="form-group mb-4">
                             <label>Danh mục thuộc tính</label>
                             <select name="property" id="properties" class="tom-select w-full" multiple>
-                                {{-- <option value="0" selected>Chọn thuộc tính</option> --}}
                                 @foreach ($categoryproperty as $key => $value)
                                     <option value="{{$value->id}}" class="form-control">
                                         {{ $value->name}} ━━━ {{ $value->ma}}
@@ -152,7 +151,6 @@
                             <th class="text-center whitespace-nowrap">MÃ</th>
                             <th class="text-center whitespace-nowrap">THUỘC TÍNH</th>
                             <th class="text-center whitespace-nowrap">GIÁ TRỊ</th>
-                            {{-- <th class="text-center whitespace-nowrap">THỨ TỰ HIỂN THỊ</th> --}}
                             <th class="text-center whitespace-nowrap">CHỨC NĂNG</th>
                         </tr>
                         </thead>

@@ -213,8 +213,8 @@ class HomeController extends Controller
     // lay san pham moi
     public function getnewProduct(Request $request)
     {
-        $product_hot_sale = Products::where('status', 1)->where('hot_sale', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
-        $product_new = Products::where('status', 1)->where('new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
+        $product_hot_sale = Products::where('status', 1)->where('is_hot', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
+        $product_new = Products::where('status', 1)->where('is_new', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
 
         $view2 = view('frontend.get-newproducts', [
             'product_new' => $product_new,
@@ -249,7 +249,6 @@ class HomeController extends Controller
     public function categoryBlogs(Request $request)
     {
         $agent = new Agent();
-        $ag = "";
         if ($agent->isMobile()) {
             $ag = "mobile";
         } else $ag = "desktop";
@@ -654,7 +653,7 @@ class HomeController extends Controller
                     $orderby ="ASC";
                 }
             }
-            $products = Products::where('status', 1)->where('hot_sale', 1)
+            $products = Products::where('status', 1)->where('is_hot', 1)
                 ->where(function ($query) use ($price) {
                     if ($price != "") {
                         $p = explode(';', $price);
@@ -783,7 +782,6 @@ class HomeController extends Controller
     public function recruit_register(Request $request)
     {
         $agent = new Agent();
-        $ag = "";
         if ($agent->isMobile()) {
             $ag = "mobile";
         } else $ag = "desktop";
@@ -836,7 +834,6 @@ class HomeController extends Controller
     public function about_us()
     {
         $agent = new Agent();
-        $ag = "";
         if ($agent->isMobile()) {
             $ag = "mobile";
         } else $ag = "desktop";
@@ -865,7 +862,6 @@ class HomeController extends Controller
     public function menucontent2(Request $request)
     {
         $Sidebarid = $request->id;
-        $Sidebarmenu = $request->menu;
         $Sidebars = $this->getmenu_ajax('sidebar');
         $view2 = view('frontend.subsidebarmenu', ['Sidebars' => $Sidebars, 'Sidebarid' => $Sidebarid])->render();
         return response()->json($view2);
@@ -875,7 +871,7 @@ class HomeController extends Controller
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
         ->leftjoin('brands','products.brand','brands.id')
-        ->where('status', 1)->where('new', 1)->inRandomOrder()->limit(6)->get();
+        ->where('status', 1)->where('is_new', 1)->inRandomOrder()->limit(6)->get();
         return response()->json([
             'data_product_mobile' => $get_new_mobile
         ]);
@@ -885,11 +881,23 @@ class HomeController extends Controller
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
         ->leftjoin('brands','products.brand','brands.id')
-        ->where('status', 1)->where('hot_sale', 1)->inRandomOrder()->limit(6)->get();
+        ->where('status', 1)->where('is_hot', 1)->inRandomOrder()->limit(6)->get();
         return response()->json([
             'data_product_mobile' => $get_new_mobile
         ]);
     }
+
+    // lay san pham hot
+    public function get_promotion_mobile(Request $request)
+    {
+        $get_promotion_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
+            ->leftjoin('brands','products.brand','brands.id')
+            ->where('status', 1)->where('is_promotion', 1)->inRandomOrder()->limit(6)->get();
+        return response()->json([
+            'data_product_mobile' => $get_promotion_mobile
+        ]);
+    }
+
     //lay san pham
     public function get_product_mobile(Request $request)
     {

@@ -6,6 +6,7 @@
     var get_menu_child = '{{route('get_menu_child')}}';
     var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
     var get_new_mobile = '{{route('get_new_mobile')}}';
+    var get_promotion_mobile = '{{route('get_promotion_mobile')}}';
     var get_product_mobile = '{{route('get_product_mobile')}}';
     var get_product_watched = '{{route('get_product_watched')}}';
     var get_product_similar = '{{route('get_product_similar')}}';
@@ -16,6 +17,7 @@
     var add_cart_cookie = '{{route('add_cart_cookie')}}';
     var remove_cart_cookie = '{{route('remove_cart_cookie')}}';
     var checkout = '{{route('checkout')}}';
+    var product_views = '{{route('product_views')}}';
     var successorder = '{{route('successorder')}}';
     var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
     var url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';

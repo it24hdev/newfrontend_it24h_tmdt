@@ -33,9 +33,9 @@ class Products extends Model
         'property_short',
         'onsale',
         'price_onsale',
-        'new',
+        'is_new',
         'specifications',
-        'hot_sale',
+        'is_hot',
         'event',
         'gift',
         'sold',
@@ -49,6 +49,8 @@ class Products extends Model
         'detailproperty',
         'tax',
         'warranty',
+        'is_promotion',
+        'view',
     ];
     const IMAGE = 'no-images.jpg';
     const ACTIVE = 1;

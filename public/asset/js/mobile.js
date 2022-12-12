@@ -66,7 +66,7 @@ $(document).ready(function () {
         var $elem = jQuery(elem)
         var top = $elem.offset().top - 1000
         var height = $elem.height()
-        var bottom = top + height + 400
+        var bottom = top + height + 100
 
         return (top >= viewport_top && top < viewport_bottom) ||
             (bottom > viewport_top && bottom <= viewport_bottom) ||
@@ -94,7 +94,7 @@ $(document).ready(function () {
 
             // HIển thị chuỗi thời gian trong thẻ
             if (days > 0)
-                document.getElementById("d").innerHTML = days+'d';
+                document.getElementById("d").innerHTML = days+'N';
             if (hours < 10)
                 document.getElementById("h").innerHTML = '0'+ hours;
             else
@@ -156,6 +156,24 @@ $(document).ready(function () {
         };
         $.ajax({
             url: get_hot_sale_mobile,
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                $('#load_promotion').html('');
+                var template_product_mobile = $('#template_product_mobile').html();
+                get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
+            }
+        })
+    });
+
+    // click chon san pham khuyen mai
+    $(document).on('click', '#promotion_p', function (){
+        var data = {
+            _token: _token
+        };
+        $.ajax({
+            url: get_promotion_mobile,
             type: "post",
             dataType: "json",
             data: data,
@@ -678,7 +696,7 @@ $(document).ready(function () {
     }
 
     //===============================trang chi tiet san pham====================================
-    $("table").addClass('table table-bordered table-striped table_boder');
+    $("table").addClass('table table-striped table_border');
     //mua ngay san pham
     $(document).on('click','.add-cart-now',function(){
         var id = $(this).data('id');
@@ -749,10 +767,6 @@ $(document).ready(function () {
     $(document).on('click', '.btn_view_content_all', function () {
         $(this).addClass('d-none');
         $('#des_show').css({"max-height":"6000px","overflow-y":"auto"});
-    });
-    $(document).on('click', '.btn_view_ttsp_all', function () {
-        $(this).addClass('d-none');
-        $('.ttsp_cnt').css({"max-height":"6000px","overflow-y":"auto"});
     });
     $(document).on('click', '.btn_review', function () {
         $('#author_customer_review').val('');
