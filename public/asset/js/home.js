@@ -127,8 +127,6 @@ $(document).ready(function () {
             },
         }
     });
-
-
     $('.sub_cat_title_slider').owlCarousel({
         autoplay: true,
         autoplayHoverPause: false,
@@ -257,8 +255,6 @@ $(document).ready(function () {
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-
             // HIển thị chuỗi thời gian trong thẻ
             if (days > 0)
                 document.getElementById("d").innerHTML = days;

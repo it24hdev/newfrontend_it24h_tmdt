@@ -342,12 +342,14 @@ Route::post('/updateAjax-cart', [CartController::class, 'update_ajax'])->name('u
 Route::post('/update-cart', [CartController::class, 'update_cart'])->name('cart.update');
 Route::get('/thanh-toan', [CartController::class, 'checkout'])->name('checkout');
 Route::get('/successorder', [CartController::class, 'successorder'])->name('successorder');
+Route::post('/complete_payment', [CartController::class, 'complete_payment'])->name('complete_payment');
 Route::post('/thanh-toan', [CartController::class, 'sendmail'])->name('sendmail');
 Route::get('/thanks', [CartController::class, 'thanks'])->name('thanks');
 Route::get('/yeu-thich', [CartController::class, 'list_wish'])->name('list_wish');
 Route::post('/add-wish', [CartController::class, 'add_wish'])->name('add_wish');
-Route::post('/add_cart_cookie', [CartController::class, 'add_cart_cookie'])->name('add_cart_cookie');
-Route::post('/remove_cart_cookie', [CartController::class, 'remove_cart_cookie'])->name('remove_cart_cookie');
+Route::post('/update_shopping_cart', [CartController::class, 'update_shopping_cart'])->name('update_shopping_cart');
+Route::post('/remove_cart_data', [CartController::class, 'remove_cart_data'])->name('remove_cart_data');
+Route::post('/order_processing', [CartController::class, 'order_processing'])->name('order_processing');
 Route::post('/delete-wish', [CartController::class, 'remove_product_wish'])->name('remove_product_wish');
 Route::post('/submit-contact', [CartController::class, 'submit_contact'])->name('submit_contact');
 

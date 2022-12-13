@@ -24,39 +24,37 @@
                 </a>
             </div>
         </div>
-        <section class="block-cart-product d-none" data-target="{{$product_cart->count()}}">
-            @if (!empty($product_cart))
+        <section class="block-cart-product d-none" data-target="{{Cookie::get('count_cart')}}">
+            @if (!empty($cart_data))
                 <div class="container-cart">
-                    @foreach ($product_cart as $item_cart)
-                        <div class="product-item-cart" id="cart_{{$item_cart->id}}">
+                    @foreach ($cart_data as $item_cart)
+                        <div class="product-item-cart" id="cart_{{$item_cart['item_id']}}">
                             <div class="d-flex">
-                                <div class="check_p"><input id="check_cart_{{$item_cart->id}}" class="check_cart"
-                                                            type="checkbox" name="check_cart"
-                                                            data-target="{{$item_cart->id}}"></div>
+                                <div class="check_p">
+                                    <input id="check_cart_{{$item_cart['item_id']}}" class="check_cart" type="checkbox" name="check_cart" data-target="{{$item_cart['item_id']}}">
+                                </div>
                                 <div class="product-item-cart__image">
-                                    <img src="{{asset('upload/images/products/thumb/'.$item_cart->thumb)}}"></div>
+                                    <img src="{{asset('upload/images/products/thumb/'.$item_cart["item_image"])}}"></div>
                                 <div class="product-item-cart-info-detail">
-                                    <p class="product-cart-name">{{$item_cart->name}}</p>
+                                    <p class="product-cart-name">{{$item_cart['item_name']}}</p>
                                     <div class="product-item-cart__price">
-                                        @if($item_cart->price_onsale)
+                                        @if($item_cart['item_price_onsale'])
                                             <div class="d-flex">
                                                 <p class="regular-price"
-                                                   data-target="{{$item_cart->price}}">{{ number_format($item_cart->price, 0, '', '.') }}
+                                                   data-target="{{$item_cart['item_price']}}}">{{ number_format($item_cart['item_price'], 0, '', '.') }}
                                                     đ</p>
-                                                <span class="onsale-cart">- {{ $item_cart->onsale}}%</span>
+                                                <span class="onsale-cart">- {{ $item_cart['item_onsale']}}%</span>
                                             </div>
                                             <div class="d-flex justify-content-between align-items-baseline">
                                                 <p class="sale-price"
-                                                   data-target="{{$item_cart->price_onsale}}">{{ number_format($item_cart->price_onsale, 0, '', '.') }}
+                                                   data-target="{{$item_cart['item_price_onsale']}}">{{ number_format($item_cart['item_price_onsale'], 0, '', '.') }}
                                                     đ</p>
                                                 <div class="item-action-cart">
                                                     <div class="change-quantity">
                                                         <div class="number-q">
-                                                            <span class="minus_cart mx-1">-</span>
-                                                            <input name="qty_cart" type="number" readonly="readonly"
-                                                                   min="1"
-                                                                   max="999" value="1">
-                                                            <span class="plus_cart mx-1">+</span>
+                                                            <span class="minus_cart mx-1" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}">-</span>
+                                                            <input name="qty_cart" type="number" readonly="readonly" min="1" max="999" value="{{$item_cart['item_quantity']}}">
+                                                            <span class="plus_cart mx-1" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}">+</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -64,15 +62,13 @@
                                     </div>
                                     @else
                                         <div class="d-flex justify-content-between align-items-baseline">
-                                            <p class="sale-price">{{ number_format($item_cart->price, 0, '', '.') }}
-                                                đ</p>
+                                            <p class="sale-price">{{ number_format($item_cart['item_price'], 0, '', '.') }} đ</p>
                                             <div class="item-action-cart">
                                                 <div class="change-quantity">
                                                     <div class="number-q">
-                                                        <span class="minus_cart mx-1">-</span>
-                                                        <input name="qty_cart" type="number" readonly="readonly" min="1"
-                                                               max="999" value="1">
-                                                        <span class="plus_cart mx-1">+</span>
+                                                        <span class="minus_cart mx-1" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}">-</span>
+                                                        <input name="qty_cart" type="number" readonly="readonly" min="1" max="999" value="{{$item_cart['item_quantity']}}">
+                                                        <span class="plus_cart mx-1" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}">+</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,7 +77,7 @@
 
                                 </div>
                             </div>
-                            <div class="delete-item cart_delete" data-target="{{$item_cart->id}}">
+                            <div class="delete-item cart_delete" data-target="{{$item_cart['item_id']}}">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fas"
                                      data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 352 512"
@@ -97,7 +93,7 @@
                 </div>
             @endif
         </section>
-        <div class="box-bottom">
+        <div class="box-bottom d-none">
             <div class="container-total-box">
                 <div class="bottom-bar">
                     <div class="voucher">
@@ -129,12 +125,9 @@
                         </div>
                     </div>
                     <div class="sm_cart">
-                        <a href="{{route('checkout')}}" class="btn-sm-cart">
+                        <a class="btn-sm-cart">
                             Tiến hành đặt hàng
                         </a>
-                        {{--                    <a href="/" class="btn-add-another-p">--}}
-                        {{--                        Chọn thêm sản phẩm khác--}}
-                        {{--                    </a>--}}
                     </div>
                 </div>
             </div>
@@ -148,4 +141,3 @@
         </div>
     </div>
 @endsection
-{{--@endsection--}}

@@ -29,9 +29,9 @@
                 <div class="block-customer">
                     <p>Thông tin khách hàng</p>
                     <div class="mt-2">
-                        <input type="text" placeholder="Họ và tên (bắt buộc)" maxlength="50" autocomplete="off"
+                        <input type="text" name="customer_name" placeholder="Họ và tên (bắt buộc)" maxlength="50" autocomplete="off"
                                class="mb-2">
-                        <input type="text" placeholder="Số điện thoại (bắt buộc)" maxlength="10" autocomplete="off"
+                        <input type="number" name="phone_number" placeholder="Số điện thoại (bắt buộc)" maxlength="12" autocomplete="off"
                                class="mb-2">
                         <input type="email" placeholder="Email" name="email"
                                maxlength="100" autocomplete="off">
@@ -42,7 +42,7 @@
                         <div class="select-box form-control">
                             <div class="dropdown-box">
                                 <div class="selected-options">
-                                    <input type="search" autocomplete="off" class="box-search"
+                                    <input name="city" type="search" autocomplete="off" class="box-search"
                                            placeholder="Tỉnh / Thành phố"></div>
                                 <div class="actions-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation"
@@ -56,7 +56,7 @@
                         <div class="select-box form-control">
                             <div class="dropdown-box">
                                 <div class="selected-options">
-                                    <input type="search" autocomplete="off" class="box-search"
+                                    <input name="district" type="search" autocomplete="off" class="box-search"
                                            placeholder="Quận / Huyện"></div>
                                 <div class="actions-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation"
@@ -68,19 +68,19 @@
                             </div>
                         </div>
                     </div>
-                    <input id="address" name="address" type="text" placeholder="Số nhà, tên đường" class="mt-2" autocomplete="off">
+                    <input id="address" name="street" type="text" placeholder="Số nhà, tên đường" class="mt-2" autocomplete="off">
                 </div>
-                <div class="mt-3 note_c"><input type="text" placeholder="Ghi chú"></div>
+                <div class="mt-3 note_c"><input name="note" type="text" placeholder="Ghi chú"></div>
                 <div class="mt-3">
                     <p class="payments_title">Chọn hình thức thanh toán</p>
                     <div class="payment-group d-flex flex-wrap justify-content-between">
-                        <input type="radio" id="cash_on_shop" name="payment-method" value="cash_on_shop" class="d-none" checked="checked">
+                        <input type="radio" id="cash_on_shop" name="payment_method" value="Thanh toán tại cửa hàng" class="d-none" checked="checked">
                         <label for="cash_on_shop"
                                class="payment-item block-box flex-column d-flex align-items-center justify-content-center">
                             <span class="text-center"> Thanh toán tại cửa hàng </span>
                             <i class="fal fa-store"></i>
                         </label>
-                        <input type="radio" id="transfer" name="payment-method" value="transfer" class="d-none">
+                        <input type="radio" id="transfer" name="payment_method" value="Chuyển khoản" class="d-none">
                         <label for="transfer"
                                class="payment-item block-box flex-column d-flex align-items-center justify-content-center">
                             <span class="text-center"> Chuyển khoản </span>
@@ -115,16 +115,11 @@
                         <div class="total-box">
                             <p class="title-temp">Tổng tiền tạm tính:</p>
                             <div class="price-tt">
-                                <span class="total">0 đ</span>
+                                <span class="total_cart_success">{{ number_format($total_money, 0, '', '.') }} đ</span>
                             </div>
                         </div>
                         <div class="sm_cart">
-                            <a href="{{route('successorder')}}" class="btn-sm-cart">
-                                Đặt Hàng
-                            </a>
-{{--                            <a href="/" class="btn-add-another-p">--}}
-{{--                                Chọn thêm sản phẩm khác--}}
-{{--                            </a>--}}
+                            <a class="btn-complte-payment"> Đặt Hàng </a>
                         </div>
                     </div>
                 </div>
@@ -142,7 +137,6 @@
                     document.getElementById("affix_h").style.top = "115px";
                 }
             }
-
             $(window).scroll(runOnScroll);
         })
     </script>

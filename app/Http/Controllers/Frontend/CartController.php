@@ -47,10 +47,12 @@ class CartController extends Controller
                  $isphone = "phone";
              }
              if ($isphone=="phone") {
-                 $get_cookie = Cookie::get('list_cart');
-                 $list_cart = explode(' ', $get_cookie);
-                 $product_cart = Products::whereIn('id',$list_cart)->where('status',1)->get();
-                 return \view('frontend.mobile.cartmobile', \compact('product_cart', 'locale',));
+                 $cart_data = "";
+                 if(Cookie::get('shopping_cart')){
+                     $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+                     $cart_data = json_decode($cookie_data, true);
+                 }
+                 return \view('frontend.mobile.cartmobile', \compact('cart_data', 'locale',));
              } else {
                  if ($agent->isMobile()) {
                      $ag = "mobile";
@@ -84,37 +86,154 @@ class CartController extends Controller
          }
     }
 
-    public function add_cart_cookie(Request $request){
-        $id = $request->id;
-        $get_cookie = Cookie::get('list_cart');
-        $list_id_cart = explode(' ', $get_cookie);
-        if(!in_array($id, $list_id_cart)){
-            $list_id_cart[] = $id;
-            $add_to_cookie = implode(' ', $list_id_cart);
-            Cookie::queue('list_cart', $add_to_cookie, 1051200);
-            $count_product = Products::whereIn('id', $list_id_cart)->where('status', 1)->count();
-            Cookie::queue('count_cart', $count_product, 1051200);
-            return response()->json(['success' => true,'count' => $count_product]);
+    public function update_shopping_cart(Request $request){
+        $prod_id = $request->input('product_id');
+        if(Cookie::get('shopping_cart')){
+            $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+            $cart_data = json_decode($cookie_data, true);
+        }
+        else
+        {
+            $cart_data = array();
+        }
+        $item_id_list = array_column($cart_data, 'item_id');
+        $prod_id_is_there = $prod_id;
+        $count = 0;
+        $quantity = 0 ;
+        if(in_array($prod_id_is_there, $item_id_list))
+        {
+            foreach($cart_data as $keys => $values)
+            {
+                if($cart_data[$keys]["item_id"] == $prod_id)
+                {
+                    if($request->input('quantity')){
+                        if($request->input('status') && $request->input('status') == 'plus'){
+                            $cart_data[$keys]["item_quantity"] = $request->input('quantity') + 1 ;
+                            $quantity =  $cart_data[$keys]["item_quantity"];
+                        }
+                        else{
+
+                            $cart_data[$keys]["item_quantity"] = $request->input('quantity') - 1 ;
+                            $quantity =  $cart_data[$keys]["item_quantity"];
+                        }
+                    }
+                    else{
+                        $cart_data[$keys]["item_quantity"] = $cart_data[$keys]["item_quantity"] + 1;
+                        $quantity =  $cart_data[$keys]["item_quantity"];
+                    }
+                    $item_data = json_encode($cart_data);
+                    $minutes = 4320;
+                    Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
+                }
+                $count = $count + $cart_data[$keys]["item_quantity"];
+            }
+            Cookie::queue(Cookie::make('count_cart', $count, $minutes));
+            return response()->json(['success'=>true, 'count' => $count,'quantity' => $quantity]);
         }
         else{
-            return response()->json(['success' => false]);
+            $products = Products::find($prod_id);
+            $prod_id = $products->id;
+            $prod_name = $products->name;
+            $prod_image = $products->thumb;
+            $price = $products->price;
+            $price_onsale = $products->price_onsale;
+            $onsale = $products->onsale;
+            if($products) {
+                $item_array = array(
+                    'item_id'    => $prod_id,
+                    'item_name'  => $prod_name,
+                    'item_image' => $prod_image,
+                    'item_price' => $price,
+                    'item_onsale'     => $onsale,
+                    'item_quantity'     => 1,
+                    'item_price_onsale' => $price_onsale,
+                    );
+                $cart_data[] = $item_array;
+                $item_data = json_encode($cart_data);
+                $minutes = 4320;
+                Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
+                foreach($cart_data as $keys => $values)
+                {
+                    $count = $count + $cart_data[$keys]["item_quantity"];
+                }
+                Cookie::queue(Cookie::make('count_cart', $count, $minutes));
+                return response()->json(['success'=>true, 'count' => $count]);
+            }
+            else{
+                return response()->json(['success'=>false]);
+            }
         }
     }
 
-    public function remove_cart_cookie(Request $request){
-        $id = $request->id;
-        $get_cookie = Cookie::get('list_cart');
-        $list_id_cart = explode(' ', $get_cookie);
-        foreach($list_id_cart as $k => $v){
-            if($v == $id){
-                unset($list_id_cart[$k]);
+    public function remove_cart_data(Request $request){
+        $prod_id = $request->input('product_id');
+        $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+        $cart_data = json_decode($cookie_data, true);
+        $item_id_list = array_column($cart_data, 'item_id');
+        $prod_id_is_there = $prod_id;
+        $count = 0;
+        $minutes = 4320;
+        if(in_array($prod_id_is_there, $item_id_list))
+        {
+            foreach($cart_data as $keys => $values)
+            {
+                if($cart_data[$keys]["item_id"] == $prod_id)
+                {
+                    unset($cart_data[$keys]);
+                    $item_data = json_encode($cart_data);
+                    Cookie::queue(Cookie::make('shopping_cart', $item_data, $minutes));
+                }else{
+                    $count = $count + $cart_data[$keys]["item_quantity"];
+                }
             }
+            Cookie::queue(Cookie::make('count_cart', $count, $minutes));
+            return response()->json(['success'=>true, 'count' => $count]);
         }
-        $add_to_cookie = implode(' ', $list_id_cart);
-        Cookie::queue('list_cart', $add_to_cookie, 1051200);
-        $count_product = Products::whereIn('id', $list_id_cart)->where('status', 1)->count();
-        Cookie::queue('count_cart', $count_product, 1051200);
-        return response()->json(['success' => true,'count' => $count_product]);
+        else{
+            return response()->json(['success'=>false]);
+        }
+    }
+    public function order_processing(Request $request){
+        $list_cart_success = $request->input('list_cart_success');
+        Cookie::forget('cart_success');
+        if($list_cart_success){
+            $minutes = 30;
+            $list_item = json_encode($list_cart_success);
+            Cookie::queue(Cookie::make('cart_success', $list_item, $minutes));
+            return response()->json(['success'=>true]);
+        }
+    }
+
+
+    public function complete_payment(Request $request){
+        $info_customer = [
+            'customer_name' => $request->input('customer_name'),
+            'email' => $request->input('email'),
+            'address' => $request->input('address'),
+            'phone_number' => $request->input('phone_number'),
+            'note' => $request->input('note'),
+            'payment_method' => $request->input('payment_method'),
+            'status' => 1
+        ];
+        $order = Order::create($info_customer);
+        $list_item = json_encode($info_customer);
+        Cookie::queue(Cookie::make('info_customer', $list_item, $minutes));
+//
+//
+//        $order_items = [];
+//        foreach (Cart::content() as $item) {
+//            $order_items[] = [
+//                'order_id' => $order->id,
+//                'product_id' => $item->id,
+//                'product_name' => $item->name,
+//                'quantity' => $item->qty,
+//                'price' => number_format($item->price, 0, '', ''),
+//            ];
+//        }
+//        $orders = array();
+//        foreach ($order_items as $order_item){
+//            $orders['products'][] = Order_item::create($order_item);
+//        }
     }
 
     public function add_cart_ajax(Request $request){
@@ -234,7 +353,27 @@ class CartController extends Controller
             $isphone = "phone";
         }
         if ($isphone=="phone") {
-            return view('frontend.mobile.orderinfomobile');
+            $cart_success = json_decode(Cookie::get('cart_success'));
+            if(Cookie::get('shopping_cart')){
+            $cookie_data = stripslashes(Cookie::get('shopping_cart'));
+            $cart_data = json_decode($cookie_data, true);
+            }
+            else{ $cart_data = array(); }
+            $total_money = 0;
+            if($cart_data && $cart_success){
+                foreach($cart_data as $keys => $values) {
+                    if(in_array($cart_data[$keys]["item_id"], $cart_success))
+                    {
+                        if($cart_data[$keys]["item_price_onsale"] != 0 && $cart_data[$keys]["item_price_onsale"] != null){
+                            $total_money = $total_money + (($cart_data[$keys]["item_quantity"])*($cart_data[$keys]["item_price_onsale"]));
+                        }
+                        else{
+                            $total_money = $total_money + (($cart_data[$keys]["item_quantity"])*($cart_data[$keys]["item_price"]));
+                        }
+                    }
+                }
+            }
+            return view('frontend.mobile.orderinfomobile',['total_money' => $total_money]);
         }
         else{
             if($agent->isMobile()){
@@ -316,7 +455,6 @@ class CartController extends Controller
         foreach ($order_items as $order_item){
             $orders['products'][] = Order_item::create($order_item);
         }
-        // dd( $orders['products']);
         $orders['code_order'] = $order->id;
         $data = [
             'info_order' => $info_order,

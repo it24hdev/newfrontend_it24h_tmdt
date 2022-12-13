@@ -84,7 +84,7 @@
 <div id="snackbar_false">
     <div class="d-grid">
         <i class="far fa-check-circle"></i>
-        <span>Đã đã trong giỏ hàng</span>
+        <span>Vui lòng thử lại</span>
     </div>
 </div>
 <div id="success_cm">

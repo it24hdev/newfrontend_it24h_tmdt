@@ -237,7 +237,7 @@ input{
     font-weight: 700;
     color: #3991ff;
 }
-.btn-sm-cart {
+.btn-sm-cart,.btn-complte-payment  {
     font-weight: 600;
     text-transform: uppercase;
     background-color: #3991ff;
@@ -302,4 +302,8 @@ input{
 }
 .font-rules{
     font-size: 14px!important;
+}
+.total_cart_success{
+    font-weight: 700;
+    color: #3991ff;
 }

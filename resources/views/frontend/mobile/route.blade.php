@@ -14,11 +14,13 @@
     var commentProduct = '{{route('commentProduct')}}';
     var detailproduct = '{{route('detailproduct', ['slug' => 'slug_code'])}}';
     var get_review_more = '{{route('get_review_more')}}';
-    var add_cart_cookie = '{{route('add_cart_cookie')}}';
-    var remove_cart_cookie = '{{route('remove_cart_cookie')}}';
+    var update_shopping_cart = '{{route('update_shopping_cart')}}';
+    var remove_cart_data = '{{route('remove_cart_data')}}';
+    var order_processing = '{{route('order_processing')}}';
     var checkout = '{{route('checkout')}}';
     var product_views = '{{route('product_views')}}';
     var successorder = '{{route('successorder')}}';
+    var complete_payment = '{{route('complete_payment')}}';
     var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
     var url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
     var url_img_large_product= '{{asset('upload/images/products/large/')}}';
