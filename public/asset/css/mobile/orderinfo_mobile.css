@@ -307,3 +307,9 @@ input{
     font-weight: 700;
     color: #3991ff;
 }
+.dselect-wrapper .form-select.dselect-clearable{
+    white-space: nowrap;
+}
+.dselect-items::-webkit-scrollbar{
+    display: none;
+}

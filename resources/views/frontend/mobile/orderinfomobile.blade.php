@@ -17,13 +17,14 @@
                     <p> Trở về</p>
                 </a>
             </div>
-            <p class="title_cart title m-auto">Giỏ hàng</p>
+            <p class="title_cart title m-auto">Thông tin đặt hàng</p>
             <div class="plus_p">
                 <a href="/" class="d-flex align-items-center">
                     <i class="fal fa-plus"></i>
                 </a>
             </div>
         </div>
+        @if($active==1)
         <section class="block-info">
             <div class="box-info-customer">
                 <div class="block-customer">
@@ -37,36 +38,22 @@
                                maxlength="100" autocomplete="off">
                     </div>
                 </div>
-                <div class="address-box">
+                <div class="address-box  ">
                     <div class="d-flex">
-                        <div class="select-box form-control">
-                            <div class="dropdown-box">
-                                <div class="selected-options">
-                                    <input name="city" type="search" autocomplete="off" class="box-search"
-                                           placeholder="Tỉnh / Thành phố"></div>
-                                <div class="actions-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation"
-                                         class="vs__open-indicator">
-                                        <path
-                                            d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path>
-                                    </svg>
-                                </div>
-                            </div>
+                        <div class="form-control row ">
+                            <select class="form-select col-sm-1">
+                                @foreach($city as $key => $item)
+                                    <option value="{{$item->city}}" @if($item->acronym =="HP") selected @endif>{{$item->city}}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <div class="select-box form-control">
-                            <div class="dropdown-box">
-                                <div class="selected-options">
-                                    <input name="district" type="search" autocomplete="off" class="box-search"
-                                           placeholder="Quận / Huyện"></div>
-                                <div class="actions-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" role="presentation"
-                                         class="vs__open-indicator">
-                                        <path
-                                            d="M9.211364 7.59931l4.48338-4.867229c.407008-.441854.407008-1.158247 0-1.60046l-.73712-.80023c-.407008-.441854-1.066904-.441854-1.474243 0L7 5.198617 2.51662.33139c-.407008-.441853-1.066904-.441853-1.474243 0l-.737121.80023c-.407008.441854-.407008 1.158248 0 1.600461l4.48338 4.867228L7 10l2.211364-2.40069z"></path>
-                                    </svg>
-                                </div>
-                            </div>
-                        </div>
+                        <select class="form-select form-select-sm">
+                            @foreach($district as $key => $item)
+                                @if($item->parent == "27")
+                                <option value="{{$item->district}}">{{$item->district}}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                     <input id="address" name="street" type="text" placeholder="Số nhà, tên đường" class="mt-2" autocomplete="off">
                 </div>
@@ -125,19 +112,20 @@
                 </div>
             </div>
         </section>
+        @endif
     </div>
 @endsection
 @section('js')
+    <link rel="stylesheet" href="https://unpkg.com/@jarstone/dselect/dist/css/dselect.css">
+    <script src="https://unpkg.com/@jarstone/dselect/dist/js/dselect.js"></script>
     <script>
-        $(document).ready(function () {
-            function runOnScroll() {
-                if (jQuery(window).scrollTop() > 30) {
-                    document.getElementById("affix_h").style.top = "60px";
-                } else {
-                    document.getElementById("affix_h").style.top = "115px";
-                }
-            }
-            $(window).scroll(runOnScroll);
-        })
+        const config = {
+            search: true, // Toggle search feature. Default: false
+            creatable: true, // Creatable selection. Default: false
+            clearable: true, // Clearable selection. Default: false
+            maxHeight: '200px', // Max height for showing scrollbar. Default: 360px
+            size: '', // Can be "sm" or "lg". Default ''
+        }
+        dselect(document.querySelector('#dselect-city'), config);
     </script>
 @endsection

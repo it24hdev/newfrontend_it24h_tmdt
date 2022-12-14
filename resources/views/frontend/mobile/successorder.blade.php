@@ -16,28 +16,29 @@
                     <p> Trở về</p>
                 </a>
             </div>
-            <p class="title_cart title m-auto">Giỏ hàng</p>
+            <p class="title_cart title m-auto">Thanh toán thành công</p>
             <div class="plus_p">
                 <a href="/" class="d-flex align-items-center">
-                    <i class="fal fa-plus-circle"></i>
+                    <i class="fal fal fa-plus"></i>
                 </a>
             </div>
         </div>
+        @if($active==1)
         <section class="block-info">
             <div class="container">
                 <p class="mx-2 mb-2">
                     <span class="strong_text">Cảm ơn Quý khách hàng đã chọn mua hàng tại IT24H. Trong 15 phút, IT24H sẽ SMS hoặc gọi để xác nhận đơn hàng.</span><br>
-                    <em>* Các đơn hàng từ 21h30 tối tới 8h sáng hôm sau. CellphoneS sẽ liên hệ với Quý khách trước 10h trưa cùng ngày</em>
+                    <em>* Các đơn hàng từ 21h30 tối tới 8h sáng hôm sau. IT24H sẽ liên hệ với Quý khách trước 10h trưa cùng ngày</em>
                 </p>
                 <div class="block-box info alert-success">
                     <div>
                     <h4 class="text-center text-uppercase">Đặt hàng thành công</h4>
-                    <div><p><span>Mã đơn hàng: </span><span class="bold_text">300710528</span></p></div>
-                    <div><p><span>Người đặt: </span><span class="bold_text">xem giam gia</span></p></div>
-                    <div><p><span>Số điện thoại: </span><span class="bold_text"> 0948384932</span></p></div>
-                    <div><p><span>Nhận sản phẩm tại:</span><span class="bold_text">218-220 Trần Quang Khải, Phường Tân Định, Quận 1, Quận 1, Hồ Chí Minh</span></p></div>
-                    <div><p><span>Hình thức thanh toán: </span><span class="bold_text">Thanh toán tại cửa hàng</span></p></div>
-                    <div><p><span>Tổng tiền: </span><span class="bold_text">20.990.000&nbsp;₫</span></p></div>
+                    <div><p><span>Mã đơn hàng: </span><span class="bold_text">{{$customer_order->id}}</span></p></div>
+                    <div><p><span>Người đặt: </span><span class="bold_text">{{$customer_order->customer_name}}</span></p></div>
+                    <div><p><span>Số điện thoại: </span><span class="bold_text">{{$customer_order->phone_number}}</span></p></div>
+                    <div><p><span>Nhận sản phẩm tại:</span><span class="bold_text">{{$customer_order->address}}</span></p></div>
+                    <div><p><span>Hình thức thanh toán: </span><span class="bold_text">{{$customer_order->payment_method}}</span></p></div>
+                    <div><p><span>Tổng tiền: </span><span class="bold_text">{{$customer_order->total}}</span></p></div>
                     </div>
                     <div>
                         <div class="QRcode_payment">
@@ -52,31 +53,14 @@
                             <span class="bold_text">Thông tin chuyển khoản:</span>
                             <div class="mx-3">
                                 <span>Công ty Cổ phần Công nghệ và Truyền thông IT24H</span><br>
-                                <span>Ngân hàng Teckcombank - Chi nhánh Lê Chân - Hải Phòng</span><br>
-                                <span>Số tài khoản:</span> <span class="bold_text">12345678902145</span><br>
+                                <span>Ngân hàng Techcombank - Chi nhánh Lê Chân - Hải Phòng</span><br>
+                                <span>Số tài khoản:</span> <span class="bold_text">19036993513011</span><br>
                                 <span class="bold_text">Hotline hỗ trợ: 0886776286</span><br>
                             </div>
 
                         </div>
                     </div>
                 </div>
-{{--                <div class="product_list_success">--}}
-{{--                    <div class="block-box-p">--}}
-{{--                        <div class="product-list">--}}
-{{--                            <div class="product-item">--}}
-{{--                                <div class="product-img">--}}
-{{--                                    <img src="https://image.cellphones.com.vn/200x/media/catalog/product/p/h/photo_2022-09-28_21-58-54_1.jpg">--}}
-{{--                                </div>--}}
-{{--                                <div class="product-info">--}}
-{{--                                    <p>iPhone 14 128GB | Chính hãng VN/A-Đỏ</p>--}}
-{{--                                    <p><span>Giá: </span>20.990.000&nbsp;₫<del data-v-34c42bd9="">24.990.000&nbsp;₫</del></p>--}}
-{{--                                    <p><span>Số lượng: </span>1</p>--}}
-{{--                                    <p><span>Tổng tiền: </span>20.990.000&nbsp;₫</p>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
                 <div class="bottom-button-success">
                     <div class="my-3 d-flex">
                         <a href="#" class="btn btn-primary mr-2">Kiểm tra đơn hàng <br>
@@ -88,7 +72,7 @@
                                       data-v-38fb1f2c="" class=""></path>
                             </svg>
                         </a>
-                        <a href="#" class="btn btn-danger ml-2">Tiếp tục mua hàng <br>
+                        <a href="/" class="btn btn-danger ml-2">Tiếp tục mua hàng <br>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cart-plus" role="img"
                                  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"
                                  class="svg-inline--fa fa-cart-plus" data-v-38fb1f2c="">
@@ -101,20 +85,7 @@
                 </div>
             </div>
         </section>
+        @endif
     </div>
 @endsection
-@section('js')
-    <script>
-        $(document).ready(function () {
-            function runOnScroll() {
-                if (jQuery(window).scrollTop() > 30) {
-                    document.getElementById("affix_h").style.top = "60px";
-                } else {
-                    document.getElementById("affix_h").style.top = "115px";
-                }
-            }
 
-            $(window).scroll(runOnScroll);
-        })
-    </script>
-@endsection

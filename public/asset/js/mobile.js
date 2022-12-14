@@ -1,3 +1,4 @@
+
 $(document).ready(function () {
     var _token = $('meta[name="csrf-token"]').attr('content');
 
@@ -66,7 +67,7 @@ $(document).ready(function () {
         var $elem = jQuery(elem)
         var top = $elem.offset().top - 1000
         var height = $elem.height()
-        var bottom = top + height + 100
+        var bottom = top + height + 400
 
         return (top >= viewport_top && top < viewport_bottom) ||
             (bottom > viewport_top && bottom <= viewport_bottom) ||
@@ -509,14 +510,16 @@ $(document).ready(function () {
     function runOnScroll() {
         // an hien thanh tim kiem khi cuon
         if(jQuery(window).scrollTop() >30){
-            document.getElementById("scroll_d").style.display="block";
-            document.getElementById("scroll_h").style.display="none";
-            document.getElementById("go_top").style.display="block";
+            $('#scroll_d').css({"display":"block"});
+            $('#scroll_h').css({"display":"none"});
+            $('#go_top').css({"display":"block"});
+            $('#affix_h').css({"top":"60px"});
         }
         else{
-            document.getElementById("scroll_d").style.display="none";
-            document.getElementById("scroll_h").style.display="block";
-            document.getElementById("go_top").style.display="none";
+            $('#scroll_d').css({"display":"none"});
+            $('#scroll_h').css({"display":"block"});
+            $('#go_top').css({"display":"none"});
+            $('#affix_h').css({"top":"115px"});
         }
         //load sp khuyen mai khi cuon
         if (isOnScreen($("#load_promotion")) && ($("#load_promotion").hasClass("loaded") == false)) {
@@ -1123,7 +1126,6 @@ $(document).ready(function () {
         var address = $('input[name="city"]').val()+" - "+ $('input[name="district"]').val()+" - "+ $('input[name="street"]').val();
         var note = $('input[name="note"]').val();
         var payment_method = $('input[name="payment_method"]:checked').val();
-        console.log(customer_name,email,phone_number,address,note,payment_method);
         var data = {
             customer_name: customer_name,
             email: email,

@@ -940,6 +940,7 @@ progress {color: #3991ff;}
     top: 0;
 }
 .modal-content{
+    height: 100%;
     opacity: 1;
     animation: scaleUp .5s cubic-bezier(.165,.84,.44,1) forwards;
     border-radius: 20px;
@@ -1027,7 +1028,7 @@ progress {color: #3991ff;}
     border: 1px solid #dbdbdb;
     border-radius: 10px;
     padding: 0.5rem!important;
-    margin-top: 0!important;
+    margin-top: 10px!important;
     margin-bottom: 1rem!important;
 }
 .title-review{

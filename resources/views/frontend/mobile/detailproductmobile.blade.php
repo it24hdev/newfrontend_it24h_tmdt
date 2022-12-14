@@ -687,7 +687,6 @@
     <script>
         $(document).ready(function () {
             var view = parseInt('{{$product->view}}') + 1;
-            console.log(view);
             var id = '{{$product->id}}';
             var _token = $('meta[name="csrf-token"]').attr('content');
             var data = {
@@ -702,16 +701,6 @@
                 success: function (data) {
                 }
             });
-
-            function runOnScroll() {
-                if (jQuery(window).scrollTop() > 30) {
-                    document.getElementById("affix_h").style.top = "60px";
-                } else {
-                    document.getElementById("affix_h").style.top = "115px";
-                }
-            }
-
-            $(window).scroll(runOnScroll);
         })
     </script>
 @endsection

@@ -584,19 +584,4 @@
 @endsection
 @section('js')
     <script src="{{asset('asset/js/filter-price-2.js')}}"></script>
-    <script>
-        $(document).ready(function () {
-            function runOnScroll() {
-                if (jQuery(window).scrollTop() > 30) {
-                    document.getElementById("affix_h").style.top = "60px";
-                } else {
-                    document.getElementById("affix_h").style.top = "115px";
-                }
-            }
-            $(window).scroll(runOnScroll);
-        })
-    </script>
 @endsection
-{{--@section('footer')--}}
-{{--    @include('frontend.mobile.footermobile')--}}
-{{--@endsection--}}
