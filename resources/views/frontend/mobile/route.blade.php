@@ -21,6 +21,7 @@
     var product_views = '{{route('product_views')}}';
     var successorder = '{{route('successorder')}}';
     var complete_payment = '{{route('complete_payment')}}';
+    var get_district = '{{route('get_district')}}';
     var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
     var url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
     var url_img_large_product= '{{asset('upload/images/products/large/')}}';

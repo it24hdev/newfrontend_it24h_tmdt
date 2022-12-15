@@ -12,16 +12,11 @@
         <div class="header_cart d-flex align-items-center justify-content-center">
             <div class="back">
                 <a href="/" class="d-flex align-items-center">
-                    <i class="fal fa-angle-left"></i>
-                    <p> Trở về</p>
+                    <i class="far fa-times"></i>
+                    <p>Đóng</p>
                 </a>
             </div>
-            <p class="title_cart title m-auto">Thanh toán thành công</p>
-            <div class="plus_p">
-                <a href="/" class="d-flex align-items-center">
-                    <i class="fal fal fa-plus"></i>
-                </a>
-            </div>
+            <p class="title_cart title m-auto">Hoàn thành</p>
         </div>
         @if($active==1)
         <section class="block-info">

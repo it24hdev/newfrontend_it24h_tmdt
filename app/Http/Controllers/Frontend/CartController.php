@@ -4,17 +4,13 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ContactMail;
-use App\Mail\OrderMail;
-use App\Mail\ThongBaoCoDonHangMoi;
-use App\Models\Category;
 use App\Models\Customer;
-use App\Models\Locationmenu;
 use App\Models\Order;
 use App\Models\Order_item;
 use App\Models\Post;
 use App\Models\Products;
-use App\Models\Locationvn;
-use http\Env\Response;
+use App\Models\District;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Cookie;
@@ -22,7 +18,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
-use App\Http\Controllers\laravelmenu\src\Models\Menus;
 use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 
 class CartController extends Controller
@@ -400,8 +395,8 @@ class CartController extends Controller
             $isphone = "phone";
         }
         if ($isphone=="phone") {
-            $city = Locationvn::where('parent',0)->get();
-            $district = Locationvn::where('parent',27)->get();
+            $city = City::get();
+            $district = District::where('matp',31)->get();
             $cart_success = json_decode(Cookie::get('cart_success'));
             if(Cookie::get('shopping_cart')){
                 $cookie_data = stripslashes(Cookie::get('shopping_cart'));
@@ -642,5 +637,13 @@ class CartController extends Controller
         ];
         Mail::to(\env('MAIL_ADMIN'))->send(new ContactMail($data));
         return \redirect()->route('contact')->with('success', 'Thông tin liên hệ phải hồi của quý khách đã được gửi thành công!');
+    }
+
+    public function get_district(Request $request){
+        $ma_tp = $request->ma_tp;
+        $district = District::where('matp',$ma_tp)->get();
+        if($district){
+            return response()->json(['success' => true,'district' => $district]);
+        }
     }
 }

@@ -1121,30 +1121,114 @@ $(document).ready(function () {
     });
     $(document).on('click', '.btn-complte-payment', function(){
         var customer_name = $('input[name="customer_name"]').val();
-        var email = $('input[name="email"]').val();
         var phone_number = $('input[name="phone_number"]').val();
-        var address = $('input[name="city"]').val()+" - "+ $('input[name="district"]').val()+" - "+ $('input[name="street"]').val();
+        var mailformat = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
+        var email = $('input[name="email"]').val();
+        var address = $('select[name="district"]').val() +" - "+ $('select[name="city"] option:selected').text();
+        if($('input[name="street"]').val()){
+            address = $('input[name="street"]').val() + " - " + address;
+        }
         var note = $('input[name="note"]').val();
         var payment_method = $('input[name="payment_method"]:checked').val();
-        var data = {
-            customer_name: customer_name,
-            email: email,
-            phone_number: phone_number,
-            address: address,
-            note: note,
-            payment_method: payment_method,
+        var vat = $('input[name="VAT"]');
+        var name_company = $('input[name="name_company"]').val();
+        var address_company = $('input[name="address_company"]').val();
+        var tax_code = $('input[name="tax_code"]').val();
+        var email_company = $('input[name="email_company"]').val();
+        switch (true){
+            case (customer_name.length<2) : {
+                if(!$('.requite_numberphone').hasClass('d-none')){
+                    $('.requite_numberphone').addClass('d-none');
+                }
+                $('.requite_name').removeClass('d-none');
+                $('input[name="customer_name"]').focus();
+                break;
+            }
+            case ((phone_number.length<10) || (phone_number.length>12)) :{
+                if(!$('.requite_name').hasClass('d-none')){
+                    $('.requite_name').addClass('d-none');
+                }
+                $('.requite_numberphone').removeClass('d-none');
+                $('input[name="phone_number"]').focus();
+                break;
+            }
+            case(!email.match(mailformat)):{
+                if(!$('.requite_numberphone').hasClass('d-none')){
+                    $('.requite_numberphone').addClass('d-none');
+                }
+                $('.requite_email').removeClass('d-none');
+                $('input[name="email"]').focus();
+                break;
+                }
+            case(vat.is(":checked")):{
+                switch (true){
+                    case (name_company.length<2) : {
+                        break;
+                    }
+                    case (address_company.length<2) : {
+                        break;
+                    }
+                    case (tax_code.length<2) : {
+                        break;
+                    }
+                    case (!email_company.match(mailformat)) : {
+                        break;
+                    }
+                    default:{
+                    }
+                }
+            }
+            default:{
+                if(!$('.requite_email').hasClass('d-none')){
+                    $('.requite_email').addClass('d-none');
+                }
+                var data = {
+                    customer_name: customer_name,
+                    email: email,
+                    phone_number: phone_number,
+                    address: address,
+                    note: note,
+                    payment_method: payment_method,
+                    _token: _token
+                };
+                $.ajax({
+                    url: complete_payment,
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.success){
+                            window.location = successorder;
+                        }
+                    }
+                });
+            }
+        }
+    });
+    $(document).on('change', 'select[name="city"]', function(){
+        var ma_tp = $(this).val();
+        data = {
+            ma_tp : ma_tp,
             _token: _token
-        };
+        }
         $.ajax({
-            url: complete_payment,
+            url: get_district,
             method: 'POST',
             data: data,
             dataType: 'json',
             success: function (data) {
                 if(data.success){
-                    window.location = successorder;
+                    $('select[name="district"]').html('');
+                    $.each(data.district, function(k,v) {
+                        $('select[name="district"]').append($('<option>',
+                            {
+                                value: v.name,
+                                text : v.name
+                            }));
+                    });
                 }
             }
         });
-    });
+    })
+
 });

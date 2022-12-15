@@ -352,6 +352,7 @@ Route::post('/remove_cart_data', [CartController::class, 'remove_cart_data'])->n
 Route::post('/order_processing', [CartController::class, 'order_processing'])->name('order_processing');
 Route::post('/delete-wish', [CartController::class, 'remove_product_wish'])->name('remove_product_wish');
 Route::post('/submit-contact', [CartController::class, 'submit_contact'])->name('submit_contact');
+Route::post('/get_district', [CartController::class, 'get_district'])->name('get_district');
 
 /** Frontend */
 Route::get('/', [HomeController::class, 'index'])->name('user');
