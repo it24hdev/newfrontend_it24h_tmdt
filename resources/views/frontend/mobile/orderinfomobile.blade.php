@@ -25,22 +25,22 @@
                 <div class="block-customer">
                     <p>Thông tin khách hàng</p>
                     <div class="mt-2">
-                        <input type="text" name="customer_name" placeholder="Họ và tên (bắt buộc)" maxlength="10" autocomplete="off">
-                        <span class="requite_name d-none text-danger mx-2"><i>Tên không hợp lệ, vui lòng nhập lại</i></span>
+                        <input type="text" name="customer_name" placeholder="Họ và tên (bắt buộc)" maxlength="50" autocomplete="off">
+                        <span class="requite_name text-danger mx-2"><i></i></span>
                         <input type="number" name="phone_number" placeholder="Số điện thoại (bắt buộc)"  autocomplete="off" class="mt-2">
-                        <span class="requite_numberphone d-none text-danger mx-2"><i>Số điện thoại không hợp lệ, vui lòng nhập lại</i></span>
+                        <span class="requite_numberphone text-danger mx-2"><i></i></span>
                         <input type="email" placeholder="Email" name="email" maxlength="100" autocomplete="off" class="mt-2">
-                        <span class="requite_email d-none text-danger mx-2"><i>Email không hợp lệ, vui lòng nhập lại</i></span>
+                        <span class="requite_email text-danger mx-2"><i></i></span>
                     </div>
                 </div>
                 <div class="address-box">
                     <div class="d-flex">
-                        <select name="city" class="form-select col-sm-1 mx-1">
+                        <select name="city" class="form-select col-sm-1 mx-1 w-50">
                             @foreach($city as $key => $item)
                                 <option value="{{$item->matp}}" @if($item->matp == 31) selected @endif>{{$item->name}}</option>
                             @endforeach
                         </select>
-                        <select name="district" class="form-select form-select-sm mx-1">
+                        <select name="district" class="form-select form-select-sm mx-1 w-50">
                             @foreach($district as $key => $item)
                                 @if($item->matp == 31)
                                 <option value="{{$item->name}}">{{$item->name}}</option>
@@ -74,16 +74,20 @@
                             <input type="checkbox" name="VAT" id="VAT">
                             <span>Yêu cầu xuất hóa đơn công ty (Vui lòng điền email để nhận hoá đơn VAT)</span>
                         </label><br>
-                        <a href="https://cellphones.com.vn/chinh-sach-giao-hang" target="_blank">
+                        <a href="#" target="_blank">
                             <i class="text-danger">(Với đơn hàng trên 20 triệu vui lòng thanh toán chuyển khoản từ tài
                                 khoản công ty khi cần xuất VAT cho công ty)</i>
                         </a>
                     </div>
                     <div class="mb-3 receipt_ip d-none">
-                        <input name="name_company" type="text" placeholder="Tên công ty (*)" autocomplete="off" class="mb-2">
-                        <input name="address_company" type="text" placeholder="Địa chỉ công ty (*)" autocomplete="off" class="mb-2">
-                        <input name="tax_code" type="text" placeholder="Mã số thuế (*)" autocomplete="off" class="mb-2">
-                        <input name="email_company" type="text" placeholder="Email công ty (*)" autocomplete="off">
+                        <input name="name_company" type="text" placeholder="Tên công ty (*)" autocomplete="off" class="my-2">
+                        <span class="requite_name_company text-danger mx-2"><i></i></span>
+                        <input name="address_company" type="text" placeholder="Địa chỉ công ty (*)" autocomplete="off" class="my-2">
+                        <span class="requite_address_company text-danger mx-2"><i></i></span>
+                        <input name="tax_code" type="text" placeholder="Mã số thuế (*)" autocomplete="off" class="my-2">
+                        <span class="requite_tax_code text-danger mx-2"><i></i></span>
+                        <input name="email_company" type="text" placeholder="Email công ty (*)" autocomplete="off" class="my-2">
+                        <span class="requite_email_company text-danger mx-2"><i></i></span>
                     </div>
                 </div>
                 <i>

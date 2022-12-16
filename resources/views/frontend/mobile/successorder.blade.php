@@ -28,12 +28,16 @@
                 <div class="block-box info alert-success">
                     <div>
                     <h4 class="text-center text-uppercase">Đặt hàng thành công</h4>
-                    <div><p><span>Mã đơn hàng: </span><span class="bold_text">{{$customer_order->id}}</span></p></div>
-                    <div><p><span>Người đặt: </span><span class="bold_text">{{$customer_order->customer_name}}</span></p></div>
-                    <div><p><span>Số điện thoại: </span><span class="bold_text">{{$customer_order->phone_number}}</span></p></div>
-                    <div><p><span>Nhận sản phẩm tại:</span><span class="bold_text">{{$customer_order->address}}</span></p></div>
-                    <div><p><span>Hình thức thanh toán: </span><span class="bold_text">{{$customer_order->payment_method}}</span></p></div>
-                    <div><p><span>Tổng tiền: </span><span class="bold_text">{{$customer_order->total}}</span></p></div>
+                    <div><p class="my-0"><span>Mã đơn hàng: </span><span class="bold_text">{{$customer_order->id}}</span></p></div>
+                    <div><p class="my-0"><span>Người đặt: </span><span class="bold_text">{{$customer_order->customer_name}}</span></p></div>
+                    @if($customer_order->name_company)
+                        <div><p class="my-0"><span>Tên công ty: </span><span class="bold_text">{{$customer_order->name_company}}</span></p></div>
+                    @endif
+                    <div><p class="my-0"><span>Số điện thoại: </span><span class="bold_text">{{$customer_order->phone_number}}</span></p></div>
+                    <div><p class="my-0"><span>Nhận sản phẩm tại: </span><span class="bold_text">{{$customer_order->address}}</span></p></div>
+                    <div><p class="my-0"><span>Hình thức thanh toán: </span><span class="bold_text">{{$customer_order->payment_method}}</span></p></div>
+                    <div><p class="my-0"><span>Tổng tiền: </span><span class="bold_text">{{$customer_order->total}}</span></p></div>
+
                     </div>
                     <div>
                         <div class="QRcode_payment">

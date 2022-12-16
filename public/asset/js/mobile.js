@@ -211,7 +211,6 @@ $(document).ready(function () {
                 var template_product_mobile = $('#template_product_mobile').html();
                 $.each(data.list_cat_childs, function(k,v) {
                     var tmp = $(template_child_categories).clone();
-                    $url = '';
                     $url = product_cat.replace('slug_code', v.slug);
                     $(tmp).find('a').html(v.name);
                     $(tmp).find('a').attr('href',$url);
@@ -246,7 +245,12 @@ $(document).ready(function () {
             }
             var dt_p = detail_p.replace('slug_code', v.slug);
             $(tmp).find('.p-img a').attr('href',dt_p);
-            var url_img_product = img_product_mobile;
+            if(v.thumb !="no-images.jpg"){
+                var url_img_product = img_product_mobile;
+            }
+            else{
+                var url_img_product = no_img_product_mobile;
+            }
             url_img_product = url_img_product.replace('img_name', v.thumb);
             $(tmp).find('.p-img img').attr('src',url_img_product);
             $(tmp).find('.p-info a').attr('href',dt_p);
@@ -1131,80 +1135,123 @@ $(document).ready(function () {
         var note = $('input[name="note"]').val();
         var payment_method = $('input[name="payment_method"]:checked').val();
         var vat = $('input[name="VAT"]');
-        var name_company = $('input[name="name_company"]').val();
+        var name_company = address_company = tax_code = email_company ="";
+        if($('input[name="name_company"]').val() != ""){
+            name_company = $('input[name="name_company"]').val();
+        }
         var address_company = $('input[name="address_company"]').val();
         var tax_code = $('input[name="tax_code"]').val();
         var email_company = $('input[name="email_company"]').val();
+        var data = {
+            customer_name: customer_name,
+            email: email,
+            phone_number: phone_number,
+            address: address,
+            note: note,
+            address_company: address_company,
+            tax_code: tax_code,
+            email_company: email_company,
+            name_company: name_company,
+            payment_method: payment_method,
+            _token: _token
+        };
+        $('.requite_name i').html('');
+        $('.requite_numberphone i').html('');
+        $('.requite_email i').html('');
         switch (true){
-            case (customer_name.length<2) : {
-                if(!$('.requite_numberphone').hasClass('d-none')){
-                    $('.requite_numberphone').addClass('d-none');
-                }
-                $('.requite_name').removeClass('d-none');
+            case (customer_name.split(" ").join("").length==0) : {
+                $('.requite_name i').html('Vui lòng nhập Họ và tên của bạn.');
                 $('input[name="customer_name"]').focus();
                 break;
             }
-            case ((phone_number.length<10) || (phone_number.length>12)) :{
-                if(!$('.requite_name').hasClass('d-none')){
-                    $('.requite_name').addClass('d-none');
-                }
-                $('.requite_numberphone').removeClass('d-none');
+            case (customer_name.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(customer_name)) : {
+                $('.requite_name i').html('Họ và tên không hợp lệ, vui lòng nhập lại.');
+                $('input[name="customer_name"]').focus();
+                break;
+            }
+            case ((phone_number.split(" ").join("").length<10) || (phone_number.split(" ").join("").length>12)) :{
+                $('.requite_numberphone i').html('Số điện thoại không hợp lệ, vui lòng nhập lại.');
                 $('input[name="phone_number"]').focus();
                 break;
             }
-            case(!email.match(mailformat)):{
-                if(!$('.requite_numberphone').hasClass('d-none')){
-                    $('.requite_numberphone').addClass('d-none');
-                }
-                $('.requite_email').removeClass('d-none');
+            case(email.split(" ").join("").length>0 && !email.match(mailformat)):{
+                $('.requite_email i').html('Địa chỉ email không hợp lệ, vui lòng nhập lại.');
                 $('input[name="email"]').focus();
                 break;
                 }
             case(vat.is(":checked")):{
+                $('.requite_name_company i').html('');
+                $('.requite_address_company i').html('');
+                $('.requite_tax_code i').html('');
+                $('.requite_email_company i').html('');
                 switch (true){
-                    case (name_company.length<2) : {
+                    case (name_company.split(" ").join("").length==0) : {
+                        $('.requite_name_company i').html('Tên công ty không được phép bỏ trống.');
                         break;
                     }
-                    case (address_company.length<2) : {
+                    case (name_company.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(name_company)) : {
+                        $('.requite_name_company i').html('Tên công ty không hợp lệ, vui lòng nhập lại.');
                         break;
                     }
-                    case (tax_code.length<2) : {
+                    case (address_company.split(" ").join("").length==0) : {
+                        $('.requite_address_company i').html('Địa chỉ công ty không được phép bỏ trống.');
+                        break;
+                    }
+                    case (address_company.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(address_company)) : {
+                        $('.requite_address_company i').html('Địa chỉ công ty không hợp lệ, vui lòng nhập lại.');
+                        break;
+                    }
+                    case (tax_code.split(" ").join("").length==0) : {
+                        $('.requite_tax_code i').html('Mã số thuế không được phép bỏ trống.');
+                        break;
+                    }
+                    case (tax_code.split(" ").join("").length<10 || tax_code.split(" ").join("").length>15) : {
+                        $('.requite_tax_code i').html('Mã số thuế không hợp lệ, vui lòng nhập lại.');
+                        break;
+                    }
+                    case (email_company.split(" ").join("").length==0) : {
+                        $('.requite_email_company i').html('Email công ty không được phép bỏ trống, vui lòng nhập lại');
                         break;
                     }
                     case (!email_company.match(mailformat)) : {
+                        $('.requite_email_company i').html('Email công ty không hợp lệ, vui lòng nhập lại.');
                         break;
                     }
                     default:{
+                        $.ajax({
+                            url: complete_payment,
+                            method: 'POST',
+                            data: data,
+                            dataType: 'json',
+                            success: function (data) {
+                                if(data.success){
+                                    window.location = successorder;
+                                }
+                            }
+                        });
                     }
                 }
+                break;
             }
             default:{
-                if(!$('.requite_email').hasClass('d-none')){
-                    $('.requite_email').addClass('d-none');
-                }
-                var data = {
-                    customer_name: customer_name,
-                    email: email,
-                    phone_number: phone_number,
-                    address: address,
-                    note: note,
-                    payment_method: payment_method,
-                    _token: _token
-                };
                 $.ajax({
                     url: complete_payment,
                     method: 'POST',
                     data: data,
                     dataType: 'json',
                     success: function (data) {
-                        if(data.success){
+                        if(data.success==true){
                             window.location = successorder;
+                        }
+                        if(data.success==false){
+                            $( "#snackbar_false" ).fadeIn( 300 ).delay( 1000 ).fadeOut( 400 );
                         }
                     }
                 });
             }
         }
     });
+
     $(document).on('change', 'select[name="city"]', function(){
         var ma_tp = $(this).val();
         data = {

@@ -22,6 +22,10 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->text('note')->nullable();
+            $table->string('name_company')->nullable();
+            $table->string('address_company')->nullable();
+            $table->string('tax_code')->nullable();
+            $table->string('email_company')->nullable();
             $table->string('payment_method');
             $table->unsignedBigInteger('total');
             $table->string('status');

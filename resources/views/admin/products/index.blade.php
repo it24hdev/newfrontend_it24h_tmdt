@@ -117,7 +117,8 @@
                                 <a href="javascript:;" data-toggle="modal" data-target="#header-footer-modal-preview-{{ $product->id }}"title="Chi tiết sản phẩm">
                                 @endcan
                                 <div class="font-medium text-center" style=" white-space: nowrap; width: 50px; overflow: hidden; text-overflow: ellipsis;">
-                                    {{ number_format($product->quantity, 0, '', '.')  }}</div>
+                                    {{ number_format($product->quantity, 0, '', '.')  }}
+                                </div>
                             </td>
                             <td style="padding: 0.25rem 0.25rem !important;">
                                 @can('viewAny', \App\Models\Products::class)

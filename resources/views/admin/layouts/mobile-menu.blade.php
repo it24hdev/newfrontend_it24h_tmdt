@@ -259,6 +259,7 @@
                             <div class="menu__icon"> <i data-feather="activity"></i> </div>
                             <div class="menu__title"> Danh mục sản phẩm</div>
                         </a>
+                    </li>
                 @endcan
                 @can('viewProduct', App\Models\Vote::class)
                     <li>
@@ -272,6 +273,12 @@
                         <a href="{{ route('category_property.index') }}" class="menu">
                             <div class="menu__icon"> <i data-feather="activity"></i> </div>
                             <div class="menu__title"> Thuộc tính sản phẩm</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('vouchers.index') }}" class="menu">
+                            <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="menu__title"> Vouchers</div>
                         </a>
                     </li>
             </ul>

@@ -9,7 +9,7 @@
               <div class="alert alert-danger alert-dismissible show">
                   @foreach($errors->all() as $error)
                   {{ $error }} <br>
-                  @endforeach      
+                  @endforeach
               </div>
             </div>
         </div>
@@ -94,7 +94,7 @@
                                         <a class="btn btn-sm btn-primary mr-2"
                                            href="{{ route('detailproperty.create',[$category_property->id])}}" data-bs-toggle="tooltip" title="Thêm chi tiết" ><i class="fas fa-plus-square"></i>
                                         </a>
-                                        
+
                                         <a class="btn btn-sm btn-primary mr-2"
                                            href="{{route('category_property.edit',$category_property->id)}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
                                         </a>

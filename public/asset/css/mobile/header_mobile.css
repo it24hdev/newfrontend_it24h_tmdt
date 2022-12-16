@@ -422,52 +422,12 @@ color: #f00!important;
 .menu-mobile .menu-tree-child::-webkit-scrollbar{
     display: none;
 }
-#snackbar, #snackbar_false {
-    display: none;
-    min-width: 150px;
-    font-size: 12px;
-    margin-left: -70px;
-    background-color: rgb(32 31 31 / 74%);
-    color: #fff;
-    text-align: center;
-    border-radius: 8px;
-    padding: 12px 0px;
-    position: fixed;
-    font-weight: 700;
-    z-index: 10;
-    left: 50%;
-    top: 40%;
-    height: auto;
-}
-#snackbar i, #success_cm i{
-    font-size: 28px;
-    color: white;
-}
-#snackbar span, #success_cm span{
-    font-size: 13px;
-    margin-top: 5px;
-}
+
 .frame-w{
     margin-right: auto;
     margin-left: auto;
 }
-#success_cm {
-    display: none;
-    min-width: 170px;
-    font-size: 12px;
-    margin-left: -100px;
-    background-color: rgb(32 31 31 / 74%);
-    color: #fff;
-    text-align: center;
-    border-radius: 8px;
-    padding: 12px 10px;
-    position: fixed;
-    font-weight: 700;
-    z-index: 10;
-    left: 45%;
-    top: 40%;
-    height: auto;
-}
+
 /*header gio hang -  thanh toan*/
 .back-home{
     border-radius: 5px;
@@ -520,22 +480,3 @@ color: #f00!important;
     margin-right: 5px;
 }
 
-#go_top{
-    display: block;
-    border-radius: 50px;
-    background: #ededed;
-    color: #8d8989;
-    font-size: 22px;
-    height: 40px;
-    width: 40px;
-    font-weight: 900;
-    position: fixed;
-    right: 15px;
-    bottom: 60px;
-    z-index:10;
-    line-height: 25px;
-    text-align: center;
-    padding-top: 6px;
-    -webkit-transition: all .2s ease-in-out;
-    cursor: pointer;
-}

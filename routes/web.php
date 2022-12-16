@@ -25,6 +25,7 @@ use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
 use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
 use App\Http\Controllers\Categoryproperty\Category_propertyController;
 use App\Http\Controllers\Menu\MenusController;
+use App\Http\Controllers\Vouchers\VouchersController;
 use App\Http\Controllers\Recentactivity\RecentactivityController;
 use App\Http\Controllers\Registerservice\RegisterserviceController;
 use App\Http\Controllers\EXController;
@@ -273,6 +274,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::post('/deletedetail', [Category_propertyController::class, 'destroydetail'])->name('detailproperty.delete');
     });
+    // =======================menu===============
     Route::prefix('admin/menus')->group(function () {
         Route::get('/', [MenusController::class, 'index'])->name('menu.index');
         Route::post('/change_number_menuitem', [MenusController::class, 'change_number_menuitem'])->name('change_number_menuitem');
@@ -296,6 +298,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/menu_import/{menu}', [MenusController::class, 'import'])->name('menu.import');
 
     });
+
+    // =======================Vouchers===============
+    Route::prefix('admin/vouchers')->group(function () {
+        Route::get('/', [VouchersController::class, 'index'])->name('vouchers.index');
+        Route::post('/create', [VouchersController::class, 'store'])->name('vouchers.store');
+    });
+    // =======================Hoat dong gan day===============
     Route::prefix('admin/recentactivity')->group(function () {
         Route::get('/', [RecentactivityController::class, 'index'])->name('recentactivity.index');
         Route::post('/create', [RecentactivityController::class, 'store'])->name('recentactivity.store');

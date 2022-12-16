@@ -434,6 +434,14 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
         $cat = Category::where('slug', $request->slug)->first();
+
+        $cat_parent = Category::find($cat->id);
+        $list_cat_child =[];
+        foreach ($cat_parent->cat_child as $cat_child){
+            $list_cat_child[]= $cat_child->id;
+        }
+        $list_cat_childs = Category::whereIn('id',$list_cat_child)->where('show_push_product',1)->get();
+        array_push($list_cat_child,$cat->id);
         if (!empty($cat)) {
             //neu co danh muc thi loc theo danh muc
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
@@ -578,13 +586,15 @@ class HomeController extends Controller
                     $orderby ="ASC";
                 }
             }
+
+
             $products = Products::select('products.*', 'detailproperties.ma as matt', 'categories.slug as url')
                 ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
                 ->leftjoin('categories', 'categories.id', 'category_relationships.cat_id')
                 ->leftjoin('propertyproducts', 'propertyproducts.products_id', 'products.id')
                 ->leftJoin('detailproperties', 'detailproperties.id', 'propertyproducts.detailproperties_id')
                 ->leftJoin('brands', 'brands.id', 'products.brand')
-                ->where('categories.slug', $request->slug)
+                ->whereIn('categories.id', $list_cat_child)
                 ->where(function ($query) use ($property) {
                     foreach ($property as $key => $value) {
                         if ($key == 'p' || $key == 'brand' || $key == 'order') {
@@ -665,7 +675,7 @@ class HomeController extends Controller
                     }
                 })
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
-                ->paginate(40)->withQueryString();
+                ->paginate(20)->withQueryString();
             $attributes = "";
         }
         $cat_parent = Category::where('taxonomy', Category::SAN_PHAM)
@@ -676,9 +686,22 @@ class HomeController extends Controller
 
         //////////////Tra ve//////////////////
         if ($agent->isMobile()) {
+            $bard = Brand::where(function ($query) use ($list_cat_child) {
+                $products_list_brand = Products::where('status',1)
+                ->leftJoin('category_relationships','products.id','category_relationships.product_id')
+                ->whereIn('category_relationships.cat_id',$list_cat_child)
+                ->groupBy('products.brand')
+                ->get();
+                $list = [];
+                foreach ($products_list_brand as $key => $item){
+                    array_push($list,$item->brand);
+                }
+                $query->whereIn('id',$list);
+            })->get();
             //slider banner header
             $sliders = DB::table('sliders')->where('location', 9)->where('status', 1)->orderBy('position', 'ASC')->get();
-            return view('frontend.mobile.productmobile', compact('sliders','products', 'categories', 'attributes','cat','filter_price'));
+            return view('frontend.mobile.productmobile',
+                compact('sliders','products', 'categories', 'attributes','cat','filter_price','list_cat_childs','bard'));
         }
         else{
             return view('frontend.product', compact('products', 'categories',
@@ -907,7 +930,7 @@ class HomeController extends Controller
             foreach ($cat_parent->cat_child as $cat_child){
                 $list_cat_child[]= $cat_child->id;
             }
-            $list_cat_childs = Category::whereIn('id',$list_cat_child)->get();
+            $list_cat_childs = Category::whereIn('id',$list_cat_child)->where('show_push_product',1)->get();
             $Products = Products::select('products.*', DB::raw("brands.image as img_brands"))
                 ->leftjoin('category_relationships','category_relationships.product_id','products.id')
                 ->leftjoin('brands','products.brand','brands.id')

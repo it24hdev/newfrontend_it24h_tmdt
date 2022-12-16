@@ -208,12 +208,17 @@ class CartController extends Controller
             'address' => $request->input('address'),
             'phone_number' => $request->input('phone_number'),
             'note' => $request->input('note'),
+            'name_company' => $request->input('name_company'),
+            'address_company' => $request->input('address_company'),
+            'tax_code' => $request->input('tax_code'),
+            'email_company' => $request->input('email_company'),
             'payment_method' => $request->input('payment_method'),
             'status' => 1
         ];
+        $order = Order::create($info_customer);
         try{
             DB::beginTransaction();
-            $order = Order::create($info_customer);
+
             DB::commit();
             $minutes = 30;
             Cookie::forget('info_customer');

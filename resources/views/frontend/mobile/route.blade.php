@@ -23,6 +23,7 @@
     var complete_payment = '{{route('complete_payment')}}';
     var get_district = '{{route('get_district')}}';
     var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
+    var no_img_product_mobile = '{{asset('upload/images/common_img/img_name')}}';
     var url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
     var url_img_large_product= '{{asset('upload/images/products/large/')}}';
     var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';

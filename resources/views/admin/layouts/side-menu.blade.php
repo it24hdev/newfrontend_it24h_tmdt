@@ -254,6 +254,12 @@
                             <div class="side-menu__title"> Thuộc tính sản phẩm</div>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('vouchers.index') }}" class="side-menu">
+                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__title"> Voucher</div>
+                        </a>
+                    </li>
             </ul>
         </li>
 

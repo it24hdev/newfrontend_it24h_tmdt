@@ -9,7 +9,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['customer_id', 'customer_name', 'email', 'address', 'phone_number', 'note', 'payment_method', 'total', 'status'];
+    protected $fillable = ['customer_id',
+        'customer_name',
+        'email', 'address',
+        'phone_number',
+        'note',
+        'payment_method',
+        'name_company',
+        'address_company',
+        'tax_code',
+        'email_company',
+        'total',
+        'status'
+    ];
 
     public function customer(){
         return $this->belongsTo(Customer::class, 'customer_id');

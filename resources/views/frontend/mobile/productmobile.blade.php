@@ -65,50 +65,50 @@
     <div class="brand_product">
         <div class="block-filter-brands"><!---->
             <div class="brands__content">
-                <div class="list-brand">
-                    <a href="https://cellphones.com.vn/mobile/apple.html" target="_self" class="list-brand__item">
-                        <img src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_71_.png"
-                             alt="Apple" loading="lazy" class="filter-brand__img">
-                    </a>
-                    <a href="https://cellphones.com.vn/mobile/samsung.html" target="_self"
-                       class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_72_.png"
-                            alt="Samsung" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/xiaomi.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_73_.png"
-                            alt="Xiaomi" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/oppo.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_74_.png"
-                            alt="OPPO" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/vivo.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_67_.png"
-                            alt="vivo" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/nokia.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_75_.png"
-                            alt="Nokia" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/realme.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_76_.png"
-                            alt="realme" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/asus.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_77_.png"
-                            alt="ASUS" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/oneplus.html" target="_self"
-                        class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_79_.png"
-                            alt="OnePlus" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/nubia.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/tmp/catalog/product/t/_/t_i_xu_ng_80_.png"
-                            alt="Nubia" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/tecno.html" target="_self" class="list-brand__item"><img
-                            src="https://cdn2.cellphones.com.vn/x/media/catalog/product/0/1/015413gpfxf4f5f3uwu6wf.png"
-                            alt="Tecno" loading="lazy" class="filter-brand__img"> <!----></a><a
-                        href="https://cellphones.com.vn/mobile/dien-thoai-pho-thong.html" target="_self"
-                        class="list-brand__item"><!----> <span>Điện thoại phổ thông</span></a>
-                    <a href="https://cellphones.com.vn/mobile/hang-sap-ve.html" target="_self"
-                       class="list-brand__item"><!----> <span>Tin đồn - Mới ra</span></a>
-                    <a href="https://cellphones.com.vn/mobile/hang-khac.html" target="_self"
-                       class="list-brand__item"> <span>Hãng khác</span>
-                    </a>
+                @if($bard)
+                    <div class="list-brand">
+                        @foreach($bard as $key => $item)
+                            @if($item->image)
+                            <a href="{{route('product_cat',['slug'=> $cat->slug,'brand' => $item->name])}}" target="_self" class="list-brand__item">
+                                <img src="{{asset('upload/images/products/'.$item->image)}}"
+                                     alt="{{$item->name}}" loading="lazy" class="filter-brand__img">
+                            </a>
+                            @else
+                            <a href="{{route('product_cat',['slug'=> $cat->slug,'brand' => $item->name])}}" target="_self"
+                                     class="list-brand__item"> <span>{{$item->name}}</span>
+                            </a>
+                            @endif
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+    <div class="list_cat_childs">
+        <div class="filter-sort__title">Chọn theo loại sản phẩm</div>
+        {{--    category--}}
+        <div class="category_">
+            <div class="b_cate">
+                <div class="content_cat">
+                    <div class="content_cat_w w2">
+                        @foreach ($list_cat_childs as $item)
+                            {{--                    item--}}
+                            <div class="item-categories-outer wcc">
+                                <a href="{{route('product_cat', ['slug' =>  $item->slug])}}"
+                                   class="item-categories square2"
+                                   style="background-color:transparent; background-size: contain;
+                                   background-image:
+                                   @if($item->thumb!="no-images.jpg")url({{asset('upload/images/products/thumb/'.$item->thumb)}});
+                                   @else url({{asset('upload/images/common_img/'.$item->thumb)}});
+                                   @endif
+                                   ">
+                                    <span class="">{{$item->name}}</span>
+                                </a>
+
+                            </div>
+                            {{--                    end item--}}
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -373,8 +373,7 @@
                     </div>
                     <div class="p-img">
                         <a href="{{ route('detailproduct', $value->slug)}}">
-                            <img class="filter_item_img" src="{{asset('upload/images/products/thumb/'.$value->thumb)}}"
-                                 alt="{{$value->name}}">
+                            <img class="filter_item_img" src=" @if($value->thumb=!'no-images.jpg' || empty($value->thumb)){{asset('upload/images/products/thumb/'.$value->thumb)}}@else{{asset('upload/images/common_img/no-images.jpg')}}@endif " alt="{{$value->name}}">
                         </a>
                     </div>
                     <div class="info_cpn">
@@ -444,6 +443,9 @@
                 </div>
             @endforeach
         </div>
+{{--        <ul class="d-flex justify-content-center">--}}
+{{--            <li> {{ $products->links() }}</li>--}}
+{{--        </ul>--}}
     </div>
     {{--    Mo ta danh muc--}}
     @if(!empty($cat->content))

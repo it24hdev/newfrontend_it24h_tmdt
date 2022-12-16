@@ -74,22 +74,3 @@
         </div>
     </div>
 </header>
-<div id="go_top"><i class="fal fa-angle-up"></i></div>
-<div id="snackbar">
-    <div class="d-grid">
-        <i class="far fa-check-circle"></i>
-        <span>Đã thêm vào giỏ hàng</span>
-    </div>
-</div>
-<div id="snackbar_false">
-    <div class="d-grid">
-        <i class="far fa-check-circle"></i>
-        <span>Vui lòng thử lại</span>
-    </div>
-</div>
-<div id="success_cm">
-    <div class="d-grid">
-        <i class="far fa-check-circle"></i>
-        <span>Đánh giá của bạn đã được ghi nhận.</span>
-    </div>
-</div>

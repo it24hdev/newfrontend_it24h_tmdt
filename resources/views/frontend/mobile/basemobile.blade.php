@@ -73,6 +73,28 @@
                 </div>
                 <div id="menu_mobile_child">
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="notification">
+    <div id="go_top"><i class="fal fa-angle-up"></i></div>
+    <div id="snackbar">
+        <div class="d-grid">
+            <i class="far fa-check-circle"></i>
+            <span>Đã thêm vào giỏ hàng</span>
+        </div>
+    </div>
+    <div id="snackbar_false">
+        <div class="d-grid">
+            <i class="far fa-times-circle"></i>
+            <span>Vui lòng thử lại</span>
+        </div>
+    </div>
+    <div id="success_cm">
+        <div class="d-grid">
+            <i class="far fa-check-circle"></i>
+            <span>Đánh giá của bạn đã được ghi nhận.</span>
         </div>
     </div>
 </div>
@@ -84,10 +106,11 @@
 @include('frontend.mobile.templatereviewmobile')
 @include('frontend.mobile.route')
 <!-- javascript -->
-    <script src="{{ asset('lib/jquery360.min.js') }}"></script>
-    <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('asset/js/mobile.js') }}"></script>
+<script src="{{ asset('lib/jquery360.min.js') }}"></script>
+<script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('asset/js/mobile.js') }}"></script>
+
 @yield('js')
 </body>
 </html>
