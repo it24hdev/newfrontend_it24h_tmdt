@@ -104,12 +104,14 @@
 @include('frontend.mobile.templatechildcategories')
 @include('frontend.mobile.templateproductmobile')
 @include('frontend.mobile.templatereviewmobile')
+@include('frontend.mobile.templatesearchmobile')
 @include('frontend.mobile.route')
 <!-- javascript -->
 <script src="{{ asset('lib/jquery360.min.js') }}"></script>
 <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
 <script src="{{ asset('asset/js/mobile.js') }}"></script>
+<script src="{{ asset('asset/js/placeholder_autotyping.js') }}"></script>
 
 @yield('js')
 </body>

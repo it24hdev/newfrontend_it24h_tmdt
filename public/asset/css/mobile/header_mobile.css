@@ -75,7 +75,7 @@ z-index: 1;
 line-height: 36px;
 padding: 0px 12px;
 background-color: white;
-border-radius: 30px;
+border-radius: 10px;
 transition-duration: 0.3s;
 text-decoration: none;
 }
@@ -102,8 +102,8 @@ border-radius: 10px;
 }
 
 .logo_t img{
-height: 30px;
-margin-top: -7px;
+height: 35px;
+/*margin-top: -7px;*/
 }
 .background_header{
 width: 100%;
@@ -480,3 +480,75 @@ color: #f00!important;
     margin-right: 5px;
 }
 
+.autocomplete_search{
+    position: fixed;
+    top: 102px;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 383px;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10;
+}
+.autocomplete_search .box_search{
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    padding: 0 12px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.autocomplete_search .box_search a{
+    height: auto;
+    max-width: 1000px;
+    width: 100%;
+    color: #444;
+    padding: 10px;
+    display: flex!important;
+    padding-right: 0.25rem!important;
+    border-bottom: 1px dashed #ddd;
+    padding-left: 0.25rem!important;
+}
+.autocomplete_search .box_search img{
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+.search-item-info{
+    overflow: hidden;
+    padding: 2px 10px;
+}
+.header-search-name{
+    font-size: 14px;
+    font-weight: 700;
+    max-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+}
+.box_result{
+    width: 100%;
+    padding-top: 20px;
+    border-radius: 0 0 8px 8px;
+    background: #ffffff;
+}
+.img_search_result{
+    margin-bottom: auto;
+    margin-top: auto;
+}
+.price_search{
+    font-size: 14px;
+}
+.header-search-special{
+    font-weight: 700;
+    color: red;
+}
+.header-search-price{
+    text-decoration: line-through;
+}
+.autocomplete_search .box_search a:last-child{
+    border: none;
+}

@@ -9,6 +9,7 @@
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/mobile/filterprice_mobile.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/css/mobile/pagination_mobile.css')}}">
 @endsection
 @section('content')
     <div id="breadcrumbs">
@@ -85,6 +86,7 @@
         </div>
     </div>
     <div class="list_cat_childs">
+        @if($list_cat_childs)
         <div class="filter-sort__title">Chọn theo loại sản phẩm</div>
         {{--    category--}}
         <div class="category_">
@@ -97,14 +99,9 @@
                                 <a href="{{route('product_cat', ['slug' =>  $item->slug])}}"
                                    class="item-categories square2"
                                    style="background-color:transparent; background-size: contain;
-                                   background-image:
-                                   @if($item->thumb!="no-images.jpg")url({{asset('upload/images/products/thumb/'.$item->thumb)}});
-                                   @else url({{asset('upload/images/common_img/'.$item->thumb)}});
-                                   @endif
-                                   ">
+                                   background-image:@if($item->thumb!="no-images.jpg")url({{asset('upload/images/products/thumb/'.$item->thumb)}});@else url('');@endif">
                                     <span class="">{{$item->name}}</span>
                                 </a>
-
                             </div>
                             {{--                    end item--}}
                         @endforeach
@@ -112,6 +109,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
     {{--    Bộ lọc--}}
     <div class="filter_product">
@@ -304,7 +302,8 @@
     {{--    Sap xep theo--}}
     <div class="filter_product filtering_by">
         <div class="filter-sort__title">Sắp xếp theo</div>
-        <div class="filter-sort__list-filter sort_by">
+        <div>
+            <div class="filter-sort__list-filter sort_by">
             <button
                 class="btn-filter btn-sort @if(request()->has('order') && request('order') == "gia_cao_den_thap") ac @endif"
                 data-target-attr="gia_cao_den_thap">
@@ -350,6 +349,7 @@
                 <span>Xem Nhiều</span>
             </button>
         </div>
+        </div>
     </div>
     {{--    san pham--}}
     <div class="col-12">
@@ -373,7 +373,8 @@
                     </div>
                     <div class="p-img">
                         <a href="{{ route('detailproduct', $value->slug)}}">
-                            <img class="filter_item_img" src=" @if($value->thumb=!'no-images.jpg' || empty($value->thumb)){{asset('upload/images/products/thumb/'.$value->thumb)}}@else{{asset('upload/images/common_img/no-images.jpg')}}@endif " alt="{{$value->name}}">
+                            <img class="filter_item_img" src="@if($value->thumb != 'no-images.jpg' || !empty($value->thumb)){{asset('upload/images/products/thumb/'.$value->thumb)}}@else{{asset('upload/images/common_img/no-images.jpg')}}@endif"
+                            alt="{{$value->name}}">
                         </a>
                     </div>
                     <div class="info_cpn">
@@ -425,7 +426,7 @@
                                 <div class="qty" style="color: #337bff; background-color: #dbe9f8;">Liên hệ</div>
                             @endif
                             <div class="action">
-                                <a href="javascript:;" get-id="{{$value->id}}" class="heart add-wish"
+                                <a href="javascript:;" get-id="{{$value->id}}" class="heart add-wish d-none"
                                    title="Lưu sản phẩm">
                                     @if(in_array($value->id,explode(' ', Cookie::get('list_wish'))))
                                         <i class="fas fa-heart heart_red"></i>
@@ -443,9 +444,7 @@
                 </div>
             @endforeach
         </div>
-{{--        <ul class="d-flex justify-content-center">--}}
-{{--            <li> {{ $products->links() }}</li>--}}
-{{--        </ul>--}}
+        <div class="mx-2 my-1 d-flex justify-content-end"> {!! $products->links('frontend.pagination') !!} </div>
     </div>
     {{--    Mo ta danh muc--}}
     @if(!empty($cat->content))

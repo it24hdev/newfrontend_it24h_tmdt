@@ -1712,7 +1712,7 @@ a:active, a:hover {
     border-radius: 10px;
     box-shadow: 0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%);
     padding: 10px;
-    margin: 7px;
+    margin: 15px 7px;
 }
 .describe_cat img{
     width: 100%;
@@ -2041,4 +2041,19 @@ a:active, a:hover {
 
 .list_cat_childs{
     margin: 5px 12px;
+}
+.viewall_promotion a{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    color: #444;
+    padding: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.viewall_promotion i{
+    margin-left: 10px;
+    line-height: 1;
+    font-size: 20px;
 }

@@ -1,0 +1,44 @@
+
+/**Pagination */
+.pagination{
+    clear: both;
+}
+.pagination .page-numbers{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    flex-wrap: wrap;
+    margin: 0;
+}
+.pagination ul{
+    padding: 0;
+}
+.pagination .page-numbers li{
+    display: inline-block;
+    margin-right: 10px;
+}
+.pagination .page-numbers li .page-numbers.current{
+    background-color: #3991ff;
+    color: #fff;
+}
+.pagination .page-numbers li .page-numbers{
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    width: 35px;
+    height: 35px;
+    line-height: 35px;
+    border-radius: 5px;
+    color: #6e6e6e;
+    background-color: #f6f6f6;
+    border: 1px solid #e8e8e8;
+}
+.pagination .page-numbers li .page-numbers:hover{
+    background-color: #169fd8;
+    border-color: #169fd8;
+    color: #fff;
+}
+.pagination ul.page-numbers::after{
+    clear: both;
+}

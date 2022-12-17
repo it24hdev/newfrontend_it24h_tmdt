@@ -54,7 +54,6 @@ $(document).ready(function () {
         });
     });
 
-
     //su kien load noi dung khi cuon toi truoc vung load noi dung
     function isOnScreen(elem) {
         if (elem.length == 0) {
@@ -68,7 +67,6 @@ $(document).ready(function () {
         var top = $elem.offset().top - 1000
         var height = $elem.height()
         var bottom = top + height + 400
-
         return (top >= viewport_top && top < viewport_bottom) ||
             (bottom > viewport_top && bottom <= viewport_bottom) ||
             (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
@@ -127,6 +125,7 @@ $(document).ready(function () {
                 if(!$('#load_promotion').hasClass('active')){
                     get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
                     $('#load_promotion').addClass('active');
+                    $('#viewall_promotion').attr('href',url_new_product);
                 }
             }
         })
@@ -146,6 +145,7 @@ $(document).ready(function () {
                 $('#load_promotion').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
                 get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
+                $('#viewall_promotion').attr('href',url_new_product);
             }
         });
     });
@@ -164,6 +164,7 @@ $(document).ready(function () {
                 $('#load_promotion').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
                 get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
+                $('#viewall_promotion').attr('href',url_hot_product);
             }
         })
     });
@@ -182,6 +183,7 @@ $(document).ready(function () {
                 $('#load_promotion').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
                 get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
+                $('#viewall_promotion').attr('href',url_promotion_product);
             }
         })
     });
@@ -292,7 +294,6 @@ $(document).ready(function () {
             $(id_append).append(tmp.html());
         })
     }
-
     //memu
     var template_menu_parent = $('#template-menu-parent').html();
     $(document).on('click', '#menubar , #menubar2', function (){
@@ -518,6 +519,7 @@ $(document).ready(function () {
             $('#scroll_h').css({"display":"none"});
             $('#go_top').css({"display":"block"});
             $('#affix_h').css({"top":"60px"});
+
         }
         else{
             $('#scroll_d').css({"display":"none"});
@@ -724,7 +726,6 @@ $(document).ready(function () {
             }
         });
     });
-
     //ham lay san pham da xem
     function spdaxem() {
         var id = $('#load_p_watched').attr('data-target');
@@ -748,7 +749,7 @@ $(document).ready(function () {
         })
     }
     //ham lay san pham da xem
-     function sptuongtu(){
+    function sptuongtu(){
          var slug = $('#load_p_similar').attr('data-target');
         var data = {
             _token: _token,
@@ -790,7 +791,6 @@ $(document).ready(function () {
         $('.modal-tskt').removeClass('d-none');
         $('body').addClass('disable_scoll');
     });
-
     $(document).on('click', '.bnt-close-tskt', function () {
         $('.modal-tskt').addClass('d-none');
         $('body').removeClass('disable_scoll');
@@ -832,7 +832,6 @@ $(document).ready(function () {
             })
         }
     });
-
     //chon sao danh gia
     $(document).on('click', '#star1, #star2, #star3, #star4, #star5', function () {
         var value_star = $(this).val();
@@ -853,7 +852,6 @@ $(document).ready(function () {
             $('#lb_star').html('Tệ')
         }
     });
-
     //Đánh giá và bình luận
     $(document).on('click','#submit_review',function(){
         var rating  = $(".check-rate:checked").val();
@@ -907,7 +905,6 @@ $(document).ready(function () {
             },
         });
     });
-
     //thay doi anh khi chon anh con
     $(document).on('click','.ac_img_p',function(){
         let src = $(this).find('img').attr('src');
@@ -943,10 +940,8 @@ $(document).ready(function () {
             }
         });
     });
-
     count_cart();
     checkall();
-
     // chon tat ca san pham trong gio hang khi load trang
     function checkall(){
         $('input[name="check_cart"]').each(function(index) {
@@ -973,7 +968,6 @@ $(document).ready(function () {
             }
         }
     }
-
     // xoa san pham khoi gio hang
     $(document).on('click', '.cart_delete', function(){
         var product_id  =  $(this).attr('data-target');
@@ -1028,7 +1022,6 @@ $(document).ready(function () {
             }
         });
     });
-
     //tru sl san pham
     $('.minus_cart').click('click',function(){
         if ($(this).next().val() > 1){
@@ -1062,7 +1055,6 @@ $(document).ready(function () {
     $(document).on('change', '.check_cart', function() {
         total_cart();
     });
-
     //tinh tong tien tam thoi
     function total_cart(){
         let total = price = sale_price = 0;
@@ -1111,7 +1103,6 @@ $(document).ready(function () {
             });
         }
     });
-
     // ==============================Thong tin dat hang==============================
     $(document).on('click', '#VAT', function(){
         if($(this).is(':checked')){
@@ -1251,7 +1242,6 @@ $(document).ready(function () {
             }
         }
     });
-
     $(document).on('change', 'select[name="city"]', function(){
         var ma_tp = $(this).val();
         data = {
@@ -1278,4 +1268,76 @@ $(document).ready(function () {
         });
     })
 
+    // ==============================Tìm kiếm==============================
+    function delay(callback, ms) {
+        var timer = 0;
+        return function() {
+            var context = this, args = arguments;
+            clearTimeout(timer);
+            timer = setTimeout(function () {
+                callback.apply(context, args);
+            }, ms || 0);
+        };
+    }
+    // $(".search_input_scroll").on("input",function() {
+    //     $(".search").val($(this).val());
+    // });
+    // $(".search").on("input",function() {
+    //     $(".search_input_scroll").val($(this).val());
+    // });
+    $('input[type=search]').on('search', function () {
+        // search logic here
+        // this function will be executed on click of X (clear button)
+        $('body').removeClass('disable_scoll');
+    });
+
+    $(".search , .search_input_scroll").keyup(delay(function(e){
+        var keyword =  $(this).val();
+        if(keyword!=""){
+            $('body').addClass('disable_scoll');
+        }
+        else{
+            if($('body').hasClass('disable_scoll')){
+                $('body').removeClass('disable_scoll');
+            }
+        }
+        $.ajax({
+            url: autotypeahead,
+            type:"post",
+            dataType:"json",
+            data:{
+                _token: _token,
+                data: keyword
+            } ,
+            success: function (data) {
+                if(data.result_search){
+                    var template_search_mobile = $('#template_search_mobile').html();
+
+                    $.each(data.result_search, function(k,v) {
+                        var tmp = $(template_search_mobile).clone();
+                        // console.log(tmp);
+                        $(tmp).find('a').attr('href',v.slug);
+                        var img = img_product_mobile;
+                        img = img.replace('img_name', v.thumb);
+                        $(tmp).find('img').attr('src',img);
+                        $(tmp).find('.header-search-name').html(v.name);
+                        if(v.price_onsale==0){
+                            $(tmp).find('.header-search-special').html(v.price);
+                        }
+                        else{
+                            $(tmp).find('.header-search-special').html(v.price_onsale);
+                            $(tmp).find('.header-search-price').html(v.price_onsale);
+                        }
+
+                        $('.box_result').append(tmp);
+                    });
+                }
+                else{
+                    // $('autocomplete_search')
+                }
+
+            },
+        })
+        // $("ajax-search").style.display = "block";
+    },0));
 });

@@ -434,15 +434,16 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
         $cat = Category::where('slug', $request->slug)->first();
-
-        $cat_parent = Category::find($cat->id);
-        $list_cat_child =[];
-        foreach ($cat_parent->cat_child as $cat_child){
-            $list_cat_child[]= $cat_child->id;
-        }
-        $list_cat_childs = Category::whereIn('id',$list_cat_child)->where('show_push_product',1)->get();
-        array_push($list_cat_child,$cat->id);
+        $list_cat_child = array();
+        $list_cat_childs ="";
         if (!empty($cat)) {
+            $cat_parent = Category::find($cat->id);
+            $list_cat_child =[];
+            foreach ($cat_parent->cat_child as $cat_child){
+                $list_cat_child[]= $cat_child->id;
+            }
+            $list_cat_childs = Category::whereIn('id',$list_cat_child)->where('show_push_product',1)->get();
+            array_push($list_cat_child,$cat->id);
             //neu co danh muc thi loc theo danh muc
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
                 ->where('parent_id', $cat->id)
@@ -586,8 +587,6 @@ class HomeController extends Controller
                     $orderby ="ASC";
                 }
             }
-
-
             $products = Products::select('products.*', 'detailproperties.ma as matt', 'categories.slug as url')
                 ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
                 ->leftjoin('categories', 'categories.id', 'category_relationships.cat_id')
@@ -638,6 +637,7 @@ class HomeController extends Controller
                 ->paginate(20)->withQueryString();
         }
         else {
+
             // Neu khong co danh muc thi lay san pham moi
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
                 ->where('parent_id', 0)
@@ -651,6 +651,19 @@ class HomeController extends Controller
             if (!empty($request->brand)) {
                 $brand = $request->brand;
             }
+            $promotion = "san-pham-hot";
+            if (!empty($request->promotion)) {
+                $promotion = $request->promotion;
+            }
+            if($promotion == "san-pham-hot"){
+                $promotion = 'is_hot';
+            }
+            if($promotion == "san-pham-moi"){
+                $promotion = 'is_new';
+            }
+            if($promotion == "san-pham-khuyen-mai"){
+                $promotion = 'is_promotion';
+            }
             $orderby = "ASC";
             $order_name ="id";
             if(!empty($request->order)){
@@ -663,7 +676,7 @@ class HomeController extends Controller
                     $orderby ="ASC";
                 }
             }
-            $products = Products::where('status', 1)->where('is_hot', 1)
+            $products = Products::where('status', 1)->where($promotion, 1)
                 ->where(function ($query) use ($price) {
                     if ($price != "") {
                         $p = explode(';', $price);
@@ -671,7 +684,7 @@ class HomeController extends Controller
                         $max_price = $p[1];
                         $query->whereBetween('price_onsale', [$min_price, $max_price]);
                     } else {
-                        $query->where('products.status',1);
+                        $query->where('status',1);
                     }
                 })
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
@@ -754,17 +767,31 @@ class HomeController extends Controller
     //xu ly nhap thanh tim kiem ra san pham
     public function autotypeahead(Request $request)
     {
-        $locale = config('app.locale');
-        $view = '';
-        if ($request->data != null) {
-            $data = Products::where('name', 'like', '%' . $request->data . '%')->limit(15)->get();
-            if ($data != null)
-                $view = view('frontend.search', [
-                    'data' => $data,
-                    'locale' => $locale,
-                ])->render();
+        $agent = new Agent();
+        $isMobile="";
+        if ($agent->isPhone()) {
+            $isMobile = "phone";
         }
-        return response()->json(['html' => $view]);
+        if ($isMobile) {
+            if($request->data){
+                $data = Products::where('name', 'like', '%' . $request->data . '%')->limit(15)->get();
+                return response()->json(['result_search' => $data]);
+            }
+        }
+        else{
+            $locale = config('app.locale');
+            $view = '';
+            if ($request->data != null) {
+                $data = Products::where('name', 'like', '%' . $request->data . '%')->limit(15)->get();
+                if ($data != null)
+                    $view = view('frontend.search', [
+                        'data' => $data,
+                        'locale' => $locale,
+                    ])->render();
+            }
+            return response()->json(['html' => $view]);
+        }
+
     }
     //lien he
     public function contact()

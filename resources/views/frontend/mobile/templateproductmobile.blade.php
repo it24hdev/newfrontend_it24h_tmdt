@@ -54,7 +54,7 @@
         <div class="detail-bottom">
             <div class="qty"></div>
             <div class="action">
-                <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm">
+                <a href="javascript:;" class="heart add-wish d-none" title="Lưu sản phẩm">
                     <i class="like"></i>
                 </a>
                 <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart">

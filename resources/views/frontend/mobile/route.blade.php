@@ -22,6 +22,10 @@
     var successorder = '{{route('successorder')}}';
     var complete_payment = '{{route('complete_payment')}}';
     var get_district = '{{route('get_district')}}';
+    var autotypeahead = '{{route('autotypeahead')}}';
+    var url_new_product = '{{route('list_product',['promotion'=>'san-pham-moi'])}}';
+    var url_hot_product = '{{route('list_product',['promotion'=>'san-pham-hot'])}}';
+    var url_promotion_product = '{{route('list_product',['promotion'=>'san-pham-khuyen-mai'])}}';
     var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
     var no_img_product_mobile = '{{asset('upload/images/common_img/img_name')}}';
     var url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';

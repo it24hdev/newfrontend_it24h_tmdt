@@ -140,7 +140,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="featured-product-list" id="load_promotion"></div>
+                <div class="featured-product-list" id="load_promotion" data-target=""></div>
+                <div class="viewall_promotion">
+                    <a id="viewall_promotion">Xem tất cả<i class="fal fa-angle-down"></i></a>
+                </div>
             </div>
         </div>
         {{--categoryproduct--}}
