@@ -45,7 +45,6 @@ class Category extends Model
 
     }
 
-
      public static function recursive_child($data, $parents, $level, &$listcategory)
     {
         if (count($data)>0) {

@@ -309,7 +309,8 @@
 
 @media screen and (max-width: 1023px){
     .hs_content_wrapper {
-        width: 1024px;
+        max-width: 1024px;
+        width: 100%;
     }
     .content_h_sale{
         max-width: 1200px;
@@ -319,7 +320,6 @@
 .hs_content_wrapper{
     position: relative;
     justify-content: flex-start;
-    /*flex-wrap: wrap;*/
     display: flex!important;
 }
 .round_ps {
@@ -2043,17 +2043,21 @@ a:active, a:hover {
     margin: 5px 12px;
 }
 .viewall_promotion a{
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 14px;=
     line-height: 1.4;
     color: #444;
     padding: 0 10px;
     display: flex;
     align-items: center;
+    font-weight: 600;
     justify-content: center;
+    opacity: 0.7;
 }
 .viewall_promotion i{
     margin-left: 10px;
     line-height: 1;
     font-size: 20px;
+}
+.cat_box_sale .featured-product-list{
+    padding: 10px 5px 2px 5px;
 }

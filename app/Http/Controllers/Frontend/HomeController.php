@@ -434,6 +434,7 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
         $cat = Category::where('slug', $request->slug)->first();
+        $sliders ="";
         $list_cat_child = array();
         $list_cat_childs ="";
         if (!empty($cat)) {
@@ -444,6 +445,10 @@ class HomeController extends Controller
             }
             $list_cat_childs = Category::whereIn('id',$list_cat_child)->where('show_push_product',1)->get();
             array_push($list_cat_child,$cat->id);
+
+            //slider banner header
+            $sliders            = json_decode($cat->banner);
+
             //neu co danh muc thi loc theo danh muc
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
                 ->where('parent_id', $cat->id)
@@ -648,22 +653,6 @@ class HomeController extends Controller
                 $filter = explode(';', $request->p);
                 $filter_price = "từ ".number_format($filter[0],0,',','.')." đến ".number_format($filter[1],0,',','.');
             }
-            if (!empty($request->brand)) {
-                $brand = $request->brand;
-            }
-            $promotion = "san-pham-hot";
-            if (!empty($request->promotion)) {
-                $promotion = $request->promotion;
-            }
-            if($promotion == "san-pham-hot"){
-                $promotion = 'is_hot';
-            }
-            if($promotion == "san-pham-moi"){
-                $promotion = 'is_new';
-            }
-            if($promotion == "san-pham-khuyen-mai"){
-                $promotion = 'is_promotion';
-            }
             $orderby = "ASC";
             $order_name ="id";
             if(!empty($request->order)){
@@ -676,13 +665,38 @@ class HomeController extends Controller
                     $orderby ="ASC";
                 }
             }
-            $products = Products::where('status', 1)->where($promotion, 1)
+            $promotion = $request->promotion;
+            $search = $request->search;
+            $products = Products::where('status', 1)
                 ->where(function ($query) use ($price) {
                     if ($price != "") {
                         $p = explode(';', $price);
                         $min_price = $p[0];
                         $max_price = $p[1];
                         $query->whereBetween('price_onsale', [$min_price, $max_price]);
+                    } else {
+                        $query->where('status',1);
+                    }
+                })
+                ->where(function ($query) use ($promotion) {
+                    if ($promotion){
+                        if($promotion == "san-pham-hot"){
+                            $promotion = 'is_hot';
+                        }
+                        if($promotion == "san-pham-moi"){
+                            $promotion = 'is_new';
+                        }
+                        if($promotion == "san-pham-khuyen-mai"){
+                            $promotion = 'is_promotion';
+                        }
+                        $query->where($promotion,1);
+                    } else {
+                        $query->where('status',1);
+                    }
+                })
+                ->where(function ($query) use ($search) {
+                    if ($search){
+                        $query->where('name', 'like', '%' . $search . '%');
                     } else {
                         $query->where('status',1);
                     }
@@ -695,7 +709,6 @@ class HomeController extends Controller
             ->where('parent_id', 0)
             ->where('status', 1)
             ->get();
-
 
         //////////////Tra ve//////////////////
         if ($agent->isMobile()) {
@@ -711,8 +724,6 @@ class HomeController extends Controller
                 }
                 $query->whereIn('id',$list);
             })->get();
-            //slider banner header
-            $sliders = DB::table('sliders')->where('location', 9)->where('status', 1)->orderBy('position', 'ASC')->get();
             return view('frontend.mobile.productmobile',
                 compact('sliders','products', 'categories', 'attributes','cat','filter_price','list_cat_childs','bard'));
         }
@@ -774,8 +785,11 @@ class HomeController extends Controller
         }
         if ($isMobile) {
             if($request->data){
-                $data = Products::where('name', 'like', '%' . $request->data . '%')->limit(15)->get();
+                $data = Products::where('name', 'like', '%' . $request->data . '%')->limit(10)->get();
                 return response()->json(['result_search' => $data]);
+            }
+            else{
+                return response()->json();
             }
         }
         else{

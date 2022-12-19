@@ -13,7 +13,7 @@
 @section('header-mobile')
     @include('frontend.layouts.menu-mobile')
 @endsection
-
+@include('frontend.mobile.route')
 @section('content')
     <div class="wp-content">
         <div class="get-list-cat" data-list="{{$list_cat}}"></div>

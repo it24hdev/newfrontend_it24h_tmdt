@@ -13,7 +13,7 @@
                 <div class="form-heade">
                 </div>
                 <div class="grid grid-cols-12 gap-x-5">
-                    <div class="col-span-12 md:col-span-6">
+                    <div class="col-span-12 md:col-span-7">
                         <div class="form-group mb-4">
                             <label>Mã</label>
                             <input type="text" class="form-control" name='ma' value="{{old('ma') ?? $edit->ma}}">
@@ -80,49 +80,64 @@
                                    value="{{$edit->show_push_product == true ? '1' : '0'}}" {{$edit->show_push_product == true ? 'checked' : ' '}}>
                         </div>
                     </div>
-                    <div class="col-span-12 md:col-span-6">
-                        <label>Ảnh đại diện danh mục (<span class="italic">Danh mục cha</span>)</label><br>
-                        <div class="px-4 pb-4 flex items-center cursor-pointer relative">
-                            <i data-feather="image" class="w-4 h-4 mr-2"></i> <span
-                                class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
-                            <input name='thumb' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0"
-                                   id="fileupload2"/>
-                        </div>
-                        <div class="border-2 border-dashed dark:border-dark-5 rounded-md p-2">
-                            <div class="m-2" id="dvPreview2">
-                                @if ($edit->thumb === '' || $edit->thumb === 'no-image-product.jpg')
-                                    <img src="{{ asset('/upload/images/common_img/no-image-product.jpg') }}"
-                                         style="object-fit: cover; object-position: 50% 0; width: 300px;height: 300px;">
-                                @else
-                                    <img src="{{ asset('/upload/images/products') . '/' . $edit->thumb }}"
-                                         style="object-fit: cover; object-position: 50% 0; width: 180px;height: auto;">
-                                @endif
-                                @error('thumb')
-                                <span style="color:red">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-4 hidden">
-                            <label>Banner danh mục trang chủ (<span class="italic">Danh mục cha</span>)</label><br>
+                    <div class="col-span-12 md:col-span-5">
+                        <div>
+                            <label>Ảnh đại diện danh mục (<span class="italic">Danh mục cha</span>)</label><br>
                             <div class="px-4 pb-4 flex items-center cursor-pointer relative">
                                 <i data-feather="image" class="w-4 h-4 mr-2"></i> <span
                                     class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
-                                <input name='banner' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0"
-                                       id="fileupload3"/>
+                                <input name='thumb' type="file" class="w-56 h-56 top-0 left-0 absolute opacity-0"
+                                       id="fileupload2"/>
                             </div>
                             <div class="border-2 border-dashed dark:border-dark-5 rounded-md p-2">
-                                <div class="m-2" id="dvPreview3">
-                                    @if ($edit->banner === '' || $edit->banner === 'no-image-product.jpg')
-                                        <img src="{{ asset('/upload/images/common_img/no-image-product.jpg') }}"
-                                             style="object-fit: cover; object-position: 50% 0; width: 180px;height: auto;">
+                                <div class="m-2" id="dvPreview2">
+                                    @if (empty($edit->thumb) || $edit->thumb == 'no-images.jpg')
+                                        <img src="{{ asset('upload/images/common_img/no-images.jpg') }}"
+                                             style="object-fit: cover; object-position: 50% 0; width: 300px;height: 300px;">
                                     @else
-                                        <img src="{{ asset('/upload/images/products') . '/' . $edit->banner }}"
+                                        <img src="{{ asset('upload/images/products/'.$edit->thumb) }}"
                                              style="object-fit: cover; object-position: 50% 0; width: 180px;height: auto;">
                                     @endif
-                                    @error('banner')
-                                    <span style="color:red">{{ $message }}</span>
+                                    @error('thumb')
+                                    <span class="text-red-500">{{ $message }}</span>
                                     @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Banner</label><br>
+                            <div class="px-4 pb-4 flex items-center cursor-pointer relative">
+                                <i data-feather="image" class="w-4 h-4 mr-2"></i> <span
+                                    class="text-theme-1 dark:text-theme-10 mr-1">Upload ảnh</span>
+                                <input type="file" class="w-full h-full top-0 left-0 absolute opacity-0"
+                                       name="banner[]"
+                                       multiple id="fileupload">
+                            </div>
+                            <div class="border-2 border-dashed dark:border-dark-5 rounded-md pt-2">
+                                <div class="flex flex-wrap px-4 w-full">
+                                    <div class="mt-2 mb-4">
+                                        <div id="dvPreview">
+                                            @if (empty($img) || $edit->banner == 'no-images.jpg')
+                                                <img class="rounded-md"
+                                                     src="{{ asset('upload/images/common_img/no-images.jpg') }}"
+                                                     style="object-fit: cover; object-position: 50% 0; width: 100px;height: 100px;">
+                                            @else
+                                                @foreach ($img as $item)
+                                                    <div
+                                                        class="inline-block w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in" id="">
+                                                        <img class="rounded-md"
+                                                             src="{{ asset('upload/images/products/'. $item)}}"
+                                                             style="object-fit: cover; object-position: 50% 0; width: 100px;height: 100px;">
+                                                        <div title="Xóa ảnh?" data-target="{{ $edit->id }}"
+                                                             data-img="{{ $item }}"
+                                                             class="xoa_anh tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-theme-6 right-0 top-0 -mr-2 -mt-2">
+                                                            <i data-feather="x" class="w-4 h-4"></i>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -222,11 +237,30 @@
                     });
                 }
             });
-
             $(document).on('click', ".btn-delete2", function (e) {
                 e.preventDefault();
                 var id = $(this).attr('data-value');
                 $('#delete_id').val(id);
+            });
+            $('.xoa_anh').click(function () {
+                var img = $(this).attr('data-img');
+                var id = $(this).attr('data-target');
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    img: img,
+                    _token: _token,
+                    id: id
+                };
+                var t = $(this).parent();
+                $.ajax({
+                    url: "{{ route('category.deleteImg') }}",
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                        t.remove();
+                    }
+                });
             });
         });
     </script>

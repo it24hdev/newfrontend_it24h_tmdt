@@ -95,9 +95,9 @@ class CategoryController extends Controller
             $thumb = $request->thumb;
             $nameFile = CommonHelper::convertTitleToSlug($request->name,'-').'-'.time().'.'.$thumb ->extension();
         }
-        if ($request->hasFile('banner')) {
-            $thumbBanner = $request->banner;
-            $nameFileBanner = CommonHelper::convertTitleToSlug($request->name,'-').'-banner-'.time().'.'.$thumbBanner ->extension();
+        $imgs     = $this->saveimg($request, '');
+        if (empty($imgs)){
+            $imgs = 'no-images.jpg';
         }
         if (empty($request->slug)) {$request->slug = '';}
         if (empty($request->parent_id)) {$request->parent_id = 0;}
@@ -112,10 +112,10 @@ class CategoryController extends Controller
             'parent_id' => $request->parent_id,
             'user_id'   => Auth::user()->id,
             'thumb'     => $nameFile,
-            'banner'    => $nameFileBanner,
+            'banner'    => $imgs,
             'status'    => $request->has('status'),
-            'show_push_product'    => $request->has('show_push_product'),
-            'content'      => $request->content_category,
+            'content'   => $request->content_category,
+            'show_push_product'    => $request->has('show_push_product')
         ];
         try {
             DB::beginTransaction();
@@ -127,11 +127,6 @@ class CategoryController extends Controller
             if ($request->hasFile('thumb')) {
                 $file = CommonHelper::uploadImage($request->thumb, $nameFile, $folder);
                 CommonHelper::cropImage2($file, $nameFile, 300, 300, $folder_thumb);
-            }
-            //xu ly luu vi tri danh muc sau khi luu danh muc
-            if ($request->hasFile('banner')) {
-            $file_banner = CommonHelper::uploadImage($request->banner, $nameFileBanner, $folder);
-            CommonHelper::cropImage2($file_banner, $nameFileBanner, 180, 324, $folder_thumb);
             }
             return redirect()->route('category.index')->with('success','Thêm danh mục mới thành công.');
         }
@@ -157,13 +152,16 @@ class CategoryController extends Controller
             $query->select('categoryproperties_id')->from('categoryproperties_manages')
             ->where('category_id',$id);
         })->get();
+
         $edit = Category::find($id);
+        $img            = json_decode($edit->banner);
         if ($edit !== null) {
             $categorieslv = $this->categorylevel();
             return view('admin.category.edit',[
                 'title'        => 'Sửa danh mục',
                 'categorieslv' => $categorieslv,
                 'edit'         => $edit,
+                'img'         => $img,
                 'categoryproperties_manages' => $categoryproperties_manages,
                 'categoryproperty'           => $categoryproperty,
             ]);
@@ -174,13 +172,13 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $request->slug = Str::slug($request->slug, '-');
         $request->validate([
             'ma'    => 'required|max:255|unique:categories,ma,'.$id.',id',
             'slug'  => 'required',
             'name'  => 'required',
-            'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
-            'banner' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:2048',
+            'thumb' => 'nullable|image|mimes:jpeg,jpg,png|mimetypes:image/jpeg,image/png,image/jpg|max:5000',
         ],
         [
             'ma.required' => 'Tên danh mục không được phép bỏ trống',
@@ -189,7 +187,6 @@ class CategoryController extends Controller
             'slug.required' => 'Tên slug không được phép bỏ trống',
             'name.required' => 'Tên danh mục không được phép bỏ trống',
             'thumb.image'   => 'Ảnh đại diện không đúng định dạng! (jpg, jpeg, png)',
-            'banner.image'   => 'Ảnh banner không đúng định dạng! (jpg, jpeg, png)',
         ]);
         $slug = $request->slug;
         if (empty($request->slug)) {$request->slug = '';}
@@ -200,20 +197,24 @@ class CategoryController extends Controller
         if(empty($Categorys)){
             return \abort(404);
         }
+
         $nameFileOld   = $Categorys->thumb;
-        $nameBannerOld   = $Categorys->banner;
         if ($request->hasFile('thumb')) {
             $thumb = $request->thumb;
             $nameFile = CommonHelper::convertTitleToSlug($request->name,'-').'-'.time().'.'.$thumb ->extension();
         }else{
             $nameFile = $nameFileOld;
         }
-        if ($request->hasFile('banner')) {
-            $thumbBanner = $request->banner;
-            $nameFileBanner = CommonHelper::convertTitleToSlug($request->name,'-').'-banner-'.time().'.'.$thumbBanner ->extension();
-        }else{
-            $nameFileBanner = $nameBannerOld;
+
+        // xu ly anh abum
+        $oldimage = $Categorys->banner;
+
+        if (empty($request->banner)){
+            $imgs = $oldimage;
+        } else{
+            $imgs = $this->saveimg($request, $oldimage);
         }
+
         $Category  = [
             'ma'        => $request->ma,
             'name'      => $request->name,
@@ -224,10 +225,10 @@ class CategoryController extends Controller
             'parent_id' => $request->parent_id,
             'user_id'   => Auth::user()->id,
             'thumb'     => $nameFile,
-            'banner'    => $nameFileBanner,
+            'banner'    => $imgs,
             'status'    => $request->has('status'),
-            'show_push_product'    => $request->has('show_push_product'),
             'content'   => $request->content_category,
+            'show_push_product'    => $request->has('show_push_product')
         ];
 
         try {
@@ -238,32 +239,18 @@ class CategoryController extends Controller
                 ->where('category_id', $request->id)
                 ->update([
                     'ma' => $request->ma,
-                    'label' => $request->name,
                 ]);
             $folder_thumb  = 'upload/images/products/thumb/';
             $folder = 'upload/images/products';
             if ($request->thumb != null) {
                 CommonHelper::cropImage2($request->thumb,  $nameFile, 300, 300, $folder_thumb);
                 CommonHelper::uploadImage($request->thumb, $nameFile, $folder);
-
                 //Xoá ảnh cũ khi có upload ảnh mới
                 if ($nameFileOld != Category::IMAGE && $nameFile != Category::IMAGE) {
                     $path         = 'upload/images/products/';
                     $path_thumb   = 'upload/images/products/thumb/';
                     CommonHelper::deleteImage($nameFileOld, $path);
                     CommonHelper::deleteImage($nameFileOld, $path_thumb);
-                }
-            }
-            if ($request->banner != null) {
-                CommonHelper::cropImage2($request->banner,  $nameFileBanner, 180, 324, $folder_thumb);
-                CommonHelper::uploadImage($request->banner, $nameFileBanner, $folder);
-
-                //Xoá ảnh cũ khi có upload ảnh mới
-                if ($nameBannerOld != Category::IMAGE && $nameFileBanner != Category::IMAGE) {
-                    $path         = 'upload/images/products/';
-                    $path_thumb   = 'upload/images/products/thumb/';
-                    CommonHelper::deleteImage($nameBannerOld, $path);
-                    CommonHelper::deleteImage($nameBannerOld, $path_thumb);
                 }
             }
             DB::commit();
@@ -292,7 +279,55 @@ class CategoryController extends Controller
         }
         return \json_encode(array('success'=>false));
     }
+    //xu ly luu anh album
+    public function saveimg($request, $oldimage)
+    {
+        $image = \json_decode($oldimage);
+        if ($files = $request->file('banner')) {
+            foreach ($files as $file) {
+                $image_name      = md5(rand(1000, 10000));
+                $ext             =  strtolower($file->getClientOriginalExtension());
+                $image_full_name = $image_name . '.' . $ext;
+                $upload_path     = 'upload/images/products/';
+                $upload_path2    = 'upload/images/products/thumb/';
+                $upload_path3    = 'upload/images/products/medium/';
+                $upload_path4    = 'upload/images/products/large/';
+                CommonHelper::cropImage($file, $image_full_name, 300, 50, $upload_path2);
+                CommonHelper::cropImage($file, $image_full_name, 600, 100, $upload_path3);
+                CommonHelper::cropImage($file, $image_full_name, 900, 150, $upload_path4);
+                $file->move($upload_path, $image_full_name);
+                $image[]         = $image_full_name;
+            }
+        }
+        return json_encode($image);
+    }
 
+    //xu ly xoa anh album
+    public function deleteImgAjax(Request $request)
+    {
+        $data   = $request->all();
+        $id     = $data['id'];
+        $image  = $data['img'];
+        $images = \json_decode(Category::find($id)->banner);
+        $db     = array();
+        foreach ($images as $k) {
+            if   ($image != $k) {
+                $db[]   = $k;
+            } else {
+                File::delete('upload/images/products/' . $k);
+                File::delete('upload/images/products/thumb/' . $k);
+                File::delete('upload/images/products/medium/' . $k);
+                File::delete('upload/images/products/large/' . $k);
+            }
+        }
+        if (empty($db)) {
+            $input = 'no-images.jpg';
+        } else {
+            $input =  json_encode($db);
+        }
+        Category::where('id', $id)->update(['banner' => $input]);
+        return \json_encode(array('success' => \true));
+    }
     public function getchild(Request $request){
         $id = $request->id;
         $data = Category::where('taxonomy', '=', 0)->get();
@@ -335,8 +370,6 @@ class CategoryController extends Controller
             }
         }
         return response()->json(['id' => $category_id]);
-
-        // return redirect()->route('category.edit',$category_id)->with('success','Cập nhật thuộc tính thành công.');
     }
 
     public function destroyproperty(Request $request)

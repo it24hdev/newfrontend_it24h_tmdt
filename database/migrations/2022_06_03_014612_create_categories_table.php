@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->default(0);
             $table->unsignedBigInteger('user_id')->default(1);
             $table->string('thumb')->default('no-images.jpg')->nullable();
-            $table->string('banner')->default('no-images.jpg')->nullable();
+            $table->text('banner')->default('no-images.jpg')->nullable();
             $table->string('icon')->nullable();
             $table->boolean('status')->default(1);
             $table->boolean('show_push_product')->default(1);

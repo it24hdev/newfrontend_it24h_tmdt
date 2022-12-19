@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    var url_list_products = '{{route('list_product',['search'=>'key_word'])}}';
     var base_url = '{{route('user')}}';
     var add_cart_ajax = '{{route('add_cart_ajax')}}';
     var list_cart = '{{route('list_cart')}}';
@@ -33,5 +34,4 @@
     var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';
     var img_category = '{{asset('upload/images/products/thumb/img_name')}}';
     var img_detailproperties = '{{asset('upload/images/detailproperties/thumb/img_name')}}';
-
 </script>

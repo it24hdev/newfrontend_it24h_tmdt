@@ -215,6 +215,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/categoryimport', [CategoryController::class, 'import'])->name('category.import');
         Route::post('/addproperty', [CategoryController::class, 'addproperty'])->name('category.addproperty');
         Route::post('/deleteproperty', [CategoryController::class, 'destroyproperty'])->name('categorypropertymanages.delete');
+        Route::post('/delete-img', [CategoryController::class, 'deleteImgAjax'])->name('category.deleteImg');
     });
 
     /* ---------- Danh muc bai viet --------------- */

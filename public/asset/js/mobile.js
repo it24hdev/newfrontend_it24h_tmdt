@@ -64,12 +64,14 @@ $(document).ready(function () {
         var viewport_height = $window.height()  // chiều cao màn hình
         var viewport_bottom = viewport_top + viewport_height
         var $elem = jQuery(elem)
-        var top = $elem.offset().top - 1000
+        var top = $elem.offset().top - 700
+        var topnow = $elem.offset().top
         var height = $elem.height()
         var bottom = top + height + 400
+        var bottomnow = topnow + height
         return (top >= viewport_top && top < viewport_bottom) ||
             (bottom > viewport_top && bottom <= viewport_bottom) ||
-            (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
+            (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom ||  viewport_top >= topnow && topnow <= bottomnow)
     }
 
     //lay thoi gian cho hot sale
@@ -213,9 +215,9 @@ $(document).ready(function () {
                 var template_product_mobile = $('#template_product_mobile').html();
                 $.each(data.list_cat_childs, function(k,v) {
                     var tmp = $(template_child_categories).clone();
-                    $url = product_cat.replace('slug_code', v.slug);
+                    var url = product_cat.replace('slug_code', v.slug);
                     $(tmp).find('a').html(v.name);
-                    $(tmp).find('a').attr('href',$url);
+                    $(tmp).find('a').attr('href',url);
                     $('#list_tag_' + id).append(tmp.html());
                 })
                 if(!$('#list_products_'+id).hasClass('active')){
@@ -297,9 +299,12 @@ $(document).ready(function () {
     //memu
     var template_menu_parent = $('#template-menu-parent').html();
     $(document).on('click', '#menubar , #menubar2', function (){
-        if ($('.menu-mobile').hasClass('active_mn')) {
+
+        if ($('.menu-mobile').hasClass('active_mn')){
             $('.menu-mobile').removeClass('active_mn');
-            $('body').removeClass('disable_scoll');
+            if( $('.box_info_result').html() ==""){
+                $('body').removeClass('disable_scoll');
+            }
         }
         else {
             $('body').addClass('disable_scoll');
@@ -323,7 +328,7 @@ $(document).ready(function () {
                             }
                             var img_name = v.img_cat;
                             var imageUrl = 'url('+img_category+')';
-                            if(img_name !=null && img_name !=''){
+                            if(img_name && img_name !="no-images.jpg"){
 
                                 imageUrl = imageUrl.replace('img_name', img_name);
                             }
@@ -373,7 +378,7 @@ $(document).ready(function () {
                             if(v2.img_brand!=null && v2.filter_by == 3){
                                 var img_name = v2.img_brand;
                                 var imageUrl = img_brands;
-                                if(img_name != null && img_name != ''){
+                                if(img_name && img_name !="no-images.jpg"){
                                     imageUrl = imageUrl.replace('img_name', img_name);
                                 }
                                 else{
@@ -386,7 +391,7 @@ $(document).ready(function () {
                             else if(v2.img_property!=null && v2.filter_by == 1){
                                 var img_name = v2.img_property;
                                 var imageUrl = img_detailproperties;
-                                if(img_name != null && img_name != ''){
+                                if(img_name && img_name !="no-images.jpg"){
                                     imageUrl = imageUrl.replace('img_name', img_name);
                                 }
                                 else{
@@ -400,7 +405,7 @@ $(document).ready(function () {
                                 if(v2.img_cat != 'no-images.jpg'){
                                     var img_name = v2.img_cat;
                                     var imageUrl = img_category;
-                                    if(img_name != null && img_name != ''){
+                                    if(img_name && img_name !="no-images.jpg"){
                                         imageUrl = imageUrl.replace('img_name', img_name);
                                     }
                                     else{
@@ -416,7 +421,7 @@ $(document).ready(function () {
                             if(v2.img_brand!=null && v2.filter_by == 3){
                                 var img_name = v2.img_brand;
                                 var imageUrl = img_brands;
-                                if(img_name != null && img_name != ''){
+                                if(img_name && img_name !="no-images.jpg"){
                                     imageUrl = imageUrl.replace('img_name', img_name);
                                 }
                                 else{
@@ -430,7 +435,7 @@ $(document).ready(function () {
                             else if(v2.img_property!=null && v2.filter_by == 1){
                                 var img_name = v2.img_property;
                                 var imageUrl = img_detailproperties;
-                                if(img_name != null && img_name != ''){
+                                if(img_name && img_name !="no-images.jpg"){
                                     imageUrl = imageUrl.replace('img_name', img_name);
                                 }
                                 else{
@@ -444,7 +449,7 @@ $(document).ready(function () {
                                 if(v2.img_cat != 'no-images.jpg'){
                                     var img_name = v2.img_cat;
                                     var imageUrl = img_category;
-                                    if(img_name != null && img_name != ''){
+                                    if(img_name && img_name !="no-images.jpg"){
                                         imageUrl = imageUrl.replace('img_name', img_name);
                                     }
                                     else{
@@ -464,7 +469,7 @@ $(document).ready(function () {
             }
             var img_name = v.img_cat;
             var imageUrl = 'url('+img_category+')';
-            if(img_name != null && img_name != ''){
+            if(img_name && img_name !="no-images.jpg"){
                 imageUrl = imageUrl.replace('img_name', img_name);
             }
             else{
@@ -519,13 +524,16 @@ $(document).ready(function () {
             $('#scroll_h').css({"display":"none"});
             $('#go_top').css({"display":"block"});
             $('#affix_h').css({"top":"60px"});
-
+            $('.autocomplete_search').css({"top":"39px"});
+            $('.box_search').css({"width":"75%","padding": "0 9px"});
         }
         else{
             $('#scroll_d').css({"display":"none"});
             $('#scroll_h').css({"display":"block"});
             $('#go_top').css({"display":"none"});
             $('#affix_h').css({"top":"115px"});
+            $('.autocomplete_search').css({"top":"95px"});
+            $('.box_search').css({"width":"100%","padding": "0 12px"});
         }
         //load sp khuyen mai khi cuon
         if (isOnScreen($("#load_promotion")) && ($("#load_promotion").hasClass("loaded") == false)) {
@@ -1286,58 +1294,66 @@ $(document).ready(function () {
     //     $(".search_input_scroll").val($(this).val());
     // });
     $('input[type=search]').on('search', function () {
-        // search logic here
-        // this function will be executed on click of X (clear button)
         $('body').removeClass('disable_scoll');
+        $('.box_info_result').html('');
     });
-
+    $url_search = url_list_products;
     $(".search , .search_input_scroll").keyup(delay(function(e){
         var keyword =  $(this).val();
-        if(keyword!=""){
-            $('body').addClass('disable_scoll');
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            var url_search = $url_search.replace('key_word',keyword);
+            window.location=url_search;
         }
-        else{
-            if($('body').hasClass('disable_scoll')){
-                $('body').removeClass('disable_scoll');
+        else
+        {
+            if(keyword!=""){
+                $('body').addClass('disable_scoll');
             }
+            else{
+                if($('body').hasClass('disable_scoll')){
+                    $('body').removeClass('disable_scoll');
+                }
+            }
+            $.ajax({
+                url: autotypeahead,
+                type:"post",
+                dataType:"json",
+                data:{
+                    _token: _token,
+                    data: keyword
+                } ,
+                success: function (data) {
+                    if(data.result_search){
+                        $('.box_info_result').html('');
+                        var template_search_mobile = $('#template_search_mobile').html();
+                        $.each(data.result_search, function(k,v) {
+                            var tmp = $(template_search_mobile).clone();
+                            var url = detailproduct.replace('slug_code', v.slug);
+                            $(tmp).find('a').attr('href',url);
+                            if(v.thumb && v.thumb !="no-images.jpg"){
+                                var img = img_product_mobile;
+                            }
+                            else{
+                                var img = no_img_product_mobile;
+                            }
+                            img = img.replace('img_name', v.thumb);
+                            $(tmp).find('img').attr('src',img);
+                            $(tmp).find('.header-search-name').html(v.name);
+                            if(v.price_onsale==0){
+                                $(tmp).find('.header-search-special').html(v.price);
+                            }
+                            else{
+                                $(tmp).find('.header-search-special').html(v.price_onsale);
+                                $(tmp).find('.header-search-price').html(v.price_onsale);
+                            }
+                            $('.box_info_result').append(tmp);
+                        });
+                    }
+                    else{
+                        $('.box_info_result').html('');
+                    }
+                },
+            })
         }
-        $.ajax({
-            url: autotypeahead,
-            type:"post",
-            dataType:"json",
-            data:{
-                _token: _token,
-                data: keyword
-            } ,
-            success: function (data) {
-                if(data.result_search){
-                    var template_search_mobile = $('#template_search_mobile').html();
-
-                    $.each(data.result_search, function(k,v) {
-                        var tmp = $(template_search_mobile).clone();
-                        // console.log(tmp);
-                        $(tmp).find('a').attr('href',v.slug);
-                        var img = img_product_mobile;
-                        img = img.replace('img_name', v.thumb);
-                        $(tmp).find('img').attr('src',img);
-                        $(tmp).find('.header-search-name').html(v.name);
-                        if(v.price_onsale==0){
-                            $(tmp).find('.header-search-special').html(v.price);
-                        }
-                        else{
-                            $(tmp).find('.header-search-special').html(v.price_onsale);
-                            $(tmp).find('.header-search-price').html(v.price_onsale);
-                        }
-
-                        $('.box_result').append(tmp);
-                    });
-                }
-                else{
-                    // $('autocomplete_search')
-                }
-
-            },
-        })
-        // $("ajax-search").style.display = "block";
-    },0));
+    },200));
 });

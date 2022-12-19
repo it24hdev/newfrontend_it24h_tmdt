@@ -52,14 +52,12 @@
                     <div class="col-1 d-flex justify-content-start align-items-center mx-3 px-2">
                         <a id="menubar"><i class="far fa-bars"></i></a>
                     </div>
-                    <div class="col-9 d-flex justify-content-center mx-3 align-items-center">
+                    <div class="col-9 d-flex justify-content-center align-items-center search_form_input">
                         <div class="w-100">
                             <a class="search_input">
-                                <img src="{{asset('asset/images/searchmobile.png')}}"
-                                     alt="icon-search">
+                                <img src="{{asset('asset/images/searchmobile.png')}}" alt="icon-search" class="submit_search">
                                 <input type="search" aria-label="search" class="search_input_scroll" placeholder="">
                             </a>
-
                         </div>
                     </div>
                     <div class="shop col-1 align-items-center d-flex justify-content-end mx-3 position-relative">
@@ -78,10 +76,12 @@
     </div>
 </header>
 <div class="autocomplete_search">
-
     <div class="box_search">
         <div class="box_result">
+            <div class="box_info_result">
 
+            </div>
         </div>
     </div>
 </div>
+
