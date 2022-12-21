@@ -1,45 +1,47 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Role\RoleController;
-use App\Http\Controllers\User\AdminController;
-use App\Http\Controllers\User\UserController;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Post\PostController;
-use App\Http\Controllers\Products\ProductsController;
-use App\Http\Controllers\Vote\VoteController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Categorypost\CategorypostController;
-use App\Http\Controllers\Frontend\UserController as FrontendUserController;
-use App\Http\Controllers\Order\OrderController;
-use App\Http\Controllers\Slider\SliderController;
-use App\Http\Controllers\User\CustomerController;
-use App\Http\Controllers\Index\IndexController;
-use App\Http\Controllers\Frontend\DetailproductController;
-use App\Http\Controllers\Locationmenu\LocationmenuController;
-use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Categoryproperty\Category_propertyController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Deals\DealsController;
+use App\Http\Controllers\EXController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\DetailproductController;
+use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\UserController as FrontendUserController;
+use App\Http\Controllers\Index\IndexController;
+use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
+use App\Http\Controllers\Locationmenu\LocationmenuController;
+use App\Http\Controllers\Menu\MenusController;
+use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Products\ProductsController;
+use App\Http\Controllers\Recentactivity\RecentactivityController;
 use App\Http\Controllers\Recruit\RecruitController;
 use App\Http\Controllers\RecruitRegister\RecruitRegisterController;
-use App\Http\Controllers\laravelmenu\src\Controllers\MenuController;
-use App\Http\Controllers\Categoryproperty\Category_propertyController;
-use App\Http\Controllers\Menu\MenusController;
-use App\Http\Controllers\Vouchers\VouchersController;
-use App\Http\Controllers\Recentactivity\RecentactivityController;
 use App\Http\Controllers\Registerservice\RegisterserviceController;
-use App\Http\Controllers\EXController;
+use App\Http\Controllers\Role\RoleController;
+use App\Http\Controllers\Slider\SliderController;
+use App\Http\Controllers\User\AdminController;
+use App\Http\Controllers\User\CustomerController;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Vote\VoteController;
+use App\Http\Controllers\Vouchers\VouchersController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use UniSharp\LaravelFilemanager\Lfm;
 
 
 Auth::routes();
-Route::get('/clear', function() {
-Artisan::call('route:clear');
-Artisan::call('route:cache');
-Artisan::call('cache:clear');
-Artisan::call('config:clear');
-Artisan::call('config:cache');
-Artisan::call('view:clear');
-return "Cleared!";
+Route::get('/clear', function () {
+    Artisan::call('route:clear');
+    Artisan::call('route:cache');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    return "Cleared!";
 });
 
 Route::get('/linkstorage', function () {
@@ -48,7 +50,7 @@ Route::get('/linkstorage', function () {
 /* ========== ADMIN ========== */
 
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-        \UniSharp\LaravelFilemanager\Lfm::routes();
+    Lfm::routes();
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -56,14 +58,14 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::prefix('admin/menu')->group(function () {
-    Route::get('/', [MenuController::class, 'index'])->name('menu');
-    Route::post('/addcustommenu', [MenuController::class, 'addcustommenu'])->name('haddcustommenu');
-    Route::post('/addcustommenu2', [MenuController::class, 'addcustommenu2'])->name('haddcustommenu2');
-    Route::post('/deleteitemmenu', [MenuController::class, 'deleteitemmenu'])->name('hdeleteitemmenu');
-    Route::post('/deletemenug', [MenuController::class, 'deletemenug'])->name('hdeletemenug');
-    Route::post('/createnewmenu', [MenuController::class, 'createnewmenu'])->name('hcreatenewmenu');
-    Route::post('/generatemenucontrol', [MenuController::class, 'generatemenucontrol'])->name('hgeneratemenucontrol');
-    Route::post('/updateitem', [MenuController::class, 'updateitem'])->name('hupdateitem');
+        Route::get('/', [MenuController::class, 'index'])->name('menu');
+        Route::post('/addcustommenu', [MenuController::class, 'addcustommenu'])->name('haddcustommenu');
+        Route::post('/addcustommenu2', [MenuController::class, 'addcustommenu2'])->name('haddcustommenu2');
+        Route::post('/deleteitemmenu', [MenuController::class, 'deleteitemmenu'])->name('hdeleteitemmenu');
+        Route::post('/deletemenug', [MenuController::class, 'deletemenug'])->name('hdeletemenug');
+        Route::post('/createnewmenu', [MenuController::class, 'createnewmenu'])->name('hcreatenewmenu');
+        Route::post('/generatemenucontrol', [MenuController::class, 'generatemenucontrol'])->name('hgeneratemenucontrol');
+        Route::post('/updateitem', [MenuController::class, 'updateitem'])->name('hupdateitem');
 
 //    Route::get('/menu_export/{menu}',[MenuController::class, 'export'])->name('menu.export');
 //    Route::post('/menu_import/{menu}', [MenuController::class, 'import'])->name('menu.import');
@@ -122,7 +124,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* ---------------- VOTE --------------- */
     Route::prefix('admin/vote')->group(function () {
-        Route::prefix('post')->group(function (){
+        Route::prefix('post')->group(function () {
             Route::get('/', [VoteController::class, 'indexVotePost'])->name('vote.indexPost');
             Route::get('/create', [VoteController::class, 'createVotePost'])->name('vote.createPost');
             Route::post('/create', [VoteController::class, 'storeVotePost'])->name('vote.storePost');
@@ -132,7 +134,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/select-reply', [VoteController::class, 'selectReply'])->name('vote.selectReply');
             Route::get('/select-reply-edit', [VoteController::class, 'selectReplyEdit'])->name('vote.selectReplyEdit');
         });
-        Route::prefix('product')->group(function (){
+        Route::prefix('product')->group(function () {
             Route::get('/', [VoteController::class, 'indexVoteProduct'])->name('vote.indexProduct');
             Route::get('/create', [VoteController::class, 'createVoteProduct'])->name('vote.createProduct');
             Route::post('/create', [VoteController::class, 'storeVoteProduct'])->name('vote.storeProduct');
@@ -152,26 +154,26 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update/{id}', [ProductsController::class, 'update'])->name('products.update');
         Route::post('/delete', [ProductsController::class, 'destroy'])->name('products.delete');
         Route::post('/delete-img', [ProductsController::class, 'deleteImgAjax'])->name('products.deleteImg');
-        Route::get('/list-attr',  [ProductsController::class, 'list_attr'])->name('products.list_attr');
-        Route::get('/create-attr',  [ProductsController::class, 'create_attr'])->name('products.create_attr');
-        Route::post('/store-attr',  [ProductsController::class, 'store_attr'])->name('products.store_attr');
-        Route::post('/update-attr',  [ProductsController::class, 'update_attr'])->name('products.update_attr');
-        Route::post('/delete-attr',  [ProductsController::class, 'delete_attr'])->name('products.delete_attr');
-        Route::get('/list-brand',  [ProductsController::class, 'list_brand'])->name('products.list_brand');
-        Route::get('/create-brand',  [ProductsController::class, 'create_brand'])->name('products.create_brand');
-        Route::post('/store-brand',  [ProductsController::class, 'store_brand'])->name('products.store_brand');
-        Route::post('/update-brand',  [ProductsController::class, 'update_brand'])->name('products.update_brand');
-        Route::post('/delete-brand',  [ProductsController::class, 'delete_brand'])->name('products.delete_brand');
-        Route::get('/list-tag-event',  [ProductsController::class, 'list_tag_event'])->name('products.list_tag-event');
-        Route::get('/create-tag-event',  [ProductsController::class, 'create_tag_event'])->name('products.create_tag-event');
-        Route::post('/store-tag-event',  [ProductsController::class, 'store_tag_event'])->name('products.store_tag-event');
-        Route::post('/update-tag-event',  [ProductsController::class, 'update_tag_event'])->name('products.update_tag-event');
-        Route::post('/delete-tag-event',  [ProductsController::class, 'delete_tag_event'])->name('products.delete_tag-event');
-        Route::get('/productsexport',[ProductsController::class, 'export'])->name('products.export');
+        Route::get('/list-attr', [ProductsController::class, 'list_attr'])->name('products.list_attr');
+        Route::get('/create-attr', [ProductsController::class, 'create_attr'])->name('products.create_attr');
+        Route::post('/store-attr', [ProductsController::class, 'store_attr'])->name('products.store_attr');
+        Route::post('/update-attr', [ProductsController::class, 'update_attr'])->name('products.update_attr');
+        Route::post('/delete-attr', [ProductsController::class, 'delete_attr'])->name('products.delete_attr');
+        Route::get('/list-brand', [ProductsController::class, 'list_brand'])->name('products.list_brand');
+        Route::get('/create-brand', [ProductsController::class, 'create_brand'])->name('products.create_brand');
+        Route::post('/store-brand', [ProductsController::class, 'store_brand'])->name('products.store_brand');
+        Route::post('/update-brand', [ProductsController::class, 'update_brand'])->name('products.update_brand');
+        Route::post('/delete-brand', [ProductsController::class, 'delete_brand'])->name('products.delete_brand');
+        Route::get('/list-tag-event', [ProductsController::class, 'list_tag_event'])->name('products.list_tag-event');
+        Route::get('/create-tag-event', [ProductsController::class, 'create_tag_event'])->name('products.create_tag-event');
+        Route::post('/store-tag-event', [ProductsController::class, 'store_tag_event'])->name('products.store_tag-event');
+        Route::post('/update-tag-event', [ProductsController::class, 'update_tag_event'])->name('products.update_tag-event');
+        Route::post('/delete-tag-event', [ProductsController::class, 'delete_tag_event'])->name('products.delete_tag-event');
+        Route::get('/productsexport', [ProductsController::class, 'export'])->name('products.export');
         Route::post('/productsimport', [ProductsController::class, 'import'])->name('products.import');
         Route::get('/productsproperties/{id}', [ProductsController::class, 'productsproperties'])->name('productsproperties.edit');
         Route::post('/saveproductsproperties/{id}', [ProductsController::class, 'saveproductsproperties'])->name('saveproductsproperties');
-        Route::get('/brandexport',[ProductsController::class, 'brandexport'])->name('brand.export');
+        Route::get('/brandexport', [ProductsController::class, 'brandexport'])->name('brand.export');
         Route::post('/brandimport', [ProductsController::class, 'brandimport'])->name('brand.import');
     });
 
@@ -211,7 +213,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
         Route::post('/delete', [CategoryController::class, 'destroy'])->name('category.delete');
         Route::post('/getchild', [CategoryController::class, 'getchild'])->name('category.getchild');
-        Route::get('/categoryexport',[CategoryController::class, 'export'])->name('category.export');
+        Route::get('/categoryexport', [CategoryController::class, 'export'])->name('category.export');
         Route::post('/categoryimport', [CategoryController::class, 'import'])->name('category.import');
         Route::post('/addproperty', [CategoryController::class, 'addproperty'])->name('category.addproperty');
         Route::post('/deleteproperty', [CategoryController::class, 'destroyproperty'])->name('categorypropertymanages.delete');
@@ -228,23 +230,23 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/edit/{id}', [CategorypostController::class, 'edit'])->name('categorypost.edit');
         Route::post('/delete', [CategorypostController::class, 'destroy'])->name('categorypost.delete');
         Route::post('/getchildpost', [CategorypostController::class, 'getchild'])->name('category.getchildpost');
-        Route::get('/categorypostexport',[CategorypostController::class, 'export'])->name('categorypost.export');
+        Route::get('/categorypostexport', [CategorypostController::class, 'export'])->name('categorypost.export');
         Route::post('/categorypostimport', [CategorypostController::class, 'import'])->name('categorypost.import');
     });
 
-     /* ---------- Danh muc vi tri menu --------------- */
+    /* ---------- Danh muc vi tri menu --------------- */
     Route::prefix('admin/locationmenu')->group(function () {
         Route::get('/', [LocationmenuController::class, 'index'])->name('locationmenu.index');
-        Route::post('/update',[LocationmenuController::class, 'update'])->name('locationmenu.update');
+        Route::post('/update', [LocationmenuController::class, 'update'])->name('locationmenu.update');
         Route::get('/edit', [LocationmenuController::class, 'edit2'])->name('locationmenu.edit');
     });
 
-     /* ---------- tuyen dung --------------- */
+    /* ---------- tuyen dung --------------- */
     Route::prefix('admin/recruit')->group(function () {
         Route::get('/', [RecruitController::class, 'index'])->name('recruit.index');
         Route::get('/create', [RecruitController::class, 'create'])->name('recruit.create');
         Route::post('/create', [RecruitController::class, 'store'])->name('recruit.store');
-        Route::post('/update/{id}',[RecruitController::class, 'update'])->name('recruit.update');
+        Route::post('/update/{id}', [RecruitController::class, 'update'])->name('recruit.update');
         Route::get('/edit/{id}', [RecruitController::class, 'edit'])->name('recruit.edit');
         Route::post('/delete', [RecruitController::class, 'destroy'])->name('recruit.delete');
     });
@@ -254,12 +256,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update', [RecruitRegisterController::class, 'update'])->name('recruit_register.update');
     });
 
-     /* ---------- Danh muc thuoc tinh --------------- */
+    /* ---------- Danh muc thuoc tinh --------------- */
     Route::prefix('admin/category_property')->group(function () {
         Route::get('/', [Category_propertyController::class, 'index'])->name('category_property.index');
         Route::get('/create', [Category_propertyController::class, 'create'])->name('category_property.create');
         Route::post('/create', [Category_propertyController::class, 'store'])->name('category_property.store');
-        Route::post('/update/{id}',[Category_propertyController::class, 'update'])->name('category_property.update');
+        Route::post('/update/{id}', [Category_propertyController::class, 'update'])->name('category_property.update');
         Route::get('/edit/{id}', [Category_propertyController::class, 'edit'])->name('category_property.edit');
         Route::post('/delete', [Category_propertyController::class, 'destroy'])->name('category_property.delete');
         Route::post('/import', [Category_propertyController::class, 'import'])->name('category_property.import');
@@ -271,7 +273,7 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/editdetail/{id}/{id_categoryproperty}', [Category_propertyController::class, 'editdetail'])->name('detailproperty.edit');
 
-        Route::post('/updatedetail/{id}',[Category_propertyController::class, 'updatedetail'])->name('detailproperty.update');
+        Route::post('/updatedetail/{id}', [Category_propertyController::class, 'updatedetail'])->name('detailproperty.update');
 
         Route::post('/deletedetail', [Category_propertyController::class, 'destroydetail'])->name('detailproperty.delete');
     });
@@ -294,10 +296,20 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/addnewmenu', [MenusController::class, 'addnewmenu'])->name('menu.addnewmenu');
         Route::post('/destroymenu', [MenusController::class, 'destroymenu'])->name('menu.destroymenu');
         Route::get('/edit/{id}', [MenusController::class, 'edit'])->name('menu.edit');
-        Route::post('/update/{id}',[MenusController::class, 'update'])->name('menu.update');
-        Route::get('/menu_export/{menu}',[MenusController::class, 'export'])->name('menu.export');
+        Route::post('/update/{id}', [MenusController::class, 'update'])->name('menu.update');
+        Route::get('/menu_export/{menu}', [MenusController::class, 'export'])->name('menu.export');
         Route::post('/menu_import/{menu}', [MenusController::class, 'import'])->name('menu.import');
 
+    });
+
+    // =======================Deals===============
+    Route::prefix('admin/deals')->group(function () {
+        Route::get('/', [DealsController::class, 'index'])->name('deals.index');
+        Route::post('/create', [DealsController::class, 'store'])->name('deals.store');
+        Route::post('/edit', [DealsController::class, 'edit'])->name('deals.edit');
+        Route::post('/update', [DealsController::class, 'update'])->name('deals.update');
+        Route::post('/destroy', [DealsController::class, 'destroy'])->name('deals.destroy');
+        Route::get('/product_deal', [DealsController::class, 'product_deal'])->name('product_deal');
     });
 
     // =======================Vouchers===============
@@ -324,7 +336,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 Route::get('setLocale/{locale}', function ($locale) {
     if (in_array($locale, Config::get('app.locales'))) {
-      Session::put('locale', $locale);
+        Session::put('locale', $locale);
     }
     return redirect()->back();
 })->name('app.setLocale');
@@ -379,10 +391,10 @@ Route::get('/{slug}.html', [HomeController::class, 'singlePost'])->name('singleP
 Route::post('/comment-blog', [HomeController::class, 'commentPost'])->name('commentPost');
 Route::post('/form-vote', [HomeController::class, 'getFormVote'])->name('getFormVote');
 Route::post('/autotypeahead', [HomeController::class, 'autotypeahead'])->name('autotypeahead');
-Route::get('/tuyen-dung',[HomeController::class, 'recruit'])->name('recruit');
-Route::post('/tuyen-dung',[HomeController::class, 'recruit_register'])->name('recruit_register');
-Route::get('/chi-tiet-san-pham/{slug}',[DetailproductController::class,'index'])->name('detailproduct');
-Route::post('/comment-product',[DetailproductController::class,'commentProduct'])->name('commentProduct');
+Route::get('/tuyen-dung', [HomeController::class, 'recruit'])->name('recruit');
+Route::post('/tuyen-dung', [HomeController::class, 'recruit_register'])->name('recruit_register');
+Route::get('/chi-tiet-san-pham/{slug}', [DetailproductController::class, 'index'])->name('detailproduct');
+Route::post('/comment-product', [DetailproductController::class, 'commentProduct'])->name('commentProduct');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
 
 //mobile
@@ -398,7 +410,7 @@ Route::post('/get_review_more', [DetailproductController::class, 'get_review_mor
 Route::post('/product_views', [DetailproductController::class, 'product_views'])->name('product_views');
 
 //Login facebook
-Route::get('/login-facebook',[FrontendUserController::class, 'login_facebook'])->name('login-facebook');
+Route::get('/login-facebook', [FrontendUserController::class, 'login_facebook'])->name('login-facebook');
 Route::get('/callback', [FrontendUserController::class, 'callback_facebook']);
 
 //Login  google
