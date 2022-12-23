@@ -187,6 +187,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update/{id}', [SliderController::class, 'update'])->name('slider.update');
         Route::post('/delete', [SliderController::class, 'destroy'])->name('slider.delete');
         Route::post('/delete-img', [SliderController::class, 'deleteImg'])->name('slider.deleteImg');
+        Route::post('/delete-img-title', [SliderController::class, 'deleteImg_title'])->name('slider.deleteImg_title');
         Route::post('/get-data', [SliderController::class, 'getData'])->name('slider.getdata');
     });
 
@@ -310,6 +311,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/update', [DealsController::class, 'update'])->name('deals.update');
         Route::post('/destroy', [DealsController::class, 'destroy'])->name('deals.destroy');
         Route::get('/product_deal', [DealsController::class, 'product_deal'])->name('product_deal');
+        Route::post('/multiple_destroy', [DealsController::class, 'multiple_destroy'])->name('multiple_destroy');
     });
 
     // =======================Vouchers===============
@@ -317,6 +319,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [VouchersController::class, 'index'])->name('vouchers.index');
         Route::post('/create', [VouchersController::class, 'store'])->name('vouchers.store');
     });
+
     // =======================Hoat dong gan day===============
     Route::prefix('admin/recentactivity')->group(function () {
         Route::get('/', [RecentactivityController::class, 'index'])->name('recentactivity.index');

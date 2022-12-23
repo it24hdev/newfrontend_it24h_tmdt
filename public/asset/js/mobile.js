@@ -233,14 +233,15 @@ $(document).ready(function () {
         $.each(data, function(k,v) {
             var detail_p = detailproduct;
             var tmp = $(template).clone();
-            if(v.year != null && v.year != ''){
+            if(v.year){
                 $(tmp).find('.years2').removeClass('d-none');
                 $(tmp).find('.years2').html(v.year);
             }
-            if(v.installment != null && v.installment != '' && v.installment != 0){
+            if(v.installment){
                 $(tmp).find('.payment2').removeClass('d-none');
+                $(tmp).find('.payment2').html(v.installment);
             }
-            if(v.img_brands != null && v.img_brands != ''){
+            if(v.img_brands){
                 var url_img_brands = img_product_mobile;
                 $(tmp).find('.dbrand2').removeClass('d-none');
                 img = 'url('+url_img_brands+')';

@@ -3,28 +3,29 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Str;
+use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Products;
-use App\Models\CategoryRelationship;
-use App\Models\Post;
-use App\Models\Vote;
-use App\Models\Recentactivity;
-use App\Models\Locationmenu;
-use App\Models\Recruit;
-use App\Models\Slider;
-use App\Models\Recruit_register;
-use App\Models\Detailproperties;
 use App\Models\Categoryproperty;
+use App\Models\CategoryRelationship;
+use App\Models\Detailproperties;
+use App\Models\Post;
+use App\Models\Products;
 use App\Models\Propertyproducts;
+use App\Models\Recentactivity;
+use App\Models\Recruit;
+use App\Models\Recruit_register;
+use App\Models\Vote;
+use App\Models\Deals;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
-use App\Http\Controllers\laravelmenu\src\Models\Menus;
-use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
-use Illuminate\Support\Facades\Cookie;
+use function compact;
+use function implode;
+use function view;
 
 class HomeController extends Controller
 {
@@ -48,8 +49,8 @@ class HomeController extends Controller
             }
             $list_cat_id[] = $cat->id;
         }
-        $list_cat = \implode(' ', $list_cat_id);
-        $get_cat_parents = Category::whereIn('id',$cat_arr)->get();
+        $list_cat = implode(' ', $list_cat_id);
+        $get_cat_parents = Category::whereIn('id', $cat_arr)->get();
 
         //slider banner header
         $sliders = DB::table('sliders')->where('location', 9)->where('status', 1)->orderBy('position', 'ASC')->get();
@@ -65,29 +66,24 @@ class HomeController extends Controller
         }
         if ($isMobile) {
             //lay sp hot sale
-            $get_hot_sale_mobile = Products::where('status', 1)
-                ->whereNull('deleted_at')->whereNotNull('time_deal')->where('time_deal', '>', date('Y-m-d') . ' 23:59:59')
-                ->orderBy('time_deal', 'desc')->inRandomOrder()->limit(8)->get();
-            $time_sale = NULL;
-            $t = 0;
+            $get_hot_sale_mobile = Products::select(DB::raw('deals.name_deal '),DB::raw('deals.price_deal ') ,DB::raw('products.*'))
+                ->leftjoin('deals', 'products.id', 'deals.product_id')
+                ->where('products.status',1)->where('deals.status_deal', 1)
+                ->where('deals.start_time','<',now())->where('deals.end_time','>',now())
+                ->orderBy('deals.end_time', 'asc')
+                ->limit(8)->get();
             //lay thoi gian hot sale
-            foreach ($get_hot_sale_mobile as $time_sale_product) {
-                $t++;
-                $time_sale = $time_sale_product->time_deal;
-                if ($t == 1) {
-                    \false;
-                }
-            }
+            $time_sale = Deals::select(DB::raw('max(end_time) as time_sale'))->where('status_deal', 1)->first('time_sale');
+
             return view('frontend.mobile.indexmobile', [
-                'list_cat'  => $list_cat,
-                'sliders'   => $sliders,
-                'locale'    => $locale,
+                'list_cat' => $list_cat,
+                'sliders' => $sliders,
+                'locale' => $locale,
                 'time_sale' => $time_sale,
-                'get_cat_parents'     => $get_cat_parents,
+                'get_cat_parents' => $get_cat_parents,
                 'get_hot_sale_mobile' => $get_hot_sale_mobile
             ]);
-        }
-        else {
+        } else {
             $Sidebars = $this->getmenu('sidebar');
             $list_cat_head = Category::where('taxonomy', 0)
                 ->where('parent_id', 0)
@@ -122,18 +118,7 @@ class HomeController extends Controller
     }
 
     //lay danh muc cho blog tren menu
-    public function getcategoryblog()
-    {
-        $categoryblog = Category::select('*')
-            ->where('categories.taxonomy', '=', 1)
-            ->where('categories.status', '=', 1)
-            ->whereNull('deleted_at')
-            ->limit(7)
-            ->get();
-        return $categoryblog;
-    }
 
-    // lay memu sidebar
     public function getmenu($location)
     {
         if ($location == 'sidebar') {
@@ -147,18 +132,7 @@ class HomeController extends Controller
         return $getmenu;
     }
 
-    public function getmenu_ajax($location)
-    {
-        if ($location == 'sidebar') {
-            $location = "sidebar_location";
-        }
-        $getmenu = MenuItems::select('admin_menu_items.*')
-            ->leftJoin('locationmenus', 'locationmenus.' . $location, '=', 'admin_menu_items.menu')
-            ->where('locationmenus.' . $location, '<>', '0')
-            ->where('locationmenus.' . $location, '<>', null)
-            ->where('depth', '<>', 0)->get();
-        return $getmenu;
-    }
+    // lay memu sidebar
 
     public function arrcategory()
     {
@@ -172,7 +146,6 @@ class HomeController extends Controller
         return $arrCategory;
     }
 
-    //lay san pham
     public function getProducts(Request $request)
     {
         $locale = config('app.locale');
@@ -186,7 +159,6 @@ class HomeController extends Controller
         return response()->json($view);
     }
 
-    //lay san pham deal
     public function getdealProduct(Request $request)
     {
         $dealProduct = Products::where('status', 1)
@@ -199,7 +171,7 @@ class HomeController extends Controller
             $t++;
             $time_deal = $k->time_deal;
             if ($t == 1) {
-                \false;
+                false;
             }
         }
 
@@ -210,7 +182,8 @@ class HomeController extends Controller
         return response()->json($view2);
     }
 
-    // lay san pham moi
+    //lay san pham
+
     public function getnewProduct(Request $request)
     {
         $product_hot_sale = Products::where('status', 1)->where('is_hot', 1)->whereNull('deleted_at')->inRandomOrder()->limit(10)->get();
@@ -223,6 +196,8 @@ class HomeController extends Controller
         return response()->json($view2);
     }
 
+    //lay san pham deal
+
     public function loadfooter(Request $request)
     {
 
@@ -233,6 +208,8 @@ class HomeController extends Controller
         ])->render();
         return response()->json($view2);
     }
+
+    // lay san pham moi
 
     public function loadsliderbottom(Request $request)
     {
@@ -245,7 +222,6 @@ class HomeController extends Controller
         return response()->json($view2);
     }
 
-    //trang blog chung
     public function categoryBlogs(Request $request)
     {
         $agent = new Agent();
@@ -287,7 +263,20 @@ class HomeController extends Controller
 
         ]);
     }
-    // xu ly bai viet duoc tim kiem
+
+    public function getcategoryblog()
+    {
+        $categoryblog = Category::select('*')
+            ->where('categories.taxonomy', '=', 1)
+            ->where('categories.status', '=', 1)
+            ->whereNull('deleted_at')
+            ->limit(7)
+            ->get();
+        return $categoryblog;
+    }
+
+    //trang blog chung
+
     public function categoryBlog(Request $request, $slug)
     {
         $agent = new Agent();
@@ -343,7 +332,8 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    //trang chi tiet bai viet
+    // xu ly bai viet duoc tim kiem
+
     public function singlePost(Request $request, $slug)
     {
         $agent = new Agent();
@@ -411,14 +401,7 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    public function is_multi($requestall) {
-
-        $rv = array_filter($requestall, 'is_array');
-
-        if(count($rv)>0) return true;
-
-        return false;
-    }
+    //trang chi tiet bai viet
 
     public function product_cat(Request $request)
     {
@@ -434,20 +417,20 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
         $cat = Category::where('slug', $request->slug)->first();
-        $sliders ="";
+        $sliders = "";
         $list_cat_child = array();
-        $list_cat_childs ="";
+        $list_cat_childs = "";
         if (!empty($cat)) {
             $cat_parent = Category::find($cat->id);
-            $list_cat_child =[];
-            foreach ($cat_parent->cat_child as $cat_child){
-                $list_cat_child[]= $cat_child->id;
+            $list_cat_child = [];
+            foreach ($cat_parent->cat_child as $cat_child) {
+                $list_cat_child[] = $cat_child->id;
             }
-            $list_cat_childs = Category::whereIn('id',$list_cat_child)->where('show_push_product',1)->get();
-            array_push($list_cat_child,$cat->id);
+            $list_cat_childs = Category::whereIn('id', $list_cat_child)->where('show_push_product', 1)->get();
+            array_push($list_cat_child, $cat->id);
 
             //slider banner header
-            $sliders            = json_decode($cat->banner);
+            $sliders = json_decode($cat->banner);
 
             //neu co danh muc thi loc theo danh muc
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
@@ -460,9 +443,9 @@ class HomeController extends Controller
                 ->where('categories.slug', $request->slug)
                 ->get();
             $filter_all = [];
-            if($this->is_multi($requestall)){
+            if ($this->is_multi($requestall)) {
                 $requestall = [];
-                foreach ($request->all() as $key => $value){
+                foreach ($request->all() as $key => $value) {
                     $requestall[$key] = implode(",", $value);
                 }
             }
@@ -523,10 +506,9 @@ class HomeController extends Controller
                         $attr->setAttribute('attr_name_code', $this_attr);
                         $attr_detail->setAttribute('this_attr_code', $this_attr);
                         $attr_detail->setAttribute('this_attr_detail_code', $this_attr_detail);
-                        $attr_detail->setAttribute('this_attr_name',  $this_attr_name);
-                        $attr_detail->setAttribute('this_attr_detail_name',  $this_attr_detail_name);
-                    }
-                    else {
+                        $attr_detail->setAttribute('this_attr_name', $this_attr_name);
+                        $attr_detail->setAttribute('this_attr_detail_name', $this_attr_detail_name);
+                    } else {
                         $attr_detail->setAttribute('attr_checked', 0);
                         foreach ($value_url2 as $key => $subArr) {
                             foreach ($subArr as $key2 => $value2) {
@@ -563,8 +545,8 @@ class HomeController extends Controller
                         $attr->setAttribute('attr_name_code', $this_attr);
                         $attr_detail->setAttribute('this_attr_code', $this_attr);
                         $attr_detail->setAttribute('this_attr_detail_code', $this_attr_detail);
-                        $attr_detail->setAttribute('this_attr_name',  $this_attr_name);
-                        $attr_detail->setAttribute('this_attr_detail_name',  $this_attr_detail_name);
+                        $attr_detail->setAttribute('this_attr_name', $this_attr_name);
+                        $attr_detail->setAttribute('this_attr_detail_name', $this_attr_detail_name);
                     }
                 }
                 $attr->setAttribute('detailproperty', $detailproperties);
@@ -575,21 +557,21 @@ class HomeController extends Controller
             if (!empty($request->p)) {
                 $price = $request->p;
                 $filter = explode(';', $request->p);
-                $filter_price = "từ ".number_format($filter[0],0,',','.')." đến ".number_format($filter[1],0,',','.');
+                $filter_price = "từ " . number_format($filter[0], 0, ',', '.') . " đến " . number_format($filter[1], 0, ',', '.');
             }
             if (!empty($request->brand)) {
                 $brand = $request->brand;
             }
             $orderby = "ASC";
-            $order_name ="products.id";
-            if(!empty($request->order)){
-                if($request->order == "gia_cao_den_thap"){
+            $order_name = "products.id";
+            if (!empty($request->order)) {
+                if ($request->order == "gia_cao_den_thap") {
                     $order_name = "NULLIF(products.price_onsale, 0), products.price";
-                    $orderby ="DESC";
+                    $orderby = "DESC";
                 }
-                if($request->order == "gia_thap_den_cao"){
+                if ($request->order == "gia_thap_den_cao") {
                     $order_name = "NULLIF(products.price_onsale, 0), products.price";
-                    $orderby ="ASC";
+                    $orderby = "ASC";
                 }
             }
             $products = Products::select('products.*', 'detailproperties.ma as matt', 'categories.slug as url')
@@ -616,7 +598,7 @@ class HomeController extends Controller
                     if ($properties != []) {
                         $query->whereIn('detailproperties.ma', $properties);
                     } else {
-                        $query->where('products.status',1);
+                        $query->where('products.status', 1);
                     }
                 })
                 ->where(function ($query) use ($price) {
@@ -626,22 +608,21 @@ class HomeController extends Controller
                         $max_price = $p[1];
                         $query->whereBetween('products.price_onsale', [$min_price, $max_price]);
                     } else {
-                        $query->where('products.status',1);
+                        $query->where('products.status', 1);
                     }
                 })
                 ->where(function ($query) use ($brand) {
                     if ($brand != "") {
                         $query->where('brands.name', trim($brand));
                     } else {
-                        $query->where('products.status',1);
+                        $query->where('products.status', 1);
                     }
                 })
                 ->where('products.status', 1)
                 ->groupBy('products.id')
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
                 ->paginate(20)->withQueryString();
-        }
-        else {
+        } else {
 
             // Neu khong co danh muc thi lay san pham moi
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
@@ -651,18 +632,18 @@ class HomeController extends Controller
             if (!empty($request->p)) {
                 $price = $request->p;
                 $filter = explode(';', $request->p);
-                $filter_price = "từ ".number_format($filter[0],0,',','.')." đến ".number_format($filter[1],0,',','.');
+                $filter_price = "từ " . number_format($filter[0], 0, ',', '.') . " đến " . number_format($filter[1], 0, ',', '.');
             }
             $orderby = "ASC";
-            $order_name ="id";
-            if(!empty($request->order)){
-                if($request->order == "gia_cao_den_thap"){
+            $order_name = "id";
+            if (!empty($request->order)) {
+                if ($request->order == "gia_cao_den_thap") {
                     $order_name = "NULLIF(price_onsale, 0), price";
-                    $orderby ="DESC";
+                    $orderby = "DESC";
                 }
-                if($request->order == "gia_thap_den_cao"){
+                if ($request->order == "gia_thap_den_cao") {
                     $order_name = "NULLIF(price_onsale, 0), price";
-                    $orderby ="ASC";
+                    $orderby = "ASC";
                 }
             }
             $promotion = $request->promotion;
@@ -675,30 +656,30 @@ class HomeController extends Controller
                         $max_price = $p[1];
                         $query->whereBetween('price_onsale', [$min_price, $max_price]);
                     } else {
-                        $query->where('status',1);
+                        $query->where('status', 1);
                     }
                 })
                 ->where(function ($query) use ($promotion) {
-                    if ($promotion){
-                        if($promotion == "san-pham-hot"){
+                    if ($promotion) {
+                        if ($promotion == "san-pham-hot") {
                             $promotion = 'is_hot';
                         }
-                        if($promotion == "san-pham-moi"){
+                        if ($promotion == "san-pham-moi") {
                             $promotion = 'is_new';
                         }
-                        if($promotion == "san-pham-khuyen-mai"){
+                        if ($promotion == "san-pham-khuyen-mai") {
                             $promotion = 'is_promotion';
                         }
-                        $query->where($promotion,1);
+                        $query->where($promotion, 1);
                     } else {
-                        $query->where('status',1);
+                        $query->where('status', 1);
                     }
                 })
                 ->where(function ($query) use ($search) {
-                    if ($search){
+                    if ($search) {
                         $query->where('name', 'like', '%' . $search . '%');
                     } else {
-                        $query->where('status',1);
+                        $query->where('status', 1);
                     }
                 })
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
@@ -713,27 +694,35 @@ class HomeController extends Controller
         //////////////Tra ve//////////////////
         if ($agent->isMobile()) {
             $bard = Brand::where(function ($query) use ($list_cat_child) {
-                $products_list_brand = Products::where('status',1)
-                ->leftJoin('category_relationships','products.id','category_relationships.product_id')
-                ->whereIn('category_relationships.cat_id',$list_cat_child)
-                ->groupBy('products.brand')
-                ->get();
+                $products_list_brand = Products::where('status', 1)
+                    ->leftJoin('category_relationships', 'products.id', 'category_relationships.product_id')
+                    ->whereIn('category_relationships.cat_id', $list_cat_child)
+                    ->groupBy('products.brand')
+                    ->get();
                 $list = [];
-                foreach ($products_list_brand as $key => $item){
-                    array_push($list,$item->brand);
+                foreach ($products_list_brand as $key => $item) {
+                    array_push($list, $item->brand);
                 }
-                $query->whereIn('id',$list);
+                $query->whereIn('id', $list);
             })->get();
             return view('frontend.mobile.productmobile',
-                compact('sliders','products', 'categories', 'attributes','cat','filter_price','list_cat_childs','bard'));
-        }
-        else{
+                compact('sliders', 'products', 'categories', 'attributes', 'cat', 'filter_price', 'list_cat_childs', 'bard'));
+        } else {
             return view('frontend.product', compact('products', 'categories',
                 'cat', 'Sidebars', 'locale', 'active_menu', 'posts_footer', 'cat_parent', 'attributes'))->with('agent', $ag);
         }
     }
 
-    // lay comment
+    public function is_multi($requestall)
+    {
+
+        $rv = array_filter($requestall, 'is_array');
+
+        if (count($rv) > 0) return true;
+
+        return false;
+    }
+
     public function commentPost(Request $request)
     {
         $post = Post::find($request->comment_post);
@@ -753,7 +742,8 @@ class HomeController extends Controller
         }
     }
 
-    //xu ly lay danh gia vote
+    // lay comment
+
     public function getFormVote(Request $request)
     {
         $locale = config('app.locale');
@@ -775,24 +765,23 @@ class HomeController extends Controller
         return response()->json($view);
     }
 
-    //xu ly nhap thanh tim kiem ra san pham
+    //xu ly lay danh gia vote
+
     public function autotypeahead(Request $request)
     {
         $agent = new Agent();
-        $isMobile="";
+        $isMobile = "";
         if ($agent->isPhone()) {
             $isMobile = "phone";
         }
         if ($isMobile) {
-            if($request->data){
+            if ($request->data) {
                 $data = Products::where('name', 'like', '%' . $request->data . '%')->limit(10)->get();
                 return response()->json(['result_search' => $data]);
-            }
-            else{
+            } else {
                 return response()->json();
             }
-        }
-        else{
+        } else {
             $locale = config('app.locale');
             $view = '';
             if ($request->data != null) {
@@ -807,7 +796,9 @@ class HomeController extends Controller
         }
 
     }
-    //lien he
+
+    //xu ly nhap thanh tim kiem ra san pham
+
     public function contact()
     {
         $agent = new Agent();
@@ -819,8 +810,10 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale = config('app.locale');
         $Sidebars = $this->getmenu('sidebar');
-        return \view('frontend.contact', \compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        return view('frontend.contact', compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
+
+    //lien he
 
     public function changeLanguage($language)
     {
@@ -840,7 +833,7 @@ class HomeController extends Controller
         $active_menu = "contact";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
-        return view('frontend.recruit', \compact('Sidebars', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies'))->with('agent', $ag);
+        return view('frontend.recruit', compact('Sidebars', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies'))->with('agent', $ag);
     }
 
     public function recruit_register(Request $request)
@@ -880,7 +873,7 @@ class HomeController extends Controller
                 'list_vacancies' => $list_vacancies,
                 'agent' => $ag,
             ])->with('error', 'Ứng tuyển thành công!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->route('recruit', [
                 'Sidebars' => $Sidebars,
@@ -905,9 +898,9 @@ class HomeController extends Controller
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale = config('app.locale');
         $Sidebars = $this->getmenu('sidebar');
-        return \view('frontend.page.about-us', compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        return view('frontend.page.about-us', compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
     }
-    //lay menu  desktop
+
     public function menucontent(Request $request)
     {
         $Sidebarid = $request->id;
@@ -922,7 +915,24 @@ class HomeController extends Controller
         }
         return response()->json($view2);
     }
+
+    //lay menu  desktop
+
+    public function getmenu_ajax($location)
+    {
+        if ($location == 'sidebar') {
+            $location = "sidebar_location";
+        }
+        $getmenu = MenuItems::select('admin_menu_items.*')
+            ->leftJoin('locationmenus', 'locationmenus.' . $location, '=', 'admin_menu_items.menu')
+            ->where('locationmenus.' . $location, '<>', '0')
+            ->where('locationmenus.' . $location, '<>', null)
+            ->where('depth', '<>', 0)->get();
+        return $getmenu;
+    }
+
     //lay menu con desktop
+
     public function menucontent2(Request $request)
     {
         $Sidebarid = $request->id;
@@ -930,22 +940,24 @@ class HomeController extends Controller
         $view2 = view('frontend.subsidebarmenu', ['Sidebars' => $Sidebars, 'Sidebarid' => $Sidebarid])->render();
         return response()->json($view2);
     }
+
     //lay san pham moi
     public function get_new_mobile(Request $request)
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
-        ->leftjoin('brands','products.brand','brands.id')
-        ->where('status', 1)->where('is_new', 1)->inRandomOrder()->limit(6)->get();
+            ->leftjoin('brands', 'products.brand', 'brands.id')
+            ->where('status', 1)->where('is_new', 1)->inRandomOrder()->limit(6)->get();
         return response()->json([
             'data_product_mobile' => $get_new_mobile
         ]);
     }
+
     // lay san pham hot
     public function get_hot_sale_mobile(Request $request)
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
-        ->leftjoin('brands','products.brand','brands.id')
-        ->where('status', 1)->where('is_hot', 1)->inRandomOrder()->limit(6)->get();
+            ->leftjoin('brands', 'products.brand', 'brands.id')
+            ->where('status', 1)->where('is_hot', 1)->inRandomOrder()->limit(6)->get();
         return response()->json([
             'data_product_mobile' => $get_new_mobile
         ]);
@@ -955,7 +967,7 @@ class HomeController extends Controller
     public function get_promotion_mobile(Request $request)
     {
         $get_promotion_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
-            ->leftjoin('brands','products.brand','brands.id')
+            ->leftjoin('brands', 'products.brand', 'brands.id')
             ->where('status', 1)->where('is_promotion', 1)->inRandomOrder()->limit(6)->get();
         return response()->json([
             'data_product_mobile' => $get_promotion_mobile
@@ -967,36 +979,37 @@ class HomeController extends Controller
     {
         if (!is_null($request->id)) {
             $cat_parent = Category::find($request->id);
-            $list_cat_child =[];
-            foreach ($cat_parent->cat_child as $cat_child){
-                $list_cat_child[]= $cat_child->id;
+            $list_cat_child = [];
+            foreach ($cat_parent->cat_child as $cat_child) {
+                $list_cat_child[] = $cat_child->id;
             }
-            $list_cat_childs = Category::whereIn('id',$list_cat_child)->where('show_push_product',1)->get();
+            $list_cat_childs = Category::whereIn('id', $list_cat_child)->where('show_push_product', 1)->get();
             $Products = Products::select('products.*', DB::raw("brands.image as img_brands"))
-                ->leftjoin('category_relationships','category_relationships.product_id','products.id')
-                ->leftjoin('brands','products.brand','brands.id')
-                ->where('category_relationships.cat_id',$request->id)
+                ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
+                ->leftjoin('brands', 'products.brand', 'brands.id')
+                ->where('category_relationships.cat_id', $request->id)
                 ->where('products.status', 1)
                 ->groupby('products.id')
-                ->orderby('products.created_at','desc')
+                ->orderby('products.created_at', 'desc')
                 ->limit(6)->get();
-            foreach($Products as $value){
-                $value->setAttribute('count_vote',$value->count_vote());
-                $value->setAttribute('list_wish',explode(' ', Cookie::get('list_wish')));
+            foreach ($Products as $value) {
+                $value->setAttribute('count_vote', $value->count_vote());
+                $value->setAttribute('list_wish', explode(' ', Cookie::get('list_wish')));
             }
         }
-      return response()->json([
-          'list_cat_childs' => $list_cat_childs,
-          'data_product_mobile' => $Products,
-          ]);
+        return response()->json([
+            'list_cat_childs' => $list_cat_childs,
+            'data_product_mobile' => $Products,
+        ]);
     }
 
     // lay menu ban mobile
-    public function get_menu_mobile(){
+    public function get_menu_mobile()
+    {
         $menu_mobile_child = '';
         $get_parent = MenuItems::select('admin_menu_items.*', DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
-            ->leftjoin('categories','categories.id','admin_menu_items.category_id')
+            ->leftjoin('categories', 'categories.id', 'admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
             ->where('admin_menu_items.depth', 0)
@@ -1007,12 +1020,12 @@ class HomeController extends Controller
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
-            ->where('admin_menu_items.depth','<>', 0)
+            ->where('admin_menu_items.depth', '<>', 0)
             ->where('admin_menu_items.status', 1)
-            ->where('admin_menu_items.parent' ,$get_parent_firts->id)
+            ->where('admin_menu_items.parent', $get_parent_firts->id)
             ->get();
         $list_cat_lv_2 = array();
-        foreach($get_child as $value){
+        foreach ($get_child as $value) {
             array_push($list_cat_lv_2, $value->id);
         }
         $get_child_2 = MenuItems::select('admin_menu_items.*',
@@ -1020,14 +1033,14 @@ class HomeController extends Controller
             DB::raw("detailproperties.image as img_property"),
             DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
-            ->leftjoin('brands','brands.name','admin_menu_items.filter_value')
-            ->leftjoin('detailproperties','detailproperties.ma','admin_menu_items.filter_value')
-            ->leftjoin('categories','categories.id','admin_menu_items.category_id')
+            ->leftjoin('brands', 'brands.name', 'admin_menu_items.filter_value')
+            ->leftjoin('detailproperties', 'detailproperties.ma', 'admin_menu_items.filter_value')
+            ->leftjoin('categories', 'categories.id', 'admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
-            ->where('admin_menu_items.depth','<>', 0)
+            ->where('admin_menu_items.depth', '<>', 0)
             ->where('admin_menu_items.status', 1)
-            ->whereIn('admin_menu_items.parent',$list_cat_lv_2)
+            ->whereIn('admin_menu_items.parent', $list_cat_lv_2)
             ->get();
         return response()->json([
             'child' => $get_child,
@@ -1037,27 +1050,29 @@ class HomeController extends Controller
             'current_parent' => $get_parent_firts,
         ]);
     }
+
     // lay menu con khi chon menu cha mobile
-    public function get_menu_child(Request $request){
+    public function get_menu_child(Request $request)
+    {
         $get_parent_firts = MenuItems::select('admin_menu_items.*', DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
-            ->leftjoin('categories','categories.id','admin_menu_items.category_id')
+            ->leftjoin('categories', 'categories.id', 'admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
             ->where('admin_menu_items.depth', 0)
             ->where('admin_menu_items.status', 1)
-            ->where('admin_menu_items.id' ,$request->id)
+            ->where('admin_menu_items.id', $request->id)
             ->first();
         $get_child = MenuItems::select('admin_menu_items.*')
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
-            ->where('admin_menu_items.depth','<>', 0)
+            ->where('admin_menu_items.depth', '<>', 0)
             ->where('admin_menu_items.status', 1)
-            ->where('admin_menu_items.parent' ,$request->id)
+            ->where('admin_menu_items.parent', $request->id)
             ->get();
         $list_cat_lv_2 = array();
-        foreach($get_child as $value){
+        foreach ($get_child as $value) {
             array_push($list_cat_lv_2, $value->id);
         }
         $get_child_2 = MenuItems::select('admin_menu_items.*',
@@ -1065,14 +1080,14 @@ class HomeController extends Controller
             DB::raw("detailproperties.image as img_property"),
             DB::raw("categories.thumb as img_cat"))
             ->leftJoin('locationmenus', 'locationmenus.sidebar_location', '=', 'admin_menu_items.menu')
-            ->leftjoin('brands','brands.name','admin_menu_items.filter_value')
-            ->leftjoin('detailproperties','detailproperties.ma','admin_menu_items.filter_value')
-            ->leftjoin('categories','categories.id','admin_menu_items.category_id')
+            ->leftjoin('brands', 'brands.name', 'admin_menu_items.filter_value')
+            ->leftjoin('detailproperties', 'detailproperties.ma', 'admin_menu_items.filter_value')
+            ->leftjoin('categories', 'categories.id', 'admin_menu_items.category_id')
             ->where('locationmenus.sidebar_location', '<>', '0')
             ->where('locationmenus.sidebar_location', '<>', null)
-            ->where('admin_menu_items.depth','<>', 0)
+            ->where('admin_menu_items.depth', '<>', 0)
             ->where('admin_menu_items.status', 1)
-            ->whereIn('admin_menu_items.parent',$list_cat_lv_2)
+            ->whereIn('admin_menu_items.parent', $list_cat_lv_2)
             ->get();
         return response()->json([
             'current_parent' => $get_parent_firts,

@@ -141,8 +141,8 @@
     border-radius: 8px;
 }
 .wp-list-categories .wp-category .cat-thumb a img{
-    width: 100%;
-    height: 100%;
+    /*width: 100%;*/
+    /*height: 100%;*/
 }
 .wp-category .child-cat{
     padding: 10px 0;
@@ -303,10 +303,10 @@
 .block-filterproducts .block-content .wp-product .thumb a img,
 .product-item-info .thumb a img,
 .product-item .thumb a img{
-    width: 100%;
-    height: 100%;
     overflow: hidden;
     border-radius: 8px;
+    width: 100%;
+    min-height: 222px;
 }
 .block-filterproducts .block-content .wp-product .thumb a span.brand,
 .product-item-info .thumb a span.brand,

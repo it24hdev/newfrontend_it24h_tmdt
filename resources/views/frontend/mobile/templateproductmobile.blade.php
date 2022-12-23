@@ -4,7 +4,7 @@
         <div class="tag_cpn">
             <div class="tag_p">
                 <span class="years2 d-none"></span>
-                <span class="payment2 d-none">Trả góp 0%</span>
+                <span class="payment2 d-none"></span>
             </div>
             <span class="dbrand2 d-none"></span>
         </div>

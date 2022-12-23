@@ -10,8 +10,6 @@
         <div class="form-group">
             <form action="{{ route('category.update',[$edit->id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="form-heade">
-                </div>
                 <div class="grid grid-cols-12 gap-x-5">
                     <div class="col-span-12 md:col-span-7">
                         <div class="form-group mb-4">

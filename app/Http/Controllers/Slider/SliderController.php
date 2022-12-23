@@ -18,11 +18,7 @@ class SliderController extends Controller
             return $next($request);
         });
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $this->authorize('view',Slider::class);
@@ -46,11 +42,6 @@ class SliderController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $this->authorize('create',Slider::class);
@@ -60,12 +51,6 @@ class SliderController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->authorize('create',Slider::class);
@@ -89,6 +74,9 @@ class SliderController extends Controller
         if ($request->image != null){
             $nameFile = time().'.'.$request->image->extension();
         }
+        if ($request->title_img != null){
+            $nameFile_title = time().'.'.$request->title_img->extension();
+        }
         $input = [
             'name'=> $request->name,
             'subtitle'=> $request->subtitle,
@@ -96,13 +84,11 @@ class SliderController extends Controller
             'location'=> $request->location,
             'link_target'=> $request->link_target,
             'image'=> $nameFile,
+            'title_img'=> $nameFile_title,
             'user_id'=> Auth::id(),
             'position' => $request->position,
             'status'=> $status
         ];
-
-
-
         try {
             DB::beginTransaction();
             Slider::create($input);
@@ -120,7 +106,12 @@ class SliderController extends Controller
                 else{
                     CommonHelper::cropImage($request->image,$nameFile,270,455,$folder);
                 }
-                    
+            }
+            if ($request->title_img != null){
+                $folder = 'upload/images/slider/';
+                $folder2 = 'upload/images/slider/thumb/';
+                CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder);
+                CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder2);
             }
             return redirect()->route('slider.index')->with('success','Tạo Slider mới thành công.');
         }catch (\Exception $exception){
@@ -129,23 +120,6 @@ class SliderController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $this->authorize('update',Slider::class);
@@ -161,13 +135,6 @@ class SliderController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $this->authorize('update',Slider::class);
@@ -185,14 +152,22 @@ class SliderController extends Controller
         if (!is_null($slider)){
             $status = Slider::ACTIVE;
             $nameFileOld = $slider->image;
+            $nameFileOld_title = $slider->title_img;
             if ($request->status == null)
                 $status = Slider::DISABLE;
             if ($request->link_target == null)
                 $request->link_target = '#';
             if ($request->image != null){
                 $nameFile = time().'.'.$request->image->extension();
-            }else
+            }else{
                 $nameFile = $nameFileOld;
+            }
+            if ($request->title_img != null){
+                $nameFile_title = time().'.'.$request->title_img->extension();
+            }
+            else{
+                $nameFile_title = $nameFileOld_title;
+            }
             /** Update bản ghi */
 
             $input = [
@@ -202,6 +177,7 @@ class SliderController extends Controller
                 'location'=> $request->location,
                 'link_target'=> $request->link_target,
                 'image'=> $nameFile,
+                'title_img'=> $nameFile_title,
                 'user_id'=> Auth::id(),
                 'position' => $request->position,
                 'status'=> $status
@@ -212,8 +188,6 @@ class SliderController extends Controller
                 $slider->update($input);
                 DB::commit();
                 if ($request->image != null){
-
-
                     /** Lưu ảnh mới vào folder */
                     $folder = 'upload/images/slider/';
                     $folder2 = 'upload/images/slider/thumb/';
@@ -228,10 +202,20 @@ class SliderController extends Controller
                     else{
                         CommonHelper::cropImage($request->image,$nameFile,270,455,$folder);
                     }
-
                     /** Xoá ảnh cũ khi có upload ảnh mới  */
                     if ($nameFileOld != Slider::IMAGE){
                         CommonHelper::deleteImage($nameFileOld,$folder);
+                    }
+                }
+                if ($request->title_img != null){
+                    /** Lưu ảnh mới vào folder */
+                    $folder = 'upload/images/slider/';
+                    $folder2 = 'upload/images/slider/thumb/';
+                    CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder);
+                    CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder2);
+                    /** Xoá ảnh cũ khi có upload ảnh mới  */
+                    if ($nameFileOld_title != Slider::IMAGE){
+                        CommonHelper::deleteImage($nameFileOld_title,$folder);
                     }
                 }
                 return redirect()->route('slider.index')->with('success','Sửa Slider thành công.');
@@ -243,12 +227,6 @@ class SliderController extends Controller
         return redirect()->route('slider.index')->with('error','Đã có lỗi xảy ra. Vui lòng thử lại!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Request $request)
     {
         $this->authorize('delete',Slider::class);
@@ -258,6 +236,10 @@ class SliderController extends Controller
             if ($slider->image != Slider::IMAGE){
                 $path = 'upload/images/slider/';
                 CommonHelper::deleteImage($slider->image,$path);
+            }
+            if ($slider->title_img != Slider::IMAGE){
+                $path = 'upload/images/slider/';
+                CommonHelper::deleteImage($slider->title_img,$path);
             }
             return \json_encode(array('success'=>true));
         }
@@ -273,6 +255,21 @@ class SliderController extends Controller
                     $folder = 'upload/images/slider/';
                     CommonHelper::deleteImage($slider->image,$folder);
                     $slider->update(['image'=>Slider::IMAGE]);
+                }
+                return \json_encode(array('success'=>true));
+            }
+        }
+        return \json_encode(array('success'=>false));
+    }
+    public function deleteImg_title(Request $request){
+        $this->authorize('update',Slider::class);
+        if (!empty($request->id)){
+            $slider = Slider::find($request->id);
+            if (!is_null($slider)){
+                if ($slider->image != Slider::IMAGE){
+                    $folder = 'upload/images/slider/';
+                    CommonHelper::deleteImage($slider->image,$folder);
+                    $slider->update(['title_img'=>Slider::IMAGE]);
                 }
                 return \json_encode(array('success'=>true));
             }

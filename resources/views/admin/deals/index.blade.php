@@ -26,16 +26,25 @@
                id="add_new_deal">
                 <span> Thêm deal</span>
             </a>
-            <form action="{{ route('deals.index')}}" method="get"
-                  class="flex flex-col sm:flex-row sm:items-end xl:items-start">
+            <form action="{{ route('deals.index')}}" method="get" class="flex flex-col sm:flex-row sm:items-end xl:items-start">
+                <select name="orderby" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3" onchange="this.form.submit()">
+                    <option value="">Tình trạng</option>
+                    <option value="not_started" {{request()->input('orderby') =='not_started' ? 'selected' : ''}} >Chưa bắt đầu</option>
+                    <option value="starting" {{request()->input('orderby') =='starting' ? 'selected' : ''}} >Đang bắt đầu</option>
+                    <option value="time_out" {{request()->input('orderby') =='time_out' ? 'selected' : ''}} >Hết thời gian</option>
+                    <option value="status_deal" {{request()->input('orderby') =='status_deal' ? 'selected' : ''}} >Hiển thị</option>
+                </select>
                 <div class="sm:w-42 2xl:w-full mt-2 sm:mt-0 sm:w-auto box">
                     <div class="w-full relative text-gray-700 dark:text-gray-300">
                         <input type="text" name="search" class="form-control w-full box pr-10 placeholder-theme-13"
-                               placeholder="Tìm kiếm..." value="{{request()->input('keywords')}}">
+                               placeholder="Tìm kiếm..." value="{{request()->input('search')}}">
                         <i class="w-4 h-4 absolute my-auto inset-y-0 mr-3 right-0" data-feather="search"></i>
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center">
+            <input class="btn btn-sm btn-primary mr-2" value="Xoá đã chọn" id="delete_selected">
         </div>
     </div>
     <div>
@@ -44,7 +53,7 @@
             <table class="table table-report -mt-2" id="table_categories">
                 <thead>
                 <tr>
-                    <th class="text-center whitespace-nowrap"><input type="checkbox" class="form-check"></th>
+                    <th class="text-center whitespace-nowrap"><input type="checkbox" class="form-check" name="checkall"></th>
                     <th class="text-center whitespace-nowrap">ẢNH</th>
                     <th class="text-center whitespace-nowrap">SẢN PHẨM</th>
                     <th class="text-center whitespace-nowrap">THỜI GIAN</th>
@@ -69,14 +78,14 @@
                             <p>Giá deal: <span class="price_deal">{{$item->price_deal}}</span> vnd - Giá thường: <span class="price">{{$item->price}}</span></p>
                             <p>Số lượng: <span class="quantity_deal">{{$item->quantity_deal}}</span></p>
                         </td>
-                        <td class="text-left w-56" style="padding: 0.25rem 0.25rem !important;">
+                        <td class="text-left w-56 datetime_deal" style="padding: 0.25rem 0.25rem !important;">
                             @if($item->start_time)
-                            <p>BĐ: <span class="start_time_date">{{date('d-m-Y', strtotime($item->start_time))}} </span>|
-                                <span class="start_time_time">{{date('h:i a', strtotime($item->start_time))}}</span></p>
+                            <p>BĐ: <span class="start_time_date">{{date('y-m-d', strtotime($item->start_time))}} </span>|
+                                <span class="start_time_time">{{date('H:I', strtotime($item->start_time))}}</span></p>
                             @endif
                             @if($item->end_time)
-                            <p>KT: <span class="end_time_date">{{date('d-m-Y', strtotime($item->end_time))}}</span>|
-                                <span class="end_time_time">{{date('h:i a', strtotime($item->end_time))}}</span></p>
+                            <p>KT: <span class="end_time_date">{{date('y-m-d', strtotime($item->end_time))}} </span>|
+                                <span class="end_time_time">{{date('H:I', strtotime($item->end_time))}}</span></p>
                             @endif
                             @if($item->end_time && $item->start_time)
                                 @if($item->end_time < now() && $item->start_time < now())
@@ -144,14 +153,18 @@
                 <p>Giá deal: <span class="price_deal"></span> vnd - Giá thường: <span class="price"></span></p>
                 <p>Số lượng: <span class="quantity_deal"></span></p>
             </td>
-            <td class="text-left w-56" style="padding: 0.25rem 0.25rem !important;">
+            <td class="text-left w-56 datetime_deal" style="padding: 0.25rem 0.25rem !important;">
             </td>
             <td class="p-1 text-center">
                 <input type="checkbox" class="form-check-switch" name='status_deal[]' value=''>
             </td>
             <td class="w-20" style="padding: 0.25rem 0.25rem !important;">
                 <div class="flex justify-center items-center">
-                    <a href="#" title="Chỉnh sửa" class="btn btn-sm btn-primary mr-2">
+                    <a href="javascript:" title="Chỉnh sửa"
+                       data-value=""
+                       data-toggle="modal"
+                       data-target="#edit_product"
+                       class="btn btn-sm btn-primary btn-edit mr-2">
                         <i class="fa-solid fa-pen-to-square"></i>
                     </a>
                     <a title="Xóa" data-toggle="modal"
@@ -164,17 +177,13 @@
             </td>
         </tr>
     </script>
-    <script id="template_edit" type="text/x-custom-template">
-
-    </script>
-
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-
     <script>
         $(document).ready(function () {
             var _token = $('meta[name="csrf-token"]').attr('content');
+            // them moi
             $(document).on('click', "#add_new_deal", function () {
                 $('#view_product').show();
                 $.ajax({
@@ -216,7 +225,7 @@
                                 {
                                     data: "id",
                                     render: function (data) {
-                                        return '<div class="text-center"><input type="button" data-target="' + data + '" class="btn btn-primary product_selected" value="Chọn sản phẩm"></div>';
+                                        return '<div class="text-center"><input type="button" data-dismiss="modal" data-target="' + data + '" class="btn btn-primary product_selected" value="Chọn sản phẩm"></div>';
                                     },
                                 }
                             ]
@@ -224,9 +233,9 @@
                     }
                 });
             });
+            // chon san pham
             $(document).on('click', ".product_selected", function () {
                 var id = $(this).attr('data-target');
-                $('body').removeClass('overflow-y-hidden');
                 $('#view_product').hide();
                 $.ajax({
                     url: '{{route('deals.store')}}',
@@ -257,6 +266,7 @@
                                 $(tmp).find('input[name="status_deal[]"]').attr('checked',true);
                             }
                             $(tmp).find('.btn-delete').attr('data-value',data.item.id);
+                            $(tmp).find('.btn-edit').attr('data-value',data.item.id);
                             $('#table1').prepend(tmp);
                             var $row = $('tbody').children('tr:first');
                             $row.attr('id',data.item.id);
@@ -265,9 +275,11 @@
                         else {
                             // alert('Đã xảy ra lỗi, vui lòng thử lại');
                         }
+                        $('body').removeClass('overflow-y-hidden');
                     }
                 });
             });
+            // xoa
             $(document).on('click', '.delete', function () {
                 var id = $("#delete_id").val();
                 var data = {
@@ -287,7 +299,7 @@
                     }
                 });
             });
-
+            // chinh sua
             $(document).on('click', '.btn-edit', function () {
                 $('#form_edit')[0].reset();
                 $('#form_edit').find('input[name="update"]').attr('data-target','');
@@ -319,18 +331,25 @@
                             }
                             $('#form_edit').find('input[name="product_name"]').val(data.item.product_name);
                             $('#form_edit').find('input[name="price"]').val(data.item.price);
+
                             var start_time = data.item.start_time;
-                            $('#form_edit').find('input[name="start_time"]').val(moment(start_time).format("YYYY-MM-DD"));
-                            $('#form_edit').find('input[name="start_time_hour"]').val(moment(start_time).format("HH:MM"));
+                            if(start_time){
+                                $('#form_edit').find('input[name="start_time"]').val(moment(start_time).format("YYYY-MM-DD"));
+                                $('#form_edit').find('input[name="start_time_hour"]').val(moment(start_time).format("HH:MM"));
+                            }
                             var end_time = data.item.end_time;
-                            $('#form_edit').find('input[name="end_time"]').val(moment(end_time).format("YYYY-MM-DD"));
-                            $('#form_edit').find('input[name="end_time_hour"]').val(moment(end_time).format("HH:MM"));
+                            if(end_time){
+                                $('#form_edit').find('input[name="end_time"]').val(moment(end_time).format("YYYY-MM-DD"));
+                                $('#form_edit').find('input[name="end_time_hour"]').val(moment(end_time).format("HH:MM"));
+                            }
                             $('#form_edit').find('input[name="update"]').attr('data-target',id);
                         }
                     }
                 });
             });
+            // cap nhat
             $(document).on('click', '.btn-update', function () {
+                $('body').removeClass('overflow-y-hidden');
                 var id = $(this).attr('data-target');
                 var name_deal = $('#form_edit').find('input[name="name_deal"]').val();
                 var price_deal = $('#form_edit').find('input[name="price_deal"]').val();
@@ -369,11 +388,21 @@
                             $('#'+id).find('a .name_deal').html(data.item.name_deal);
                             $('#'+id).find('.price_deal').html(data.item.price_deal);
                             $('#'+id).find('.quantity_deal').html(data.item.quantity_deal);
+                            $('#'+id).find('.datetime_deal').html('');
+                            if(data.item.start_time){
+                                $('#'+id).find('.datetime_deal').append('<p>BĐ: <span class="start_time_date"></span> | <span class="start_time_time"></span></p>')
+                            }
+                            if(data.item.end_time){
+                                $('#'+id).find('.datetime_deal').append('<p>KT: <span class="end_time_date"></span> | <span class="end_time_time"></span></p>')
+                            }
+                            if(data.item.start_time && data.item.end_time){
+                                $('#'+id).find('.datetime_deal').append('<p class="processing"></p>');
+                            }
                             $('#'+id).find('.start_time_date').html(moment(data.item.start_time).format("YYYY-MM-DD"));
                             $('#'+id).find('.start_time_time').html(moment(data.item.start_time).format("HH:MM"));
                             $('#'+id).find('.end_time_date').html(moment(data.item.end_time).format("YYYY-MM-DD"));
                             $('#'+id).find('.end_time_time').html(moment(data.item.end_time).format("HH:MM"));
-                            var d = new Date();
+                            var d = moment().format('YYYY-MM-DD HH:MM::SS');
                             if(data.item.end_time < d && data.item.start_time < d){
                                 $('#'+id).find('.processing').html("(Hết thời gian)");
                             }
@@ -391,14 +420,67 @@
                                 $('#'+id).find('input[name="status_deal[]"]').val(1);
                             }
                             else{
-                                console.log(1);
                                 $('#'+id).find('input[name="status_deal[]"]').attr('checked',false);
                                 $('#'+id).find('input[name="status_deal[]"]').val(0);
                             }
-                            alert('Cập nhật thành công.');
                         }
                     }
                 });
+            });
+            // thay doi trang thai
+            $(document).on('change' , 'input[name="status_deal[]"]', function (){
+                var row_id = $(this).closest('tr').attr('id');
+                let status_deal = 0;
+                if($(this).is(':checked')){
+                    status_deal = 1;
+                }
+                var data = {
+                    id: row_id,
+                    status_deal: status_deal,
+                    _token: _token
+                };
+                $.ajax({
+                    url: '{{ route('deals.update')}}',
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                    }
+                })
+            });
+            // chon tat ca
+            $(document).on('change' , 'input[name="checkall"]', function (){
+                if($(this).is(':checked')){
+                    $('input[name="product_selected[]"]').attr('checked',true);
+                }
+                else{
+                    $('input[name="product_selected[]"]').attr('checked',false);
+                }
+            });
+            $(document).on('click' , '#delete_selected', function (){
+                var list = [];
+                $('input[name="product_selected[]"]').each(function (){
+                    if($(this).is(':checked')){
+                        list.push($(this).val());
+                    }
+                });
+                var data = {
+                    list_id: list,
+                    _token: _token
+                };
+                $.ajax({
+                    url: '{{ route('multiple_destroy')}}',
+                    method: "POST",
+                    data: data,
+                    dataType: "json",
+                    success: function (data) {
+                        if(data.success){
+                            $.each(list, function (k,v){
+                                $('#'+v).empty();
+                            })
+                        }
+                    }
+                })
             });
         });
     </script>

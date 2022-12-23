@@ -12,26 +12,46 @@
     </div>
     <div class="grid grid-cols-12 gap-6 mt-5">
         <div class="intro-y col-span-12">
-
             <form action="{{route('slider.update',['id'=>$slider->id])}}" method="post" enctype="multipart/form-data" id="form-slider">
                 <div class="intro-y box p-5">
-                    <div>
-                        <label for="crud-form-1" class="form-label">Tiêu đề</label>
-                        <input id="crud-form-1" type="text" name="name" value="{{old('name') ?? $slider->name}}" class="form-control w-full" placeholder="Nhập tiêu đề">
+                    <div class="grid grid-cols-12 gap-6 mt-5">
+                        <div class="col-span-12 md:col-span-6">
+                            <div class="mt-3">
+                                <label for="crud-form-1" class="form-label">Tiêu đề</label>
+                                <input id="crud-form-1" type="text" name="name" value="{{old('name') ?? $slider->name}}" class="form-control w-full" placeholder="Nhập tiêu đề">
+                            </div>
+                            <div class="mt-3">
+                                <label for="crud-form-1" class="form-label">Tiêu đề phụ</label>
+                                <input id="crud-form-1" type="text" name="subtitle" value="{{old('subtitle') ?? $slider->subtitle}}" class="form-control w-full" placeholder="Nhập tiêu đề phụ">
+                            </div>
+                            <div class="mt-3">
+                                <label for="crud-form-1" class="form-label">Mô tả</label>
+                                <input id="crud-form-1" type="text" name="description" value="{{old('description') ?? $slider->description}}" class="form-control w-full" placeholder="Nhập mô tả">
+                            </div>
+                            <div class="mt-3">
+                                <label for="crud-form-1" class="form-label">Link</label>
+                                <input id="crud-form-1" type="text" name="link_target" value="{{old('link_target') ?? $slider->link_target}}" class="form-control w-full" placeholder="Nhập đường dẫn">
+                            </div>
+                        </div>
+                        <div class="col-span-12 md:col-span-6">
+                            <div class="mt-3">
+                                <label>Ảnh tiêu đề</label>
+                                <div class="mt-2">
+                                    <div class="w-40 show-title-img">
+                                        <div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in">
+                                            @if($slider->title_img == \App\Models\Slider::IMAGE)
+                                                <img src="{{asset('/upload/images/common_img').'/'.$slider->title_img}}">
+                                            @else
+                                                <img src="{{asset('/upload/images/slider').'/'.$slider->title_img}}">
+                                                <div title="Xoá ảnh?" data-value="{{$slider->id}}" class="btn-delete-title-img tooltip w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-theme-6 right-0 top-0 -mr-2 -mt-2"> <i data-feather="x" class="w-4 h-4"></i> </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <input type="file" name="title_img" id="file-title-image">
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="mt-3">
-                        <label for="crud-form-1" class="form-label">Tiêu đề phụ</label>
-                        <input id="crud-form-1" type="text" name="subtitle" value="{{old('subtitle') ?? $slider->subtitle}}" class="form-control w-full" placeholder="Nhập tiêu đề phụ">
-                    </div>
-                    <div class="mt-3">
-                        <label for="crud-form-1" class="form-label">Mô tả</label>
-                        <input id="crud-form-1" type="text" name="description" value="{{old('description') ?? $slider->description}}" class="form-control w-full" placeholder="Nhập mô tả">
-                    </div>
-                    <div class="mt-3">
-                        <label for="crud-form-1" class="form-label">Link</label>
-                        <input id="crud-form-1" type="text" name="link_target" value="{{old('link_target') ?? $slider->link_target}}" class="form-control w-full" placeholder="Nhập đường dẫn">
-                    </div>
-
                     <div class="mt-3">
                         <div class="grid grid-cols-12 gap-x-5">
                             <div class="col-span-12 xl:col-span-4">
@@ -53,13 +73,12 @@
                             </div>
                             <div class="col-span-12 xl:col-span-4">
                                 <label>Trạng thái</label>
-                                <div class="mt-2">
+                                <div class="mt-3">
                                     <input type="checkbox" name="status" {{(old('status') == 'on' || $slider->status == \App\Models\Slider::ACTIVE) ? 'checked' : false}} class="form-check-switch">
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="mt-3">
                         <label>Ảnh Slider</label>
                         <div class="mt-2">
@@ -79,7 +98,6 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="text-right mt-5">
                         @can('view',\App\Models\Slider::class)
                             <a type="button" href="{{route('slider.index')}}" class="btn btn-outline-secondary w-24 mr-1">Hủy</a>
@@ -119,8 +137,43 @@
                     error: function (r) {
                     }
                 })
+            });
+            $(document).on("click", ".btn-delete-title-img", function(e) {
+                e.preventDefault();
+                var id = $(this).attr('data-value');
+                var _token = $('meta[name="csrf-token"]').attr('content');
+                var data = {
+                    id: id,
+                    _token: _token
+                };
+                $.ajax({
+                    url:"{{route('slider.deleteImg_title')}}",
+                    type:"post",
+                    dataType:"json",
+                    data: data,
+                    beforeSend: function(){
+                    },
+                    success: function (result) {
+                        var show_image = $(".show-title-img");
+                        show_image.empty();
+                    },
+                    error: function (r) {
+                    }
+                })
+            });
+            /**Hiển thị ảnh ngay khi upload */
+            $(document).on('change','#file-title-image',function () {
+                var show_image = $(".show-title-img");
+                var selectedFile = event.target.files[0];
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var image = '<div class="w-24 h-24 relative image-fit mb-5 mr-5 cursor-pointer zoom-in"><img src="'+event.target.result+'"></div>';
+                    show_image.empty();
+                    show_image.append(image);
+                };
+                reader.readAsDataURL(selectedFile);
             })
-        })
+        });
     </script>
 @endsection
 

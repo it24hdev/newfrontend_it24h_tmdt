@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('location')->default(0);
             $table->string('link_target',300)->default('#')->nullable();
             $table->string('image',300)->default('no-images.jpg')->nullable();
+            $table->longText('title_img')->default('no-images.jpg')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->integer('position')->nullable();
             $table->integer('status')->default(0);

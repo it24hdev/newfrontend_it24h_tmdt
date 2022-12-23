@@ -34,7 +34,9 @@
                             <div class="item-categories-outer">
                                 <a href="{{route('product_cat', ['slug' =>  $item->slug])}}"
                                    class="item-categories square"
-                                   style="background-color:transparent;background-image:url({{asset('upload/images/products/thumb/'.$item->thumb)}});">
+                                   style="background-color:transparent;background-size: 100% 100%;background-image:
+                                   @if($item->thumb!="no-images.jpg")url({{asset('upload/images/products/thumb/'.$item->thumb)}});
+                                   @else url({{asset('upload/images/common_img/'.$item->thumb)}});@endif">
                                 </a>
                                 <p class="title-under">{{$item->name}}</p>
                             </div>
@@ -46,19 +48,25 @@
         </div>
         {{--    hotsale --}}
         <div class="hot_sale">
-            <div class="block_hot_sale">
+            <div class="block_hot_sale" style="background: url(https://cdn2.cellphones.com.vn/x,webp/media/wysiwyg/background.png) 0% 0% / cover no-repeat;">
                 <div class="hot_sale_l1">
+                    <div class="text-center mx-2 my-2">
+                        <div>
+                            <img src="https://cdn2.cellphones.com.vn/x,webp/media/wysiwyg/title.png" alt="title" class="w-100">
+                        </div>
+                    </div>
                     {{--                header-time sale--}}
                     <div class="header_sale">
                         <div class="top_header_sale">
                             <div class="h_inner title_s">
                                 <div class="d-flex">
-                                    <i class="fas fa-bolt"></i>
-                                    <p>Flash Sale</p>
+{{--                                    <i class="fas fa-bolt"></i>--}}
+{{--                                    <p>Flash Sale</p>--}}
+                                    Kết thúc trong
                                 </div>
                                 <div class="time_count">
                                     <a title="Xem tất cả Deal Hot" href="#">
-                                        <div class="count-down" id="timesale" get-time-sale="{{$time_sale}}">
+                                        <div class="count-down" id="timesale" get-time-sale="{{$time_sale->time_sale}}">
                                             <span id="d"></span> &nbsp;<span id="h"></span>&nbsp;:&nbsp;<span id="m"></span>&nbsp;:&nbsp;<span id="s"></span></div>
                                     </a>
                                 </div>
@@ -79,10 +87,10 @@
                                                     @endif
                                                     <div class="dtag">
                                                         @if (!empty($value->year))
-                                                            <span class="years">NEW 2022</span>
+                                                            <span class="years">{{$value->year}}</span>
                                                         @endif
                                                         @if (!empty($value->installment))
-                                                            <span class="payment">Trả góp 0%</span>
+                                                            <span class="payment">{{$value->installment}}</span>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -90,12 +98,12 @@
                                                     <img src="{{asset('upload/images/products/thumb/'.$value->thumb)}}">
                                                 </div>
                                                 <div class="p_price">
-                                                    @if (!empty($value->onsale))
+                                                    @if ($value->price_deal!=0)
                                                         <div class="promotion">
                                                             <div class="dprice dpromotion">{{number_format($value->price,0,',','.')}} đ</div>
-                                                            <div class="dprice dpercent">- {{$value->onsale}}%</div>
+                                                            <div class="dprice dpercent">- {{number_format(100-$value->price_deal/$value->price*100)}}%</div>
                                                         </div>
-                                                        <div class="p_price">{{number_format($value->price_onsale,0,',','.')}} đ</div>
+                                                        <div class="p_price">{{number_format($value->price_deal,0,',','.')}} đ</div>
                                                     @else
                                                         <div class="promotion">
                                                             <div class="dprice dpromotion">{{number_format($value->price,0,',','.')}} đ</div>
@@ -122,7 +130,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
         {{--khuyen mai hot--}}
         <div class="category-container">
