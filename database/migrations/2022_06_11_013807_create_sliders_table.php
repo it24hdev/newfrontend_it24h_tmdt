@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('title_img')->default('no-images.jpg')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->integer('position')->nullable();
+            $table->string('background')->nullable();
             $table->integer('status')->default(0);
             $table->timestamps();
         });
@@ -31,11 +32,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('sliders');

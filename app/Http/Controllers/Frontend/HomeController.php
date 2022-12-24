@@ -17,6 +17,7 @@ use App\Models\Recruit;
 use App\Models\Recruit_register;
 use App\Models\Vote;
 use App\Models\Deals;
+use App\Models\Slider;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -74,6 +75,9 @@ class HomeController extends Controller
                 ->limit(8)->get();
             //lay thoi gian hot sale
             $time_sale = Deals::select(DB::raw('max(end_time) as time_sale'))->where('status_deal', 1)->first('time_sale');
+            $deal_background = Slider::where('status', 1)->where('location',5)->first();
+            $background = json_decode($deal_background->background);
+//            dd($deal_background);
 
             return view('frontend.mobile.indexmobile', [
                 'list_cat' => $list_cat,
@@ -81,7 +85,9 @@ class HomeController extends Controller
                 'locale' => $locale,
                 'time_sale' => $time_sale,
                 'get_cat_parents' => $get_cat_parents,
-                'get_hot_sale_mobile' => $get_hot_sale_mobile
+                'get_hot_sale_mobile' => $get_hot_sale_mobile,
+                'background' => $background,
+                'deal_background' => $deal_background,
             ]);
         } else {
             $Sidebars = $this->getmenu('sidebar');

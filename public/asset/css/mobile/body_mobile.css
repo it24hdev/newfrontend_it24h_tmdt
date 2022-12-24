@@ -376,9 +376,15 @@
     border-radius: 15px;
     padding: 0.5rem;
 }
+.title_bg{
+    font-size: 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #ff424e;
+}
 
 .item_p {
-    width: 100%;
+    width: 110px;
 }
 
 @media screen and (max-width: 1199px) {

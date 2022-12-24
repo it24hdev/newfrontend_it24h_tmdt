@@ -66,17 +66,23 @@ class SliderController extends Controller
         );
 
         $status = Slider::ACTIVE;
-        $nameFile = Slider::IMAGE;
-        if ($request->status == null)
+        $nameFile = $nameFile_title = Slider::IMAGE;
+        if ($request->status == null){
             $status = Slider::DISABLE;
-        if ($request->link_target == null)
+        }
+        if ($request->link_target == null){
             $request->link_target = '#';
-        if ($request->image != null){
+        }
+        if ($request->image){
             $nameFile = time().'.'.$request->image->extension();
         }
-        if ($request->title_img != null){
-            $nameFile_title = time().'.'.$request->title_img->extension();
+        if ($request->title_img){
+            $nameFile_title = 'title_img_'.time().'.'.$request->title_img->extension();
         }
+        $background = array();
+        array_push($background, $request->colortop);
+        array_push($background, $request->colorbottom);
+        $background = json_encode($background);
         $input = [
             'name'=> $request->name,
             'subtitle'=> $request->subtitle,
@@ -87,15 +93,16 @@ class SliderController extends Controller
             'title_img'=> $nameFile_title,
             'user_id'=> Auth::id(),
             'position' => $request->position,
+            'background' => $background,
             'status'=> $status
         ];
         try {
             DB::beginTransaction();
             Slider::create($input);
             DB::commit();
-            if ($request->image != null){
-                $folder = 'upload/images/slider/';
-                $folder2 = 'upload/images/slider/thumb/';
+            $folder = 'upload/images/slider/';
+            $folder2 = 'upload/images/slider/thumb/';
+            if ($request->image){
                 if($request->location  == 1 || $request->location  == 2 || $request->location == 3){
                     CommonHelper::cropImage($request->image,$nameFile,310,135,$folder);
                 }
@@ -107,11 +114,8 @@ class SliderController extends Controller
                     CommonHelper::cropImage($request->image,$nameFile,270,455,$folder);
                 }
             }
-            if ($request->title_img != null){
-                $folder = 'upload/images/slider/';
-                $folder2 = 'upload/images/slider/thumb/';
+            if ($request->title_img){
                 CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder);
-                CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder2);
             }
             return redirect()->route('slider.index')->with('success','Tạo Slider mới thành công.');
         }catch (\Exception $exception){
@@ -124,13 +128,17 @@ class SliderController extends Controller
     {
         $this->authorize('update',Slider::class);
         $slider = Slider::find($id);
+        $background = json_decode($slider->background);
+
         if(is_null($slider))
             \abort(404);
         else{
             return view('admin.slider.edit',[
                 'title' => 'Sửa Slider',
                 'arrLocation' => Slider::$arr_location,
-                'slider' => $slider
+                'slider' => $slider,
+                'colortop' => $background[0],
+                'colorbottom' => $background[1],
             ]);
         }
     }
@@ -153,23 +161,29 @@ class SliderController extends Controller
             $status = Slider::ACTIVE;
             $nameFileOld = $slider->image;
             $nameFileOld_title = $slider->title_img;
-            if ($request->status == null)
+            if ($request->status == null){
                 $status = Slider::DISABLE;
-            if ($request->link_target == null)
+            }
+            if ($request->link_target == null){
                 $request->link_target = '#';
-            if ($request->image != null){
+            }
+            if ($request->image){
                 $nameFile = time().'.'.$request->image->extension();
-            }else{
+            }
+            else{
                 $nameFile = $nameFileOld;
             }
-            if ($request->title_img != null){
-                $nameFile_title = time().'.'.$request->title_img->extension();
+            if ($request->title_img){
+                $nameFile_title = 'title_img_'.time().'.'.$request->title_img->extension();
             }
             else{
                 $nameFile_title = $nameFileOld_title;
             }
+            $background = array();
+            array_push($background, $request->colortop);
+            array_push($background, $request->colorbottom);
+            $background = json_encode($background);
             /** Update bản ghi */
-
             $input = [
                 'name'=> $request->name,
                 'subtitle'=> $request->subtitle,
@@ -180,6 +194,7 @@ class SliderController extends Controller
                 'title_img'=> $nameFile_title,
                 'user_id'=> Auth::id(),
                 'position' => $request->position,
+                'background' => $background,
                 'status'=> $status
             ];
 
@@ -187,10 +202,10 @@ class SliderController extends Controller
                 DB::beginTransaction();
                 $slider->update($input);
                 DB::commit();
-                if ($request->image != null){
+                $folder = 'upload/images/slider/';
+                $folder2 = 'upload/images/slider/thumb/';
+                if ($request->image){
                     /** Lưu ảnh mới vào folder */
-                    $folder = 'upload/images/slider/';
-                    $folder2 = 'upload/images/slider/thumb/';
                     if($request->location  == 1 || $request->location  == 2 || $request->location == 3){
                         CommonHelper::cropImage($request->image,$nameFile,310,135,$folder);
                     }
@@ -207,12 +222,9 @@ class SliderController extends Controller
                         CommonHelper::deleteImage($nameFileOld,$folder);
                     }
                 }
-                if ($request->title_img != null){
+                if ($request->title_img){
                     /** Lưu ảnh mới vào folder */
-                    $folder = 'upload/images/slider/';
-                    $folder2 = 'upload/images/slider/thumb/';
                     CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder);
-                    CommonHelper::cropImage($request->title_img,$nameFile_title,505,44,$folder2);
                     /** Xoá ảnh cũ khi có upload ảnh mới  */
                     if ($nameFileOld_title != Slider::IMAGE){
                         CommonHelper::deleteImage($nameFileOld_title,$folder);
@@ -248,32 +260,34 @@ class SliderController extends Controller
 
     public function deleteImg(Request $request){
         $this->authorize('update',Slider::class);
-        if (!empty($request->id)){
+        if ($request->id){
             $slider = Slider::find($request->id);
             if (!is_null($slider)){
                 if ($slider->image != Slider::IMAGE){
                     $folder = 'upload/images/slider/';
+                    $folder2 = 'upload/images/slider/thumb/';
                     CommonHelper::deleteImage($slider->image,$folder);
+                    CommonHelper::deleteImage($slider->image,$folder2);
                     $slider->update(['image'=>Slider::IMAGE]);
                 }
-                return \json_encode(array('success'=>true));
             }
         }
-        return \json_encode(array('success'=>false));
+        return \json_encode(array('success'=>true));
     }
     public function deleteImg_title(Request $request){
         $this->authorize('update',Slider::class);
-        if (!empty($request->id)){
+        if ($request->id){
             $slider = Slider::find($request->id);
             if (!is_null($slider)){
-                if ($slider->image != Slider::IMAGE){
+                if ($slider->title_img != Slider::IMAGE){
                     $folder = 'upload/images/slider/';
-                    CommonHelper::deleteImage($slider->image,$folder);
+                    $folder2 = 'upload/images/slider/thumb/';
+                    CommonHelper::deleteImage($slider->title_img,$folder);
+                    CommonHelper::deleteImage($slider->title_img,$folder2);
                     $slider->update(['title_img'=>Slider::IMAGE]);
                 }
-                return \json_encode(array('success'=>true));
             }
         }
-        return \json_encode(array('success'=>false));
+        return \json_encode(array('success'=>true));
     }
 }

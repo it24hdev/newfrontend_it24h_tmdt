@@ -48,21 +48,30 @@
         </div>
         {{--    hotsale --}}
         <div class="hot_sale">
-            <div class="block_hot_sale" style="background: url(https://cdn2.cellphones.com.vn/x,webp/media/wysiwyg/background.png) 0% 0% / cover no-repeat;">
+            <div class="block_hot_sale" style="@if($deal_background->image!='no-images.jpg')
+            background: url({{asset('upload/images/slider/'.$deal_background->image)}}) 0% 0% / cover no-repeat;
+            @else background: linear-gradient(to top,{{$background[1]}},{{$background[0]}});
+            @endif">
                 <div class="hot_sale_l1">
-                    <div class="text-center mx-2 my-2">
+                    <div class="text-center mx-2">
                         <div>
-                            <img src="https://cdn2.cellphones.com.vn/x,webp/media/wysiwyg/title.png" alt="title" class="w-100">
+                            @if($deal_background->title_img!='no-images.jpg')
+                            <img src="{{asset('upload/images/slider/'.$deal_background->title_img)}}" alt="title" class="w-100">
+                            @else
+                            <span class="title_bg">{{$deal_background->name}}</span>
+                            @endif
                         </div>
                     </div>
                     {{--                header-time sale--}}
                     <div class="header_sale">
                         <div class="top_header_sale">
                             <div class="h_inner title_s">
-                                <div class="d-flex">
+                                <div>
+                                    <p>
 {{--                                    <i class="fas fa-bolt"></i>--}}
 {{--                                    <p>Flash Sale</p>--}}
-                                    Kết thúc trong
+                                  <text>  Kết thúc trong </text>
+                                    </p>
                                 </div>
                                 <div class="time_count">
                                     <a title="Xem tất cả Deal Hot" href="#">
