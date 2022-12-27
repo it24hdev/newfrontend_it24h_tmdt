@@ -77,7 +77,9 @@ class HomeController extends Controller
             $time_sale = Deals::select(DB::raw('max(end_time) as time_sale'))->where('status_deal', 1)->first('time_sale');
             $deal_background = Slider::where('status', 1)->where('location',5)->first();
             $background = json_decode($deal_background->background);
-//            dd($deal_background);
+            $count_is_hot = Products::where('is_hot',1)->where('status',1)->count();
+            $count_is_new = Products::where('is_new',1)->where('status',1)->count();
+            $count_is_promotion = Products::where('is_promotion',1)->where('status',1)->count();
 
             return view('frontend.mobile.indexmobile', [
                 'list_cat' => $list_cat,
@@ -88,6 +90,9 @@ class HomeController extends Controller
                 'get_hot_sale_mobile' => $get_hot_sale_mobile,
                 'background' => $background,
                 'deal_background' => $deal_background,
+                'count_is_hot' => $count_is_hot,
+                'count_is_new' => $count_is_new,
+                'count_is_promotion' => $count_is_promotion,
             ]);
         } else {
             $Sidebars = $this->getmenu('sidebar');
@@ -629,7 +634,6 @@ class HomeController extends Controller
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
                 ->paginate(20)->withQueryString();
         } else {
-
             // Neu khong co danh muc thi lay san pham moi
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
                 ->where('parent_id', 0)
@@ -667,17 +671,28 @@ class HomeController extends Controller
                 })
                 ->where(function ($query) use ($promotion) {
                     if ($promotion) {
-                        if ($promotion == "san-pham-hot") {
-                            $promotion = 'is_hot';
+                        if($promotion == "deal"){
+                            $deal  = Deals::where('status_deal',1)->where('start_time','<',now())->where('end_time','>',now())->get();
+                            $list_deals_id = array();
+                            foreach ($deal as $value){
+                                $list_deals_id[] = $value->product_id;
+                            }
+                            $query->whereIn('id',$list_deals_id);
                         }
-                        if ($promotion == "san-pham-moi") {
-                            $promotion = 'is_new';
+                        else{
+                            if ($promotion == "san-pham-hot") {
+                                $promotion = 'is_hot';
+                            }
+                            if ($promotion == "san-pham-moi") {
+                                $promotion = 'is_new';
+                            }
+                            if ($promotion == "san-pham-khuyen-mai") {
+                                $promotion = 'is_promotion';
+                            }
+                            $query->where($promotion, 1);
                         }
-                        if ($promotion == "san-pham-khuyen-mai") {
-                            $promotion = 'is_promotion';
-                        }
-                        $query->where($promotion, 1);
-                    } else {
+                    }
+                    else {
                         $query->where('status', 1);
                     }
                 })
@@ -1006,6 +1021,31 @@ class HomeController extends Controller
         return response()->json([
             'list_cat_childs' => $list_cat_childs,
             'data_product_mobile' => $Products,
+            'category_slug' => $cat_parent->slug,
+        ]);
+    }
+
+    //chon san pham danh muc con mobile
+    public function get_product_category_child_mobile(Request $request)
+    {
+        if (!is_null($request->id)) {
+            $cat_parent = Category::find($request->id);
+            $Products = Products::select('products.*', DB::raw("brands.image as img_brands"))
+                ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
+                ->leftjoin('brands', 'products.brand', 'brands.id')
+                ->where('category_relationships.cat_id', $request->id)
+                ->where('products.status', 1)
+                ->groupby('products.id')
+                ->orderby('products.created_at', 'desc')
+                ->limit(6)->get();
+            foreach ($Products as $value) {
+                $value->setAttribute('count_vote', $value->count_vote());
+                $value->setAttribute('list_wish', explode(' ', Cookie::get('list_wish')));
+            }
+        }
+        return response()->json([
+            'data_product_mobile' => $Products,
+            'category_slug' => $cat_parent->slug,
         ]);
     }
 

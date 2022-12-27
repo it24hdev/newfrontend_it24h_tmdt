@@ -68,9 +68,7 @@
                             <div class="h_inner title_s">
                                 <div>
                                     <p>
-{{--                                    <i class="fas fa-bolt"></i>--}}
-{{--                                    <p>Flash Sale</p>--}}
-                                  <text>  Kết thúc trong </text>
+                                        <text>  Kết thúc trong </text>
                                     </p>
                                 </div>
                                 <div class="time_count">
@@ -134,32 +132,58 @@
                                     </div>
                                 @endforeach
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="viewall_deal">
+                <a href="{{route('list_product',['promotion'=>'deal'])}}">Xem tất cả<i class="fal fa-angle-down"></i></a>
+            </div>
         </div>
         {{--khuyen mai hot--}}
+
         <div class="category-container">
             <div class="cat_box_sale mg-box-p">
-                <div class="cat_box_s_h">
-                    <div class="title_s">
-                        <div class="b_title tt_center" id="new_p">
-                            <i class="fas fa-sparkles"></i><h2>Sản phẩm mới</h2>
-                        </div>
-                        <div class="b_title tt_center" id="hot_p">
-                            <i class="fas fa-fire"></i><h2>Sản phẩm hot</h2>
-                        </div>
-                        <div class="b_title tt_center" id="promotion_p">
-                            <i class="far fa-diploma"></i><h2>Khuyến mại</h2>
+                <div class="box_sale_title">
+                    <span>GỢI Ý CHO BẠN</span>
+                </div>
+                <div class="promotion_menu">
+                    <div class="scroll_promotion">
+                        <div class="flex_promotion">
+                            @if($count_is_new>0)
+                            <div class="box_promtion_menu" id="new_p">
+                                <div class="icon_promtion_menu">
+                                    <i class="fas fa-sparkles"></i>
+                                </div>
+                                <div class="title_promotion_menu">
+                                    <span>Sản phẩm mới</span>
+                                </div>
+                            </div>
+                            @endif
+                            @if($count_is_hot>0)
+                            <div class="box_promtion_menu" id="hot_p">
+                                <div class="icon_promtion_menu">
+                                    <i class="fas fa-fire"></i>
+                                </div>
+                                <div class="title_promotion_menu">
+                                    <span>Sản phẩm hot</span>
+                                </div>
+                            </div>
+                            @endif
+                            @if($count_is_promotion>0)
+                            <div class="box_promtion_menu" id="promotion_p">
+                                <div class="icon_promtion_menu">
+                                    <i class="far fa-diploma"></i>
+                                </div>
+                                <div class="title_promotion_menu">
+                                    <span>Khuyến mại</span>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-                <div class="featured-product-list" id="load_promotion" data-target=""></div>
-                <div class="viewall_promotion">
-                    <a id="viewall_promotion">Xem tất cả<i class="fal fa-angle-down"></i></a>
-                </div>
+                <div class="featured-product-list background_list_p" id="load_promotion" data-target=""></div>
             </div>
         </div>
         {{--categoryproduct--}}

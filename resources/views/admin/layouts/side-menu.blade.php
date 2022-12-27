@@ -12,8 +12,8 @@
     <ul>
         <li>
             <a href="{{ route('dashboard') }}"
-                class="side-menu {{ $module_active == 'dashboard' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="home"></i> </div>
+               class="side-menu {{ $module_active == 'dashboard' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="home"></i></div>
                 <div class="side-menu__title">
                     Dashboard
                     <div class="side-menu__sub-icon transform rotate-180"></div>
@@ -21,11 +21,11 @@
             </a>
         </li>
         <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'post' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="file-text"></i> </div>
+            <a href="javascript:" class="side-menu {{ $module_active == 'post' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="file-text"></i></div>
                 <div class="side-menu__title">
                     Bài viết
-                    <div class="side-menu__sub-icon "> <i
+                    <div class="side-menu__sub-icon "><i
                             data-feather="{{ $module_active == 'post' ? 'chevron-up' : 'chevron-down' }}"
                             class="{{ $module_active == 'post' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
                     </div>
@@ -35,31 +35,31 @@
                 @can('view', App\Models\Post::class)
                     <li>
                         <a href="{{ route('post.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Danh sách bài viết </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Danh sách bài viết</div>
                         </a>
                     </li>
                 @endcan
                 @can('create', App\Models\Post::class)
                     <li>
                         <a href="{{ route('post.create') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Thêm mới </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Thêm mới</div>
                         </a>
                     </li>
                 @endcan
                 @can('viewAnypost', App\Models\Category::class)
                     <li>
                         <a href="{{ route('categorypost.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Danh mục bài viết </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Danh mục bài viết</div>
                         </a>
                     </li>
                 @endcan
                 @can('viewPost', App\Models\Vote::class)
                     <li>
                         <a href="{{ route('vote.indexPost') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Đánh giá</div>
                         </a>
                     </li>
@@ -67,11 +67,11 @@
             </ul>
         </li>
         <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'slider' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="layout"></i> </div>
+            <a href="javascript:" class="side-menu {{ $module_active == 'slider' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="layout"></i></div>
                 <div class="side-menu__title">
                     Slider
-                    <div class="side-menu__sub-icon "> <i
+                    <div class="side-menu__sub-icon "><i
                             data-feather="{{ $module_active == 'slider' ? 'chevron-up' : 'chevron-down' }}"
                             class="{{ $module_active == 'slider' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
                     </div>
@@ -81,27 +81,27 @@
                 @can('view', App\Models\Slider::class)
                     <li>
                         <a href="{{ route('slider.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Danh sách Slider </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Danh sách Slider</div>
                         </a>
                     </li>
                 @endcan
                 @can('create', App\Models\Slider::class)
                     <li>
                         <a href="{{ route('slider.create') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Thêm mới </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Thêm mới</div>
                         </a>
                     </li>
                 @endcan
             </ul>
         </li>
         <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'user' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="user"></i> </div>
+            <a href="javascript:" class="side-menu {{ $module_active == 'user' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="user"></i></div>
                 <div class="side-menu__title">
                     Nhân viên
-                    <div class="side-menu__sub-icon "> <i
+                    <div class="side-menu__sub-icon "><i
                             data-feather="{{ $module_active == 'user' ? 'chevron-up' : 'chevron-down' }}"
                             class="{{ $module_active == 'user' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
                     </div>
@@ -111,16 +111,16 @@
                 @can('view', App\Models\User::class)
                     <li>
                         <a href="{{ route('user.list') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Danh sách nhân viên </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Danh sách nhân viên</div>
                         </a>
                     </li>
                 @endcan
                 @can('create', App\Models\User::class)
                     <li>
                         <a href="{{ route('admin.create') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Thêm mới </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Thêm mới</div>
                         </a>
                     </li>
                 @endcan
@@ -128,11 +128,11 @@
 
         </li>
         <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'role' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="bookmark"></i> </div>
+            <a href="javascript:" class="side-menu {{ $module_active == 'role' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="bookmark"></i></div>
                 <div class="side-menu__title">
                     Quyền quản trị
-                    <div class="side-menu__sub-icon "> <i
+                    <div class="side-menu__sub-icon "><i
                             data-feather="{{ $module_active == 'role' ? 'chevron-up' : 'chevron-down' }}"
                             class="{{ $module_active == 'role' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
                     </div>
@@ -142,16 +142,16 @@
                 @can('view', App\Models\Role::class)
                     <li>
                         <a href="{{ route('role.list') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Danh sách quyền </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Danh sách quyền</div>
                         </a>
                     </li>
                 @endcan
                 @can('create', App\Models\Role::class)
                     <li>
                         <a href="{{ route('role.create') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Thêm mới </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Thêm mới</div>
                         </a>
                     </li>
                 @endcan
@@ -160,8 +160,8 @@
         @can('view', App\Models\Customer::class)
             <li>
                 <a href="{{ route('customer.list') }}"
-                    class="side-menu {{ $module_active == 'customer' ? 'side-menu--active' : '' }}">
-                    <div class="side-menu__icon"> <i data-feather="users"></i> </div>
+                   class="side-menu {{ $module_active == 'customer' ? 'side-menu--active' : '' }}">
+                    <div class="side-menu__icon"><i data-feather="users"></i></div>
                     <div class="side-menu__title">
                         Khách hàng
                         <div class="side-menu__sub-icon transform rotate-180"></div>
@@ -172,8 +172,8 @@
         @can('view', App\Models\Order::class)
             <li>
                 <a href="{{ route('order.list') }}"
-                    class="side-menu {{ $module_active == 'order' ? 'side-menu--active' : '' }}">
-                    <div class="side-menu__icon"> <i data-feather="shopping-cart"></i> </div>
+                   class="side-menu {{ $module_active == 'order' ? 'side-menu--active' : '' }}">
+                    <div class="side-menu__icon"><i data-feather="shopping-cart"></i></div>
                     <div class="side-menu__title">
                         Đơn hàng
                         <div class="side-menu__sub-icon transform rotate-180"></div>
@@ -182,11 +182,11 @@
             </li>
         @endcan
         <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'products' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="archive"></i> </div>
+            <a href="javascript:" class="side-menu {{ $module_active == 'products' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="archive"></i></div>
                 <div class="side-menu__title">
                     Sản phẩm
-                    <div class="side-menu__sub-icon "> <i
+                    <div class="side-menu__sub-icon "><i
                             data-feather="{{ $module_active == 'products' ? 'chevron-up' : 'chevron-down' }}"
                             class="{{ $module_active == 'products' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
                     </div>
@@ -196,7 +196,7 @@
                 @can('viewAny', App\Models\Products::class)
                     <li>
                         <a href="{{ route('products.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Danh sách sản phẩm</div>
                         </a>
                     </li>
@@ -204,23 +204,23 @@
                 @can('create', App\Models\Products::class)
                     <li>
                         <a href="{{ route('products.create') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Thêm mới </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Thêm mới</div>
                         </a>
                     </li>
                 @endcan
                 @can('create', App\Models\Products::class)
                     <li>
                         <a href="{{ route('products.list_attr') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Quản lý thuộc tính sản phẩm </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                            <div class="side-menu__title"> Quản lý thuộc tính sản phẩm</div>
                         </a>
                     </li>
                 @endcan
                 @can('create', App\Models\Products::class)
                     <li>
                         <a href="{{ route('products.list_brand') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Danh sách thương hiệu</div>
                         </a>
                     </li>
@@ -228,7 +228,7 @@
                 @can('create', App\Models\Products::class)
                     <li>
                         <a href="{{ route('products.list_tag-event') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Danh sách thẻ Tag ưu đãi</div>
                         </a>
                     </li>
@@ -236,41 +236,59 @@
                 @can('viewAny', App\Models\Category::class)
                     <li>
                         <a href="{{ route('category.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Danh mục sản phẩm</div>
                         </a>
-                    @endcan
-                    @can('viewProduct', App\Models\Vote::class)
+                @endcan
+                @can('viewProduct', App\Models\Vote::class)
                     <li>
                         <a href="{{ route('vote.indexProduct') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Đánh giá</div>
                         </a>
                     </li>
                 @endcan
-                    <li>
-                        <a href="{{ route('category_property.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Thuộc tính sản phẩm</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('vouchers.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
-                            <div class="side-menu__title"> Voucher</div>
-                        </a>
-                    </li>
+                <li>
+                    <a href="{{ route('category_property.index') }}" class="side-menu">
+                        <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                        <div class="side-menu__title"> Thuộc tính sản phẩm</div>
+                    </a>
+                </li>
+
             </ul>
         </li>
-
-
-
-          <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'recruit' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="clipboard"></i> </div>
+        <li>
+            <a href="javascript:;" class="side-menu {{ $module_active == 'marketing' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"> <i data-feather="gift"></i> </div>
                 <div class="side-menu__title">
-                   Tuyển dụng
-                    <div class="side-menu__sub-icon "> <i
+                    Marketing
+                    <div class="side-menu__sub-icon ">
+                        <i data-feather="{{ $module_active == 'marketing' ? 'chevron-up' : 'chevron-down' }}"
+                            class="{{ $module_active == 'marketing' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
+                    </div>
+                </div>
+            </a>
+            <ul class="{{ $module_active == 'marketing' ? 'side-menu__sub-open' : '' }}">
+                <li>
+                    <a href="{{ route('deals.index') }}" class="side-menu">
+                        <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                        <div class="side-menu__title">Deals/Giờ vàng</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('vouchers.index') }}" class="side-menu">
+                        <div class="side-menu__icon"><i data-feather="activity"></i></div>
+                        <div class="side-menu__title">Vouchers</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:" class="side-menu {{ $module_active == 'recruit' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="clipboard"></i></div>
+                <div class="side-menu__title">
+                    Tuyển dụng
+                    <div class="side-menu__sub-icon "><i
                             data-feather="{{ $module_active == 'recruit' ? 'chevron-up' : 'chevron-down' }}"
                             class="{{ $module_active == 'recruit' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
                     </div>
@@ -280,7 +298,7 @@
                 @can('view', App\Models\Recruit::class)
                     <li>
                         <a href="{{ route('recruit.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Danh mục tuyển dụng</div>
                         </a>
                     </li>
@@ -288,7 +306,7 @@
                 @can('view', App\Models\Recruit_register::class)
                     <li>
                         <a href="{{ route('recruit_register.index') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="activity"></i></div>
                             <div class="side-menu__title"> Danh sách ứng tuyển</div>
                         </a>
                     </li>
@@ -298,18 +316,18 @@
 
         <li>
             <a href="{{route('recentactivity.index')}}" class="side-menu">
-                <div class="side-menu__icon"> <i data-feather="activity"></i> </div>
+                <div class="side-menu__icon"><i data-feather="activity"></i></div>
                 <div class="side-menu__title">
                     Hoạt động gần đây
                 </div>
             </a>
         </li>
         <li>
-            <a href="javascript:;" class="side-menu {{ $module_active == 'setting' ? 'side-menu--active' : '' }}">
-                <div class="side-menu__icon"> <i data-feather="settings"></i> </div>
+            <a href="javascript:" class="side-menu {{ $module_active == 'setting' ? 'side-menu--active' : '' }}">
+                <div class="side-menu__icon"><i data-feather="settings"></i></div>
                 <div class="side-menu__title">
-                   Cài đặt
-                    <div class="side-menu__sub-icon "> <i
+                    Cài đặt
+                    <div class="side-menu__sub-icon "><i
                             data-feather="{{ $module_active == 'setting' ? 'chevron-up' : 'chevron-down' }}"
                             class="{{ $module_active == 'setting' ? 'menu__sub-icon transform rotate-180' : '' }}"></i>
                     </div>
@@ -318,14 +336,14 @@
             <ul class="{{ $module_active == 'menu' ? 'side-menu__sub-open' : '' }}">
                 <li>
                     <a href="{{ route('menu.index') }}" class="side-menu">
-                        <div class="side-menu__icon"> <i data-feather="menu"></i> </div>
+                        <div class="side-menu__icon"><i data-feather="menu"></i></div>
                         <div class="side-menu__title"> Menu</div>
                     </a>
                 </li>
                 @can('viewAny', App\Models\Locationmenu::class)
                     <li>
                         <a href="{{ route('locationmenu.edit') }}" class="side-menu">
-                            <div class="side-menu__icon"> <i data-feather="grid"></i> </div>
+                            <div class="side-menu__icon"><i data-feather="grid"></i></div>
                             <div class="side-menu__title"> Vị trí menu</div>
                         </a>
                     </li>

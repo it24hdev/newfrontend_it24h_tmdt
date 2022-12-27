@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <i>
-                    <input type="checkbox" class="check_rules" checked="checked">
+                    <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
                     <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
                 </i>
                 <div class="container-total-box">

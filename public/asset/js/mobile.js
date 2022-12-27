@@ -112,13 +112,27 @@ $(document).ready(function () {
         }, 1000);
     }
 
+
     // lay sp moi
-    function lay_sp_moi() {
+    function lay_sp_km(active) {
+        if(!$('#'+active).hasClass('active')){
+            $('#'+active).addClass('active');
+        }
+        var url="";
+        if(active=="new_p"){
+            url = get_new_mobile;
+        }
+        if(active=="hot_p"){
+            url = get_hot_sale_mobile;
+        }
+        if(active=="promotion_p"){
+            url = get_promotion_mobile;
+        }
         var data = {
             _token: _token
         };
         $.ajax({
-            url: get_new_mobile,
+            url: url,
             type: "post",
             dataType: "json",
             data: data,
@@ -127,7 +141,10 @@ $(document).ready(function () {
                 if(!$('#load_promotion').hasClass('active')){
                     get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
                     $('#load_promotion').addClass('active');
-                    $('#viewall_promotion').attr('href',url_new_product);
+                    if(data.data_product_mobile.length>=6) {
+                        var see_more = '<div class="see_more"><a href="' + url_new_product + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                        $('#load_promotion').append(see_more);
+                    }
                 }
             }
         })
@@ -135,6 +152,8 @@ $(document).ready(function () {
 
     // click chon san pham moi
     $(document).on('click', '#new_p', function (){
+        $('.box_promtion_menu').removeClass('active');
+        $(this).addClass('active');
         var data = {
             _token: _token
         };
@@ -147,13 +166,18 @@ $(document).ready(function () {
                 $('#load_promotion').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
                 get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
-                $('#viewall_promotion').attr('href',url_new_product);
+                if(data.data_product_mobile.length>=6) {
+                    var see_more = '<div class="see_more"><a href="' + url_new_product + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                    $('#load_promotion').append(see_more);
+                }
             }
         });
     });
 
     // click chon san pham hot
     $(document).on('click', '#hot_p', function (){
+        $('.box_promtion_menu').removeClass('active');
+        $(this).addClass('active');
         var data = {
             _token: _token
         };
@@ -166,13 +190,18 @@ $(document).ready(function () {
                 $('#load_promotion').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
                 get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
-                $('#viewall_promotion').attr('href',url_hot_product);
+                if(data.data_product_mobile.length>=6) {
+                    var see_more = '<div class="see_more"><a href="' + url_hot_product + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                    $('#load_promotion').append(see_more);
+                }
             }
         })
     });
 
     // click chon san pham khuyen mai
     $(document).on('click', '#promotion_p', function (){
+        $('.box_promtion_menu').removeClass('active');
+        $(this).addClass('active');
         var data = {
             _token: _token
         };
@@ -185,7 +214,11 @@ $(document).ready(function () {
                 $('#load_promotion').html('');
                 var template_product_mobile = $('#template_product_mobile').html();
                 get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
-                $('#viewall_promotion').attr('href',url_promotion_product);
+                if(data.data_product_mobile.length>=6) {
+                    var see_more = '<div class="see_more"><a href="' + url_promotion_product + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                    $('#load_promotion').append(see_more);
+                }
+                // $('#viewall_promotion').attr('href',url_promotion_product);
             }
         })
     });
@@ -211,17 +244,23 @@ $(document).ready(function () {
             dataType: "json",
             data: data,
             success: function (data) {
+                var url_category = product_cat.replace('slug_code', data.category_slug);
                 var template_child_categories = $('#template_child_categories').html();
                 var template_product_mobile = $('#template_product_mobile').html();
                 $.each(data.list_cat_childs, function(k,v) {
                     var tmp = $(template_child_categories).clone();
                     var url = product_cat.replace('slug_code', v.slug);
                     $(tmp).find('a').html(v.name);
-                    $(tmp).find('a').attr('href',url);
+                    $(tmp).find('a').attr('category_child_id',v.id);
                     $('#list_tag_' + id).append(tmp.html());
+                    $('#list_tag_' + id).attr('data-target',id);
                 })
                 if(!$('#list_products_'+id).hasClass('active')){
                     get_list_product(data.data_product_mobile, template_product_mobile,'#list_products_'+id);
+                    if(data.data_product_mobile.length>=6) {
+                        var see_more = '<div class="see_more"><a href="' + url_category + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                        $('#list_products_'+id).append(see_more);
+                    }
                     $('#list_products_'+id).addClass('active');
                 }
             }
@@ -297,13 +336,41 @@ $(document).ready(function () {
             $(id_append).append(tmp.html());
         })
     }
+
+    // chon danh muc con load lai sp cho danh muc con
+    $(document).on('click','.related-tag', function (){
+        if($(this).attr('category_child_id')){
+            var category_child_id = $(this).attr('category_child_id');
+            var category_id = $(this).parent().attr('data-target');
+            var template_product_mobile = $('#template_product_mobile').html();
+            $('#list_products_'+category_id).html('');
+            var data = {
+                id: category_child_id,
+                _token: _token
+            };
+            $.ajax({
+                url: get_product_category_child_mobile,
+                type: "post",
+                dataType: "json",
+                data: data,
+                success: function (data) {
+                    var url_category = product_cat.replace('slug_code', data.category_slug);
+                    get_list_product(data.data_product_mobile, template_product_mobile,'#list_products_'+category_id);
+                    if(data.data_product_mobile.length>=6){
+                        var see_more = '<div class="see_more"><a href="'+url_category+'"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                        $('#list_products_'+category_id).append(see_more);
+                    }
+                }
+            });
+        }
+    })
+
     //memu
     var template_menu_parent = $('#template-menu-parent').html();
     $(document).on('click', '#menubar , #menubar2', function (){
-
         if ($('.menu-mobile').hasClass('active_mn')){
             $('.menu-mobile').removeClass('active_mn');
-            if( $('.box_info_result').html() ==""){
+            if($('.box_info_result').html('')){
                 $('body').removeClass('disable_scoll');
             }
         }
@@ -489,6 +556,7 @@ $(document).ready(function () {
             $(this).css("background-color", firts_color);
         })
     }
+
     // load menu con khi chon menu cha mobile
     $(document).on('click', '.label-menu-tree', function (){
         var id = $(this).attr('get-id');
@@ -526,7 +594,7 @@ $(document).ready(function () {
             $('#go_top').css({"display":"block"});
             $('#affix_h').css({"top":"60px"});
             $('.autocomplete_search').css({"top":"39px"});
-            $('.box_search').css({"width":"75%","padding": "0 9px"});
+            $('.box_search').css({"width":"66.66666667%","padding": "0 8px","margin-left":"20.66%"});
         }
         else{
             $('#scroll_d').css({"display":"none"});
@@ -538,11 +606,23 @@ $(document).ready(function () {
         }
         //load sp khuyen mai khi cuon
         if (isOnScreen($("#load_promotion")) && ($("#load_promotion").hasClass("loaded") == false)) {
-            lay_sp_moi();
+            if($('#new_p').length>0){
+                lay_sp_km('new_p');
+            }
+            else if($('#hot_p').length>0){
+                lay_sp_km('hot_p');
+            }
+            else if($('#promotion_p').length>0){
+                lay_sp_km('promotion_p');
+            }
+            else{
+                $('.cat_box_sale').addClass('d-none');
+            }
+
             $("#load_promotion").addClass("loaded");
         }
 
-        //load sp khuyen mai khi cuon
+        //load sp trang chi tiet
         if (isOnScreen($("#load_p_detail")) && ($("#load_p_detail").hasClass("loaded") == false)) {
             sptuongtu();
             $("#load_p_detail").addClass("loaded");
@@ -680,6 +760,8 @@ $(document).ready(function () {
 
     //loc thuoc tinh
     function filter() {
+        var params_string = window.location.search;
+        var searchparams =  new URLSearchParams(params_string);
         var params = new URLSearchParams();
         var arr = [];
         //thuoc tinh
@@ -705,10 +787,15 @@ $(document).ready(function () {
             var between = min_price + ';' + max_price;
             params.append('p', between);
         }
-
         if ($('.btn-sort').hasClass('ac')) {
             var attr = $('.btn-sort.ac').attr('data-target-attr');
             params.append('order', attr);
+        }
+        if(searchparams.has('promotion')==true){
+            params.append('promotion', searchparams.get('promotion'));
+        }
+        if(searchparams.has('search')==true){
+            params.append('search', searchparams.get('search'));
         }
         window.location = window.location.origin + window.location.pathname + '?' + params.toString();
     }
@@ -1159,6 +1246,9 @@ $(document).ready(function () {
         $('.requite_numberphone i').html('');
         $('.requite_email i').html('');
         switch (true){
+            case ($('input[name="check_rules"]').is(":checked") == false) : {
+                break;
+            }
             case (customer_name.split(" ").join("").length==0) : {
                 $('.requite_name i').html('Vui lòng nhập Họ và tên của bạn.');
                 $('input[name="customer_name"]').focus();
@@ -1218,36 +1308,38 @@ $(document).ready(function () {
                         break;
                     }
                     default:{
-                        $.ajax({
-                            url: complete_payment,
-                            method: 'POST',
-                            data: data,
-                            dataType: 'json',
-                            success: function (data) {
-                                if(data.success){
-                                    window.location = successorder;
-                                }
-                            }
-                        });
+                        console.log(2);
+                        // $.ajax({
+                        //     url: complete_payment,
+                        //     method: 'POST',
+                        //     data: data,
+                        //     dataType: 'json',
+                        //     success: function (data) {
+                        //         if(data.success){
+                        //             window.location = successorder;
+                        //         }
+                        //     }
+                        // });
                     }
                 }
                 break;
             }
             default:{
-                $.ajax({
-                    url: complete_payment,
-                    method: 'POST',
-                    data: data,
-                    dataType: 'json',
-                    success: function (data) {
-                        if(data.success==true){
-                            window.location = successorder;
-                        }
-                        if(data.success==false){
-                            $( "#snackbar_false" ).fadeIn( 300 ).delay( 1000 ).fadeOut( 400 );
-                        }
-                    }
-                });
+                console.log(2);
+                // $.ajax({
+                //     url: complete_payment,
+                //     method: 'POST',
+                //     data: data,
+                //     dataType: 'json',
+                //     success: function (data) {
+                //         if(data.success==true){
+                //             window.location = successorder;
+                //         }
+                //         if(data.success==false){
+                //             $( "#snackbar_false" ).fadeIn( 300 ).delay( 1000 ).fadeOut( 400 );
+                //         }
+                //     }
+                // });
             }
         }
     });
@@ -1288,12 +1380,6 @@ $(document).ready(function () {
             }, ms || 0);
         };
     }
-    // $(".search_input_scroll").on("input",function() {
-    //     $(".search").val($(this).val());
-    // });
-    // $(".search").on("input",function() {
-    //     $(".search_input_scroll").val($(this).val());
-    // });
     $('input[type=search]').on('search', function () {
         $('body').removeClass('disable_scoll');
         $('.box_info_result').html('');

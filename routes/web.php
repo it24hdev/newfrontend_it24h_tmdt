@@ -402,6 +402,7 @@ Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
 
 //mobile
 Route::post('/get_product_mobile', [HomeController::class, 'get_product_mobile'])->name('get_product_mobile');
+Route::post('/get_product_category_child_mobile', [HomeController::class, 'get_product_category_child_mobile'])->name('get_product_category_child_mobile');
 Route::post('/get_menu_mobile', [HomeController::class, 'get_menu_mobile'])->name('get_menu_mobile');
 Route::post('/get_menu_child', [HomeController::class, 'get_menu_child'])->name('get_menu_child');
 Route::post('/get_new_mobile', [HomeController::class, 'get_new_mobile'])->name('get_new_mobile');

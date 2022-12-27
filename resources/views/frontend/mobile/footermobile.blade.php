@@ -81,7 +81,7 @@
         <p>
             <a title="" target="_blank"
                class="px-2">
-                <img src="{{asset('asset/images/it24h.png')}}" width="101" height="30"></a>
+                <img src="{{asset('upload/images/common_img/logo-footer-IT24H.png')}}" width="101" height="30"></a>
         </p>
     </div>
     <div class="mf-ftif">

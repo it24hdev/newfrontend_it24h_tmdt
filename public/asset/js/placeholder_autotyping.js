@@ -15,7 +15,9 @@
         Math.floor(Math.random() * (max - min + 1) + min);
 
     const setPlaceholder = (inputNode, placeholder) => {
-        inputNode.setAttribute("placeholder", placeholder);
+        if(inputNode){
+            inputNode.setAttribute("placeholder", placeholder);
+        }
     };
 
     const animateLetters = (

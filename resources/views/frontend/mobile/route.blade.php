@@ -9,6 +9,7 @@
     var get_new_mobile = '{{route('get_new_mobile')}}';
     var get_promotion_mobile = '{{route('get_promotion_mobile')}}';
     var get_product_mobile = '{{route('get_product_mobile')}}';
+    var get_product_category_child_mobile = '{{route('get_product_category_child_mobile')}}';
     var get_product_watched = '{{route('get_product_watched')}}';
     var get_product_similar = '{{route('get_product_similar')}}';
     var product_cat = '{{route('product_cat',['slug' => 'slug_code'])}}';

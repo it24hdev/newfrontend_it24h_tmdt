@@ -52,7 +52,12 @@
                     <div class="col-1 d-flex justify-content-start align-items-center mx-3 px-2">
                         <a id="menubar"><i class="far fa-bars"></i></a>
                     </div>
-                    <div class="col-9 d-flex justify-content-center align-items-center search_form_input">
+                    <div class="col-1 logo_cpn">
+                        <a href="/">
+                        <img src="{{asset('upload/images/common_img/logo-IT24H-mobile.png')}}">
+                        </a>
+                    </div>
+                    <div class="col-8 d-flex justify-content-center align-items-center search_form_input">
                         <div class="w-100">
                             <a class="search_input">
                                 <img src="{{asset('asset/images/searchmobile.png')}}" alt="icon-search" class="submit_search">

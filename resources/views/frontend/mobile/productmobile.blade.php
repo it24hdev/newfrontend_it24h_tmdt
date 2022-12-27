@@ -27,19 +27,49 @@
                         </div>
                         <a href="/">Trang chủ</a>
                     </li>
-                    <li>
-                        <div>
-                            <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                <path
-                                    d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
-                            </svg>
-                        </div>
-                        @if(!empty($cat))
-                            <a href="{{route('product_cat',[ 'slug' => $cat->slug])}}">{{$cat->name}}</a>
-                        @else
-                            <a href="{{route('list_product')}}">Sản phẩm</a>
-                        @endif
-                    </li>
+                    @if(request()->input('search'))
+                        <li>
+                            <div>
+                                <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path
+                                        d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
+                                </svg>
+                            </div>
+                            <a href="/">Tìm kiếm</a>
+                        </li>
+                    @elseif(request()->input('promotion'))
+                        <li>
+                            <div>
+                                <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path
+                                        d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
+                                </svg>
+                            </div>
+                            @if(request()->input('promotion')=="deal")
+                                <a href="{{route('list_product',[ 'promotion' => 'deal'])}}">Deal</a>
+                            @elseif(request()->input('promotion')=="san-pham-moi")
+                                <a href="{{route('list_product',[ 'promotion' => 'san-pham-moi'])}}">Sản phẩm mới</a>
+                            @elseif(request()->input('promotion')=="san-pham-hot")
+                                <a href="{{route('list_product',[ 'promotion' => 'san-pham-hot'])}}">Sản phẩm hot</a>
+                            @else
+                                <a href="{{route('list_product',[ 'promotion' => 'san-pham-khuyen-mai'])}}">Sản phẩm khuyến mại</a>
+                            @endif
+                        </li>
+                    @else
+                        <li>
+                            <div>
+                                <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                    <path
+                                        d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
+                                </svg>
+                            </div>
+                            @if(!empty($cat))
+                                <a href="{{route('product_cat',[ 'slug' => $cat->slug])}}">{{$cat->name}}</a>
+                            @else
+                                <a href="{{route('list_product')}}">Tất cả sản phẩm</a>
+                            @endif
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -597,5 +627,7 @@
     </div>
 @endsection
 @section('js')
+    @if(!empty($cat))
     <script src="{{asset('asset/js/filter-price-2.js')}}"></script>
+    @endif
 @endsection

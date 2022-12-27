@@ -1691,6 +1691,7 @@ $(document).ready(function() {
     // Run the standard initializer
 
     function initialize(target, originalOptions) {
+        // if(nodeName){
         if (!target.nodeName) {
             throw new Error('noUiSlider.create requires a single element.');
         }
@@ -1701,6 +1702,7 @@ $(document).ready(function() {
         slider.set(options.start);
         target.noUiSlider = slider;
         return slider;
+        // }
     }
     // Use an object instead of a function for future expansibility;
     return {
