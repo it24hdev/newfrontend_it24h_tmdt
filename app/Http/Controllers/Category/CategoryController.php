@@ -40,16 +40,27 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny', Category::class);
-        $limit    =  $request->query('limit');
         $keywords =  $request->query('keywords');
-        $orderby  =  $request->query('orderby');
+        $orderby  = $orderby_another =  $request->query('orderby');
         $sort     =  $request->query('sort');
-        if($limit   ==null) {$limit   =10;}
         if($sort    ==null) {$sort    ='asc';}
-        if($keywords==null) {$keywords="";}
-        if($orderby ==null) {$orderby ="id";}
+        if($orderby ==null || $orderby=="is_promotion") {$orderby ="id";}
         $data = Category::where('taxonomy', 0)
-        ->where('name', 'like', '%' . $keywords . '%')
+            ->where(function ($query) use ($keywords){
+                if($keywords){
+                    $query->where('name', 'like', '%' . $keywords . '%');
+                }
+            })
+            ->where(function ($query) use ($orderby_another){
+                if($orderby_another=="is_promotion"){
+                    $query->where('is_promotion', 1);
+                }
+            })
+            ->where(function ($query) use ($orderby_another){
+                if($orderby_another=="show_push_product"){
+                    $query->where('show_push_product', 1);
+                }
+            })
         ->orderby($orderby,$sort)->get();
         $listcategories = [];
         Category::recursive($data, $parents = 0, $level = 1, $listcategories);
@@ -115,7 +126,8 @@ class CategoryController extends Controller
             'banner'    => $imgs,
             'status'    => $request->has('status'),
             'content'   => $request->content_category,
-            'show_push_product'    => $request->has('show_push_product')
+            'show_push_product'    => $request->has('show_push_product'),
+            'is_promotion'    => $request->has('is_promotion')
         ];
         try {
             DB::beginTransaction();
@@ -228,7 +240,8 @@ class CategoryController extends Controller
             'banner'    => $imgs,
             'status'    => $request->has('status'),
             'content'   => $request->content_category,
-            'show_push_product'    => $request->has('show_push_product')
+            'show_push_product'    => $request->has('show_push_product'),
+            'is_promotion'    => $request->has('is_promotion')
         ];
 
         try {

@@ -56,7 +56,7 @@
                     <div class="text-center mx-2">
                         <div>
                             @if($deal_background->title_img!='no-images.jpg')
-                            <img src="{{asset('upload/images/slider/'.$deal_background->title_img)}}" alt="title" class="w-100">
+                            <img src="{{asset('upload/images/slider/'.$deal_background->title_img)}}" alt="title" class="w-100 my-2">
                             @else
                             <span class="title_bg">{{$deal_background->name}}</span>
                             @endif
@@ -134,10 +134,11 @@
                             </div>
                         </div>
                     </div>
+                    {{--                    xem them--}}
+                    <div class="viewall_deal">
+                        <a href="{{route('list_product',['promotion'=>'deal'])}}">Xem tất cả<i class="fal fa-angle-down"></i></a>
+                    </div>
                 </div>
-            </div>
-            <div class="viewall_deal">
-                <a href="{{route('list_product',['promotion'=>'deal'])}}">Xem tất cả<i class="fal fa-angle-down"></i></a>
             </div>
         </div>
         {{--khuyen mai hot--}}
@@ -179,6 +180,18 @@
                                     <span>Khuyến mại</span>
                                 </div>
                             </div>
+                            @endif
+                            @if($category_promotion)
+                                @foreach($category_promotion as $key => $value)
+                                    <div class="box_promtion_menu category_promotion" id="category_promotion_{{$value->id}}" data-target="{{$value->id}}">
+                                        <div class="icon_promtion_menu">
+                                            <img src="{{asset('upload/images/products/thumb/'.$value->thumb)}}">
+                                        </div>
+                                        <div class="title_promotion_menu">
+                                            <span>{{$value->name}}</span>
+                                        </div>
+                                    </div>
+                                @endforeach
                             @endif
                         </div>
                     </div>

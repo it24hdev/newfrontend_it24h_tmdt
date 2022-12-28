@@ -18,6 +18,7 @@ use App\Models\Recruit_register;
 use App\Models\Vote;
 use App\Models\Deals;
 use App\Models\Slider;
+use Database\Seeders\categories;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
@@ -80,6 +81,7 @@ class HomeController extends Controller
             $count_is_hot = Products::where('is_hot',1)->where('status',1)->count();
             $count_is_new = Products::where('is_new',1)->where('status',1)->count();
             $count_is_promotion = Products::where('is_promotion',1)->where('status',1)->count();
+            $category_promotion = Category::where('is_promotion',1)->where('status',1)->get();
 
             return view('frontend.mobile.indexmobile', [
                 'list_cat' => $list_cat,
@@ -93,6 +95,7 @@ class HomeController extends Controller
                 'count_is_hot' => $count_is_hot,
                 'count_is_new' => $count_is_new,
                 'count_is_promotion' => $count_is_promotion,
+                'category_promotion' => $category_promotion,
             ]);
         } else {
             $Sidebars = $this->getmenu('sidebar');
@@ -993,6 +996,24 @@ class HomeController extends Controller
         return response()->json([
             'data_product_mobile' => $get_promotion_mobile
         ]);
+    }
+
+    // lay san danh muc khuyen mai
+    public function get_category_promotion_mobile(Request $request)
+    {
+        if($request->category_id){
+            $slug = Category::find($request->category_id);
+            $get_category_promotion_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
+                ->leftjoin('brands', 'products.brand', 'brands.id')
+                ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
+                ->leftjoin('categories', 'category_relationships.cat_id', 'categories.id')
+                ->where('categories.id',$request->category_id)
+                ->where('products.status', 1)->inRandomOrder()->limit(6)->get();
+            return response()->json([
+                'data_product_mobile' => $get_category_promotion_mobile,
+                'url_category' => $slug->slug
+            ]);
+        }
     }
 
     //lay san pham

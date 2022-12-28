@@ -36,11 +36,11 @@
                         </div>
                         <div class="form-group mb-4">
                             <label>Icon</label>
-                            <input type="text" class="form-control" name='icon' value=" {{old('icon') ?? $edit->icon}}">
-                        </div>
-                        <div class="form-group mb-4">
-                            <a type="button" class="btn btn-primary" href="https://fontawesome.com/v5/search"
+                            <div class="flex">
+                            <input type="text" class="form-control mr-2" name='icon' value=" {{old('icon') ?? $edit->icon}}">
+                            <a type="button" class="btn btn-sm btn-primary form-control w-28" href="https://fontawesome.com/v5/search"
                                target="_blank">Lấy icon</a>
+                            </div>
                         </div>
                         <div class="form-group mb-4">
                             <label>Danh mục cha</label>
@@ -67,15 +67,22 @@
 
                             </select>
                         </div>
-                        <div class="form-group mb-4">
-                            <label>Trạng thái</label><br>
-                            <input type="checkbox" class="form-check-switch" name='status'
-                                   value="{{$edit->status == true ? '1' : '0'}}" {{$edit->status == true ? 'checked' : ' '}}>
-                        </div>
-                        <div class="form-group mb-4">
-                            <label>Hiện danh sách sản phẩm lên trang chủ</label><br>
-                            <input type="checkbox" class="form-check-switch" name='show_push_product'
-                                   value="{{$edit->show_push_product == true ? '1' : '0'}}" {{$edit->show_push_product == true ? 'checked' : ' '}}>
+                        <div class="">
+                            <div class="form-group mb-4 mr-4">
+                                <label>Trạng thái</label><br>
+                                <input type="checkbox" class="form-check-switch" name='status'
+                                       value="{{$edit->status == true ? '1' : '0'}}" {{$edit->status == true ? 'checked' : ' '}}>
+                            </div>
+                            <div class="form-group mb-4 mr-4">
+                                <label>Hiện danh sách sản phẩm lên trang chủ</label><br>
+                                <input type="checkbox" class="form-check-switch" name='show_push_product'
+                                       value="{{$edit->show_push_product == true ? '1' : '0'}}" {{$edit->show_push_product == true ? 'checked' : ' '}}>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label>Là danh mục khuyến mại</label><br>
+                                <input type="checkbox" class="form-check-switch" name='is_promotion'
+                                       value="{{$edit->is_promotion == true ? '1' : '0'}}" {{$edit->is_promotion == true ? 'checked' : ' '}}>
+                            </div>
                         </div>
                     </div>
                     <div class="col-span-12 md:col-span-5">

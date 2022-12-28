@@ -1,3 +1,4 @@
+@php use Illuminate\Support\Facades\Session; @endphp
 <header>
     <div class="header_mobile">
         <div class="headerL1">
@@ -9,7 +10,7 @@
                     </div>
                     <div class="col-8 d-flex align-items-center logo_t justify-content-center">
                         <a href="/">
-                            <img src="{{asset('asset/images/it24hvn.png')}}">
+                            <img src="{{asset('upload/images/common_img/it24hvn.png')}}">
                         </a>
                     </div>
                     <div class="col-2 d-flex justify-content-end align-items-center">
@@ -29,8 +30,8 @@
                             <a href="{{route('list_cart')}}">
                                 <i class="fal fa-shopping-cart"></i>
                                 <span class="count_c" id="count-cart">
-                                    @if (!empty(Cookie::get('count_cart')))
-                                        {{Cookie::get('count_cart')}}
+                                    @if (!empty(Session::get('count_cart')))
+                                        {{Session::get('count_cart')}}
                                     @else
                                         0
                                     @endif
@@ -48,19 +49,20 @@
                 </div>
             </div>
             <div id="scroll_d">
-                <div class="d-flex pl-2 pr-2 pt-2 justify-content-around">
+                <div class="d-flex pl-2 pr-2 pt-2 justify-content-around align-items-center">
                     <div class="col-1 d-flex justify-content-start align-items-center mx-3 px-2">
                         <a id="menubar"><i class="far fa-bars"></i></a>
                     </div>
                     <div class="col-1 logo_cpn">
                         <a href="/">
-                        <img src="{{asset('upload/images/common_img/logo-IT24H-mobile.png')}}">
+                            <img src="{{asset('upload/images/common_img/logo-IT24H-mobile.png')}}">
                         </a>
                     </div>
                     <div class="col-8 d-flex justify-content-center align-items-center search_form_input">
                         <div class="w-100">
                             <a class="search_input">
-                                <img src="{{asset('asset/images/searchmobile.png')}}" alt="icon-search" class="submit_search">
+                                <img src="{{asset('asset/images/searchmobile.png')}}" alt="icon-search"
+                                     class="submit_search">
                                 <input type="search" aria-label="search" class="search_input_scroll" placeholder="">
                             </a>
                         </div>
@@ -68,12 +70,12 @@
                     <div class="shop col-1 align-items-center d-flex justify-content-end mx-3 position-relative">
                         <a href="{{route('list_cart')}}"> <i class="fal fa-shopping-cart"></i> </a>
                         <span class="count_c_2" id="count-cart2">
-                        @if (!empty(Cookie::get('count_cart')))
-                                {{Cookie::get('count_cart')}}
+                            @if (!empty(Session::get('count_cart')))
+                                {{Session::get('count_cart')}}
                             @else
                                 0
                             @endif
-                    </span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -84,7 +86,6 @@
     <div class="box_search">
         <div class="box_result">
             <div class="box_info_result">
-
             </div>
         </div>
     </div>

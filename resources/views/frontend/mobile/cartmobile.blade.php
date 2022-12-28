@@ -24,7 +24,7 @@
                 </a>
             </div>
         </div>
-        <section class="block-cart-product d-none" data-target="{{Cookie::get('count_cart')}}">
+        <section class="block-cart-product d-none" data-target="{{\Illuminate\Support\Facades\Session::get('count_cart')}}">
             @if (!empty($cart_data))
                 <div class="container-cart">
                     @foreach ($cart_data as $item_cart)

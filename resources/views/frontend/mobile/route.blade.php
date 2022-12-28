@@ -8,6 +8,7 @@
     var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
     var get_new_mobile = '{{route('get_new_mobile')}}';
     var get_promotion_mobile = '{{route('get_promotion_mobile')}}';
+    var get_category_promotion_mobile = '{{route('get_category_promotion_mobile')}}';
     var get_product_mobile = '{{route('get_product_mobile')}}';
     var get_product_category_child_mobile = '{{route('get_product_category_child_mobile')}}';
     var get_product_watched = '{{route('get_product_watched')}}';
@@ -29,7 +30,7 @@
     var url_hot_product = '{{route('list_product',['promotion'=>'san-pham-hot'])}}';
     var url_promotion_product = '{{route('list_product',['promotion'=>'san-pham-khuyen-mai'])}}';
     var img_product_mobile = '{{asset('upload/images/products/thumb/img_name')}}';
-    var no_img_product_mobile = '{{asset('upload/images/common_img/img_name')}}';
+    var common_img_mobile = '{{asset('upload/images/common_img/img_name')}}';
     var url_img_thumb_product= '{{asset('upload/images/products/thumb/')}}';
     var url_img_large_product= '{{asset('upload/images/products/large/')}}';
     var img_brands = '{{asset('upload/images/products/thumb/img_name')}}';

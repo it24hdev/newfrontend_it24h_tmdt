@@ -33,6 +33,16 @@ $(document).ready(function () {
         $(this).css("background-color", firts_color);
     });
 
+    //doi mau cho khuyen mai
+    var colors =  ['#ff8d50', '#ffb550', '#ffee50','#e0ff50','#6eff50','#50ffb3','#5089ff','#5069ff','#9050ff',
+        '#e150ff80', '#ff50ed80', '#ff50b480', '#ff507480',  '#fb386080',  '#ff16458f','#fb385080','#fb385080','#ff50b380','#ff50ed70','#e150ff70','#9050ff70','#5069ff70','#5089ff70','#50ffb370','#6eff408f','#e0ff408f','#ffee408f','#ffb5408f','#ff8d408f'];
+
+    $('.icon_promtion_menu').each(function (){
+        var firts_color = colors[0];
+        colors.splice($.inArray(firts_color, colors), 1);
+        $(this).css("background-color", firts_color);
+    });
+
     // chon san pham yeu thich
     $(document).on('click', '.add-wish', function(){
         var id  =  $(this).attr('get-id');
@@ -115,22 +125,40 @@ $(document).ready(function () {
 
     // lay sp moi
     function lay_sp_km(active) {
-        if(!$('#'+active).hasClass('active')){
-            $('#'+active).addClass('active');
-        }
+
         var url="";
-        if(active=="new_p"){
-            url = get_new_mobile;
-        }
-        if(active=="hot_p"){
-            url = get_hot_sale_mobile;
-        }
-        if(active=="promotion_p"){
-            url = get_promotion_mobile;
-        }
         var data = {
             _token: _token
         };
+        if(active=="new_p"){
+            if(!$('#'+active).hasClass('active')){
+                $('#'+active).addClass('active');
+            }
+            url = get_new_mobile;
+        }
+        else if(active=="hot_p"){
+            if(!$('#'+active).hasClass('active')){
+                $('#'+active).addClass('active');
+            }
+            url = get_hot_sale_mobile;
+        }
+        else if(active=="promotion_p"){
+            if(!$('#'+active).hasClass('active')){
+                $('#'+active).addClass('active');
+            }
+            url = get_promotion_mobile;
+        }
+        else{
+            if(!$('#category_promotion_'+active).hasClass('active')){
+                $('#category_promotion_'+active).addClass('active');
+            }
+            url = get_category_promotion_mobile;
+            data = {
+                category_id: active,
+                _token: _token
+            };
+        }
+
         $.ajax({
             url: url,
             type: "post",
@@ -142,7 +170,23 @@ $(document).ready(function () {
                     get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
                     $('#load_promotion').addClass('active');
                     if(data.data_product_mobile.length>=6) {
-                        var see_more = '<div class="see_more"><a href="' + url_new_product + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                        var url = "";
+                        if(active=="new_p"){
+                            url = url_new_product;
+                        }
+                        else if(active=="hot_p"){
+                            url = url_hot_product;
+                        }
+                        else if(active=="promotion_p"){
+                            url = url_promotion_product;
+                        }
+                        else{
+                            if(data.url_category){
+                                url = product_cat;
+                                url = url.replace('slug_code',data.url_category);
+                            }
+                        }
+                        var see_more = '<div class="see_more"><a href="' + url + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
                         $('#load_promotion').append(see_more);
                     }
                 }
@@ -223,6 +267,35 @@ $(document).ready(function () {
         })
     });
 
+    // click chon danh muc khuyen mai
+    $(document).on('click', '.category_promotion', function (){
+        $('.box_promtion_menu').removeClass('active');
+        $(this).addClass('active');
+        var category_id = $(this).attr('data-target');
+        var data = {
+            category_id: category_id,
+            _token: _token
+        };
+        $.ajax({
+            url: get_category_promotion_mobile,
+            type: "post",
+            dataType: "json",
+            data: data,
+            success: function (data) {
+                $('#load_promotion').html('');
+                var template_product_mobile = $('#template_product_mobile').html();
+                get_list_product(data.data_product_mobile, template_product_mobile,'#load_promotion');
+                var url = product_cat;
+                url = url.replace('slug_code',data.url_category);
+                if(data.data_product_mobile.length>=6) {
+                    var see_more = '<div class="see_more"><a href="' + url + '"><svg enable-background="new 0 0 40 40" viewBox="0 0 40 40" role="img" class="stardust-icon stardust-icon-arrow-right-bold-circle"><circle cx="20" cy="20" fill="none" r="18.5" stroke-miterlimit="10"></circle><path d="m11.1 9.9l-9-9-2.2 2.2 8 7.9-8 7.9 2.2 2.1 9-9 1-1z" transform="translate(15 9)"></path></svg>Xem thêm</a></div>';
+                    $('#load_promotion').append(see_more);
+                }
+                // $('#viewall_promotion').attr('href',url_promotion_product);
+            }
+        })
+    });
+
     var list_product = [];
     var list_cat_1 = $('#categories_p').attr('list-cat');
     var list_cat = String(list_cat_1);
@@ -293,7 +366,7 @@ $(document).ready(function () {
                 var url_img_product = img_product_mobile;
             }
             else{
-                var url_img_product = no_img_product_mobile;
+                var url_img_product = common_img_mobile;
             }
             url_img_product = url_img_product.replace('img_name', v.thumb);
             $(tmp).find('.p-img img').attr('src',url_img_product);
@@ -401,6 +474,7 @@ $(document).ready(function () {
                                 imageUrl = imageUrl.replace('img_name', img_name);
                             }
                             else{
+                                imageUrl = 'url('+common_img_mobile+')';
                                 imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
                             }
                             $(item).find('.icons-cate').css('background-image',imageUrl);
@@ -538,9 +612,11 @@ $(document).ready(function () {
             var img_name = v.img_cat;
             var imageUrl = 'url('+img_category+')';
             if(img_name && img_name !="no-images.jpg"){
+
                 imageUrl = imageUrl.replace('img_name', img_name);
             }
             else{
+                imageUrl = 'url('+common_img_mobile+')';
                 imageUrl = imageUrl.replace('img_name', 'no-images.jpg');
             }
             $(item).find('.icons-cate').css('background-image',imageUrl);
@@ -593,16 +669,16 @@ $(document).ready(function () {
             $('#scroll_h').css({"display":"none"});
             $('#go_top').css({"display":"block"});
             $('#affix_h').css({"top":"60px"});
-            $('.autocomplete_search').css({"top":"39px"});
-            $('.box_search').css({"width":"66.66666667%","padding": "0 8px","margin-left":"20.66%"});
+            $('.autocomplete_search').css({"top":"45px"});
+            $('.box_search').css({"width":"66.66666667%","padding": "0 8px","margin-left":"21%"});
         }
         else{
             $('#scroll_d').css({"display":"none"});
             $('#scroll_h').css({"display":"block"});
             $('#go_top').css({"display":"none"});
             $('#affix_h').css({"top":"115px"});
-            $('.autocomplete_search').css({"top":"95px"});
-            $('.box_search').css({"width":"100%","padding": "0 12px"});
+            $('.autocomplete_search').css({"top":"96px"});
+            $('.box_search').css({"width":"100%","padding": "0 12px","margin-left":"auto"});
         }
         //load sp khuyen mai khi cuon
         if (isOnScreen($("#load_promotion")) && ($("#load_promotion").hasClass("loaded") == false)) {
@@ -614,6 +690,10 @@ $(document).ready(function () {
             }
             else if($('#promotion_p').length>0){
                 lay_sp_km('promotion_p');
+            }
+            else if($('.category_promotion').length>0){
+                var category_id = $('.category_promotion').first().attr('data-target');
+                lay_sp_km(category_id);
             }
             else{
                 $('.cat_box_sale').addClass('d-none');
@@ -1254,7 +1334,7 @@ $(document).ready(function () {
                 $('input[name="customer_name"]').focus();
                 break;
             }
-            case (customer_name.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(customer_name)) : {
+            case (customer_name.split(" ").join("").length<2) : {
                 $('.requite_name i').html('Họ và tên không hợp lệ, vui lòng nhập lại.');
                 $('input[name="customer_name"]').focus();
                 break;
@@ -1308,38 +1388,36 @@ $(document).ready(function () {
                         break;
                     }
                     default:{
-                        console.log(2);
-                        // $.ajax({
-                        //     url: complete_payment,
-                        //     method: 'POST',
-                        //     data: data,
-                        //     dataType: 'json',
-                        //     success: function (data) {
-                        //         if(data.success){
-                        //             window.location = successorder;
-                        //         }
-                        //     }
-                        // });
+                        $.ajax({
+                            url: complete_payment,
+                            method: 'POST',
+                            data: data,
+                            dataType: 'json',
+                            success: function (data) {
+                                if(data.success){
+                                    window.location = successorder;
+                                }
+                            }
+                        });
                     }
                 }
                 break;
             }
             default:{
-                console.log(2);
-                // $.ajax({
-                //     url: complete_payment,
-                //     method: 'POST',
-                //     data: data,
-                //     dataType: 'json',
-                //     success: function (data) {
-                //         if(data.success==true){
-                //             window.location = successorder;
-                //         }
-                //         if(data.success==false){
-                //             $( "#snackbar_false" ).fadeIn( 300 ).delay( 1000 ).fadeOut( 400 );
-                //         }
-                //     }
-                // });
+                $.ajax({
+                    url: complete_payment,
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.success==true){
+                            window.location = successorder;
+                        }
+                        if(data.success==false){
+                            $( "#snackbar_false" ).fadeIn( 300 ).delay( 1000 ).fadeOut( 400 );
+                        }
+                    }
+                });
             }
         }
     });
@@ -1421,7 +1499,7 @@ $(document).ready(function () {
                                 var img = img_product_mobile;
                             }
                             else{
-                                var img = no_img_product_mobile;
+                                var img = common_img_mobile;
                             }
                             img = img.replace('img_name', v.thumb);
                             $(tmp).find('img').attr('src',img);

@@ -9,7 +9,7 @@
                       <div class="alert alert-danger alert-dismissible show">
                           @foreach($errors->all() as $error)
                           {{ $error }} <br>
-                          @endforeach      
+                          @endforeach
                       </div>
                     </div>
                 </div>
@@ -32,25 +32,18 @@
                     </div>
                 </div>
                 <div class="hidden md:block mx-auto text-gray-600">
-                
+
                 </div>
                 <div class="hidden md:block mx-auto text-gray-600">
-                     
+
                 </div>
                 <form  action="{{ route('category.index')}}" method="get" class="flex flex-col sm:flex-row sm:items-end xl:items-start">
-                    <select id="limit" name="limit" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3"
-                            onchange="this.form.submit()"
-                    >
-                        <option value="10" {{request()->input('limit') =='10' ? 'selected' : ''}}>10</option>
-                        <option value="25" {{request()->input('limit') =='25' ? 'selected' : ''}}>25</option>
-                        <option value="35" {{request()->input('limit') =='35' ? 'selected' : ''}}>35</option>
-                        <option value="50" {{request()->input('limit') =='50' ? 'selected' : ''}}>50</option>
-                    </select>
                     <select id="orderby" name="orderby" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3" onchange="this.form.submit()">
                         <option value="ma" {{request()->input('orderby') =='ma' ? 'selected' : ''}} >STT</option>
                         <option value="name" {{request()->input('orderby') =='name' ? 'selected' : ''}} >Tên danh mục</option>
-                        <option value="parent_id" {{request()->input('orderby') =='parent_id' ? 'selected' : ''}}>Danh mục cha</option>
-                        <option value="user_id" {{request()->input('orderby') =='user_id' ? 'selected' : ''}}>Người dùng</option>
+{{--                        <option value="user_id" {{request()->input('orderby') =='user_id' ? 'selected' : ''}}>Người dùng</option>--}}
+                        <option value="show_push_product" {{request()->input('orderby') =='show_push_product' ? 'selected' : ''}}>Hiện trang chủ</option>
+                        <option value="is_promotion" {{request()->input('orderby') =='is_promotion' ? 'selected' : ''}}>Là danh mục km</option>
                         <option value="status" {{request()->input('orderby') =='status' ? 'selected' : ''}}>Trạng thái</option>
                     </select>
                     <select id="sort" name="sort" class="form-select  sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto box mr-3" onchange="this.form.submit()">
@@ -84,9 +77,7 @@
                         <th class="whitespace-nowrap text-center">MÃ</th>
                         <th class="whitespace-nowrap">TÊN DANH MỤC</th>
                         <th class="text-center whitespace-nowrap ">DANH MỤC CHA</th>
-                        {{-- <th class="text-center whitespace-nowrap w-30">NGƯỜI DÙNG</th> --}}
-                        <th style="display:none;"></th>
-                        <th class="text-center whitespace-nowrap w-30">HIỆN DS</th>
+                        <th class="text-center whitespace-nowrap w-30">HIỆN TRANG CHỦ</th>
                         <th class="text-center whitespace-nowrap w-30">TRẠNG THÁI</th>
                         <th class="text-center whitespace-nowrap ">CHỨC NĂNG</th>
                     </tr>
@@ -99,7 +90,8 @@
                             {{ $category->ma }}
                             </td>
                             <td class="category_name">
-                                {{$category->name}} </td>
+                                {{$category->name}}
+                            </td>
                             <td class="text-center">
                                 @if ($category->cat_parent)
                                  {{$category->cat_parent->name}}
@@ -112,9 +104,8 @@
                                     <div class="flex items-center justify-center text-theme-6 mr-3"data-bs-toggle="tooltip" title="Vô hiệu hóa"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
                                 @endif
                             </td>
-                            <td style="display:none;">{{$status = $category->status}}</td>
                             <td>
-                                @if($status == '1')
+                                @if($category->status == '1')
                                     <div class="flex items-center justify-center text-theme-9 mr-3" data-bs-toggle="tooltip" title="Kích hoạt"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
                                 @else
                                     <div class="flex items-center justify-center text-theme-6 mr-3"data-bs-toggle="tooltip" title="Vô hiệu hóa"> <i data-feather="check-square" class="w-4 h-4 mr-1"></i></div>
@@ -125,7 +116,6 @@
                                     @can('update',App\Models\Category::class)
                                         <a class="btn btn-sm btn-primary mr-2"
                                            href="{{route('category.edit',['id'=>$category->id])}}" data-bs-toggle="tooltip" title="Sửa" > <i class="fa-solid fa-pen-to-square"></i>
-                                 
                                         </a>
                                     @endcan
                                     @can('delete',App\Models\Category::class)

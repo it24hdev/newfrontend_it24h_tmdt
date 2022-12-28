@@ -34,10 +34,10 @@
                 </div>
                  <div class="form-group mb-4">
                     <label>Icon</label>
-                    <input type="text" class="form-control" name='icon' value=" {{old('icon')}}">
-                </div>
-                 <div class="form-group mb-4">
-                    <a type="button" class="btn btn-primary" href="https://fontawesome.com/v5/search" target="_blank">Lấy icon</a>
+                     <div class="flex">
+                         <input type="text" class="form-control mr-2" name='icon' value=" {{old('icon')}}">
+                         <a type="button" class="btn btn-sm btn-primary form-control w-28" href="https://fontawesome.com/v5/search" target="_blank">Lấy icon</a>
+                     </div>
                  </div>
                 <div class="form-group mb-4">
                     <label>Danh mục cha</label>
@@ -65,6 +65,10 @@
                  <div class="form-group mb-4">
                     <label>Hiện danh sách sản phẩm lên trang chủ</label> <br>
                      <input type="checkbox" name='show_push_product' checked="checked" class="form-check-switch">
+                </div>
+                <div class="form-group mb-4">
+                    <label>Là danh mục khuyến mại</label> <br>
+                    <input type="checkbox" name='is_promotion' checked="checked" class="form-check-switch">
                 </div>
                 </div>
                 <div class="col-span-12 xl:col-span-5">

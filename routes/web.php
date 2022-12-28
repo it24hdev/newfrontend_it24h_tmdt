@@ -408,6 +408,7 @@ Route::post('/get_menu_child', [HomeController::class, 'get_menu_child'])->name(
 Route::post('/get_new_mobile', [HomeController::class, 'get_new_mobile'])->name('get_new_mobile');
 Route::post('/get_hot_sale_mobile', [HomeController::class, 'get_hot_sale_mobile'])->name('get_hot_sale_mobile');
 Route::post('/get_promotion_mobile', [HomeController::class, 'get_promotion_mobile'])->name('get_promotion_mobile');
+Route::post('/get_category_promotion_mobile', [HomeController::class, 'get_category_promotion_mobile'])->name('get_category_promotion_mobile');
 Route::post('/get_product_watched', [DetailproductController::class, 'get_product_watched'])->name('get_product_watched');
 Route::post('/get_product_similar', [DetailproductController::class, 'get_product_similar'])->name('get_product_similar');
 Route::post('/get_review_more', [DetailproductController::class, 'get_review_more'])->name('get_review_more');
