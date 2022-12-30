@@ -28,11 +28,9 @@ class admin_menu_items extends Model
         'img_caption',
     ];
 
-//    public function childs()
-//    {
-//        return $this->hasMany('App\Models\menu', 'parent_id', 'category_id');
-//    }
-
+    public function childs(){
+        return $this->hasMany(admin_menu_items::class, 'parent');
+    }
 
     public static function recursive($menu, $parents = 0, $level = 1, &$listmenuitem)
     {
@@ -44,6 +42,21 @@ class admin_menu_items extends Model
                     unset($menu[$key]);
                     $parent = $value->id;
                     self::recursive($menu, $parent, $level+1,$listmenuitem);
+                }
+            }
+        }
+    }
+
+    public static function recursive_child($menu, $parents, $level, &$list_menu)
+    {
+        if (count($menu)>0) {
+            foreach ($menu as $key => $value) {
+                if ($value->parent==$parents) {
+                    $value->level=$level;
+                    $list_menu[]=$value;
+                    unset($menu[$key]);
+                    $parent = $value->id;
+                    self::recursive($menu, $parent, $level+1,$list_menu);
                 }
             }
         }

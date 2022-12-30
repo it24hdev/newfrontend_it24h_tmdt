@@ -873,8 +873,11 @@ a {
 .component-product .p-img {
     overflow: hidden;
     float: left;
-    display: block;
+    /*display: block;*/
     width: 100%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
 }
 
 .component-product .p-img img {
@@ -1539,8 +1542,9 @@ a:active, a:hover {
 
 #breadcrumbs .block-breadcrumbs.affix {
     position: fixed;
-    top: 115px;
-    left: 0;
+    top: 123px;
+    /*left: 0;*/
+    max-width: 1000px;
 }
 
 #breadcrumbs .block-breadcrumbs {
@@ -1836,10 +1840,9 @@ a:active, a:hover {
 }
 
 .ac {
-    border: 1px solid #ff1919 !important;
-    background: #ffe6e6 !important;
-    color: #fd0d0d !important;
-
+    border: 1px solid #3991ff!important;
+    background: #e6f7ff !important;
+    color: #3991ff!important;
 }
 
 .acsgv {
@@ -1847,7 +1850,7 @@ a:active, a:hover {
 }
 
 .btn-filter.ac .icon svg {
-    fill: #d70018;
+    fill: #3991ff;
     width: 12px;
     margin-right: 5px;
 }
@@ -1888,7 +1891,7 @@ a:active, a:hover {
 }
 
 .list-filter-child .button_submit {
-    background-color: #d70018;
+    background-color: #3991ff;
     width: calc(50% - 5px);
     font-weight: 600;
     font-size: 14px;
@@ -1915,8 +1918,8 @@ a:active, a:hover {
     font-weight: 600;
     font-size: 14px;
     border-radius: 2px;
-    background-color: #feecf0;
-    color: #cc0f35;
+    background-color: #daeefd;
+    color: #3991ff;
     border-color: transparent;
     cursor: pointer;
     justify-content: center;
@@ -1934,9 +1937,9 @@ a:active, a:hover {
 }
 
 .filter_item_img {
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 150px;
+    /*width: 100% !important;*/
+    /*height: 100% !important;*/
+    min-height: 135px;
 }
 
 @media screen and (min-width: 821px) {

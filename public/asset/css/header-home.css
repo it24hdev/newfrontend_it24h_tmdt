@@ -397,21 +397,24 @@ ul{
     visibility: hidden;
     width: 1000px;
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
+    max-height: 530px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 .vertical-menu-content ul.menu-cat li:hover .wp-submenu{
     opacity: 1;
     visibility: visible;
 }
 .vertical-menu-content ul.menu-cat li .wp-submenu .content-submenu{
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
+    /*width: 100%;*/
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
 }
 ul li .wp-submenu .content-submenu .submenu{
-    width: 85%;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 13px;
+    /*width: 85%;*/
+    /*display: flex;*/
+    /*flex-wrap: wrap;*/
+    /*font-size: 13px;*/
 }
 ul li .wp-submenu .content-submenu .wp-product-banner{
     width: 15%;
@@ -421,8 +424,9 @@ ul li .wp-submenu .content-submenu .wp-product-banner{
     padding: 0 15px;
     color: #222;
     font-weight: 600;
-    margin: 0;
-    width: 25%;
+    margin: 10px 5px 10px 5px;
+    /* width: 25%; */
+    max-width: 200px;
 }
 .wp-menu-parent a.title-cat:hover{
     color: #169fd8;
@@ -543,8 +547,8 @@ ul li .wp-submenu .content-submenu .wp-product-banner{
 }
 .wp-menu-parent ul li .submenu-child{
     position: absolute;
-    top: 22px;
-    left: 20%;
+    top: 0px;
+    left: 50%;
     width: 120%;
     box-shadow: 0 0 15px rgb(0 0 0 / 10%);
     background-color: #fff;
@@ -869,6 +873,8 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active{
 
 .full_sub{
     width: 100%;
+    flex-wrap: wrap;
+    display: flex;
 }
 @keyframes jump {
     0% { bottom: 20px; } 50% { bottom: 40px; } 100% { bottom: 20px; }
@@ -899,4 +905,27 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active{
     .vertical-menu-content ul.menu-cat li .wp-submenu{
         width: 900px;
     }
+}
+.sidebar_menu{
+    position: absolute;
+}
+.sidebar_menu_cpn{
+    width: 100%;
+    padding-right: 15px;
+}
+.sidebar_menu_cpn{
+}
+.wp-menu-parent{
+    margin: 10px 20px;
+}
+.tmp_lv3 li:hover .submenu-child{
+    visibility: visible;
+    opacity: 1;
+}
+.vertical-menu-content ul.menu-cat li .wp-submenu::-webkit-scrollbar-thumb {
+    background: #606060;
+    border-radius: 10px;
+}
+.vertical-menu-content ul.menu-cat li .wp-submenu::-webkit-scrollbar {
+    width: 10px;
 }

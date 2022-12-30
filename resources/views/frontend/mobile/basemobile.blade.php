@@ -12,48 +12,10 @@
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.theme.default.min.css')}}">
     <link rel="stylesheet" href="/asset/lib/fontawesomePro5/css/all.min.css">
-{{--    <link rel="stylesheet" href="{{asset('asset/css/mobile/html.css')}}">--}}
     <link rel="stylesheet" href="{{asset('asset/css/mobile/header_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/body_mobile.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/mobile/footer_mobile.css')}}">
     @yield('css')
-<!-- css -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-            let active = false;
-
-            const lazyLoad = function() {
-                if (active === false) {
-                    active = true;
-
-                    setTimeout(function() {
-                        lazyImages.forEach(function(lazyImage) {
-                            if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
-                                lazyImage.src = lazyImage.dataset.src;
-                                lazyImage.classList.remove("lazy");
-
-                                lazyImages = lazyImages.filter(function(image) {
-                                    return image !== lazyImage;
-                                });
-
-                                if (lazyImages.length === 0) {
-                                    document.removeEventListener("scroll", lazyLoad);
-                                    window.removeEventListener("resize", lazyLoad);
-                                    window.removeEventListener("orientationchange", lazyLoad);
-                                }
-                            }
-                        });
-
-                        active = false;
-                    }, 200);
-                }
-            };
-            document.addEventListener("scroll", lazyLoad);
-            window.addEventListener("resize", lazyLoad);
-            window.addEventListener("orientationchange", lazyLoad);
-        });
-    </script>
 </head>
 <body>
 <div class="contentt">

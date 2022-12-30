@@ -239,6 +239,26 @@
 @section('js')
     <script>
         $(document).ready(function () {
+            let width = window.innerWidth;
+            $('.wp-submenu').each(function() {
+                if(width>1650)
+                {
+                    $(this).css({"width":"1355px"});
+                }else{
+                    $(this).css({"width":"calc("+width+"px - 45px - 100%)"});
+                }
+            });
+            $(window).resize(function () {
+                let w = window.innerWidth;
+                $('.wp-submenu').each(function() {
+                    if(w>1650)
+                    {
+                        $(this).css({"width":"1355px"});
+                    }else{
+                        $(this).css({"width":"calc("+w+"px - 45px - 100%)"});
+                    }
+                });
+            });
             //Add to Cart
             add_cart = function (id) {
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -282,15 +302,9 @@
                 var viewport_height = $window.height()  // chiều cao màn hình
                 var viewport_bottom = viewport_top + viewport_height
                 var $elem = jQuery(elem)
-                let width = screen.width;
-                var top = $elem.offset().top - 500
-                // if(width < 1024)
-                // top = $elem.offset().top-5000
-                // console.log(top);
-
-
+                var top = $elem.offset().top
                 var height = $elem.height()
-                var bottom = top + height + 1000
+                var bottom = top + height
 
                 return (top >= viewport_top && top < viewport_bottom) ||
                     (bottom > viewport_top && bottom <= viewport_bottom) ||

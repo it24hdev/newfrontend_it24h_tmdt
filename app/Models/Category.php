@@ -43,16 +43,13 @@ class Category extends Model
                 }
             }
         }
-
     }
 
-     public static function recursive_child($data, $parents, $level, &$listcategory)
+    public static function recursive_child($data, $parents, $level, &$listcategory)
     {
         if (count($data)>0) {
             foreach ($data as $key => $value) {
-                // code...
                 if ($value->parent_id==$parents) {
-                    // code...
                     $value->level=$level;
                     $listcategory[]=$value;
                     unset($data[$key]);

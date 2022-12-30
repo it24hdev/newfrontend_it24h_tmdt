@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Jenssegers\Agent\Agent;
+use App\Models\admin_menu_items;
 use function compact;
 use function implode;
 use function view;
@@ -33,6 +34,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+
         //lay danh muc cha
         $get_cat_parents = Category::where('taxonomy', 0)
             ->where('parent_id', 0)
@@ -62,9 +64,12 @@ class HomeController extends Controller
 
         //phan biet mobile / desktop
         $agent = new Agent();
-        $isMobile = "";
+
         if ($agent->isPhone()) {
             $isMobile = "phone";
+        }
+        else{
+            $isMobile = "";
         }
         if ($isMobile) {
             //lay sp hot sale
@@ -927,17 +932,22 @@ class HomeController extends Controller
 
     public function menucontent(Request $request)
     {
-        $Sidebarid = $request->id;
         $agent = new Agent();
         if ($agent->isMobile()) {
             $Sidebars = $this->getmenu('sidebar');
             $view2 = view('frontend.contentmenumobile', ['Sidebars' => $Sidebars])->render();
+            return response()->json($view2);
         } else {
-            $Sidebars = $this->getmenu_ajax('sidebar');
-            $view2 = view('frontend.contentmenu', ['Sidebars' => $Sidebars, 'Sidebarid' => $Sidebarid
-            ])->render();
+            if($request->id){
+                $arr = array();
+                $data2 = admin_menu_items::where('parent',$request->id)->pluck('id');
+                $data3 = admin_menu_items::whereIn('parent',$data2->all())->pluck('id');
+                $data4 = admin_menu_items::whereIn('parent',$data3->all())->pluck('id');
+                $arr[] = array_merge( $data2->all(),$data3->all(),$data4->all());
+                $list_menu = admin_menu_items::select('id', 'parent', 'label','link','depth')->whereIn('id',$arr[0])->get();
+                return response()->json($list_menu);
+            }
         }
-        return response()->json($view2);
     }
 
     //lay menu  desktop

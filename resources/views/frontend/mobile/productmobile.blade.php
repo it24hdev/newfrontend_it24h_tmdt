@@ -368,7 +368,7 @@
                 <span>Giá Thấp - Cao</span>
             </button>
             <button
-                class="btn-filter btn-sort @if(request()->has('order') && request('order') == "khuyen_mai_hot") ac @endif"
+                class="btn-filter btn-sort d-none @if(request()->has('order') && request('order') == "khuyen_mai_hot") ac @endif"
                 data-target-attr="khuyen_mai_hot">
                 <div class="icon">
                     <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -379,7 +379,7 @@
                 <span>Khuyến Mãi Hot</span>
             </button>
             <button
-                class="btn-filter btn-sort @if(request()->has('order') && request('order') == "xem_nhieu") ac @endif"
+                class="btn-filter btn-sort d-none @if(request()->has('order') && request('order') == "xem_nhieu") ac @endif"
                 data-target-attr="xem_nhieu">
                 <div class="icon">
                     <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -461,7 +461,7 @@
                     </div>
                     <div class="detail_cpn">
                         <div class="detail-bottom">
-                            @if (($value->quantity - $value->sold > 0))
+                            @if (($value->quantity> 0))
                                 <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng</div>
                             @else
                                 <div class="qty" style="color: #337bff; background-color: #dbe9f8;">Liên hệ</div>
@@ -475,10 +475,12 @@
                                         <i class="far fa-heart"></i>
                                     @endif
                                 </a>
+                                @if (($value->quantity> 0))
                                 <a href="javascript:;" get-id="{{$value->id}}" title="Thêm vào giỏ hàng"
                                    class="add-cart">
                                     <i class="far fa-shopping-cart"></i>
                                 </a>
+                                @endif
                             </div>
                         </div>
                     </div>

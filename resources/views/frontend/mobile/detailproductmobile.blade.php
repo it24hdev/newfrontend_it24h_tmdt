@@ -10,46 +10,37 @@
     @include('frontend.mobile.headermobile')
 @endsection
 @section('content')
+    <div id="breadcrumbs">
+        <div class="block-breadcrumbs affix" id="affix_h">
+            <div class="cps-container">
+                <ul>
+                    <li>
+                        <div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10.633"
+                                 viewBox="0 0 12 10.633">
+                                <path
+                                    d="M13.2,9.061H12.1v3.965a.6.6,0,0,1-.661.661H8.793V9.721H6.15v3.965H3.507a.6.6,0,0,1-.661-.661V9.061h-1.1c-.4,0-.311-.214-.04-.494L7,3.259a.634.634,0,0,1,.936,0l5.3,5.307c.272.281.356.495-.039.495Z"
+                                    transform="translate(-1.471 -3.053)" fill="#3991ff"></path>
+                            </svg>
+                        </div>
+                        <a href="/">Trang chủ</a>
+                    </li>
+                    <li>
+                        <div>
+                            <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                                <path
+                                    d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
+                            </svg>
+                        </div>
+                        <p> {{$product->name}} </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
     <div class="component-dt-container">
         <div>
-            <div id="breadcrumbs">
-                <div class="block-breadcrumbs affix" id="affix_h">
-                    <div class="cps-container">
-                        <ul>
-                            <li>
-                                <div>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="10.633"
-                                         viewBox="0 0 12 10.633">
-                                        <path
-                                            d="M13.2,9.061H12.1v3.965a.6.6,0,0,1-.661.661H8.793V9.721H6.15v3.965H3.507a.6.6,0,0,1-.661-.661V9.061h-1.1c-.4,0-.311-.214-.04-.494L7,3.259a.634.634,0,0,1,.936,0l5.3,5.307c.272.281.356.495-.039.495Z"
-                                            transform="translate(-1.471 -3.053)" fill="#3991ff"></path>
-                                    </svg>
-                                </div>
-                                <a href="/">Trang chủ</a></li>
-                            <li>
-                                <div>
-                                    <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                        <path
-                                            d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
-                                    </svg>
-                                </div>
-                                <a href="{{route('list_product')}}">
-                                    Sản phẩm
-                                </a>
-                            </li>
-                            <li>
-                                <div>
-                                    <svg height="15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                                        <path
-                                            d="M96 480c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L242.8 256L73.38 86.63c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l192 192c12.5 12.5 12.5 32.75 0 45.25l-192 192C112.4 476.9 104.2 480 96 480z"></path>
-                                    </svg>
-                                </div>
-                                <p> {{$product->name}} </p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
             <section class="block-detail-product">
                 <div class="cps-container">
                     <div class="box-detail-product">
@@ -182,6 +173,7 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if($product->quantity > 0)
                                 <div class="float-start d-block w-100">
                                     <div class="box-buy">
                                         <div class="box-order-button-container">
@@ -212,6 +204,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
                         </div>
                         <div class="d-flex align-items-baseline justify-content-center call">

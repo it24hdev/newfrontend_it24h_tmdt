@@ -133,7 +133,7 @@
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
-{{--                                    @if($Sidebar->parent==0)--}}
+                                    @if($Sidebar->parent==0)
                                     <li class="menucontent">
                                         <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
                                             {{$Sidebar->label}}
@@ -144,15 +144,13 @@
                                         <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}">
                                             <div class="wp-submenu">
                                                 <div class="content-submenu">
-                                                    @if(count($Sidebar->childs))
                                                     <div id="subid-{{$Sidebar->id}}" class="full_sub">
                                                     </div>
-                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
-{{--                                    @endif--}}
+                                    @endif
                                     @endforeach
                                 </ul>
                             </nav>
@@ -178,4 +176,3 @@
         </div>
     </div>
 </header>
-

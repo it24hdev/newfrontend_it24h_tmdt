@@ -296,6 +296,7 @@ $(document).ready(function () {
         })
     });
 
+    // danh sach danh muc hien thi tren trang chu
     var list_product = [];
     var list_cat_1 = $('#categories_p').attr('list-cat');
     var list_cat = String(list_cat_1);
@@ -395,6 +396,7 @@ $(document).ready(function () {
                 $(tmp).find('.qty').css({"color":"#01aa42", "background-color": "#dbf8e1"});
             }
             else{
+                $(tmp).find('.add-cart').addClass('d-none');
                 $(tmp).find('.qty').html('Liên hệ');
                 $(tmp).find('.qty').css({"color":"#337bff", "background-color": "#dbe9f8"});
             }
@@ -668,15 +670,15 @@ $(document).ready(function () {
             $('#scroll_d').css({"display":"block"});
             $('#scroll_h').css({"display":"none"});
             $('#go_top').css({"display":"block"});
-            $('#affix_h').css({"top":"60px"});
+            $('#affix_h').css({"top":"65px"});
             $('.autocomplete_search').css({"top":"45px"});
-            $('.box_search').css({"width":"66.66666667%","padding": "0 8px","margin-left":"21%"});
+            $('.box_search').css({"width":"66.66666667%","padding": "0 8px","margin-left":"21.8%"});
         }
         else{
             $('#scroll_d').css({"display":"none"});
             $('#scroll_h').css({"display":"block"});
             $('#go_top').css({"display":"none"});
-            $('#affix_h').css({"top":"115px"});
+            $('#affix_h').css({"top":"123px"});
             $('.autocomplete_search').css({"top":"96px"});
             $('.box_search').css({"width":"100%","padding": "0 12px","margin-left":"auto"});
         }
