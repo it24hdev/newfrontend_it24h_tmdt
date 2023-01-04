@@ -1310,7 +1310,15 @@ ul.sub_cat_title_slider li{
     width: 50%;
     padding: 0 10px;
 }
-
+.tmp_product.active{
+    width: 500px;
+}
+#list_pcp .owl-item{
+    width: 500px !important
+}
+#list_pcp{
+    display: table;
+}
 @media (min-width:1024px){
     .content-right .slider-banner .slider{
         width: 75%;

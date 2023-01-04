@@ -191,14 +191,23 @@ class HomeController extends Controller
 
     public function get_categories_promotion()
     {
-        $product_hot_sale = Products::where('status', 1)->where('is_hot', 1)->inRandomOrder()->limit(10)->get();
-        $product_new = Products::where('status', 1)->where('is_new', 1)->inRandomOrder()->limit(10)->get();
-
-        $view2 = view('frontend.get-newproducts', [
-            'product_new' => $product_new,
-            'product_hot_sale' => $product_hot_sale,
-        ])->render();
-        return response()->json($view2);
+        $title = Category::where('status', 1)->where('is_promotion', 1)->limit(6)->get();
+        $product_promotion = Products::select(DB::raw('products.*'),DB::raw('deals.name_deal '),DB::raw('deals.price_deal ') , DB::raw("brands.image as img_brands"),
+            DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
+            DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
+            ->leftjoin('brands', 'products.brand', 'brands.id')
+            ->leftjoin('tag_events', 'products.event', 'tag_events.id')
+            ->leftjoin('deals', 'products.id', 'deals.product_id')
+            ->leftjoin('votes','products.id','votes.product_id')
+            ->leftjoin('category_relationships','products.id','category_relationships.product_id')
+            ->where('products.status', 1)
+            ->where('category_relationships.cat_id', $title->pluck('id')->first())
+            ->groupby('products.id')
+            ->limit(10)->get();
+        return response()->json([
+            'title' => $title,
+            'product_promotion' => $product_promotion,
+        ]);
     }
 
     public function loadfooter(Request $request)

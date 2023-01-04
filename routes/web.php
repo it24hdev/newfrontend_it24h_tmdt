@@ -383,7 +383,7 @@ Route::post('/get_district', [CartController::class, 'get_district'])->name('get
 Route::get('/', [HomeController::class, 'index'])->name('user');
 Route::post('/', [HomeController::class, 'getProducts'])->name('getProducts');
 Route::post('/get_deal', [HomeController::class, 'get_deal'])->name('get_deal');
-Route::post('/new', [HomeController::class, 'getnewProduct'])->name('getnewProduct');
+Route::post('/get_categories_promotion', [HomeController::class, 'get_categories_promotion'])->name('get_categories_promotion');
 Route::post('/footer', [HomeController::class, 'loadfooter'])->name('loadfooter');
 Route::post('/loadsliderbottom', [HomeController::class, 'loadsliderbottom'])->name('loadsliderbottom');
 Route::get('/san-pham', [HomeController::class, 'product_cat'])->name('list_product');

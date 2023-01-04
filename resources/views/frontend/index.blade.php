@@ -188,7 +188,7 @@
                     </div>
                     <div class="deal_form">
                         <div id="slider-deal"></div>
-                        <div id="slider-new"></div>
+                        <div id="slider-categories-promotion"></div>
                     </div>
                 </div>
                 <!-- Danh sách sp theo danh mục -->
@@ -229,10 +229,13 @@
     </div>
     <div id="loadfooter"></div>
 @include('frontend.desktop.template.template_deals_time')
+@include('frontend.desktop.template.template_title_categories_promotion')
+
 @endsection
 @section('js')
     <script>
         $(document).ready(function () {
+            var _token = $('meta[name="csrf-token"]').attr('content');
             let width = window.innerWidth;
             $('.wp-submenu').each(function() {
                 if(width>1650)
@@ -368,7 +371,6 @@
 
             //load san pham deal
             function get_deal() {
-                var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
                     _token: _token
                 };
@@ -417,7 +419,7 @@
                     },
                 })
             }
-            
+
             //bo dem thoi gian
             function time_deal(){
                 var $time = $('.time-deal').attr('data-target');
@@ -540,19 +542,57 @@
                 });
             }
 
-            function laySpnew() {
-                var _token = $('meta[name="csrf-token"]').attr('content');
+            function get_categories_promotion() {
                 var data = {
                     _token: _token
                 };
                 $.ajax({
-                    url: "{{route('getnewProduct')}}",
+                    url: "{{route('get_categories_promotion')}}",
                     type: "post",
                     dataType: "json",
                     data: data,
                     success: function (data) {
-                        $('#slider-new').append(data);
+                        var template_title_categories_promotion = $('#template_title_categories_promotion').html();
+                        $('#slider-categories-promotion').append(template_title_categories_promotion);
+                        $.each(data.title, function(k,v){
+                            $('#slider-categories-promotion .box_title_cp ul').append('<li attr="'+v.id+'">'+v.name+'</li>');
+                        });
+                        tmp_product(data.product_promotion,'#list_pcp');
+                        $('#list_pcp .tmp_product .box_product').addClass('active');
+                        $('#list_pcp .tmp_product .lower_half').addClass('active');
+                        $('#list_pcp .tmp_product .upper_half').addClass('active');
+                        $('#list_pcp .tmp_product').addClass('active');
+                        $('#list_pcp').owlCarousel({
+                            autoplay: true,
+                            autoplayHoverPause: true,
+                            loop: true,
+                            margin: 10,
+                            nav: true,
+                            dots: false,
+                            mouseDrag: true,
+                            touchDrag: true,
+                            callbacks: true,
+                            lazyLoad: true,
+                            slideBy: 2,
+                            responsive: {
+                                0: {
+                                    items:1,
+                                },
+                                700: {
+                                    items:1,
+                                },
+                                700: {
+                                    items:2,
+                                },
+                                1000: {
+                                    items:4,
+                                },
+                                1300: {
+                                    items:4,
+                                },
 
+                            },
+                        });
                     },
                 })
             }
@@ -605,10 +645,10 @@
                 }
 
 
-                // if (isOnScreen($("#slider-new")) && ($("#slider-new").hasClass("loaded") == false)) {
-                //     laySpnew();
-                //     $("#slider-new").addClass("loaded");
-                // }
+                if (isOnScreen($("#slider-categories-promotion")) && ($("#slider-categories-promotion").hasClass("loaded") == false)) {
+                    get_categories_promotion();
+                    $("#slider-categories-promotion").addClass("loaded");
+                }
 
                 if (isOnScreen($("#loadfooter")) && ($("#loadfooter").hasClass("loaded") == false)) {
                     loadfooter();
