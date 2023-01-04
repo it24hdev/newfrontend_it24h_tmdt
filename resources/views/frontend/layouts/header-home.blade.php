@@ -37,7 +37,6 @@
             <div class="middle-content">
                 <div class="logo-container">
                     <h1 class="logo-content">
-                        <strong style="display: none;">IT24H - Máy tính văn phòng, PC gaming, phụ kiện máy tính, camera an linh</strong>
                         <a href="{{route('user')}}" title="IT24H - Máy tính văn phòng, PC gaming, phụ kiện máy tính, camera an linh">
                             <img src="{{asset('/asset/images/it24h.png')}}" alt="">
                         </a>
@@ -133,7 +132,6 @@
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
-                                    @if($Sidebar->parent==0)
                                     <li class="menucontent">
                                         <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
                                             {{$Sidebar->label}}
@@ -143,14 +141,18 @@
                                         </a>
                                         <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}">
                                             <div class="wp-submenu">
-                                                <div class="content-submenu">
-                                                    <div id="subid-{{$Sidebar->id}}" class="full_sub">
+                                                <div class="cpn_submenu col-12">
+                                                    <div class="content-submenu col-10">
+                                                        <div id="subid-{{$Sidebar->id}}" class="full_sub">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <img src="https://theme.hstatic.net/1000026716/1000440777/14/xxxbannerxxx1.png?v=32041" class="w-100">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </li>
-                                    @endif
                                     @endforeach
                                 </ul>
                             </nav>

@@ -19,7 +19,6 @@ $(document).ready(function () {
         $(".dropdown-login").toggleClass("active-form-login");
     })
 
-
     $('#slider-show').owlCarousel({
         autoplay: true,
         autoplayHoverPause: true,
@@ -48,62 +47,42 @@ $(document).ready(function () {
         mouseDrag: true,
         touchDrag: true,
         lazyLoad: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            375: {
-                items: 2
-            },
-            600: {
-                items: 3
-            },
-            840: {
-                items: 4
-            },
-            1024: {
-                items: 3
-            },
-            1150: {
-                items: 4
-            },
-            1200: {
-                items: 4
-            },
-            1441: {
-                items: 5
-            },
-            1920: {
-                items: 6
-            },
-        }
+        items:5,
+        responsive:false
     });
-    $('#slider-deal-supper').owlCarousel({
-        autoplay: true,
-        autoplayHoverPause: true,
-        loop: true,
-        margin: 10,
-        nav: true,
-        dots: false,
-        mouseDrag: true,
-        touchDrag: true,
-        callbacks: true,
-        lazyLoad: true,
-        responsive: {
-            0: {
-                items: 1
-            },
-            415: {
-                items: 2
-            },
-            600: {
-                items: 3
-            },
-            1920: {
-                items: 4
-            },
-        }
-    });
+    // $('#slider-deal-supper').owlCarousel({
+    //     autoplay: true,
+    //     autoplayHoverPause: true,
+    //     loop: true,
+    //     margin: 10,
+    //     nav: true,
+    //     dots: false,
+    //     mouseDrag: true,
+    //     touchDrag: true,
+    //     callbacks: true,
+    //     lazyLoad: true,
+    //     // items:4,
+    //     // responsive:false
+    //     responsive: {
+
+    //         0: {
+    //             items:3,
+    //         },
+    //         730: {
+    //             items:3,
+    //         },
+    //         1200: {
+    //             items:4,
+    //         },
+    //         1350: {
+    //             items:3,
+    //         },
+    //         1510: {
+    //             items:4,
+    //         },
+
+    //     },
+    // });
     $('.wp-info-product').owlCarousel({
         autoplay: true,
         autoplayHoverPause: true,
@@ -237,42 +216,6 @@ $(document).ready(function () {
             },
         }
     });
-
-    var $time = $('.time-dem-nguoc').attr('data-date');
-    var countDownDate = new Date($time).getTime();
-    if(countDownDate){
-        // cập nhập thời gian sau mỗi 1 giây
-        var x = setInterval(function() {
-
-            // Lấy thời gian hiện tại
-            var now = new Date().getTime();
-
-            // Lấy số thời gian chênh lệch
-            var distance = countDownDate - now;
-
-            // Tính toán số ngày, giờ, phút, giây từ thời gian chênh lệch
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            // HIển thị chuỗi thời gian trong thẻ
-            if (days > 0)
-                document.getElementById("d").innerHTML = days;
-            if (hours < 10)
-                document.getElementById("h").innerHTML = '0'+ hours;
-            else
-                document.getElementById("h").innerHTML = hours;
-            if (minutes < 10 )
-                document.getElementById("m").innerHTML = '0'+ minutes;
-            else
-                document.getElementById("m").innerHTML = minutes;
-
-            if (seconds < 10)
-                document.getElementById("s").innerHTML = '0'+ seconds;
-            else
-                document.getElementById("s").innerHTML = seconds;
-        }, 1000);
-    }
 
     $('.sub_cat_title_slider .nav-link').click(function(){
         $('.sub_cat_title_slider .nav-link').removeClass('active');

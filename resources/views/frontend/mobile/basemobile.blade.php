@@ -24,14 +24,13 @@
     @yield('footer')
 </div>
 <div class="frame-w">
-    <div class="menu-mobile" >
+    <div class="menu-mobile d-none">
         <div id="menu_mobile" class="menu-tree"></div>
         <div class="menu-tree-child m-0 box">
             <div class="mgb_cat_m">
                 <div class="box-title">
                     <a  target="_self" class="box-title__title"></a>
-                    <a target="_self" class="box-title__btn-show-all">Xem tất
-                        cả</a>
+                    <a target="_self" class="box-title__btn-show-all">Xem tất cả</a>
                 </div>
                 <div id="menu_mobile_child">
                 </div>

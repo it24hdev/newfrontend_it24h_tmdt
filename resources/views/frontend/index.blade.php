@@ -1,24 +1,16 @@
 @extends('frontend.layouts.base')
-
 @section('title')
     <title>IT24H - Trang chủ</title>
 @endsection
-
-
 @section('header-home')
     @include('frontend.layouts.header-home', [$Sidebars])
 @endsection
-
-
-@section('header-mobile')
-    @include('frontend.layouts.menu-mobile')
-@endsection
-@include('frontend.mobile.route')
 @section('content')
     <div class="wp-content">
         <div class="get-list-cat" data-list="{{$list_cat}}"></div>
         <div class="container-page">
             <div id="content">
+                <div class="col-12">
                 <div class="content-left">
                     @if (!empty($banner_sidebar))
                         <div class="banner-image">
@@ -27,80 +19,6 @@
                             </a>
                         </div>
                     @endif
-                    <div class="form-group wp-supper-deal p-3 mb-4">
-                        <h3>Đăng ký dịch vụ</h3>
-                        <form enctype="multipart/form-data" class="register_form">
-                            <div class="form-group">
-                                <div class="input-wrapper" >
-                                    <span class="icon-wrapper" >
-                                        <i class="fal fa-user"></i>
-                                    </span>
-                                    <span class="position-relative">
-                                        <input class="form-control register_service" type="text" name="customer_name" placeholder="Họ và tên" required>
-                                        <span class="required_name text-danger d-none"><i>Bạn chưa nhập họ và tên.</i></span>
-                                </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-wrapper" >
-                                    <span class="icon-wrapper" >
-                                        <i class="fal fa-phone-alt"></i>
-                                    </span>
-                                    <span class="position-relative">
-                                        <input class="form-control register_service" type="tel" name="customer_numberphone" placeholder="Số điện thoại" maxlength="12" required>
-                                        <span class="required_phone text-danger d-none"><i>Bạn chưa nhập số điện thoại.</i></span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-wrapper" >
-                                    <span class="icon-wrapper" >
-                                        <i class="fal fa-envelope"></i>
-                                    </span>
-                                    <span class="position-relative">
-                                        <input class="form-control register_service" type="email" name="customer_email" placeholder="Email">
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-wrapper" >
-                                    <span class="position-relative">
-                                    <textarea class="form-control " name="customer_request" rows="3" placeholder="Nhập yêu cầu.." required></textarea>
-                                    <span class="required_request text-danger d-none"><i>Bạn chưa nhập yêu cầu.</i></span>
-                                    </span>
-                                </div>
-                            </div>
-                                    <input id="registerservice" type="button" class="btn-submit btn btn-primary px-2 form-control mt-4" value="Đăng ký">
-                        </form>
-                        <div class="respone_register d-none">
-                            <div class="register_error d-none">
-                                <p>Đăng ký dịch vụ không thành công, xin vui lòng thử lại</p>
-                                <input id="re_register" type="button" class="form-control btn btn-primary" value="Đăng ký lại">
-                            </div>
-                            <div class="register_success d-none">
-                                <p>Cảm ơn bạn đã đăng ký dịch vụ IT24h</p>
-                                <input id="newrequest" type="button" class="form-control btn btn-primary" value="Thêm yêu cầu">
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="block-services mb-5">
-                    </div>
-                    <div class="wp-supper-deal p-1">
-                        <div class="title_activity form-control">Hoạt động gần đây</div>
-                        <div class="vwrap p-1">
-                            <div class="vmove">
-                                <ul>
-                                    @foreach($recentactivity as $value)
-                                    <li class="vitem"><a
-                                            href="#" target="_blank">{{$value->name}}</a>
-                                        {{$value->activities}} <span class="colorattr">{{$value->attr}}</span>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="content-right">
                     <div class="slider-banner mb-4">
@@ -149,7 +67,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="categories-slider-home mb-5">
+                    <div class="categories-slider-home">
                         <div class="block-title">
                             <strong>Sản phẩm theo danh mục</strong>
                         </div>
@@ -191,51 +109,127 @@
                             </div>
                         </div>
                     </div>
-                    <div id="slider-deal"></div>
-                    <div id="slider-new"></div>
+                </div>
+                </div>
+                <div class="col-12">
+                    <div class="action_form">
+                        <div class="form-group wp-supper-deal p-3 mb-4">
+                            <h3>Đăng ký dịch vụ</h3>
+                            <form enctype="multipart/form-data" class="register_form">
+                                <div class="form-group">
+                                    <div class="input-wrapper" >
+                                    <span class="icon-wrapper" >
+                                        <i class="fal fa-user"></i>
+                                    </span>
+                                        <span class="position-relative">
+                                        <input class="form-control register_service" type="text" name="customer_name" placeholder="Họ và tên" required>
+                                        <span class="required_name text-danger d-none"><i>Bạn chưa nhập họ và tên.</i></span>
+                                </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-wrapper" >
+                                    <span class="icon-wrapper" >
+                                        <i class="fal fa-phone-alt"></i>
+                                    </span>
+                                        <span class="position-relative">
+                                        <input class="form-control register_service" type="tel" name="customer_numberphone" placeholder="Số điện thoại" maxlength="12" required>
+                                        <span class="required_phone text-danger d-none"><i>Bạn chưa nhập số điện thoại.</i></span>
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-wrapper" >
+                                    <span class="icon-wrapper" >
+                                        <i class="fal fa-envelope"></i>
+                                    </span>
+                                        <span class="position-relative">
+                                        <input class="form-control register_service" type="email" name="customer_email" placeholder="Email">
+                                    </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-wrapper" >
+                                    <span class="position-relative">
+                                    <textarea class="form-control " name="customer_request" rows="3" placeholder="Nhập yêu cầu.." required></textarea>
+                                    <span class="required_request text-danger d-none"><i>Bạn chưa nhập yêu cầu.</i></span>
+                                    </span>
+                                    </div>
+                                </div>
+                                <input id="registerservice" type="button" class="btn-submit btn btn-primary px-2 form-control mt-4" value="Đăng ký">
+                            </form>
+                            <div class="respone_register d-none">
+                                <div class="register_error d-none">
+                                    <p>Đăng ký dịch vụ không thành công, xin vui lòng thử lại</p>
+                                    <input id="re_register" type="button" class="form-control btn btn-primary" value="Đăng ký lại">
+                                </div>
+                                <div class="register_success d-none">
+                                    <p>Cảm ơn bạn đã đăng ký dịch vụ IT24h</p>
+                                    <input id="newrequest" type="button" class="form-control btn btn-primary" value="Thêm yêu cầu">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="wp-supper-deal p-1">
+                            <div class="title_activity form-control">Hoạt động gần đây</div>
+                            <div class="vwrap p-1">
+                                <div class="vmove">
+                                    <ul>
+                                        @foreach($recentactivity as $value)
+                                            <li class="vitem"><a
+                                                    href="#" target="_blank">{{$value->name}}</a>
+                                                {{$value->activities}} <span class="colorattr">{{$value->attr}}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="deal_form">
+                        <div id="slider-deal"></div>
+                        <div id="slider-new"></div>
+                    </div>
                 </div>
                 <!-- Danh sách sp theo danh mục -->
                 <div class="group-product">
                     <!-- Danh mục -->
                     @foreach ($get_cat_parents as $cat_parent)
-                        @if(in_array($cat_parent->id, $cat_arr))
-                            <div class="product-content mb-4" id="category-{{$cat_parent->id}}">
-                                <div class="block-title">
-                                    <h2>{{$cat_parent->name}}</h2>
-                                    <ul class="nav nav-pills sub_cat_title_slider owl-carousel owl-theme owl-loaded owl-drag"
-                                        id="pills-tab sub_cat_title_slider" role="tablist">
+                        <div class="product-content mb-4" id="category-{{$cat_parent->id}}">
+                            <div class="block-title">
+                                <h2>{{$cat_parent->name}}</h2>
+                                {{-- <ul class="nav nav-pills sub_cat_title_slider owl-carousel owl-theme owl-loaded owl-drag"
+                                    id="pills-tab sub_cat_title_slider" role="tablist">
+                                    @php
+                                        $t=0;
+                                    @endphp
+                                    @foreach ($cat_parent as $cat_child)
                                         @php
-                                            $t=0;
+                                            $t++;
                                         @endphp
-                                        @foreach ($cat_parent->cat_child as $cat_child)
-                                            @php
-                                                $t++;
-                                            @endphp
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link {{($t==1) ? 'active' : ''}}"
-                                                        id="pills-cat{{$cat_child->id}}-tab" data-bs-toggle="pill"
-                                                        data-bs-target="#pills-cat{{$cat_child->id}}" type="button"
-                                                        role="tab" aria-controls="pills-cat{{$cat_child->id}}"
-                                                        aria-selected="true">{{$cat_child->name}}</button>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                    <a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all">Xem
-                                        tất cả <i class="far fa-angle-right"></i></a>
-                                </div>
-                                <div id="data-{{$cat_parent->id}}" class="wp-slider-pro"></div>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link {{($t==1) ? 'active' : ''}}"
+                                                    id="pills-cat{{$cat_child->id}}-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-cat{{$cat_child->id}}" type="button"
+                                                    role="tab" aria-controls="pills-cat{{$cat_child->id}}"
+                                                    aria-selected="true">{{$cat_child->name}}</button>
+                                        </li>
+                                    @endforeach
+                                </ul> --}}
+                                <a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all">Xem
+                                    tất cả <i class="far fa-angle-right"></i></a>
                             </div>
-                        @endif
+                            <div id="data-{{$cat_parent->id}}" class="wp-slider-pro"></div>
+                        </div>
                     @endforeach
                 </div>
             </div>
             <div id="slider-bottom"></div>
         </div>
     </div>
-
     <div id="loadfooter"></div>
+@include('frontend.desktop.template.template_deals_time')
 @endsection
-
 @section('js')
     <script>
         $(document).ready(function () {
@@ -372,25 +366,179 @@
                 list_product.push(element);
             });
 
-
-            function laySpdeal() {
+            //load san pham deal
+            function get_deal() {
                 var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
                     _token: _token
                 };
                 $.ajax({
-                    url: "{{route('getdealProduct')}}",
+                    url: "{{route('get_deal')}}",
                     type: "post",
                     dataType: "json",
                     data: data,
                     success: function (data) {
-                        // console.log(data);
-                        $('#slider-deal').append(data);
+                        var template_deals_time = $('#template_deals_time').html();
+                        var tmp_deals_time = $(template_deals_time).clone();
+                        $(tmp_deals_time).find('.time-deal').attr('data-target',data.time_deal);
+                        $('#slider-deal').prepend(tmp_deals_time);
+                        time_deal();
+                        tmp_product(data.deal,'#slider-deal-supper');
+                        $('#slider-deal-supper').owlCarousel({
+                            autoplay: true,
+                            autoplayHoverPause: true,
+                            loop: true,
+                            margin: 10,
+                            nav: true,
+                            dots: false,
+                            mouseDrag: true,
+                            touchDrag: true,
+                            callbacks: true,
+                            lazyLoad: true,
+                            responsive: {
+                                0: {
+                                    items:3,
+                                },
+                                730: {
+                                    items:3,
+                                },
+                                1200: {
+                                    items:4,
+                                },
+                                1350: {
+                                    items:3,
+                                },
+                                1510: {
+                                    items:4,
+                                },
 
+                            },
+                        });
                     },
                 })
             }
+            
+            //bo dem thoi gian
+            function time_deal(){
+                var $time = $('.time-deal').attr('data-target');
+                var countDownDate = new Date($time).getTime();
+                if(countDownDate){
+                    // cập nhập thời gian sau mỗi 1 giây
+                    var x = setInterval(function() {
 
+                        // Lấy thời gian hiện tại
+                        var now = new Date().getTime();
+
+                        // Lấy số thời gian chênh lệch
+                        var distance = countDownDate - now;
+
+                        // Tính toán số ngày, giờ, phút, giây từ thời gian chênh lệch
+                        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                        // HIển thị chuỗi thời gian trong thẻ
+                        if (days > 0)
+                            document.getElementById("d").innerHTML = days;
+                        if (hours < 10)
+                            document.getElementById("h").innerHTML = '0'+ hours;
+                        else
+                            document.getElementById("h").innerHTML = hours;
+                        if (minutes < 10 )
+                            document.getElementById("m").innerHTML = '0'+ minutes;
+                        else
+                            document.getElementById("m").innerHTML = minutes;
+
+                        if (seconds < 10)
+                            document.getElementById("s").innerHTML = '0'+ seconds;
+                        else
+                            document.getElementById("s").innerHTML = seconds;
+                    }, 1000);
+                }
+            }
+        
+            // template product
+            function tmp_product(data, id_append){
+                var template_product_desktop = $('#template_product_desktop').html();
+                $.each(data, function(k,v) {
+                    var url ="";
+                    var tmp = $(template_product_desktop).clone();
+                    if(v.img_brands){
+                        $(tmp).find('.brand').css({'visibility':'visible','opacity':'1'});
+                        url = '{{asset("upload/images/products/thumb/img_brand")}}';
+                        url = url.replace('img_brand',v.img_brands);
+                        img = 'url('+url+')';
+                        $(tmp).find('.brand_img').css('background-image',img);
+                    }
+                    if(v.year){
+                        $(tmp).find('.years').removeClass('d-none');
+                        $(tmp).find('.years').html(v.year);
+                    }
+                    if(v.installment){
+                        $(tmp).find('.payment').removeClass('d-none');
+                        $(tmp).find('.payment').html(v.installment);
+                    }
+                    url = '{{route('detailproduct', "slug_detail")}}';
+                    url = url.replace('slug_detail',v.slug);
+                    
+                    $(tmp).find('.link_detail').attr('href',url);
+                    if(v.thumb!='no-images.jpg'){
+                        url = '{{asset('upload/images/products/medium/img_product')}}';
+                        url = url.replace('img_product',v.thumb);
+                        $(tmp).find('.thumb img').attr('data-src',url);
+                    }
+                    else{
+                        url = '{{asset('upload/images/common_img/img_product')}}';
+                        url = url.replace('img_product',v.thumb);
+                        $(tmp).find('.thumb img').attr('data-src',url);
+                    }
+                    $(tmp).find('.name span').html(v.name);
+                    if(v.event!=0){
+                        $(tmp).find('.event').removeClass('d-none');
+                        $(tmp).find('.event').css('background','linear-gradient(to right,'+v.event_color_left+','+v.event_color_right+')');
+                        url = '{{asset("upload/images/products/thumb/event_icon")}}';
+                        url = url.replace('event_icon',v.event_icon);
+                        $(tmp).find('.event img').attr('src',url);
+                        $(tmp).find('.event span').html(v.event_name);
+                    }
+                    // $(tmp).find('.code').html('Mã: '+v.ma);
+                    var list_specifications = $.parseJSON(v.specifications);
+                    $.each(list_specifications, function(k,v) {
+                        if(k<=6)
+                         $(tmp).find('.product-attributes').append('<li>'+v+'</li>');
+                    });
+                    if(v.price_onsale>0 && v.onsale>0){
+                        $(tmp).find('.onsale').html('-'+v.onsale+'%');
+                        $(tmp).find('.price-old').html((new Intl.NumberFormat().format(v.price))+' VNĐ');
+                        $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price_onsale))+' VNĐ');
+                    }
+                    else{
+                        $(tmp).find('.price_sale').css('visibility','hidden')
+                        $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price))+' VNĐ');
+                    }
+                    var votes_sum = 0;
+                    if(v.votes_count>0){
+                        votes_sum = (v.votes_sum/v.votes_count)*20;
+                    }
+                    $(tmp).find('.rating-upper').css('width',votes_sum+'%');
+                    $(tmp).find('.count-review').html('('+v.votes_count+')');
+                    $(tmp).find('.sold span').html('Đã bán '+v.sold);
+                    if(v.quantity>0){
+                        $(tmp).find('.qty').css({'color':'#01aa42','background-color':'#dbf8e1'});
+                        $(tmp).find('.qty').html('Còn hàng');
+                    }
+                    else{
+                        $(tmp).find('.qty').css({'color':'#ffffff','background-color':'#fb0000'});
+                        $(tmp).find('.qty').html('Liên hệ');
+                    }
+                    if(v.quantity<0){
+                        $(tmp).find('.qty').addClass('d-none');
+                    }
+                    $(tmp).find('.add-wish').attr('data-target',v.id);
+                    $(tmp).find('.add-cart').attr('data-target',v.id);
+                    $(id_append).append(tmp);
+                });
+            }
 
             function laySpnew() {
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -452,15 +600,15 @@
                 });
 
                 if (isOnScreen($("#slider-deal")) && ($("#slider-deal").hasClass("loaded") == false)) {
-                    laySpdeal();
+                    get_deal();
                     $("#slider-deal").addClass("loaded");
                 }
 
 
-                if (isOnScreen($("#slider-new")) && ($("#slider-new").hasClass("loaded") == false)) {
-                    laySpnew();
-                    $("#slider-new").addClass("loaded");
-                }
+                // if (isOnScreen($("#slider-new")) && ($("#slider-new").hasClass("loaded") == false)) {
+                //     laySpnew();
+                //     $("#slider-new").addClass("loaded");
+                // }
 
                 if (isOnScreen($("#loadfooter")) && ($("#loadfooter").hasClass("loaded") == false)) {
                     loadfooter();

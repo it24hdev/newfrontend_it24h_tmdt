@@ -200,7 +200,7 @@
             </div>
         </div>
         {{--categoryproduct--}}
-        <div class="block-product" id="categories_p" list-cat="{{$list_cat}}" >
+        <div class="block-product" id="categories_p" list-cat="{{$list_cat}}">
             @foreach($get_cat_parents as $item)
                 <div class="block-featured-product" id="category_product_{{$item->id}}">
                     {{--            list title--}}

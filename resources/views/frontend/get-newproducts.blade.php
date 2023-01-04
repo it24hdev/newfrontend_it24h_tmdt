@@ -1,4 +1,5 @@
- <div class="tabs-product" style="margin-bottom: 40px;">
+
+<div class="tabs-product" style="margin-bottom: 40px;">
     <div class="block-content">
         <div class="ltabs-tabs-wrap">
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">

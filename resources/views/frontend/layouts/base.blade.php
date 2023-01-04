@@ -64,7 +64,6 @@
 <body>
 <div id="wrapper-page">
     @yield('header-home')
-    @yield('header-mobile')
     @yield('content')
     @yield('footer')
     <!-- Messenger Plugin chat Code -->
@@ -77,12 +76,13 @@
 @include('frontend.desktop.template.template_menu_lv2_desktop')
 @include('frontend.desktop.template.template_menu_lv3_desktop')
 @include('frontend.desktop.template.template_menu_lv4_desktop')
+@include('frontend.desktop.template.template_product_desktop')
 <!-- javascript -->
 <script src="{{ asset('lib/jquery360.min.js') }}"></script>
 <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-<script src="{{ asset('asset/js/home.js') }}"></script>
 @yield('js')
+<script src="{{ asset('asset/js/home.js') }}"></script>
 <script>
     $(document).ready(function () {
         $("#login-ajax").click(function () {
@@ -205,24 +205,6 @@
                         });
                     },
                 })
-            }
-        });
-        $("#pills-2-tab").on("click", function () {
-            if (($("#pills-2").hasClass("loaded") == false)) {
-                var _token = $('meta[name="csrf-token"]').attr('content');
-                var data = {
-                    _token: _token
-                };
-                $.ajax({
-                    url: "{{route('menucontent')}}",
-                    type: "post",
-                    dataType: "json",
-                    data: data,
-                    success: function (data) {
-                        $("#pills-2").append(data);
-                    },
-                })
-                $("#pills-2").addClass("loaded");
             }
         });
     });

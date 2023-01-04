@@ -166,9 +166,6 @@ class DetailproductController extends Controller
             $item = Vote::create($input);
             $agent = new Agent();
             if($agent->isMobile()){
-                $isphone = "phone";
-            }
-            if($isphone){
                 return \json_encode(array('success'=>true));
             }
             else{

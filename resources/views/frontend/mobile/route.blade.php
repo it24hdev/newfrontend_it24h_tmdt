@@ -5,7 +5,7 @@
     var list_cart = '{{route('list_cart')}}';
     var get_menu_mobile = '{{route('get_menu_mobile')}}';
     var get_menu_child = '{{route('get_menu_child')}}';
-    var get_hot_sale_mobile = '{{route('get_hot_sale_mobile')}}';
+    var get_hot_product = '{{route('get_hot_product')}}';
     var get_new_mobile = '{{route('get_new_mobile')}}';
     var get_promotion_mobile = '{{route('get_promotion_mobile')}}';
     var get_category_promotion_mobile = '{{route('get_category_promotion_mobile')}}';
