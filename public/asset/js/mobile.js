@@ -122,7 +122,6 @@ $(document).ready(function () {
         }, 1000);
     }
 
-
     // lay sp khuyen mai
     function lay_sp_km(active) {
 

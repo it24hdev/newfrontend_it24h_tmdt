@@ -151,23 +151,14 @@ class HomeController extends Controller
         return $arrCategory;
     }
 
-    public function getProducts(Request $request)
-    {
-        $locale = config('app.locale');
-        if (!is_null($request->id)) {
-            $cat_parent = Category::find($request->id);
-            $view = view('frontend.get-products', [
-                'cat_parent' => $cat_parent,
-                'locale' => $locale,
-            ])->render();
-        }
-        return response()->json($view);
-    }
-
+    //load san pham deal desktop
     public function get_deal(Request $request)
     {
-       //lay sp deal
-        $get_deal = Products::select(DB::raw('products.*'),DB::raw('deals.name_deal '),DB::raw('deals.price_deal ') , DB::raw("brands.image as img_brands"),
+        //lay san pham deal
+        $get_deal = Products::select(DB::raw('products.id'),DB::raw('products.ma'),DB::raw('products.name'),DB::raw('products.thumb'),
+            DB::raw('products.price_onsale'),DB::raw('products.onsale'),DB::raw('products.price'),DB::raw('products.sold'),DB::raw('products.quantity'),
+            DB::raw('products.slug'), DB::raw('products.year'), DB::raw('products.installment'), DB::raw('products.event'),DB::raw('products.specifications'),
+            DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
             DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
             DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
             ->leftjoin('brands', 'products.brand', 'brands.id')
@@ -187,12 +178,16 @@ class HomeController extends Controller
         ]);
     }
 
-    //lay danh
-
+    //load san pham danh muc khuyen mai
     public function get_categories_promotion()
     {
-        $title = Category::where('status', 1)->where('is_promotion', 1)->limit(6)->get();
-        $product_promotion = Products::select(DB::raw('products.*'),DB::raw('deals.name_deal '),DB::raw('deals.price_deal ') , DB::raw("brands.image as img_brands"),
+        //lay danh muc khuyen mai
+        $title = Category::where('status', 1)->where('is_promotion', 1)->limit(10)->get();
+        //lay san pham danh muc khuyen mai
+        $product_promotion = Products::select(DB::raw('products.id'),DB::raw('products.ma'),DB::raw('products.name'),DB::raw('products.thumb'),
+            DB::raw('products.price_onsale'),DB::raw('products.onsale'),DB::raw('products.price'),DB::raw('products.sold'),DB::raw('products.quantity'),
+            DB::raw('products.slug'), DB::raw('products.year'), DB::raw('products.installment'), DB::raw('products.event'),DB::raw('products.specifications'),
+            DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
             DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
             DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
             ->leftjoin('brands', 'products.brand', 'brands.id')
@@ -210,9 +205,36 @@ class HomeController extends Controller
         ]);
     }
 
+    //load san pham theo danh muc
+    public function get_product_categories_loading(Request $request){
+        $product_promotion = Products::select(DB::raw('products.id'),DB::raw('products.ma'),DB::raw('products.name'),DB::raw('products.thumb'),
+            DB::raw('products.price_onsale'),DB::raw('products.onsale'),DB::raw('products.price'),DB::raw('products.sold'),DB::raw('products.quantity'),
+            DB::raw('products.slug'), DB::raw('products.year'), DB::raw('products.installment'), DB::raw('products.event'),DB::raw('products.specifications'),
+            DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
+            DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
+            DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
+            ->leftjoin('brands', 'products.brand', 'brands.id')
+            ->leftjoin('tag_events', 'products.event', 'tag_events.id')
+            ->leftjoin('deals', 'products.id', 'deals.product_id')
+            ->leftjoin('votes','products.id','votes.product_id')
+            ->leftjoin('category_relationships','products.id','category_relationships.product_id')
+            ->where('products.status', 1)
+            ->where('category_relationships.cat_id', $request->id)
+            ->groupby('products.id')
+            ->limit(10)->get();
+        return response()->json([
+            'product_promotion' => $product_promotion,
+        ]);
+    }
+
+    //load danh muc con
+    public  function get_list_categories_child_loading(Request $request){
+        $data = Category::where('status',1)->where('parent_id',$request->id)->get();
+        return response()->json($data);
+    }
+
     public function loadfooter(Request $request)
     {
-
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
 
         $view2 = view('frontend.layouts.footer', [
@@ -304,8 +326,6 @@ class HomeController extends Controller
             $search = '';
         }
         $Sidebars = $this->getmenu('sidebar');
-        // $Menus              = $this->getmenu('menu');
-        // $Sub_menus          = $this->getmenu('submenu');
         $getcategoryblog = $this->getcategoryblog();
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $blog_category = DB::table('categories')->where('slug', $slug)
@@ -765,7 +785,6 @@ class HomeController extends Controller
     }
 
     // lay comment
-
     public function getFormVote(Request $request)
     {
         $locale = config('app.locale');
@@ -788,7 +807,6 @@ class HomeController extends Controller
     }
 
     //xu ly lay danh gia vote
-
     public function autotypeahead(Request $request)
     {
         $agent = new Agent();
@@ -820,7 +838,6 @@ class HomeController extends Controller
     }
 
     //xu ly nhap thanh tim kiem ra san pham
-
     public function contact()
     {
         $agent = new Agent();
@@ -836,13 +853,11 @@ class HomeController extends Controller
     }
 
     //lien he
-
     public function changeLanguage($language)
     {
         Session::put('website_language', $language);
         return redirect()->back();
     }
-
     public function recruit()
     {
         $agent = new Agent();
@@ -943,32 +958,7 @@ class HomeController extends Controller
         }
     }
 
-    //lay menu  desktop
-
-    // public function getmenu_ajax($location)
-    // {
-    //     if ($location == 'sidebar') {
-    //         $location = "sidebar_location";
-    //     }
-    //     $getmenu = MenuItems::select('admin_menu_items.*')
-    //         ->leftJoin('locationmenus', 'locationmenus.' . $location, '=', 'admin_menu_items.menu')
-    //         ->where('locationmenus.' . $location, '<>', '0')
-    //         ->where('locationmenus.' . $location, '<>', null)
-    //         ->where('depth', '<>', 0)->get();
-    //     return $getmenu;
-    // }
-
-    //lay menu con desktop
-
-    // public function menucontent2(Request $request)
-    // {
-    //     $Sidebarid = $request->id;
-    //     $Sidebars = $this->getmenu_ajax('sidebar');
-    //     $view2 = view('frontend.subsidebarmenu', ['Sidebars' => $Sidebars, 'Sidebarid' => $Sidebarid])->render();
-    //     return response()->json($view2);
-    // }
-
-    //lay san pham moi
+    //lay san pham moi mobile
     public function get_new_mobile(Request $request)
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
@@ -979,7 +969,7 @@ class HomeController extends Controller
         ]);
     }
 
-    // lay san pham hot
+    // lay san pham hot mobile
     public function get_hot_product(Request $request)
     {
         $get_new_mobile = Products::select('products.*', DB::raw("brands.image as img_brands"))
@@ -1019,7 +1009,7 @@ class HomeController extends Controller
         }
     }
 
-    //lay san pham
+    //lay san pham loading mobile
     public function get_product_mobile(Request $request)
     {
         if (!is_null($request->id)) {

@@ -196,30 +196,14 @@
                     <!-- Danh mục -->
                     @foreach ($get_cat_parents as $cat_parent)
                         <div class="product-content mb-4" id="category-{{$cat_parent->id}}">
-                            <div class="block-title">
-                                <h2>{{$cat_parent->name}}</h2>
-                                {{-- <ul class="nav nav-pills sub_cat_title_slider owl-carousel owl-theme owl-loaded owl-drag"
-                                    id="pills-tab sub_cat_title_slider" role="tablist">
-                                    @php
-                                        $t=0;
-                                    @endphp
-                                    @foreach ($cat_parent as $cat_child)
-                                        @php
-                                            $t++;
-                                        @endphp
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link {{($t==1) ? 'active' : ''}}"
-                                                    id="pills-cat{{$cat_child->id}}-tab" data-bs-toggle="pill"
-                                                    data-bs-target="#pills-cat{{$cat_child->id}}" type="button"
-                                                    role="tab" aria-controls="pills-cat{{$cat_child->id}}"
-                                                    aria-selected="true">{{$cat_child->name}}</button>
-                                        </li>
-                                    @endforeach
-                                </ul> --}}
-                                <a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all">Xem
-                                    tất cả <i class="far fa-angle-right"></i></a>
+                            <div class="block-title flex_title">
+                                <div>
+                                    <div> <h2>{{$cat_parent->name}}</h2> </div>
+                                    <div> <ul class="owl-carousel owl-theme owl-loaded owl-drag" id="list-cat-child-{{$cat_parent->id}}"></ul></div>
+                                </div>
+                                <div><a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all">Xem tất cả <i class="far fa-angle-right"></i></a></div>
                             </div>
-                            <div id="data-{{$cat_parent->id}}" class="wp-slider-pro"></div>
+                            <div id="data-{{$cat_parent->id}}" class="owl-carousel owl-theme owl-loaded owl-drag"></div>
                         </div>
                     @endforeach
                 </div>
@@ -230,6 +214,7 @@
     <div id="loadfooter"></div>
 @include('frontend.desktop.template.template_deals_time')
 @include('frontend.desktop.template.template_title_categories_promotion')
+@include('frontend.desktop.template.template_product_two_rows')
 
 @endsection
 @section('js')
@@ -256,7 +241,8 @@
                     }
                 });
             });
-            //Add to Cart
+
+            //Them san pham vao gio hang
             add_cart = function (id) {
                 var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {
@@ -275,6 +261,8 @@
                     },
                 });
             }
+
+            //ham them san pham yeu thich
             add_wish = function (id) {
                 var _token = $('meta[name="csrf-token"]').attr('content');
                 var data = {id: id, _token: _token};
@@ -290,40 +278,32 @@
                 });
             }
 
-            function isOnScreen(elem) {
-                if (elem.length == 0) {
-                    return;
-                }
-                var $window = jQuery(window)
-                var viewport_top = $window.scrollTop() //vị trí đang scroll
-                var viewport_height = $window.height()  // chiều cao màn hình
-                var viewport_bottom = viewport_top + viewport_height
-                var $elem = jQuery(elem)
-                var top = $elem.offset().top
-                var height = $elem.height()
-                var bottom = top + height
-
-                return (top >= viewport_top && top < viewport_bottom) ||
-                    (bottom > viewport_top && bottom <= viewport_bottom) ||
-                    (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
-            }
-
-            function laySp(category_id) {
-                var _token = $('meta[name="csrf-token"]').attr('content');
+            // danh sach danh muc hien thi tren trang chu
+            var list_product = [];
+            let list_cat = $('.get-list-cat').data('list');
+            let cat_ids = list_cat.split('_');
+            cat_ids.forEach(function (element) {
+                list_product.push(element);
+            });
+            //load san pham theo danh muc
+            function get_product_categories_loading(category_id) {
                 var id = category_id;
                 var data = {
                     id: category_id,
                     _token: _token
                 };
                 $.ajax({
-                    url: "{{route('getProducts')}}",
+                    url: "{{route('get_product_categories_loading')}}",
                     type: "post",
                     dataType: "json",
                     data: data,
                     success: function (data) {
-                        // console.log(data);
-                        $('#data-' + id).append(data);
-                        $('.list-product-group').owlCarousel({
+                        get_title_categories_loading(id);
+                        var append_id = $('#data-'+id);
+                        append_id.html('');
+                        tmp_product(data.product_promotion,'#data-'+id);
+                        append_id.owlCarousel('destroy');
+                        append_id.owlCarousel({
                             autoplay: false,
                             autoplayHoverPause: true,
                             loop: false,
@@ -335,40 +315,55 @@
                             lazyLoad: true,
                             responsive: {
                                 0: {
-                                    items: 1
-                                },
-                                375: {
                                     items: 2
                                 },
-                                768: {
+                                650: {
                                     items: 3
                                 },
-                                992: {
+                                870: {
                                     items: 4
                                 },
-                                1200: {
+                                1000: {
                                     items: 5
                                 },
-                                1650: {
+                                1600: {
                                     items: 6
-                                },
-                                1920: {
-                                    items: 6
-                                },
+                                }
                             }
                         });
                     },
                 })
             }
-
-            var list_product = [];
-            let list_cat_1 = $('.get-list-cat').data('list');
-            let list_cat = String(list_cat_1);
-            let cat_ids = list_cat.split(' ');
-            cat_ids.forEach(function (element) {
-                list_product.push(element);
-            });
-
+            //load danh muc con
+            function get_title_categories_loading(id){
+                var append_id = $('#list-cat-child-'+id);
+                var data = {
+                    id: id,
+                    _token: _token
+                };
+                $.ajax({
+                    url: "{{route('get_list_categories_child_loading')}}",
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        $.each(data, function (k, v) {
+                            append_id.append('<li class="item_categoreis_child" data-target="' + v.id + '">' + v.name + '</li>');
+                        });
+                        append_id.owlCarousel('destroy');
+                        append_id.owlCarousel({
+                            autoplay: true,
+                            autoplayHoverPause: false,
+                            loop: false,
+                            margin: 10,
+                            nav: false,
+                            dots: false,
+                            autoWidth: true,
+                            callbacks: true,
+                        });
+                    }
+                });
+            }
             //load san pham deal
             function get_deal() {
                 var data = {
@@ -419,7 +414,6 @@
                     },
                 })
             }
-
             //bo dem thoi gian
             function time_deal(){
                 var $time = $('.time-deal').attr('data-target');
@@ -458,8 +452,7 @@
                     }, 1000);
                 }
             }
-        
-            // template product
+            //template product
             function tmp_product(data, id_append){
                 var template_product_desktop = $('#template_product_desktop').html();
                 $.each(data, function(k,v) {
@@ -482,7 +475,7 @@
                     }
                     url = '{{route('detailproduct', "slug_detail")}}';
                     url = url.replace('slug_detail',v.slug);
-                    
+
                     $(tmp).find('.link_detail').attr('href',url);
                     if(v.thumb!='no-images.jpg'){
                         url = '{{asset('upload/images/products/medium/img_product')}}';
@@ -496,8 +489,8 @@
                     }
                     $(tmp).find('.name span').html(v.name);
                     if(v.event!=0){
-                        $(tmp).find('.event').removeClass('d-none');
-                        $(tmp).find('.event').css('background','linear-gradient(to right,'+v.event_color_left+','+v.event_color_right+')');
+
+                        $(tmp).find('.event').css({'background':'linear-gradient(to right,'+v.event_color_left+','+v.event_color_right+')','visibility':'visible','opacity':'1'});
                         url = '{{asset("upload/images/products/thumb/event_icon")}}';
                         url = url.replace('event_icon',v.event_icon);
                         $(tmp).find('.event img').attr('src',url);
@@ -541,7 +534,101 @@
                     $(id_append).append(tmp);
                 });
             }
+            //template product 2 rows slider
+            function tmp_product_2(data, id_append){
+                var template_product_desktop = $('#template_product_desktop').html();
+                var template_two_rows = $('#template_product_two_rows').html();
+                var tmp_two_rows ="";
+                $.each(data, function(k,v) {
+                    var  tmp = $(template_product_desktop).clone();
+                    var url ="";
+                    if(v.img_brands){
+                        $(tmp).find('.brand').css({'visibility':'visible','opacity':'1'});
+                        url = '{{asset("upload/images/products/thumb/img_brand")}}';
+                        url = url.replace('img_brand',v.img_brands);
+                        img = 'url('+url+')';
+                        $(tmp).find('.brand_img').css('background-image',img);
+                    }
+                    if(v.year){
+                        $(tmp).find('.years').removeClass('d-none');
+                        $(tmp).find('.years').html(v.year);
+                    }
+                    if(v.installment){
+                        $(tmp).find('.payment').removeClass('d-none');
+                        $(tmp).find('.payment').html(v.installment);
+                    }
+                    url = '{{route('detailproduct', "slug_detail")}}';
+                    url = url.replace('slug_detail',v.slug);
 
+                    $(tmp).find('.link_detail').attr('href',url);
+                    if(v.thumb!='no-images.jpg'){
+                        url = '{{asset('upload/images/products/medium/img_product')}}';
+                        url = url.replace('img_product',v.thumb);
+                        $(tmp).find('.thumb img').attr('data-src',url);
+                    }
+                    else{
+                        url = '{{asset('upload/images/common_img/img_product')}}';
+                        url = url.replace('img_product',v.thumb);
+                        $(tmp).find('.thumb img').attr('data-src',url);
+                    }
+                    $(tmp).find('.name span').html(v.name);
+                    if(v.event!=0){
+                        $(tmp).find('.event').removeClass('d-none');
+                        $(tmp).find('.event').css('background','linear-gradient(to right,'+v.event_color_left+','+v.event_color_right+')');
+                        url = '{{asset("upload/images/products/thumb/event_icon")}}';
+                        url = url.replace('event_icon',v.event_icon);
+                        $(tmp).find('.event img').attr('src',url);
+                        $(tmp).find('.event span').html(v.event_name);
+                    }
+                    // $(tmp).find('.code').html('Mã: '+v.ma);
+                    var list_specifications = $.parseJSON(v.specifications);
+                    $.each(list_specifications, function(k,v) {
+                        if(k<=6)
+                            $(tmp).find('.product-attributes').append('<li>'+v+'</li>');
+                    });
+                    if(v.price_onsale>0 && v.onsale>0){
+                        $(tmp).find('.onsale').html('-'+v.onsale+'%');
+                        $(tmp).find('.price-old').html((new Intl.NumberFormat().format(v.price))+' VNĐ');
+                        $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price_onsale))+' VNĐ');
+                    }
+                    else{
+                        $(tmp).find('.price_sale').css('visibility','hidden')
+                        $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price))+' VNĐ');
+                    }
+                    var votes_sum = 0;
+                    if(v.votes_count>0){
+                        votes_sum = (v.votes_sum/v.votes_count)*20;
+                    }
+                    $(tmp).find('.rating-upper').css('width',votes_sum+'%');
+                    $(tmp).find('.count-review').html('('+v.votes_count+')');
+                    $(tmp).find('.sold span').html('Đã bán '+v.sold);
+                    if(v.quantity>0){
+                        $(tmp).find('.qty').css({'color':'#01aa42','background-color':'#dbf8e1'});
+                        $(tmp).find('.qty').html('Còn hàng');
+                    }
+                    else{
+                        $(tmp).find('.qty').css({'color':'#ffffff','background-color':'#fb0000'});
+                        $(tmp).find('.qty').html('Liên hệ');
+                    }
+                    if(v.quantity<0){
+                        $(tmp).find('.qty').addClass('d-none');
+                    }
+                    $(tmp).find('.add-wish').attr('data-target',v.id);
+                    $(tmp).find('.add-cart').attr('data-target',v.id);
+                    if((k+1)%2!=0){
+                        tmp_two_rows = $(template_two_rows).clone();
+                        console.log(tmp_two_rows.html());
+                        $(tmp_two_rows).find('.p_two_rows').append(tmp);
+
+                    }
+                    else{
+                        console.log(2);
+                        $(tmp_two_rows).find('.p_two_rows').append(tmp);
+                        $(id_append).append(tmp_two_rows);
+                    }
+                });
+            }
+            //load san pham danh muc khuyen mai
             function get_categories_promotion() {
                 var data = {
                     _token: _token
@@ -552,50 +639,89 @@
                     dataType: "json",
                     data: data,
                     success: function (data) {
-                        var template_title_categories_promotion = $('#template_title_categories_promotion').html();
-                        $('#slider-categories-promotion').append(template_title_categories_promotion);
-                        $.each(data.title, function(k,v){
-                            $('#slider-categories-promotion .box_title_cp ul').append('<li attr="'+v.id+'">'+v.name+'</li>');
-                        });
-                        tmp_product(data.product_promotion,'#list_pcp');
-                        $('#list_pcp .tmp_product .box_product').addClass('active');
-                        $('#list_pcp .tmp_product .lower_half').addClass('active');
-                        $('#list_pcp .tmp_product .upper_half').addClass('active');
-                        $('#list_pcp .tmp_product').addClass('active');
-                        $('#list_pcp').owlCarousel({
-                            autoplay: true,
-                            autoplayHoverPause: true,
-                            loop: true,
-                            margin: 10,
-                            nav: true,
-                            dots: false,
-                            mouseDrag: true,
-                            touchDrag: true,
-                            callbacks: true,
-                            lazyLoad: true,
-                            slideBy: 2,
-                            responsive: {
-                                0: {
-                                    items:1,
-                                },
-                                700: {
-                                    items:1,
-                                },
-                                700: {
-                                    items:2,
-                                },
-                                1000: {
-                                    items:4,
-                                },
-                                1300: {
-                                    items:4,
-                                },
-
-                            },
-                        });
+                        title_categories_promotion(data.title);
+                        product_categories_promotion(data.product_promotion,"#list_pcp");
                     },
                 })
             }
+            //ten danh muc khuyen mai
+            function title_categories_promotion(data){
+                var template_title_categories_promotion = $('#template_title_categories_promotion').html();
+                $('#slider-categories-promotion').append(template_title_categories_promotion);
+                $.each(data, function(k,v){
+                    if(k==0){
+                        $('#item_cp').append('<div class="item_title active"  data-target="'+v.id+'">'+v.name+'</div>');
+                    }
+                    else{
+                        $('#item_cp').append('<div class="item_title" data-target="'+v.id+'">'+v.name+'</div>');
+                    }
+                });
+                $('#item_cp').owlCarousel({
+                    autoplay: false,
+                    autoplayHoverPause: true,
+                    loop: false,
+                    margin: 10,
+                    nav: false,
+                    dots: false,
+                    mouseDrag: true,
+                    touchDrag: true,
+                    callbacks: true,
+                    items:5,
+                    responsive:false
+                });
+            }
+            //danh sach san pham danh muc khuyen mai
+            function product_categories_promotion(data,id_append){
+                tmp_product_2(data,id_append);
+                $(id_append+' .tmp_product .box_product').addClass('active');
+                $(id_append+' .tmp_product .lower_half').addClass('active');
+                $(id_append+' .tmp_product .upper_half').addClass('active');
+                $(id_append+'.tmp_product').addClass('active');
+                $(id_append).owlCarousel('destroy');
+                $(id_append).owlCarousel({
+                    autoplay: true,
+                    autoplayHoverPause: true,
+                    loop: true,
+                    margin: 10,
+                    nav: false,
+                    dots: false,
+                    mouseDrag: true,
+                    touchDrag: true,
+                    callbacks: true,
+                    lazyLoad: true,
+                    responsive: {
+                        0: {
+                            items:1,
+                        },
+                        700: {
+                            items:2,
+                        },
+                        1650: {
+                            items:3
+                        },
+                    },
+                });
+            }
+            //chon lai danh muc khuyen mai
+            $(document).on('click', '.item_title', function(){
+                var id =  $(this).attr('data-target');
+                $('.item_title').removeClass('active');
+                $(this).addClass('active');
+                $('#list_pcp').html('');
+                var data = {
+                    _token: _token,
+                    id:id
+                };
+                $.ajax({
+                    url: "{{route('get_product_categories_loading')}}",
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        product_categories_promotion(data.product_promotion,'#list_pcp');
+                    },
+                })
+            })
 
             function loadfooter() {
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -630,11 +756,28 @@
                 })
             }
 
+            //ham cai dat load khung hinh
+            function isOnScreen(elem) {
+                if (elem.length == 0) {
+                    return;
+                }
+                var $window = jQuery(window)
+                var viewport_top = $window.scrollTop() //vị trí đang scroll
+                var viewport_height = $window.height()  // chiều cao màn hình
+                var viewport_bottom = viewport_top + viewport_height
+                var $elem = jQuery(elem)
+                var top = $elem.offset().top
+                var height = $elem.height()
+                var bottom = top + height
+
+                return (top >= viewport_top && top < viewport_bottom) ||
+                    (bottom > viewport_top && bottom <= viewport_bottom) ||
+                    (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
+            }
             function runOnScroll() {
                 list_product.forEach(function (category_id) {
                     if (isOnScreen($("#category-" + category_id)) && ($("#category-" + category_id).hasClass("loaded") == false)) {
-                        laySp(category_id);
-
+                        get_product_categories_loading(category_id);
                         $("#category-" + category_id).addClass("loaded");
                     }
                 });

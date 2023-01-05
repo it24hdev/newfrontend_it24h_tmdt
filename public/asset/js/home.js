@@ -47,42 +47,22 @@ $(document).ready(function () {
         mouseDrag: true,
         touchDrag: true,
         lazyLoad: true,
-        items:5,
-        responsive:false
+        responsive: {
+            0: {
+                items:4,
+            },
+            700: {
+                items:5,
+            },
+            1350: {
+                items:6,
+            },
+            1600: {
+                items:7,
+            },
+        },
     });
-    // $('#slider-deal-supper').owlCarousel({
-    //     autoplay: true,
-    //     autoplayHoverPause: true,
-    //     loop: true,
-    //     margin: 10,
-    //     nav: true,
-    //     dots: false,
-    //     mouseDrag: true,
-    //     touchDrag: true,
-    //     callbacks: true,
-    //     lazyLoad: true,
-    //     // items:4,
-    //     // responsive:false
-    //     responsive: {
 
-    //         0: {
-    //             items:3,
-    //         },
-    //         730: {
-    //             items:3,
-    //         },
-    //         1200: {
-    //             items:4,
-    //         },
-    //         1350: {
-    //             items:3,
-    //         },
-    //         1510: {
-    //             items:4,
-    //         },
-
-    //     },
-    // });
     $('.wp-info-product').owlCarousel({
         autoplay: true,
         autoplayHoverPause: true,

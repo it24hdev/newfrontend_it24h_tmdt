@@ -175,6 +175,8 @@
 }
 .categories-slider-home{
     position: relative;
+    max-height: 600px;
+    overflow: hidden;
 }
 .categories-slider-home .owl-carousel{
     position: unset;
@@ -629,7 +631,6 @@ ul.product-attributes li{
     overflow: hidden;
 }
 .product-content .block-title{
-    /* position: relative; */
     margin-bottom: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -747,6 +748,9 @@ ul.product-attributes li{
 .product-content .block-title h2{
     background-color: #fff;
     position: relative;
+}
+.product-content{
+    min-height: 596px;
 }
 
 .product-content .owl-carousel .owl-nav, .tabs-product .owl-carousel .owl-nav{
@@ -1112,7 +1116,8 @@ ul.sub_cat_title_slider li{
     padding: 10px;
     border: 1px solid #e5e5e5;
     border-radius: 10px;
-    max-width: 500px;
+    max-width: 650px;
+    margin: 1px 0 2px 0;
 }
 .tmp_product .head_p{
     display: flex;
@@ -1129,12 +1134,7 @@ ul.sub_cat_title_slider li{
     width: 100%;
     background-repeat: no-repeat;
 }
-.tmp_product .tag_p{
-    display: block;
-    width: 40%;
-    font-size: 12px;
-    float: right;
-}
+
 .tmp_product .years,.tmp_product .payment{
     float: right;
     background-color: #f1f1f1;
@@ -1180,6 +1180,9 @@ ul.sub_cat_title_slider li{
     padding-right: 8px;
     text-transform: uppercase;
     font-size: 12px;
+    visibility: hidden;
+    opacity: 0;
+    height: 20px;
 }
 .tmp_product .event img{
     width: 100%;
@@ -1303,22 +1306,125 @@ ul.sub_cat_title_slider li{
 #slider-deal-supper{
     display: flex;
 }
+#slider-deal-supper .owl-stage-outer{
+    padding: 0 10px;
+}
+#slider-deal .wp-supper-deal{
+    padding: 13px 20px;
+}
 .tmp_product .box_product.active{
     display: flex;
 }
 .tmp_product .upper_half.active , .tmp_product .lower_half.active {
-    width: 50%;
+
     padding: 0 10px;
 }
+.tmp_product .upper_half.active{
+    width: 45%;
+}
+.tmp_product .lower_half.active {
+    width: 55%;
+}
+.tmp_product .lower_half.active .detail{
+    padding: 0 0 5px 0;
+}
+.tmp_product .lower_half.active .event{
+    margin: 0px 3px 4px 0;
+}
+
 .tmp_product.active{
-    width: 500px;
+    width: 100%;
+    height: auto;
+    margin-bottom: 10px;
 }
 #list_pcp .owl-item{
-    width: 500px !important
+    margin-bottom: 10px;
 }
-#list_pcp{
-    display: table;
+.tmp_product.active .tag_p{
+    font-size: 8px;
 }
+.tmp_product .tag_p{
+    display: block;
+    width: 40%;
+    font-size: 12px;
+    float: right;
+}
+.tmp_product:hover{
+    box-shadow: 0 0 15px rgb(0 0 0 / 15%);
+    border: 1px solid #fff;
+}
+
+.box_title_cp{
+    display: flex;
+    padding: 0;
+}
+.box_title_cp .item_title{
+    background: #fff;
+    line-height: 20px;
+    text-align: center;
+    padding: 8px 20px;
+    border-radius: 35px;
+    margin-right: 20px;
+    display: flex;
+    color: #1D94FF;
+    font-size: 18px;
+    font-weight: 600;
+    border: 1px solid;
+    margin-bottom: 10px;
+    min-height: 58px;
+    justify-content: space-around;
+    align-items: center;
+}
+.box_title_cp .item_title.active{
+    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
+    color: #fff;
+}
+#item_cp .owl-item{
+    /*width: auto!important;*/
+}
+#item_cp{
+    margin-bottom: 20px;
+}
+#list_pcp .tmp_product{
+    margin-bottom: 10px;
+}
+
+#slider-deal{
+    min-height: 510px;
+    margin-bottom: 20px;
+}
+#slider-categories-promotion{
+    min-height: 650px;
+}
+#list-cat-slider{
+    max-height: 560px;
+}
+.item_categoreis_child{
+    font-size: 15px;
+    color: #333333;
+    display: inline-block;
+    padding: 5px 10px;
+    position: relative;
+    margin-right: 5px;
+    background: #ececec;
+    border-radius: 10px;
+    width: 100%;
+}
+.flex_title{
+    flex-wrap: nowrap!important;
+}
+.flex_title ul{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+@media (min-width:1200px) {
+    .tmp_product.active .tag_p{
+        font-size: 12px;
+    }
+}
+
 @media (min-width:1024px){
     .content-right .slider-banner .slider{
         width: 75%;
@@ -1333,7 +1439,7 @@ ul.sub_cat_title_slider li{
     }
     #content .content-left {
         width: 300px;
-        padding: 590px 30px 0px 0px;
+        padding: 630px 30px 0px 0px;
         visibility: visible;
         opacity: 1;
     }

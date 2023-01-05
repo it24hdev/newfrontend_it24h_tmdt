@@ -381,7 +381,8 @@ Route::post('/get_district', [CartController::class, 'get_district'])->name('get
 
 /** Frontend */
 Route::get('/', [HomeController::class, 'index'])->name('user');
-Route::post('/', [HomeController::class, 'getProducts'])->name('getProducts');
+Route::post('/get_product_categories_loading', [HomeController::class, 'get_product_categories_loading'])->name('get_product_categories_loading');
+Route::post('/get_list_categories_child_loading', [HomeController::class, 'get_list_categories_child_loading'])->name('get_list_categories_child_loading');
 Route::post('/get_deal', [HomeController::class, 'get_deal'])->name('get_deal');
 Route::post('/get_categories_promotion', [HomeController::class, 'get_categories_promotion'])->name('get_categories_promotion');
 Route::post('/footer', [HomeController::class, 'loadfooter'])->name('loadfooter');
