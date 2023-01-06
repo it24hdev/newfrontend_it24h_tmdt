@@ -206,7 +206,7 @@ ul.list-categories li.cat-item a:hover{
   border-radius: 50%;
   left: -7px;
   top: -7px;
-  background-color: #345DBB;
+  background-color: #1d94ff;
 }
 
 /* Styling;
@@ -216,7 +216,7 @@ ul.list-categories li.cat-item a:hover{
 }
 
 .noUi-connect {
-  background: #345DBB;
+  background: #1d94ff;
   -webkit-transition: background 450ms;
   transition: background 450ms;
 }
@@ -276,27 +276,27 @@ ul.list-categories li.cat-item a:hover{
     width: 25%;
 }
 .form-filter button{
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 18px;
+    font-weight: 600;
     padding-top: 10px;
     padding-bottom: 10px;
     order: 3;
     margin-top: 15px;
     margin-bottom: 15px;
     margin-left: auto;
-    border: none;
     display: block;
-    color: #222;
+    color: #1d94ff;
     border-radius: 4px;
     text-transform: unset;
     background-color: #fff;
     width: 100%;
     transition: all .3s ease;
-    border: 1px solid #169fd8;
+    border: 1px solid #1d94ff;
 }
 .form-filter button:hover{
-    background-color: #169fd8;
-    color: #fff;
+    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
+    color: #FFFFFF;
+    border: none;
 }
 .filter-color-sidebar ul.list-color{
     margin-left: -5px;

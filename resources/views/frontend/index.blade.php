@@ -196,52 +196,33 @@
                     <!-- Danh mục -->
                     @foreach ($get_cat_parents as $cat_parent)
                         <div class="product-content mb-4" id="category-{{$cat_parent->id}}">
-                            <div class="block-title flex_title">
-                                <div>
-                                    <div> <h2>{{$cat_parent->name}}</h2> </div>
-                                    <div> <ul class="owl-carousel owl-theme owl-loaded owl-drag" id="list-cat-child-{{$cat_parent->id}}"></ul></div>
+                            <div class="block-title flex-wrap">
+                                <div class="d-flex w-100 overflow-hidden justify-content-between">
+                                    <div class="name_cat_parent"> <h2>{{$cat_parent->name}}</h2> </div>
+                                    <div class="linktocat"><a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all"><span>Xem tất cả</span><i class="far fa-angle-right"></i></a></div>
                                 </div>
-                                <div><a href="{{route('product_cat', ['slug' =>  $cat_parent->slug])}}" class="show-all">Xem tất cả <i class="far fa-angle-right"></i></a></div>
+                                <div class="d-flex align-items-center overflow-hidden w-100"> <ul class="owl-carousel owl-theme owl-loaded owl-drag px-0 my-0" id="list-cat-child-{{$cat_parent->id}}"></ul></div>
                             </div>
                             <div id="data-{{$cat_parent->id}}" class="owl-carousel owl-theme owl-loaded owl-drag"></div>
                         </div>
                     @endforeach
                 </div>
             </div>
-            <div id="slider-bottom"></div>
+            <div class="owl-carousel owl-theme owl-loaded owl-drag" id="load_brand"></div>
         </div>
     </div>
-    <div id="loadfooter"></div>
 @include('frontend.desktop.template.template_deals_time')
 @include('frontend.desktop.template.template_title_categories_promotion')
 @include('frontend.desktop.template.template_product_two_rows')
-
+@include('frontend.desktop.template.template_brand')
+@endsection
+@section('footer')
+    @include('frontend.layouts.footer')
 @endsection
 @section('js')
     <script>
         $(document).ready(function () {
             var _token = $('meta[name="csrf-token"]').attr('content');
-            let width = window.innerWidth;
-            $('.wp-submenu').each(function() {
-                if(width>1650)
-                {
-                    $(this).css({"width":"1355px"});
-                }else{
-                    $(this).css({"width":"calc("+width+"px - 45px - 100%)"});
-                }
-            });
-            $(window).resize(function () {
-                let w = window.innerWidth;
-                $('.wp-submenu').each(function() {
-                    if(w>1650)
-                    {
-                        $(this).css({"width":"1355px"});
-                    }else{
-                        $(this).css({"width":"calc("+w+"px - 45px - 100%)"});
-                    }
-                });
-            });
-
             //Them san pham vao gio hang
             add_cart = function (id) {
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -261,7 +242,6 @@
                     },
                 });
             }
-
             //ham them san pham yeu thich
             add_wish = function (id) {
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -277,7 +257,6 @@
                     },
                 });
             }
-
             // danh sach danh muc hien thi tren trang chu
             var list_product = [];
             let list_cat = $('.get-list-cat').data('list');
@@ -348,11 +327,11 @@
                     data: data,
                     success: function (data) {
                         $.each(data, function (k, v) {
-                            append_id.append('<li class="item_categoreis_child" data-target="' + v.id + '">' + v.name + '</li>');
+                            append_id.append('<li class="item_categoreis_child" data-target="' + v.id + '" data-parent="'+v.parent_id+'">' + v.name + '</li>');
                         });
                         append_id.owlCarousel('destroy');
                         append_id.owlCarousel({
-                            autoplay: true,
+                            autoplay: false,
                             autoplayHoverPause: false,
                             loop: false,
                             margin: 10,
@@ -458,7 +437,7 @@
                 $.each(data, function(k,v) {
                     var url ="";
                     var tmp = $(template_product_desktop).clone();
-                    if(v.img_brands){
+                    if(v.img_brands !="no-images.jpg"){
                         $(tmp).find('.brand').css({'visibility':'visible','opacity':'1'});
                         url = '{{asset("upload/images/products/thumb/img_brand")}}';
                         url = url.replace('img_brand',v.img_brands);
@@ -488,8 +467,7 @@
                         $(tmp).find('.thumb img').attr('data-src',url);
                     }
                     $(tmp).find('.name span').html(v.name);
-                    if(v.event!=0){
-
+                    if(v.event!=0 && v.event_icon){
                         $(tmp).find('.event').css({'background':'linear-gradient(to right,'+v.event_color_left+','+v.event_color_right+')','visibility':'visible','opacity':'1'});
                         url = '{{asset("upload/images/products/thumb/event_icon")}}';
                         url = url.replace('event_icon',v.event_icon);
@@ -542,7 +520,7 @@
                 $.each(data, function(k,v) {
                     var  tmp = $(template_product_desktop).clone();
                     var url ="";
-                    if(v.img_brands){
+                    if(v.img_brands != "no-images.jpg"){
                         $(tmp).find('.brand').css({'visibility':'visible','opacity':'1'});
                         url = '{{asset("upload/images/products/thumb/img_brand")}}';
                         url = url.replace('img_brand',v.img_brands);
@@ -572,9 +550,8 @@
                         $(tmp).find('.thumb img').attr('data-src',url);
                     }
                     $(tmp).find('.name span').html(v.name);
-                    if(v.event!=0){
-                        $(tmp).find('.event').removeClass('d-none');
-                        $(tmp).find('.event').css('background','linear-gradient(to right,'+v.event_color_left+','+v.event_color_right+')');
+                    if(v.event!=0 && v.event_icon){
+                        $(tmp).find('.event').css({'background':'linear-gradient(to right,'+v.event_color_left+','+v.event_color_right+')','visibility':'visible','opacity':'1'});
                         url = '{{asset("upload/images/products/thumb/event_icon")}}';
                         url = url.replace('event_icon',v.event_icon);
                         $(tmp).find('.event img').attr('src',url);
@@ -617,12 +594,9 @@
                     $(tmp).find('.add-cart').attr('data-target',v.id);
                     if((k+1)%2!=0){
                         tmp_two_rows = $(template_two_rows).clone();
-                        console.log(tmp_two_rows.html());
                         $(tmp_two_rows).find('.p_two_rows').append(tmp);
-
                     }
                     else{
-                        console.log(2);
                         $(tmp_two_rows).find('.p_two_rows').append(tmp);
                         $(id_append).append(tmp_two_rows);
                     }
@@ -722,36 +696,87 @@
                     },
                 })
             })
-
-            function loadfooter() {
-                var _token = $('meta[name="csrf-token"]').attr('content');
+            //chon danh muc con- hien thi danh sach san pham danh muc con
+            $(document).on('click','.item_categoreis_child',function () {
+                var id = $(this).attr('data-target');
+                var parent_id = $(this).attr('data-parent');
+                var append_id = '#data-'+parent_id;
+                $('.item_categoreis_child').removeClass('active');
+                $(this).addClass('active');
+                $(append_id).html('');
                 var data = {
-                    _token: _token
+                    _token: _token,
+                    id:id
                 };
                 $.ajax({
-                    url: "{{route('loadfooter')}}",
+                    url: "{{route('get_product_categories_loading')}}",
                     type: "post",
                     dataType: "json",
                     data: data,
                     success: function (data) {
-                        $('#loadfooter').append(data);
-
+                        tmp_product(data.product_promotion,append_id);
+                        $(append_id).owlCarousel('destroy');
+                        $(append_id).owlCarousel({
+                            autoplay: false,
+                            autoplayHoverPause: true,
+                            loop: false,
+                            margin: 10,
+                            nav: true,
+                            dots: false,
+                            mouseDrag: true,
+                            touchDrag: true,
+                            lazyLoad: true,
+                            responsive: {
+                                0: {
+                                    items: 2
+                                },
+                                650: {
+                                    items: 3
+                                },
+                                870: {
+                                    items: 4
+                                },
+                                1000: {
+                                    items: 5
+                                },
+                                1600: {
+                                    items: 6
+                                }
+                            }
+                        });
                     },
-                })
-            }
-
-            function loadsliderbottom() {
-                var _token = $('meta[name="csrf-token"]').attr('content');
+                });
+            })
+            //load thuong hieu
+            function load_brand() {
                 var data = {
                     _token: _token
                 };
                 $.ajax({
-                    url: "{{route('loadsliderbottom')}}",
+                    url: "{{route('load_brand')}}",
                     type: "post",
                     dataType: "json",
                     data: data,
                     success: function (data) {
-                        $('#slider-bottom').append(data);
+                        var tmp_brand = $(template_brand).html();
+                        $.each(data, function (k,v){
+                            var url_img = '{{asset('upload/images/products/large/brand_img')}}';
+                            var tmp = $(tmp_brand).clone();
+                            url_img = url_img.replace('brand_img', v.image);
+                            $(tmp).find('img').attr('src',url_img);
+                            $('#load_brand').append(tmp);
+                        });
+                        $('#load_brand').owlCarousel('destroy');
+                        $('#load_brand').owlCarousel({
+                            autoplay: true,
+                            autoplayHoverPause: true,
+                            loop: true,
+                            margin: 10,
+                            nav: false,
+                            dots: false,
+                            autoWidth: true,
+                            callbacks: true,
+                        });
                     },
                 })
             }
@@ -774,6 +799,7 @@
                     (bottom > viewport_top && bottom <= viewport_bottom) ||
                     (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
             }
+            //ham xu ly khi cuon man hinh
             function runOnScroll() {
                 list_product.forEach(function (category_id) {
                     if (isOnScreen($("#category-" + category_id)) && ($("#category-" + category_id).hasClass("loaded") == false)) {
@@ -781,31 +807,23 @@
                         $("#category-" + category_id).addClass("loaded");
                     }
                 });
-
                 if (isOnScreen($("#slider-deal")) && ($("#slider-deal").hasClass("loaded") == false)) {
                     get_deal();
                     $("#slider-deal").addClass("loaded");
                 }
-
-
                 if (isOnScreen($("#slider-categories-promotion")) && ($("#slider-categories-promotion").hasClass("loaded") == false)) {
                     get_categories_promotion();
                     $("#slider-categories-promotion").addClass("loaded");
                 }
-
-                if (isOnScreen($("#loadfooter")) && ($("#loadfooter").hasClass("loaded") == false)) {
-                    loadfooter();
-                    $("#loadfooter").addClass("loaded");
-                }
-
-                if (isOnScreen($("#slider-bottom")) && ($("#slider-bottom").hasClass("loaded") == false)) {
-                    loadsliderbottom();
-                    $("#slider-bottom").addClass("loaded");
+                if (isOnScreen($("#load_brand")) && ($("#load_brand").hasClass("loaded") == false)) {
+                    load_brand();
+                    $("#load_brand").addClass("loaded");
                 }
             }
             $(window).scroll(runOnScroll);
-            $(document).on('click', '#registerservice', function (){
 
+            //dang ky dich vu
+            $(document).on('click', '#registerservice', function (){
                 var name =   $("input[name='customer_name']").val();
                 var phone =   $("input[name='customer_numberphone']").val();
                 var email =   $("input[name='customer_email']").val();
@@ -861,7 +879,6 @@
                     });
                 }
             });
-
             $(document).on('click', '#re_register , #newrequest', function (){
                 $('.respone_register').addClass('d-none');
                 $('.register_form').removeClass('d-none');

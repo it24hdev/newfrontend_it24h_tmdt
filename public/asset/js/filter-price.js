@@ -60,8 +60,8 @@ $(document).ready(function() {
     $('.btn-filter-price-1').click(function(){
         var min_value = $('#slider-range-value3').val().replace(/\./g, '');
         var max_value = $('#slider-range-value4').val().replace(/\./g, '');
-        document.getElementById('min-value1').value = min_value;
-        document.getElementById('max-value2').value = max_value;
+        document.getElementById('min-value-tl').value = min_value;
+        document.getElementById('max-value-tl').value = max_value;
     });
   });
 

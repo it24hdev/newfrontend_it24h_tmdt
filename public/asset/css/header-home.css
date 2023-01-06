@@ -80,7 +80,7 @@ ul {
 }
 
 .page-header .header-mid {
-    background: linear-gradient(to right, #0f3cb6, #169fd8);
+    background: linear-gradient(to right, #0d4cfb, #1d94ff );
     border-radius: 10px;
 }
 
@@ -325,7 +325,7 @@ ul {
     width: 30px;
     height: 30px;
     line-height: 30px;
-    background-color: #169fd8;
+    background-color: #1d94ff;
     color: #fff;
     position: absolute;
     top: 10px;
@@ -361,12 +361,12 @@ ul {
 }
 
 .horizontal-menu nav ul li:hover a {
-    background: linear-gradient(to left, #6cc9ed, #169fd8);
+    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
     color: #FFFFFF;
 }
 
 .horizontal-menu nav ul li a.active {
-    background: linear-gradient(to left, #6cc9ed, #169fd8);
+    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
     color: #FFFFFF;
 }
 
@@ -394,7 +394,7 @@ ul {
     left: 0;
     min-width: 220px;
     border-radius: 10px;
-    border: 2px solid #169fd8;
+    border: 2px solid #1d94ff;
     background-color: #fff;
     z-index: 9999;
     transition: ease all 0.2s;
@@ -430,7 +430,7 @@ ul {
 }
 
 .vertical-menu-content ul.menu-cat li:hover > a {
-    color: #169fd8;
+    color: #1d94ff ;
 }
 
 .vertical-menu-content ul.menu-cat li a span.icon-right {
@@ -498,7 +498,7 @@ ul li .wp-submenu .content-submenu .wp-product-banner {
 }
 
 .wp-menu-parent ul li a:hover {
-    color: #169fd8 !important;
+    color: #1d94ff !important;
 }
 
 .rating2 {
@@ -923,7 +923,7 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     border-radius: 3px;
     -webkit-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
-    background: linear-gradient(to bottom, #6cc9ed, #169fd8);
+    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
     cursor: pointer;
 }
 
@@ -938,9 +938,11 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
 }
 
 .wp-breadcrumb-page {
-    margin-bottom: 30px;
-    padding: 10px 0;
     background-color: #eee;
+    max-width: 1620px;
+    margin: 0 auto;
+    padding: 10px 0px;
+    margin-bottom: 30px;
 }
 
 .breadcrumb-page a {
@@ -1096,7 +1098,16 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
 .desktop-menu.clearfix {
     display: flex;
 }
-
+.content-img a{
+    background-size: 100% 100%;
+    height: 580px;
+    width: 100% !important;
+    border-radius: 0 7px 7px 0px;
+    display: block;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+}
 @media (min-width: 1024px){
     .wp-menu-parent ul li a{
         font-size: 14px;

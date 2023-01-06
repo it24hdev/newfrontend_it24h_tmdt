@@ -65,16 +65,8 @@
                         Kinh doanh 1: 0886776286
                     </a>
                     <a class="phone" href="">
-                        <i class="fas fa-phone-alt me-1"></i>
-                        Kinh doanh 2: 0886776286
-                    </a>
-                    <a class="phone" href="">
-                        <i class="fas fa-phone-alt me-1"></i>
-                        Kinh doanh 3: 0886776286
-                    </a>
-                    <a class="phone" href="">
                         <i class="fas fa-envelope me-1"></i>
-                       Email: contact@it24h.vn
+                        Email: contact@it24h.vn
                     </a>
                     <a class="warranty-logo-dtv">
                         <div class="box-left">
@@ -94,24 +86,12 @@
                 <div class="box-content info-news">
                     <div class="title">Tin tức</div>
                     <ul>
-                        @foreach ($posts_footer as $item)
-                            <li>
-                                <a href="{{route('singlePost', $item->slug)}}">
-                                    <div class="thumb">
-                                        <img src="{{asset('upload/images/post/thumb/'.$item->thumb)}}" alt="">
-                                    </div>
-                                    <div class="detail">
-                                        <h4>{{$item->title}}</h4>
-                                    </div>
-                                </a>
-                            </li>
-                        @endforeach
                     </ul>
                 </div>
                 <div class="box-content info-fanpage">
                     <div class="title">Fanpage</div>
                     <div class="fanpage-fb">
-                        <a href="https://www.facebook.com/it24h.vnn">
+                        <a href="https://www.facebook.com/it24h.vn">
                             <img src="{{asset('/asset/images/fanpage-it24h.jpg')}}" alt="">
                         </a>
                     </div>
@@ -120,8 +100,8 @@
                     <div class="title">Youtube</div>
                     <div class="youtube-content">
                         <div>
-                            <a href="https://www.youtube.com/embed/vlDzYIIOYmM" style="display: block"><img src="{{asset('/upload/images/youtubevideo.png')}}" style="width: 100%; height: auto"></a>
-                            {{-- <iframe src="" title="YouTube video" allowfullscreen></iframe> --}}
+                            <a class="d-block" href="https://www.youtube.com/embed/vlDzYIIOYmM">
+                                <img src="{{asset('/upload/images/youtubevideo.png')}}" width="100%"></a>
                         </div>
                     </div>
                 </div>
@@ -138,7 +118,7 @@
                         <a href="">Liên hệ hợp tác kinh doanh</a>
                         <a href="">Thông tin tuyển dụng</a>
                         <a href="">Tin công nghệ</a>
-                        <a href="{{route('recruit')}}">Tuyên dụng</a>
+                        <a href="{{route('recruit')}}">Tuyển dụng</a>
                     </div>
                 </div>
                 <div class="box-content info-support">
@@ -171,13 +151,14 @@
                             <img src="{{asset('/asset/images/payment-footer.png')}}" alt="">
                         </div>
                         <div class="icon-footer">
-                            <img src="{{asset('/asset/images/bct-2020.png')}}" alt="">
+                            {{--                                <img src="{{asset('/asset/images/bct-2020.png')}}" alt="">--}}
                         </div>
                         <div class="register-email">
                             <form action="">
                                 <label for="">Đăng ký nhận thông tin</label>
                                 <div class="group-input">
-                                    <input type="email" name="" class="form-control" placeholder="Nhập email" required>
+                                    <input type="email" name="" class="form-control" placeholder="Nhập email"
+                                           required>
                                     <button><i class="fas fa-paper-plane"></i></button>
                                 </div>
                             </form>

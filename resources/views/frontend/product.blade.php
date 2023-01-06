@@ -12,10 +12,6 @@
     @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
 @endsection
 
-@section('header-mobile')
-    @include('frontend.layouts.menu-mobile', [$Sidebars])
-@endsection
-
 @section('content')
     <div class="wp-content">
             <div class="wp-breadcrumb-page">
@@ -32,7 +28,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="container-page">
                 <div class="wp-content clearfix">
                     <div class="sidebar">
@@ -80,7 +75,7 @@
                                     <div class="col-12">
                                             <input type="hidden" id="min-value" name="min-value" value="">
                                             <input type="hidden" id="max-value" name="max-value" value="">
-                                            <button type="submit" class="button btn-filter-price">@lang('lang.Filter')</button>
+                                            <button type="button" class="button btn-filter-price filter_price" data-target="ds">@lang('lang.Filter')</button>
                                     </div>
                                 </div>
                             </form>
@@ -193,10 +188,8 @@
                                 @lang('lang.Filterby')
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'A-Z']) }}">@lang('lang.From') A-Z</a></li>
-                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'Z-A']) }}">@lang('lang.From') Z-A</a></li>
-                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'gia-giam-dan']) }}">@lang('lang.Sortbypricehightolow')</a></li>
-                                    <li><a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'gia-tang-dan']) }}">@lang('lang.Sortbypricelowtohigh')</a></li>
+                                    <li><a class="dropdown-item sort_price_asc" data-target="gia_thap_den_cao">Giá tăng dần</a></li>
+                                    <li><a class="dropdown-item sort_price_desc" data-target="gia_cao_den_thap">Giá giảm dần</a></li>
                                 </ul>
                             </div>
                             <p class="showing">
@@ -306,7 +299,6 @@
                                 </div>
                             </div>
                         {!! $products->links('frontend.pagination') !!}
-
                             <div>
                                 @if(!empty($cat->content))
                                 {!! $cat->content !!}
@@ -360,9 +352,9 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <input type="hidden" id="min-value1" name="min-value" value="">
-                            <input type="hidden" id="max-value2" name="max-value" value="">
-                            <button type="submit" class="button btn-filter-price-1">@lang('lang.Filter')</button>
+                            <input type="hidden" id="min-value-tl" name="min-value" value="">
+                            <input type="hidden" id="max-value-tl" name="max-value" value="">
+                            <button type="button" class="button btn-filter-price-1 filter_price" data-targe="tb">@lang('lang.Filter')</button>
                         </div>
                     </div>
                     </form>
@@ -474,18 +466,48 @@
 <script src="{{asset('asset/js/filter-price.js')}}"></script>
 <script>
     $(document).ready(function(){
+
+            //Loc gia
+            $(document).on('click','.filter_price', function (){
+                var params_string = window.location.search;
+                var searchparams =  new URLSearchParams(params_string);
+                var device = $(this).attr('data-target');
+                if(device == "ds"){
+                    var min_price = $('#min-value').val();
+                    var max_price = $('#max-value').val();
+                }
+                else{
+                    var min_price = $('#min-value-tl').val();
+                    var max_price = $('#max-value-tl').val();
+                }
+                var between = min_price + ';' + max_price;
+                if(searchparams.has('p')==true){
+                    searchparams.delete('p');
+                    searchparams.append('p',between);
+                }
+                else{
+                    searchparams.append('p',between);
+                }
+                window.location = window.location.origin + window.location.pathname + '?' +searchparams.toString();
+            });
+
+            //sap xep
+            $(document).on('click','.sort_price_asc, .sort_price_desc', function (){
+                var params_string = window.location.search;
+                var searchparams =  new URLSearchParams(params_string);
+                var orderby  =  $(this).attr('data-target');
+                if(searchparams.has('order')==true){
+                    searchparams.delete('order');
+                    searchparams.append('order',orderby);
+                }
+                else{
+                    searchparams.append('order',orderby);
+                }
+                window.location = window.location.origin + window.location.pathname + '?' +searchparams.toString();
+            });
+
+
             //Add to Cart
-
-         /*  var sPageURL = window.location.search.substring(1);
-            var sURLVariables = sPageURL.split('&');
-            for (var i = 0; i < sURLVariables.length; i++)
-            {
-                var sParameterName = sURLVariables[i].split('=');
-
-            }
-
-            console.log(sParameterName);*/
-
             var mess = document.getElementById('message_add_cart').innerHTML;
             add_cart = function(id){
                     var _token = $('meta[name="csrf-token"]').attr('content');

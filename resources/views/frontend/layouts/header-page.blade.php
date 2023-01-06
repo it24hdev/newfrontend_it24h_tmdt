@@ -21,15 +21,15 @@
             </ul>
             <div class="wp-language-email">
                 <div class="language"><div class="dropdown">
-                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        @lang('lang.Language')
-                    </a>
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                            @lang('lang.Language')
+                        </a>
 
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <li><a class="dropdown-item" href="{{ route('app.setLocale',['vi']) }}">@lang('lang.Vietnamese')</a></li>
-                      <li><a class="dropdown-item" href="{{ route('app.setLocale',['en']) }}">@lang('lang.English')</a></li>
-                    </ul>
-                  </div></div>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <li><a class="dropdown-item" href="{{ route('app.setLocale',['vi']) }}">@lang('lang.Vietnamese')</a></li>
+                            <li><a class="dropdown-item" href="{{ route('app.setLocale',['en']) }}">@lang('lang.English')</a></li>
+                        </ul>
+                    </div></div>
                 <div class="email-header"><a href="mailto:contact@it24h.vn">contact@it24h.vn</a></div>
             </div>
         </div>
@@ -37,7 +37,6 @@
             <div class="middle-content">
                 <div class="logo-container">
                     <h1 class="logo-content">
-                        <strong style="display: none;">IT24H - Máy tính văn phòng, PC gaming, phụ kiện máy tính, camera an linh</strong>
                         <a href="{{route('user')}}" title="IT24H - Máy tính văn phòng, PC gaming, phụ kiện máy tính, camera an linh">
                             <img src="{{asset('/asset/images/it24h.png')}}" alt="">
                         </a>
@@ -56,9 +55,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @foreach($Sidebars as $Sidebar)
-                                                @if($Sidebar->parent==0)
-                                                    <li><a class="dropdown-item" href="{!! $Sidebar->link !!}">{{$Sidebar->label}}</a></li>
-                                                @endif
+                                                <li><a class="dropdown-item" href="{!!$Sidebar->link!!}">{{$Sidebar->label}}</a></li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -72,7 +69,7 @@
                                 <span class="count" id="count-wish">
                                     @if (!empty(Cookie::get('count_wish')))
                                         {{Cookie::get('count_wish')}}
-                                        @else
+                                    @else
                                         0
                                     @endif
                                 </span>
@@ -110,9 +107,9 @@
                                             <a href="{{route('forgot_password')}}">@lang('lang.Forgetpassword')</a>
                                         </form>
                                         <a href="{{route('login-facebook')}}" class="btn-login-facebook btn btn-primary w-100 mt-2"><i class="fab fa-facebook-square me-2"></i>
-                                        @lang('lang.loginwithfb')</a>
+                                            @lang('lang.loginwithfb')</a>
                                         <a href="{{route('login-google')}}" class="btn-login-google btn btn-danger w-100 mt-2"><i class="fab fa-google me-2"></i>
-                                        @lang('lang.loginwithgg')</a>
+                                            @lang('lang.loginwithgg')</a>
                                     </div>
                                 </div>
                             @endif
@@ -129,32 +126,32 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content " style="visibility: hidden; transform: translateY(10px); opacity: 0;">
+                        <div class="vertical-menu-content" style="visibility: hidden; transform: translateY(10px); opacity: 0;">
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
-                                    @if($Sidebar->parent==0)
-                                    <li class="menucontent">
-                                        <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
-                                            {{$Sidebar->label}}
-                                             @if(count($Sidebar->childs))
-                                             <span class="icon-right"><i class="far fa-angle-right"></i></span>
-                                             @endif
-                                        </a>
-                                        <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}">
-                                            
+                                        <li class="menucontent">
+                                            <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
+                                                {{$Sidebar->label}}
+                                                @if(count($Sidebar->childs))
+                                                    <span class="icon-right"><i class="far fa-angle-right"></i></span>
+                                                @endif
+                                            </a>
+                                            <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}">
                                                 <div class="wp-submenu">
-                                                    <div class="content-submenu">
-                                                        @if(count($Sidebar->childs))
-                                                        <div id="subid-{{$Sidebar->id}}" class="full_sub">
+                                                    <div class="cpn_submenu col-12">
+                                                        <div class="content-submenu col-10">
+                                                            <div id="subid-{{$Sidebar->id}}" class="full_sub">
+                                                            </div>
                                                         </div>
-
-                                                        @endif
+                                                        <div class="col-2 content-img">
+                                                            <a style="background-image: url('https://theme.hstatic.net/1000026716/1000440777/14/xxxbannerxxx1.png?v=32041');">
+                                                            </a>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </li>
-                                    @endif
+                                        </li>
                                     @endforeach
                                 </ul>
                             </nav>
@@ -165,7 +162,7 @@
                     <div class="horizontal-menu">
                         <nav>
                             <ul class="menu-header">
-                                <li><a href="{{route('user')}}"><span><i class="far fa-home"></i></span> @lang('lang.Home')</a></li>
+                                <li><a href="/"><span><i class="far fa-home"></i></span> @lang('lang.Home')</a></li>
                                 <li><a href="{{route('list_product')}}" class="{{$active_menu == 'product' ? 'active' : ''}}"><span><i class="fal fa-shopping-bag"></i></span> @lang('lang.Shop')</a></li>
                                 <li><a href="{{route('categoryBlogs')}}" class="{{$active_menu == 'post' ? 'active' : ''}}"><span><i class="fal fa-newspaper"></i></span> @lang('lang.Blog')</a></li>
                                 <li><a href="{{route('contact')}}" class="{{$active_menu == 'contact' ? 'active' : ''}}"><span><i class="far fa-phone-rotary"></i></span> @lang('lang.Contact')</a></li>

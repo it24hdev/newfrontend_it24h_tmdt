@@ -1,5 +1,5 @@
 <script id="template_deals_time" type="text/x-custom-template">
-<div class="wp-supper-deal" style="margin-bottom: 50px;">
+<div class="wp-supper-deal mgb_deal">
     <div class="block-filterproducts clearfix" >
         <div class="block-title">
         <strong>Siêu Ưu Đãi <br> trong Tháng Này</strong>
@@ -30,7 +30,7 @@
         <div class="block-content">
         <div class="slider-content" >
             <div class="owl-carousel owl-theme owl-loaded owl-drag" id="slider-deal-supper">
-                
+
             </div>
         </div>
         </div>

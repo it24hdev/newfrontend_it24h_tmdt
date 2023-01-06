@@ -386,7 +386,7 @@ Route::post('/get_list_categories_child_loading', [HomeController::class, 'get_l
 Route::post('/get_deal', [HomeController::class, 'get_deal'])->name('get_deal');
 Route::post('/get_categories_promotion', [HomeController::class, 'get_categories_promotion'])->name('get_categories_promotion');
 Route::post('/footer', [HomeController::class, 'loadfooter'])->name('loadfooter');
-Route::post('/loadsliderbottom', [HomeController::class, 'loadsliderbottom'])->name('loadsliderbottom');
+Route::post('/load_brand', [HomeController::class, 'load_brand'])->name('load_brand');
 Route::get('/san-pham', [HomeController::class, 'product_cat'])->name('list_product');
 Route::get('/san-pham/{slug}', [HomeController::class, 'product_cat'])->name('product_cat');
 Route::get('/bai-viet', [HomeController::class, 'categoryBlogs'])->name('categoryBlogs');

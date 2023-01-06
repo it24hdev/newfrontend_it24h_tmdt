@@ -55,9 +55,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @foreach($Sidebars as $Sidebar)
-                                                @if($Sidebar->parent==0)
                                                     <li><a class="dropdown-item" href="{!!$Sidebar->link!!}">{{$Sidebar->label}}</a></li>
-                                                @endif
                                             @endforeach
                                         </ul>
                                     </div>
@@ -146,8 +144,9 @@
                                                         <div id="subid-{{$Sidebar->id}}" class="full_sub">
                                                         </div>
                                                     </div>
-                                                    <div class="col-2">
-                                                        <img src="https://theme.hstatic.net/1000026716/1000440777/14/xxxbannerxxx1.png?v=32041" class="w-100">
+                                                    <div class="col-2 content-img">
+                                                        <a style="background-image: url('https://theme.hstatic.net/1000026716/1000440777/14/xxxbannerxxx1.png?v=32041');">
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>

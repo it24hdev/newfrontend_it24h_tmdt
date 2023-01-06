@@ -108,7 +108,7 @@
                     @if($bard)
                         <div class="list-brand">
                             @foreach($bard as $key => $item)
-                                @if($item->image)
+                                @if($item->image!='no-images.jpg')
                                 <a href="{{route('product_cat',['slug'=> $cat->slug,'brand' => $item->name])}}" target="_self" class="list-brand__item">
                                     <img src="{{asset('upload/images/products/'.$item->image)}}"
                                          alt="{{$item->name}}" loading="lazy" class="filter-brand__img">
@@ -243,7 +243,7 @@
                                 <input type="hidden" name="min-value" class="min-value">
                                 <input type="hidden" name="max-value" class="max-value">
                                 <button class="btn btn-primary mx-1 close_p">Đóng</button>
-                                <button id="filter_price" class="btn btn-primary mx-1">Lọc</button>
+                                <button id="filter_price" class="mx-1">Lọc</button>
                                 {{--                            </form>--}}
                             </div>
                         </div>
@@ -407,7 +407,7 @@
                             @endif
                         </div>
 
-                        @if (!empty($value->brands->image))
+                        @if (!empty($value->brands->image !="no-images.jpg"))
                             <span class="dbrand2"
                                   style="background-image: url('{{asset("upload/images/products/thumb/".$value->brands->image)}}');"></span>
                         @endif

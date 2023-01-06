@@ -52,13 +52,11 @@
                     }, 200);
                 }
             };
-
             document.addEventListener("scroll", lazyLoad);
             window.addEventListener("resize", lazyLoad);
             window.addEventListener("orientationchange", lazyLoad);
         });
     </script>
-
 </head>
 
 <body>
@@ -206,6 +204,26 @@
                     },
                 })
             }
+        });
+        let width = window.innerWidth;
+        $('.wp-submenu').each(function() {
+            if(width>1650)
+            {
+                $(this).css({"width":"1355px"});
+            }else{
+                $(this).css({"width":"calc("+width+"px - 45px - 100%)"});
+            }
+        });
+        $(window).resize(function () {
+            let w = window.innerWidth;
+            $('.wp-submenu').each(function() {
+                if(w>1650)
+                {
+                    $(this).css({"width":"1355px"});
+                }else{
+                    $(this).css({"width":"calc("+w+"px - 45px - 100%)"});
+                }
+            });
         });
     });
 </script>

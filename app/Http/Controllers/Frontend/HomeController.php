@@ -229,31 +229,14 @@ class HomeController extends Controller
 
     //load danh muc con
     public  function get_list_categories_child_loading(Request $request){
-        $data = Category::where('status',1)->where('parent_id',$request->id)->get();
-        return response()->json($data);
+        $cat_child = Category::where('status',1)->where('parent_id',$request->id)->get();
+        return response()->json($cat_child);
     }
 
-    public function loadfooter(Request $request)
+    public function load_brand()
     {
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-
-        $view2 = view('frontend.layouts.footer', [
-            'posts_footer' => $posts_footer,
-        ])->render();
-        return response()->json($view2);
-    }
-
-    // lay san pham moi
-
-    public function loadsliderbottom(Request $request)
-    {
-
-        $list_brand = Brand::get();
-
-        $view2 = view('frontend.slider-bottom', [
-            'list_brand' => $list_brand,
-        ])->render();
-        return response()->json($view2);
+        $list_brand = Brand::where('image','<>',"no-images.jpg")->inRandomOrder()->limit(10)->get();
+        return response()->json($list_brand);
     }
 
     public function categoryBlogs(Request $request)
@@ -451,19 +434,17 @@ class HomeController extends Controller
         $cat = Category::where('slug', $request->slug)->first();
         $sliders = "";
         $list_cat_child = array();
-        $list_cat_childs = "";
+        $list_cat_childs ="";
         if (!empty($cat)) {
-            $cat_parent = Category::find($cat->id);
-            $list_cat_child = [];
-            foreach ($cat_parent->cat_child as $cat_child) {
-                $list_cat_child[] = $cat_child->id;
-            }
-            $list_cat_childs = Category::whereIn('id', $list_cat_child)->where('show_push_product', 1)->get();
-            array_push($list_cat_child, $cat->id);
-
+            $list_cat1 = Category::where('status',1)->where('parent_id',$cat->id)->pluck('id');
+            $list_cat2 = Category::where('status',1)->whereIn('parent_id',$list_cat1->all())->pluck('id');
+            $list_cat3 = Category::where('status',1)->whereIn('parent_id',$list_cat2->all())->pluck('id');
+            $arr[] = array_merge($list_cat1->all(),$list_cat2->all(),$list_cat3->all());
+            array_push($arr[0], $cat->id);
+            $list_cat_child = $arr[0];
+            $list_cat_childs = Category::whereIn('id', $list_cat1->all())->where('show_push_product', 1)->get();
             //slider banner header
             $sliders = json_decode($cat->banner);
-
             //neu co danh muc thi loc theo danh muc
             $categories = Category::where('taxonomy', Category::SAN_PHAM)
                 ->where('parent_id', $cat->id)

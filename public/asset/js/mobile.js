@@ -297,10 +297,12 @@ $(document).ready(function () {
     // danh sach danh muc hien thi tren trang chu
     var list_product = [];
     var list_cat = $('#categories_p').attr('list-cat');
-    var cat_ids = list_cat.split('_');
-    cat_ids.forEach(function (element) {
-        list_product.push(element);
-    });
+    if(list_cat){
+        var cat_ids = list_cat.split('_');
+        cat_ids.forEach(function (element) {
+            list_product.push(element);
+        });
+    }
 
     // lay san pham
     function laySp(category_id) {
@@ -721,10 +723,10 @@ $(document).ready(function () {
 
     // dong button loc
     $(document).on("click", '.btn-f, .btnclose', function () {
-        if ($('.filterall').hasClass('active_mn')) {
-            $('.filterall').removeClass('active_mn');
+        if ($('.filterall').hasClass('active_filter')) {
+            $('.filterall').removeClass('active_filter');
         } else {
-            $('.filterall').addClass('active_mn');
+            $('.filterall').addClass('active_filter');
         }
         $('.list-filter-child').removeClass('active');
         $('.p_filter').addClass('d-none');

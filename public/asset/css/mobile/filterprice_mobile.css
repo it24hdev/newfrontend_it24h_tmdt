@@ -110,7 +110,7 @@
     border-radius: 50%;
     left: -7px;
     top: -7px;
-    background-color: #345DBB;
+    background-color: #3991ff;
 }
 
 /* Styling;
@@ -120,7 +120,7 @@
 }
 
 .noUi-connect {
-    background: #345DBB;
+    background: #3991ff;
     -webkit-transition: background 450ms;
     transition: background 450ms;
 }
