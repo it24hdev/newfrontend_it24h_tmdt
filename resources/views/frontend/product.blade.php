@@ -214,15 +214,15 @@
                                                                 @if (!empty($item->year))
                                                                     <span class="years">{{$item->year}}</span>
                                                                 @endif
-                                                                @if (!empty($item->installment))
-                                                                    <span class="payment">Trả góp 0%</span>
+                                                                @if ($item->installment)
+                                                                    <span class="payment">{{$item->installment}}</span>
                                                                 @endif
                                                             </div>
                                                         </a>
                                                     </div>
                                                     <div class="detail">
                                                         <div class="wp-event">
-                                                            @if (!empty($item->event))
+                                                            @if ($item->event)
                                                                 <p class="event" style="background: linear-gradient(to right,{{$item->events->color_left}},{{$item->events->color_right}});">
                                                                     <img src="{{asset('upload/images/products/thumb/'.$item->events->icon)}}" alt="">
                                                                     <span>{{$item->events->name}}</span>
