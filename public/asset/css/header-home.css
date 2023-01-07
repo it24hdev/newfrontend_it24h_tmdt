@@ -361,12 +361,12 @@ ul {
 }
 
 .horizontal-menu nav ul li:hover a {
-    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
     color: #FFFFFF;
 }
 
 .horizontal-menu nav ul li a.active {
-    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
     color: #FFFFFF;
 }
 
@@ -923,7 +923,7 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     border-radius: 3px;
     -webkit-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
-    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
     cursor: pointer;
 }
 

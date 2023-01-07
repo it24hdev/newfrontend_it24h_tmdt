@@ -207,8 +207,8 @@
                                                     <div class="thumb">
                                                         <a href="{{ route('detailproduct', $item->slug)}}">
                                                             <img class="owl-lazy" src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
-                                                            @if (!empty($item->brands->image))
-                                                                <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
+                                                            @if ($item->brand_img !="no-images.jpg")
+                                                                <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brand_img)}}');"></span>
                                                             @endif
                                                             <div class="wp-tag">
                                                                 @if (!empty($item->year))
@@ -224,8 +224,8 @@
                                                         <div class="wp-event">
                                                             @if ($item->event)
                                                                 <p class="event" style="background: linear-gradient(to right,{{$item->events->color_left}},{{$item->events->color_right}});">
-                                                                    <img src="{{asset('upload/images/products/thumb/'.$item->events->icon)}}" alt="">
-                                                                    <span>{{$item->events->name}}</span>
+                                                                    <img src="{{asset('upload/images/products/thumb/'.$item->event_icon)}}" alt="">
+                                                                    <span>{{$item->event_name}}</span>
                                                                 </p>
                                                             @else
                                                                 <p class="event" style="min-height: 20px;"></p>
@@ -285,8 +285,8 @@
                                                             @endif
                                                             <div class="action">
                                                                 <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>
-                                                                <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm" onclick="add_wish({{$item->id}})"><i class="far fa-heart"></i></a>
-                                                                <a href="javascript:;" title="Thêm vào giỏ hàng" class="add-cart" onclick="add_cart({{$item->id}})"><i class="far fa-shopping-cart"></i></a>
+                                                                <a href="javascript:;" class="heart add-wish" get-id="{{$item->id}}" title="Lưu sản phẩm"><i class="far fa-heart"></i></a>
+                                                                <a href="javascript:;" class="add-cart" get-id="{{$item->id}}" title="Thêm vào giỏ hàng"><i class="far fa-shopping-cart"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -299,7 +299,7 @@
                                 </div>
                             </div>
                         {!! $products->links('frontend.pagination') !!}
-                            <div>
+                            <div class="discription_cat my-5">
                                 @if(!empty($cat->content))
                                 {!! $cat->content !!}
                                 @endif

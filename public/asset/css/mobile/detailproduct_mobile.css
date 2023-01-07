@@ -444,15 +444,16 @@ title_dtp ul{
     display: inline-flex;
     font-size: 1rem;
 }
-.button-add-to-cart img{
+.button-add-to-cart i{
     width: 30px;
     height: 30px;
     object-fit: contain;
     max-width: 100%;
     text-align: center;
     white-space: nowrap;
-    font-size: 1rem;
+    font-size: 23px;
     line-height: 1.5;
+    color: #e04040;
 }
 .button-add-to-cart span{
     font-size: 7.5px;

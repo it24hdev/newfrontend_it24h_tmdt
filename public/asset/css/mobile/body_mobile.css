@@ -538,7 +538,7 @@
 /*title product*/
 .block-featured-product {
     /*margin-bottom: 5px;*/
-    min-height: 250px;
+    height: 472px;
     background: white;
 }
 
@@ -815,15 +815,14 @@ a {
 
 .component-product .tag_cpn {
     width: 100%;
-    height: auto;
-    display: block;
-    float: left;
-    min-height: 40px;
+    display: flex;
+    height: 40px;
+    overflow: hidden;
 }
 
 .component-product .info_cpn, .component-product .detail_cpn {
-    display: block;
-    float: left;
+    width: 100%;
+    display: flex;
 }
 
 .component-product .action {
@@ -872,8 +871,6 @@ a {
 
 .component-product .p-img {
     overflow: hidden;
-    float: left;
-    /*display: block;*/
     width: 100%;
     align-items: center;
     display: flex;
@@ -889,21 +886,23 @@ a {
 }
 
 .component-product .p-info {
-    min-height: 110px;
-    float: left;
-    display: block;
+    height: 110px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .component-product .p-info .p-name {
-    display: block;
     font-size: 14px;
     line-height: 20px;
     font-weight: 600;
     margin-top: 5px;
     color: #111;
-    height: 40px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
-    width: 95%;
+    text-overflow: ellipsis;
 }
 
 .component-product .p-info .p-price {
@@ -1181,13 +1180,13 @@ a:active, a:hover {
 }
 
 .tag_p {
-    position: absolute;
-    display: inline-block;
-    right: 5px;
-    width: 70px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 50%;
     z-index: 5;
     font-size: 10px;
     font-weight: 700;
+    margin-left: 5px;
 }
 
 .years2 {
@@ -1199,6 +1198,8 @@ a:active, a:hover {
     float: left;
     border-radius: 3px;
     text-align: center;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .payment2 {
@@ -1208,13 +1209,14 @@ a:active, a:hover {
     width: 100%;
     border-radius: 3px;
     text-align: center;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .dbrand2 {
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
-    max-width: 50px;
     height: 15px;
     z-index: 2;
     font-size: 12px;
@@ -1227,8 +1229,12 @@ a:active, a:hover {
     align-items: center;
     -webkit-box-pack: center;
     justify-content: center;
+    width: 50%;
+    overflow: hidden;
+    margin-right: 5px;
+    visibility: hidden;
+    opacity: 0;
 }
-
 .promotion2 {
     display: flex;
     float: left;
@@ -1247,6 +1253,8 @@ a:active, a:hover {
     height: 24px;
     text-decoration: line-through;
     color: #888888 !important;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .dpercent2 {
@@ -1258,6 +1266,8 @@ a:active, a:hover {
     font-weight: 700;
     align-items: center;
     text-align: center;
+    visibility: hidden;
+    opacity: 0;
 }
 
 .p_rev {
@@ -1314,8 +1324,13 @@ a:active, a:hover {
     position: absolute;
     top: 3px;
     right: 0;
+    visibility: hidden;
+    opacity: 0;
 }
-
+.visible_opacity_show{
+    visibility: visible;
+    opacity: 1;
+}
 .sold2 i {
     margin-right: 3px;
 }

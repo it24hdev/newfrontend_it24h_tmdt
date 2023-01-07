@@ -4,7 +4,7 @@
         <div class="header-top">
             <ul class="social-header">
                 <li class="facebook">
-                    <a  title="Facebook" href="https://www.facebook.com/it24h.vnn"><i class="fab fa-facebook-f"></i></a>
+                    <a title="Facebook" href="https://www.facebook.com/it24h.vnn"><i class="fab fa-facebook-f"></i></a>
                 </li>
                 <li class="youtube">
                     <a class="icon-youtube1" title="Youtube" href="#"><i class="fab fa-youtube"></i></a>
@@ -20,16 +20,21 @@
                 </li>
             </ul>
             <div class="wp-language-email">
-                <div class="language"><div class="dropdown">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="language">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                           data-bs-toggle="dropdown" aria-expanded="false">
                             @lang('lang.Language')
                         </a>
 
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <li><a class="dropdown-item" href="{{ route('app.setLocale',['vi']) }}">@lang('lang.Vietnamese')</a></li>
-                            <li><a class="dropdown-item" href="{{ route('app.setLocale',['en']) }}">@lang('lang.English')</a></li>
+                            <li><a class="dropdown-item"
+                                   href="{{ route('app.setLocale',['vi']) }}">@lang('lang.Vietnamese')</a></li>
+                            <li><a class="dropdown-item"
+                                   href="{{ route('app.setLocale',['en']) }}">@lang('lang.English')</a></li>
                         </ul>
-                    </div></div>
+                    </div>
+                </div>
                 <div class="email-header"><a href="mailto:contact@it24h.vn">contact@it24h.vn</a></div>
             </div>
         </div>
@@ -37,7 +42,8 @@
             <div class="middle-content">
                 <div class="logo-container">
                     <h1 class="logo-content">
-                        <a href="{{route('user')}}" title="IT24H - Máy tính văn phòng, PC gaming, phụ kiện máy tính, camera an linh">
+                        <a href="{{route('user')}}"
+                           title="IT24H - Máy tính văn phòng, PC gaming, phụ kiện máy tính, camera an linh">
                             <img src="{{asset('/asset/images/it24h.png')}}" alt="">
                         </a>
                     </h1>
@@ -47,15 +53,19 @@
                         <div class="search-header">
                             <div class="search-wrapper">
                                 <form action="{{route('list_product')}}">
-                                    <input type="text" name="search" id="searchs" placeholder="@lang('lang.Search')" autocomplete="off">
+                                    <input type="text" name="search" id="searchs" placeholder="@lang('lang.Search')"
+                                           autocomplete="off">
                                     <button class="icon-search"><i class="far fa-search"></i></button>
                                     <div class="dropdown">
-                                        <button class="select-cat dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="select-cat dropdown-toggle" type="button"
+                                                id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
                                             @lang('lang.Allcategory')
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                             @foreach($Sidebars as $Sidebar)
-                                                <li><a class="dropdown-item" href="{!!$Sidebar->link!!}">{{$Sidebar->label}}</a></li>
+                                                <li><a class="dropdown-item"
+                                                       href="{!!$Sidebar->link!!}">{{$Sidebar->label}}</a></li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -77,7 +87,13 @@
                         </div>
                         <div class="header-cart">
                             <a href="{{route('list_cart')}}" class="icon-cart"><i class="fal fa-shopping-cart"></i>
-                                <span class="count" id="count-cart">{{Cart::count()}}</span>
+                                <span class="count" id="count-cart">
+                                    @if (Session::get('count_cart'))
+                                        {{Session::get('count_cart')}}
+                                    @else
+                                        0
+                                    @endif
+                                </span>
                             </a>
                         </div>
                         <div class="header-user-account">
@@ -85,7 +101,7 @@
                                 <a href="{{route('user_account')}}" class="icon-user"><i class="fal fa-user"></i></a>
                             @else
                                 <div class="wp-dropdown">
-                                    <a href="javascript:;" class="dropdown-login-toggle icon-user">
+                                    <a href="javascript:" class="dropdown-login-toggle icon-user">
                                         <i class="fal fa-user"></i>
                                     </a>
                                     <div class="dropdown-login">
@@ -97,18 +113,26 @@
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="">@lang('lang.Email')</label>
-                                                <input type="email" class="form-control" name="email" id="email-header" placeholder="@lang('lang.Email')" required>
+                                                <input type="email" class="form-control" name="email" id="email-header"
+                                                       placeholder="@lang('lang.Email')" required>
                                             </div>
                                             <div class="form-group mb-3">
                                                 <label for="">@lang('lang.Password')</label>
-                                                <input type="password" class="form-control" name="password" id="password-header" placeholder="@lang('lang.Password')" required>
+                                                <input type="password" class="form-control" name="password"
+                                                       id="password-header" placeholder="@lang('lang.Password')"
+                                                       required>
                                             </div>
-                                            <a href="javascript:;" class="btn btn-primary btn-login" id="login-ajax">@lang('lang.Login')</a>
+                                            <a href="javascript:" class="btn btn-primary btn-login"
+                                               id="login-ajax">@lang('lang.Login')</a>
                                             <a href="{{route('forgot_password')}}">@lang('lang.Forgetpassword')</a>
                                         </form>
-                                        <a href="{{route('login-facebook')}}" class="btn-login-facebook btn btn-primary w-100 mt-2"><i class="fab fa-facebook-square me-2"></i>
+                                        <a href="{{route('login-facebook')}}"
+                                           class="btn-login-facebook btn btn-primary w-100 mt-2"><i
+                                                class="fab fa-facebook-square me-2"></i>
                                             @lang('lang.loginwithfb')</a>
-                                        <a href="{{route('login-google')}}" class="btn-login-google btn btn-danger w-100 mt-2"><i class="fab fa-google me-2"></i>
+                                        <a href="{{route('login-google')}}"
+                                           class="btn-login-google btn btn-danger w-100 mt-2"><i
+                                                class="fab fa-google me-2"></i>
                                             @lang('lang.loginwithgg')</a>
                                     </div>
                                 </div>
@@ -126,18 +150,21 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content" style="visibility: hidden; transform: translateY(10px); opacity: 0;">
+                        <div class="vertical-menu-content"
+                             style="visibility: hidden; transform: translateY(10px); opacity: 0;">
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
                                         <li class="menucontent">
-                                            <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
+                                            <a href="{!! $Sidebar->link !!}"><span
+                                                    class="icon-menu">{!! $Sidebar->class !!}</span>
                                                 {{$Sidebar->label}}
                                                 @if(count($Sidebar->childs))
                                                     <span class="icon-right"><i class="far fa-angle-right"></i></span>
                                                 @endif
                                             </a>
-                                            <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}">
+                                            <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}"
+                                                 get-menu="{{$Sidebar->menu}}">
                                                 <div class="wp-submenu">
                                                     <div class="cpn_submenu col-12">
                                                         <div class="content-submenu col-10">
@@ -163,9 +190,15 @@
                         <nav>
                             <ul class="menu-header">
                                 <li><a href="/"><span><i class="far fa-home"></i></span> @lang('lang.Home')</a></li>
-                                <li><a href="{{route('list_product')}}" class="{{$active_menu == 'product' ? 'active' : ''}}"><span><i class="fal fa-shopping-bag"></i></span> @lang('lang.Shop')</a></li>
-                                <li><a href="{{route('categoryBlogs')}}" class="{{$active_menu == 'post' ? 'active' : ''}}"><span><i class="fal fa-newspaper"></i></span> @lang('lang.Blog')</a></li>
-                                <li><a href="{{route('contact')}}" class="{{$active_menu == 'contact' ? 'active' : ''}}"><span><i class="far fa-phone-rotary"></i></span> @lang('lang.Contact')</a></li>
+                                <li><a href="{{route('list_product')}}"
+                                       class="{{$active_menu == 'product' ? 'active' : ''}}"><span><i
+                                                class="fal fa-shopping-bag"></i></span> @lang('lang.Shop')</a></li>
+                                <li><a href="{{route('categoryBlogs')}}"
+                                       class="{{$active_menu == 'post' ? 'active' : ''}}"><span><i
+                                                class="fal fa-newspaper"></i></span> @lang('lang.Blog')</a></li>
+                                <li><a href="{{route('contact')}}"
+                                       class="{{$active_menu == 'contact' ? 'active' : ''}}"><span><i
+                                                class="far fa-phone-rotary"></i></span> @lang('lang.Contact')</a></li>
                             </ul>
                         </nav>
                     </div>

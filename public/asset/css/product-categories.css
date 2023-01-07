@@ -95,7 +95,7 @@
     display: block;
     width: 100%;
     padding-bottom: 4px;
-    border-bottom: 1px solid #169fd8;
+    border-bottom: 1px solid #1d94ff;
     font-size: 18px;
     font-weight: 500;
     color: #222;
@@ -294,7 +294,7 @@ ul.list-categories li.cat-item a:hover{
     border: 1px solid #1d94ff;
 }
 .form-filter button:hover{
-    background: linear-gradient(300.63deg,#1D94FF 0%,#74CDFF 99.26%);
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
     color: #FFFFFF;
     border: none;
 }
@@ -368,26 +368,29 @@ ul.list-color li a.color-type .color-name{
     margin-right: 10px;
 }
 .pagination .page-numbers li .page-numbers.current{
-    background-color: #169fd8;
-    border-color: #169fd8;
+    background-color: #1d94ff;
+    border-color: #1d94ff;
     color: #fff;
+}
+.discription_cat{
+    color: #222;
 }
 .pagination .page-numbers li .page-numbers{
     display: inline-block;
     text-align: center;
     font-size: 14px;
-    font-weight: 400;
     width: 40px;
     height: 40px;
     line-height: 40px;
     border-radius: 5px;
     color: #222;
     background-color: #fff;
-    border: 1px solid #169fd8;
+    border: 1px solid #1d94ff;
+    font-weight: 800;
 }
 .pagination .page-numbers li .page-numbers:hover{
-    background-color: #169fd8;
-    border-color: #169fd8;
+    background-color: #1d94ff;
+    border-color: #1d94ff;
     color: #fff;
 }
 .pagination ul.page-numbers::after{

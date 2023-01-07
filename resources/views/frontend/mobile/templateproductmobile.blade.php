@@ -2,11 +2,11 @@
     <div>
         <div class="component-product">
             <div class="tag_cpn">
+                <span class="dbrand2"></span>
                 <div class="tag_p">
-                    <span class="years2 d-none"></span>
-                    <span class="payment2 d-none"></span>
+                    <span class="years2"></span>
+                    <span class="payment2"></span>
                 </div>
-                <span class="dbrand2 d-none"></span>
             </div>
             <div class="p-img">
                 <a><img src=""></a>
@@ -14,16 +14,10 @@
             <div class="info_cpn">
                 <div class="p-info">
                     <a class="p-name"></a>
-                    <div class="price_p d-none">
+                    <div class="price_p">
                         <div class="promotion2">
                             <span class="pprice2"></span>
                             <span class="dpercent2"></span>
-                        </div>
-                        <span class="p-price"></span>
-                    </div>
-                    <div class="price_p_2 d-none">
-                        <div class="promotion2">
-                            <span></span>
                         </div>
                         <span class="p-price"></span>
                     </div>
@@ -47,7 +41,7 @@
                             <span><i class="fal fa-star"></i></span>
                         </div>
                     </div>
-                    <div class="sold2 d-none"><i class="fas fa-badge-check"></i><span></span></div>
+                    <div class="sold2"><i class="fas fa-badge-check"></i><span></span></div>
                 </div>
             </div>
             <div class="detail_cpn">

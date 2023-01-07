@@ -77,7 +77,13 @@
                         </div>
                         <div class="header-cart">
                             <a href="{{route('list_cart')}}" class="icon-cart"><i class="fal fa-shopping-cart"></i>
-                                <span class="count" id="count-cart">{{Cart::count()}}</span>
+                                <span class="count" id="count-cart">
+                                    @if (Session::get('count_cart'))
+                                        {{Session::get('count_cart')}}
+                                    @else
+                                        0
+                                    @endif
+                                </span>
                             </a>
                         </div>
                         <div class="header-user-account">

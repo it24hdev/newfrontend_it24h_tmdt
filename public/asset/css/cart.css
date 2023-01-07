@@ -14,21 +14,22 @@ body {
             margin-top: 25px !important;
 }
 .wp-cart-table{
-    margin-right: 3.2%;
-    margin-bottom: 30px;
+    margin:30px;
 }
 .wp-cart-table table.table-cart{
     border-spacing: 0;
     width: 100%;
     border-collapse: collapse;
 }
-
+table.table-cart td{
+    padding: 5px 10px;
+}
 table.table-cart thead {
     border-bottom: 1px solid;
     border-bottom-color: var(--border);
 }
 table.table-cart thead tr th{
-    padding: 1.618em 1.618em 1.618em 0;
+    padding: 10px;
     text-transform: uppercase;
     color: var(--accent);
     font-weight: 500;
@@ -94,14 +95,11 @@ table.table-cart tbody tr td.product-subtotal{
     font-weight: 700;
     border-radius: 5px;
     padding: 0.929em 2em;
-    color: #fff;
-    background-color: var(--primary);
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
+    color: #FFFFFF;
     border: none;
 }
-.actions button:hover{
-    color: #fff;
-    background-color: var(--primary_hover);
-}
+
 .actions .btn-update{
     float: right;
 }
@@ -136,22 +134,19 @@ table.table-cart tbody tr td.product-subtotal{
     font-size: 18px;
 }
 .cart-collaterals .cart-total .total span.count-total{
-    color: var(--primary);
+    color: #1d94ff;
     font-size: 24px;
     font-weight: 600;
 }
 .cart-collaterals .cart-total .checkout{
     display: block;
     width: 100%;
-    background-color: var(--primary);
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
+    color: #FFFFFF;
     font-size: 14px;
     font-weight: 700;
     border-radius: 5px;
     padding: 0.929em 2em;
-    color: #fff;
-}
-.cart-collaterals .cart-total .checkout:hover{
-    background-color: var(--accent);
 }
 .cross-sells h2 {
     margin-bottom: 30px;
@@ -214,7 +209,7 @@ table.table-cart .product-quantity .quantity button {
     background-color: #fff;
 }
 table.table-cart .product-quantity .quantity button:hover {
-    background-color: var(--primary);
+    background-color: #1d94ff;
     outline: none;
     color: #fff;
 }
@@ -256,7 +251,7 @@ input[type=number] {
     box-sizing: border-box;
     font-weight: 400;
     border-radius: 5px;
-    outline: 0;
+    outline: none;
     transition: all ease-in-out .3s;
 }
 .actions .input-text:focus{
@@ -269,25 +264,6 @@ input[type=number] {
 .actions .btn-update{margin-top: 5px;}
 
 @media (min-width:768px){
-    table.table-cart tbody tr td{
-        padding: 1.618em 1.618em 1.618em 0;
-        font-size: 14px;
-    }
-    table.table-cart tbody tr td.product-remove{
-        width: 5%;
-    }
-    table.table-cart tbody tr td.product-thumbnail{
-        width: 15%;
-    }
-    table.table-cart tbody tr td.product-name{
-        width: 35%;
-    }
-    table.table-cart tbody tr td.product-price{
-        width: 20%;
-    }
-    table.table-cart tbody tr td.product-subtotal{
-        width: 20%;
-    }
     .actions .coupon .input-text{
         display: inline-block;
         width: auto;

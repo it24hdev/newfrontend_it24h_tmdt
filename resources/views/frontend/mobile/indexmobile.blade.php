@@ -185,7 +185,9 @@
                                 @foreach($category_promotion as $key => $value)
                                     <div class="box_promtion_menu category_promotion" id="category_promotion_{{$value->id}}" data-target="{{$value->id}}">
                                         <div class="icon_promtion_menu">
-                                            <img src="{{asset('upload/images/products/thumb/'.$value->thumb)}}">
+                                            @if($value->thumb!="no-images.jpg")
+                                                <img src="{{asset('upload/images/products/thumb/'.$value->thumb)}}">
+                                            @endif
                                         </div>
                                         <div class="title_promotion_menu">
                                             <span>{{$value->name}}</span>

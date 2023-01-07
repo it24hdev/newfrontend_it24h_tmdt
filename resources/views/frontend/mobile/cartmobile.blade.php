@@ -25,7 +25,7 @@
             </div>
         </div>
         <section class="block-cart-product d-none" data-target="{{\Illuminate\Support\Facades\Session::get('count_cart')}}">
-            @if (!empty($cart_data))
+            @if ($cart_data)
                 <div class="container-cart">
                     @foreach ($cart_data as $item_cart)
                         <div class="product-item-cart" id="cart_{{$item_cart['item_id']}}">
@@ -34,7 +34,12 @@
                                     <input id="check_cart_{{$item_cart['item_id']}}" class="check_cart" type="checkbox" name="check_cart" data-target="{{$item_cart['item_id']}}">
                                 </div>
                                 <div class="product-item-cart__image">
-                                    <img src="{{asset('upload/images/products/thumb/'.$item_cart["item_image"])}}"></div>
+                                    @if($item_cart["item_image"]!="no-images.jpg")
+                                        <img src="{{asset('upload/images/products/thumb/'.$item_cart["item_image"])}}">
+                                    @else
+                                        <img src="{{asset('upload/images/common_img/no-images.jpg')}}">
+                                    @endif
+                                </div>
                                 <div class="product-item-cart-info-detail">
                                     <p class="product-cart-name">{{$item_cart['item_name']}}</p>
                                     <div class="product-item-cart__price">

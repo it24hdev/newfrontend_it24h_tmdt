@@ -346,19 +346,18 @@ $(document).ready(function () {
             var detail_p = detailproduct;
             var tmp = $(template).clone();
             if(v.year){
-                $(tmp).find('.years2').removeClass('d-none');
+                $(tmp).find('.years2').css({'visibility':'visible','opacity':1});
                 $(tmp).find('.years2').html(v.year);
             }
             if(v.installment){
-                $(tmp).find('.payment2').removeClass('d-none');
                 $(tmp).find('.payment2').html(v.installment);
+                $(tmp).find('.payment2').css({'visibility':'visible','opacity':1});
             }
-            if(v.img_brands){
+            if(v.img_brands && v.img_brands != "no-images.jpg"){
                 var url_img_brands = img_product_mobile;
-                $(tmp).find('.dbrand2').removeClass('d-none');
                 img = 'url('+url_img_brands+')';
                 img = img.replace('img_name', v.img_brands);
-                $(tmp).find('.dbrand2').css('background-image',img);
+                $(tmp).find('.dbrand2').css({'background-image':img,'visibility':'visible','opacity':1});
             }
             var dt_p = detail_p.replace('slug_code', v.slug);
             $(tmp).find('.p-img a').attr('href',dt_p);
@@ -372,22 +371,26 @@ $(document).ready(function () {
             $(tmp).find('.p-img img').attr('src',url_img_product);
             $(tmp).find('.p-info a').attr('href',dt_p);
             $(tmp).find('.p-name').html(v.name);
-            if(v.onsale != null && v.onsale != ''){
-                $(tmp).find('.price_p').removeClass('d-none');
+            if(v.price_onsale!=0) {
                 var price = new Intl.NumberFormat().format(v.price);
-                var price_onsale = new Intl.NumberFormat().format(v.price_onsale);
                 $(tmp).find('.promotion2 .pprice2').html(price+' đ');
+                $(tmp).find('.pprice2').css({'visibility':'visible','opacity':1});
+
                 $(tmp).find('.promotion2 .dpercent2').html('- '+v.onsale+'%');
+                $(tmp).find('.dpercent2').css({'visibility':'visible','opacity':1});
+
+                var price_onsale = new Intl.NumberFormat().format(v.price_onsale);
                 $(tmp).find('.price_p .p-price').html(price_onsale+' đ');
+                $(tmp).find('.price_p').css({'visibility':'visible','opacity':1});
             }
             else{
                 var prices = new Intl.NumberFormat().format(v.price);
-                $(tmp).find('.price_p_2').removeClass('d-none');
-                $(tmp).find('.price_p_2 .p-price').html(prices+' đ');
+                $(tmp).find('.price_p .p-price').html(prices+' đ');
+                $(tmp).find('.price_p').css({'visibility':'visible','opacity':1});
             }
             $(tmp).find('.rating-upper').css('width', v.count_vote+'%');
-            if(v.sold != null && v.sold != ''){
-                $(tmp).find('.sold2').removeClass('d-none');
+            if(v.sold > 0){
+                $(tmp).find('.sold2').css({'visibility':'visible','opacity':1});
                 $(tmp).find('.sold2 span').html('Đã bán '+v.sold);
             }
             if(v.quantity > 0){
@@ -1103,9 +1106,15 @@ $(document).ready(function () {
     //dem so luong san pham trong gio hang
     function count_cart(){
         if($('.block-cart-product').attr('data-target')>0){
-            $('.block-cart-product').removeClass('d-none');
-            $('.box-bottom').removeClass('d-none');
-            $('.cnt_empty_cart').addClass('d-none');
+            if($('.block-cart-product').hasClass('d-none')){
+                $('.block-cart-product').removeClass('d-none');
+            }
+            if( $('.box-bottom').hasClass('d-none')){
+                $('.box-bottom').removeClass('d-none');
+            }
+            if(!$('.cnt_empty_cart').hasClass('d-none')){
+                $('.cnt_empty_cart').addClass('d-none');
+            }
         }
         else{
             if(!$('.block-cart-product').hasClass('d-none')){
@@ -1369,6 +1378,7 @@ $(document).ready(function () {
                             dataType: 'json',
                             success: function (data) {
                                 if(data.success){
+                                    $('.btn-complte-payment').attr('disabled',true);
                                     window.location = successorder;
                                 }
                             }
@@ -1385,6 +1395,7 @@ $(document).ready(function () {
                     dataType: 'json',
                     success: function (data) {
                         if(data.success==true){
+                            $('.btn-complte-payment').attr('disabled',true);
                             window.location = successorder;
                         }
                         if(data.success==false){

@@ -155,9 +155,9 @@ class HomeController extends Controller
     public function get_deal(Request $request)
     {
         //lay san pham deal
-        $get_deal = Products::select(DB::raw('products.id'),DB::raw('products.ma'),DB::raw('products.name'),DB::raw('products.thumb'),
-            DB::raw('products.price_onsale'),DB::raw('products.onsale'),DB::raw('products.price'),DB::raw('products.sold'),DB::raw('products.quantity'),
-            DB::raw('products.slug'), DB::raw('products.year'), DB::raw('products.installment'), DB::raw('products.event'),DB::raw('products.specifications'),
+        $get_deal = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
+            'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
+            'products.installment as installment', 'products.event as event', 'products.specifications as specifications',
             DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
             DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
             DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
@@ -184,10 +184,9 @@ class HomeController extends Controller
         //lay danh muc khuyen mai
         $title = Category::where('status', 1)->where('is_promotion', 1)->limit(10)->get();
         //lay san pham danh muc khuyen mai
-        $product_promotion = Products::select(DB::raw('products.id'),DB::raw('products.ma'),DB::raw('products.name'),DB::raw('products.thumb'),
-            DB::raw('products.price_onsale'),DB::raw('products.onsale'),DB::raw('products.price'),DB::raw('products.sold'),DB::raw('products.quantity'),
-            DB::raw('products.slug'), DB::raw('products.year'), DB::raw('products.installment'), DB::raw('products.event'),DB::raw('products.specifications'),
-            DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
+        $product_promotion = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
+            'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
+            'products.installment as installment', 'products.event as event', 'products.specifications as specifications',  DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
             DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
             DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
             ->leftjoin('brands', 'products.brand', 'brands.id')
@@ -207,9 +206,9 @@ class HomeController extends Controller
 
     //load san pham theo danh muc
     public function get_product_categories_loading(Request $request){
-        $product_promotion = Products::select(DB::raw('products.id'),DB::raw('products.ma'),DB::raw('products.name'),DB::raw('products.thumb'),
-            DB::raw('products.price_onsale'),DB::raw('products.onsale'),DB::raw('products.price'),DB::raw('products.sold'),DB::raw('products.quantity'),
-            DB::raw('products.slug'), DB::raw('products.year'), DB::raw('products.installment'), DB::raw('products.event'),DB::raw('products.specifications'),
+        $product_promotion = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
+            'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
+            'products.installment as installment', 'products.event as event', 'products.specifications as specifications',
             DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
             DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
             DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
@@ -587,12 +586,16 @@ class HomeController extends Controller
                     $orderby = "ASC";
                 }
             }
-            $products = Products::select('products.*', 'detailproperties.ma as matt', 'categories.slug as url')
+            $products = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
+                    'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
+                    'products.installment as installment', 'products.event as event', 'products.specifications as specifications', 'detailproperties.ma as matt',
+                    'categories.slug as url','brands.image as brand_img','tag_events.icon as event_icon','tag_events.name as event_name')
                 ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
                 ->leftjoin('categories', 'categories.id', 'category_relationships.cat_id')
                 ->leftjoin('propertyproducts', 'propertyproducts.products_id', 'products.id')
                 ->leftJoin('detailproperties', 'detailproperties.id', 'propertyproducts.detailproperties_id')
                 ->leftJoin('brands', 'brands.id', 'products.brand')
+                ->leftJoin('tag_events', 'tag_events.id', 'products.event')
                 ->whereIn('categories.id', $list_cat_child)
                 ->where(function ($query) use ($property) {
                     foreach ($property as $key => $value) {
@@ -713,6 +716,8 @@ class HomeController extends Controller
             ->where('parent_id', 0)
             ->where('status', 1)
             ->get();
+
+//        dd($products);
 
         //////////////Tra ve//////////////////
         if ($agent->isMobile()) {

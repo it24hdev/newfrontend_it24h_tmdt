@@ -185,9 +185,7 @@
                                                 </a>
                                                 <a href="javascript:;" get-id="{{$product->id}}"
                                                    class="button-add-to-cart add-cart">
-                                                    <img
-                                                        src="https://static-product.cellphones.com.vn/img/add-to-cart.97145ab.png"
-                                                        alt="cart-icon">
+                                                    <i class="fas fa-cart-plus"></i>
                                                     <span>Thêm vào giỏ</span>
                                                 </a>
                                             </div>
@@ -307,8 +305,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <p class="size_p"><strong>{{$product->votes->count()}}</strong> đánh giá và nhận xét
-                                    </p></div>
+                                    <p class="size_p"><strong>{{$product->votes->count()}}</strong> đánh giá và nhận xét</p>
+                                </div>
                                 <div class="boxReview-star">
                                     <div class="rating-level">
                                         <div class="star-count">

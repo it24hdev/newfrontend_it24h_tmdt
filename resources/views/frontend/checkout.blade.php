@@ -1,27 +1,19 @@
 @extends('frontend.layouts.base')
-
 @section('title')
     <title>@lang('lang.IT24Hcheckout')</title>
 @endsection
-
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/checkout.css')}}">
 @endsection
-
 @section('header-home')
     @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
 @endsection
-
-@section('header-mobile')
-    @include('frontend.layouts.menu-mobile', [$Sidebars])
-@endsection
-
 @section('content')
     <div class="wp-breadcrumb-page">
         <div class="container-page">
             <div class="breadcrumb-page">
                 <a href="{{route('user')}}">@lang('lang.Home') <i class="fas fa-angle-right mx-1"></i></a>
-                <a>@lang('lang.Checkout')</a>
+                <a>Thanh toán</a>
             </div>
         </div>
     </div>
@@ -29,99 +21,110 @@
         <div class="wp-my-account" style="color: #222">
             <div class="row">
                 <div class="col-12">
-                    <form action="{{route('sendmail')}}" method="POST">
+                    @if($active==1)
+                    <form>
                         @csrf
-                        <div class="row">
-                            <div class="col-12 col-md-7" style="padding-right: 5%;">
-                                <h3 class="d-block mb-4">@lang('lang.Billingdetails')</h3>
-                                <div class="wp-form pb-5">
-                                    <div class="form-group mb-3">
-                                        <label for="fullname">@lang('lang.Fullname') <span class="text-danger">*</span></label>
-                                        <input type="text" name="name" value="{{(old('name')) ?? (!empty($customer) ? $customer->name : '')}}"
-                                        id="fullname" class="form-control @error('name') is-invalid @enderror" placeholder="@lang('lang.Enteryourfullname')" required>
-                                        @error('name')
-                                            <span role="alert">
-                                                <p class="text-danger fst-italic mt-2" style="font-size: 14px;">{{ $message }}</p>
-                                            </span>
-                                        @enderror
+                        <h3 class="d-block mb-4 mx-3">Thông tin đặt hàng</h3>
+                        <div class="col-12 d-flex">
+                            <div class="col-6">
+                                <div class="wp-form mx-3">
+                                    <div class="form-group mb-1">
+                                        <div class="form-group">
+                                            <div class="input-wrapper">
+                                                <span class="icon-wrapper-payment">
+                                                    <i class="fal fa-user"></i>
+                                                </span>
+                                                <span class="position-relative">
+                                                    <input class="form-control input-info" type="text" name="customer_name" maxlength="50" autocomplete="off" placeholder="Họ và tên (bắt buộc)">
+                                                    <span class="requite_name text-danger mx-2 d-none"><i></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label for="phone">@lang('lang.Phone') <span class="text-danger">*</span></label>
-                                        <input type="text" name="phone_number" value="{{(old('phone_number')) ?? (!empty($customer) ? $customer->phone_number : '')}}"
-                                        id="phone" class="form-control @error('phone_number') is-invalid @enderror" placeholder="@lang('lang.Enteryourphone')" required>
-                                        @error('phone_number')
-                                            <span role="alert">
-                                                <p class="text-danger fst-italic mt-2" style="font-size: 14px;">{{ $message }}</p>
-                                            </span>
-                                        @enderror
+                                    <div class="form-group mb-1">
+                                        <div class="form-group">
+                                            <div class="input-wrapper">
+                                                <span class="icon-wrapper-payment">
+                                                    <i class="fal fa-phone-alt"></i>
+                                                </span>
+                                                <span class="position-relative">
+                                                    <input class="form-control input-info" type="number" autocomplete="off" name="phone_number" placeholder="Số điện thoại (bắt buộc)">
+                                                    <span class="requite_numberphone text-danger mx-2 d-none"><i></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label for="address">@lang('lang.Address') <span class="text-danger">*</span></label>
-                                        <input type="text" name="address" value="{{(old('address')) ?? (!empty($customer) ? $customer->address : '')}}"
-                                        id="address" class="form-control @error('address') is-invalid @enderror" placeholder="@lang('lang.Enteryouraddress')" required>
-                                        @error('address')
-                                            <span role="alert">
-                                                <p class="text-danger fst-italic mt-2" style="font-size: 14px;">{{ $message }}</p>
-                                            </span>
-                                        @enderror
+                                    <div class="form-group mb-1">
+                                        <div class="form-group">
+                                            <div class="input-wrapper">
+                                                <span class="icon-wrapper-payment">
+                                                    <i class="fal fa-envelope"></i>
+                                                </span>
+                                                <span class="position-relative">
+                                                    <input class="form-control input-info"  type="email" placeholder="Email" name="email" maxlength="100" autocomplete="off" placeholder="Email">
+                                                    <span class="requite_email text-danger mx-2 d-none"><i></i></span>
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label for="email">@lang('lang.Email') <span class="text-danger">*</span></label>
-                                        <input type="email" name="email" value="{{(old('email')) ?? (!empty($customer) ? $customer->email : '')}}"
-                                        id="email" class="form-control @error('email') is-invalid @enderror" placeholder="@lang('lang.Enteryouremail')" required>
-                                        @error('email')
-                                            <span role="alert">
-                                                <p class="text-danger fst-italic mt-2" style="font-size: 14px;">{{ $message }}</p>
-                                            </span>
-                                        @enderror
+                                    <div class="form-group mb-1 address-box">
+                                        <div class="d-flex">
+                                            <select name="city" class="ct_info form-select col-sm-1 w-50">
+                                                @foreach($city as $key => $item)
+                                                    <option value="{{$item->matp}}" @if($item->matp == 31) selected @endif>{{$item->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            <select name="district" class="dt_info form-select form-select-sm w-50">
+                                                @foreach($district as $key => $item)
+                                                    @if($item->matp == 31)
+                                                        <option value="{{$item->name}}">{{$item->name}}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <input id="address" name="street" type="text" placeholder="Số nhà, tên đường" class="mt-2" autocomplete="off">
                                     </div>
-                                    <div class="form-group mb-3">
-                                            <label for="note">@lang('lang.Ordernotes')</label>
-                                        <textarea name="note" id="note" cols="30" rows="5" class="form-control" placeholder="@lang('lang.Enterordernotes')">{{old('note')}}</textarea>
-                                        @error('note')
-                                            <span role="alert">
-                                                <p class="text-danger fst-italic mt-2" style="font-size: 14px;">{{ $message }}</p>
-                                            </span>
-                                        @enderror
+                                    <div class="mt-3 d-flex flex-column">
+                                        <div class="receipt">
+                                            <label for="VAT">
+                                                <input type="checkbox" name="VAT" id="VAT">
+                                                <span>Yêu cầu xuất hóa đơn công ty (Vui lòng điền email để nhận hoá đơn VAT)</span>
+                                            </label><br>
+                                            <a href="#" target="_blank">
+                                                <i class="text-danger">(Với đơn hàng trên 20 triệu vui lòng thanh toán chuyển khoản từ tài
+                                                    khoản công ty khi cần xuất VAT cho công ty)</i>
+                                            </a>
+                                        </div>
+                                        <div class="mb-3 receipt_ip d-none">
+                                            <input name="name_company" type="text" placeholder="Tên công ty (*)" autocomplete="off" class="my-2">
+                                            <span class="requite_name_company text-danger mx-2"><i></i></span>
+                                            <input name="address_company" type="text" placeholder="Địa chỉ công ty (*)" autocomplete="off" class="my-2">
+                                            <span class="requite_address_company text-danger mx-2"><i></i></span>
+                                            <input name="tax_code" type="text" placeholder="Mã số thuế (*)" autocomplete="off" class="my-2">
+                                            <span class="requite_tax_code text-danger mx-2"><i></i></span>
+                                            <input name="email_company" type="text" placeholder="Email công ty (*)" autocomplete="off" class="my-2">
+                                            <span class="requite_email_company text-danger mx-2"><i></i></span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <i>
+                                            <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
+                                            <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
+                                        </i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-5">
-                                <div class="order-review mb-5">
+                            <div class="col-6">
+                                <div class="order-review mb-5 mx-3">
                                     <h3>@lang('lang.Yourorder')</h3>
                                     <div class="checkout-review-order">
                                         <table class="checkout-review-order-table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="product-name">@lang('lang.Product')</th>
-                                                    <th class="product-total">@lang('lang.Subtotal')</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (Cart::content() as $item)
-                                                <tr class="cart_item">
-                                                    <td class="product-name">
-                                                        {{$item->name}}<strong class="product-quantity"> × {{$item->qty}}</strong>
-                                                    </td>
-                                                    <td class="product-total">
-                                                        <span class="amount"><bdi>{{ number_format($item->subtotal, 0, '', '.')}}<span> @lang('lang.Currencyunit')</span></bdi></span>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-
-                                            </tbody>
                                             <tfoot>
-                                                <tr class="cart-subtotal">
-                                                    <th>@lang('lang.Subtotal')</th>
-                                                    <td>
-                                                        <span class="amount"><bdi>{{ Cart::subtotal(0, '', '.') }}<span> @lang('lang.Currencyunit')</span></bdi></span>
-                                                    </td>
-                                                </tr>
                                                 <tr class="order-total">
-                                                    <th>@lang('lang.Total')</th>
+                                                    <th>@lang('lang.Total') </th>
                                                     <td>
                                                         <strong>
-                                                            <span class="amount"><bdi>{{ Cart::subtotal(0, '', '.') }}<span> @lang('lang.Currencyunit')</span></bdi></span>
+                                                            <span class="amount mx-1">{{ number_format($total_money, 0, '', '.') }}<span> @lang('lang.Currencyunit')</span></span>
                                                         </strong>
                                                     </td>
                                                 </tr>
@@ -129,22 +132,15 @@
                                         </table>
                                         <div class="payment mt-2">
                                             <div class="form-group pt-3">
-                                                <input type="radio" value="@lang('lang.Transfer')" name="payment_method" id="payment_method_bacs" class="form-check-input me-2 payment-check" checked>
+                                                <input type="radio" id="transfer" name="payment_method" value="Chuyển khoản"  class="form-check-input me-2 payment-check" checked>
                                                 <label for="payment_method_bacs" class="payment-check"><strong>@lang('lang.Directbanktransfer')</strong></label>
                                                 <div class="payment-box">
                                                     <p>@lang('lang.Makeyourpayment')
                                                     .</p>
                                                 </div>
                                             </div>
-                                            {{-- <div class="form-group pt-3">
-                                                <input type="radio" value="@lang('lang.Paydirectlyatthestore')" name="payment_method" id="payment_method_cheque" class="form-check-input me-2 payment-check">
-                                                <label for="payment_method_cheque" class="payment-check"><strong>@lang('lang.Checkpayments')</strong></label>
-                                                <div class="payment-box payment-box-none">
-                                                    <p>@lang('lang.checktoStore').</p>
-                                                </div>
-                                            </div> --}}
                                             <div class="form-group pt-3">
-                                                <input type="radio" value="@lang('lang.Paymentondelivery')" name="payment_method" id="payment_method_cod" class="form-check-input me-2 payment-check">
+                                                <input  type="radio" id="cash_on_shop" name="payment_method" value="Thanh toán tại cửa hàng" class="form-check-input me-2 payment-check">
                                                 <label for="payment_method_cod" class="payment-check"><strong>@lang('lang.Cashondelivery')</strong></label>
                                                 <div class="payment-box payment-box-none">
                                                     <p>@lang('lang.Paywithcashupondelivery').</p>
@@ -153,13 +149,14 @@
                                         </div>
                                         <div class="place-order mt-4">
                                             <p>@lang('lang.Yourpersonaldata').</p>
-                                            <button type="submit" class="btn-order">@lang('lang.PlaceOrder')</button>
+                                            <button type="button" class="btn-order btn-complte-payment">@lang('lang.PlaceOrder')</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -167,15 +164,202 @@
 @endsection
 
 @section('footer')
-    @include('frontend.layouts.footer', [$posts_footer])
+    @include('frontend.layouts.footer')
 @endsection
 
 @section('js')
     <script>
         $(document).ready(function(){
+            var _token = $('meta[name="csrf-token"]').attr('content');
             $('.payment-check').click(function(){
                 $('.payment-box').not($(this).parent('.form-group').children('.payment-box')).slideUp( 300 );
                 $(this).parent('.form-group').children('.payment-box').slideDown( 300 );
+            });
+            $(document).on('click', '#VAT', function(){
+                if($(this).is(':checked')){
+                    if($('.receipt_ip').hasClass('d-none')){
+                        $('.receipt_ip').removeClass('d-none');
+                    }
+                }
+                else{
+                    $('.receipt_ip').addClass('d-none');
+                }
+            });
+            $(document).on('change', 'select[name="city"]', function(){
+                var ma_tp = $(this).val();
+                data = {
+                    ma_tp : ma_tp,
+                    _token: _token
+                }
+                $.ajax({
+                    url: '{{route('get_district')}}',
+                    method: 'POST',
+                    data: data,
+                    dataType: 'json',
+                    success: function (data) {
+                        if(data.success){
+                            $('select[name="district"]').html('');
+                            $.each(data.district, function(k,v) {
+                                $('select[name="district"]').append($('<option>',
+                                    {
+                                        value: v.name,
+                                        text : v.name
+                                    }));
+                            });
+                        }
+                    }
+                });
+            });
+            $(document).on('click', '.btn-complte-payment', function(){
+                var customer_name = $('input[name="customer_name"]').val();
+                var phone_number = $('input[name="phone_number"]').val();
+                var mailformat = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
+                var email = $('input[name="email"]').val();
+                var address = $('select[name="district"]').val() +" - "+ $('select[name="city"] option:selected').text();
+                if($('input[name="street"]').val()){
+                    address = $('input[name="street"]').val() + " - " + address;
+                }
+                var note = $('input[name="note"]').val();
+                var payment_method = $('input[name="payment_method"]:checked').val();
+                var vat = $('input[name="VAT"]');
+                var name_company = address_company = tax_code = email_company ="";
+                if($('input[name="name_company"]').val() != ""){
+                    name_company = $('input[name="name_company"]').val();
+                }
+                var address_company = $('input[name="address_company"]').val();
+                var tax_code = $('input[name="tax_code"]').val();
+                var email_company = $('input[name="email_company"]').val();
+                var data = {
+                    customer_name: customer_name,
+                    email: email,
+                    phone_number: phone_number,
+                    address: address,
+                    note: note,
+                    address_company: address_company,
+                    tax_code: tax_code,
+                    email_company: email_company,
+                    name_company: name_company,
+                    payment_method: payment_method,
+                    _token: _token
+                };
+                if(!$('.requite_name').hasClass('d-none')){
+                    $('.requite_name').addClass('d-none');
+                }
+                if(!$('.requite_numberphone').hasClass('d-none')){
+                    $('.requite_numberphone').addClass('d-none');
+                }
+                if(!$('.requite_email').hasClass('d-none')){
+                    $('.requite_email').addClass('d-none');
+                }
+                $('.requite_name i').html('');
+                $('.requite_numberphone i').html('');
+                $('.requite_email i').html('');
+                switch (true){
+                    case ($('input[name="check_rules"]').is(":checked") == false) : {
+                        break;
+                    }
+                    case (customer_name.split(" ").join("").length==0) : {
+                        if($('.requite_name').hasClass('d-none')){
+                            $('.requite_name').removeClass('d-none');
+                        }
+                        $('.requite_name i').html('Vui lòng nhập Họ và tên của bạn.');
+                        $('input[name="customer_name"]').focus();
+                        break;
+                    }
+                    case (customer_name.split(" ").join("").length<2) : {
+                        if($('.requite_name').hasClass('d-none')){
+                            $('.requite_name').removeClass('d-none');
+                        }
+                        $('.requite_name i').html('Họ và tên không hợp lệ, vui lòng nhập lại.');
+                        $('input[name="customer_name"]').focus();
+                        break;
+                    }
+                    case ((phone_number.split(" ").join("").length<10) || (phone_number.split(" ").join("").length>12)) :{
+                        if($('.requite_numberphone').hasClass('d-none')){
+                            $('.requite_numberphone').removeClass('d-none');
+                        }
+                        $('.requite_numberphone i').html('Số điện thoại không hợp lệ, vui lòng nhập lại.');
+                        $('input[name="phone_number"]').focus();
+                        break;
+                    }
+                    case(email.split(" ").join("").length>0 && !email.match(mailformat)):{
+                        if($('.requite_email').hasClass('d-none')){
+                            $('.requite_email').removeClass('d-none');
+                        }
+                        $('.requite_email i').html('Địa chỉ email không hợp lệ, vui lòng nhập lại.');
+                        $('input[name="email"]').focus();
+                        break;
+                    }
+                    case(vat.is(":checked")):{
+                        $('.requite_name_company i').html('');
+                        $('.requite_address_company i').html('');
+                        $('.requite_tax_code i').html('');
+                        $('.requite_email_company i').html('');
+                        switch (true){
+                            case (name_company.split(" ").join("").length==0) : {
+                                $('.requite_name_company i').html('Tên công ty không được phép bỏ trống.');
+                                break;
+                            }
+                            case (name_company.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(name_company)) : {
+                                $('.requite_name_company i').html('Tên công ty không hợp lệ, vui lòng nhập lại.');
+                                break;
+                            }
+                            case (address_company.split(" ").join("").length==0) : {
+                                $('.requite_address_company i').html('Địa chỉ công ty không được phép bỏ trống.');
+                                break;
+                            }
+                            case (address_company.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(address_company)) : {
+                                $('.requite_address_company i').html('Địa chỉ công ty không hợp lệ, vui lòng nhập lại.');
+                                break;
+                            }
+                            case (tax_code.split(" ").join("").length==0) : {
+                                $('.requite_tax_code i').html('Mã số thuế không được phép bỏ trống.');
+                                break;
+                            }
+                            case (tax_code.split(" ").join("").length<10 || tax_code.split(" ").join("").length>15) : {
+                                $('.requite_tax_code i').html('Mã số thuế không hợp lệ, vui lòng nhập lại.');
+                                break;
+                            }
+                            case (email_company.split(" ").join("").length==0) : {
+                                $('.requite_email_company i').html('Email công ty không được phép bỏ trống, vui lòng nhập lại');
+                                break;
+                            }
+                            case (!email_company.match(mailformat)) : {
+                                $('.requite_email_company i').html('Email công ty không hợp lệ, vui lòng nhập lại.');
+                                break;
+                            }
+                            default:{
+                                $.ajax({
+                                    url: '{{route('complete_payment')}}',
+                                    method: 'POST',
+                                    data: data,
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        if(data.success){
+                                            $('.btn-complte-payment').attr('disabled',true);
+                                            window.location = '{{route('successorder')}}';
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        break;
+                    }
+                    default:{
+                        $.ajax({
+                            url: '{{route('complete_payment')}}',
+                            method: 'POST',
+                            data: data,
+                            dataType: 'json',
+                            success: function (data) {
+                                if(data.success==true){
+                                    $('.btn-complte-payment').attr('disabled',true);
+                                    window.location = '{{route('successorder')}}';
+                                }
+                            }
+                        });
+                    }
+                }
             });
         });
     </script>

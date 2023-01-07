@@ -90,10 +90,12 @@
                         <span class="requite_email_company text-danger mx-2"><i></i></span>
                     </div>
                 </div>
-                <i>
-                    <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
-                    <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
-                </i>
+                <div>
+                    <i>
+                        <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
+                        <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
+                    </i>
+                </div>
                 <div class="container-total-box">
                     <div class="bottom-bar">
                         <div class="total-box">

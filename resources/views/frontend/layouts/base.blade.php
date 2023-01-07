@@ -15,48 +15,14 @@
     <link rel="stylesheet" href="{{asset('asset/lib/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.theme.default.min.css')}}">
-    <link rel="stylesheet" href="/asset/lib/fontawesomePro5/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('asset/lib/fontawesomePro5/css/all.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/header-home.css')}}">
     <link rel="stylesheet" href="{{asset('asset/css/content-home.css')}}">
-    @yield('css')
     <link rel="stylesheet" href="{{asset('asset/css/footer.css')}}">
+    @yield('css')
+
     <!-- css -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-            let active = false;
 
-            const lazyLoad = function () {
-                if (active === false) {
-                    active = true;
-
-                    setTimeout(function () {
-                        lazyImages.forEach(function (lazyImage) {
-                            if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
-                                lazyImage.src = lazyImage.dataset.src;
-                                lazyImage.classList.remove("lazy");
-
-                                lazyImages = lazyImages.filter(function (image) {
-                                    return image !== lazyImage;
-                                });
-
-                                if (lazyImages.length === 0) {
-                                    document.removeEventListener("scroll", lazyLoad);
-                                    window.removeEventListener("resize", lazyLoad);
-                                    window.removeEventListener("orientationchange", lazyLoad);
-                                }
-                            }
-                        });
-
-                        active = false;
-                    }, 200);
-                }
-            };
-            document.addEventListener("scroll", lazyLoad);
-            window.addEventListener("resize", lazyLoad);
-            window.addEventListener("orientationchange", lazyLoad);
-        });
-    </script>
 </head>
 
 <body>
@@ -68,8 +34,7 @@
     <div id="scroll_up" class="top-visible"><i class="fal fa-angle-up"></i></div>
     <div id="zalo"><a href="https://zalo.me/" target="_blank">Zalo</a></div>
     <div id="hotline"><a href="tel:0886776286"><i class="fas fa-phone-alt"></i></a></div>
-    <div id="messenger"><a href="https://m.me/106139498237028/" target="_blank"><i
-                class="fab fa-facebook-messenger"></i></a></div>
+    <div id="messenger"><a href="https://m.me/106139498237028/" target="_blank"><i class="fab fa-facebook-messenger"></i></a></div>
 </div>
 @include('frontend.desktop.template.template_menu_lv2_desktop')
 @include('frontend.desktop.template.template_menu_lv3_desktop')
@@ -78,6 +43,41 @@
 <!-- javascript -->
 <script src="{{ asset('lib/jquery360.min.js') }}"></script>
 <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+        let active = false;
+
+        const lazyLoad = function () {
+            if (active === false) {
+                active = true;
+
+                setTimeout(function () {
+                    lazyImages.forEach(function (lazyImage) {
+                        if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
+                            lazyImage.src = lazyImage.dataset.src;
+                            lazyImage.classList.remove("lazy");
+
+                            lazyImages = lazyImages.filter(function (image) {
+                                return image !== lazyImage;
+                            });
+
+                            if (lazyImages.length === 0) {
+                                document.removeEventListener("scroll", lazyLoad);
+                                window.removeEventListener("resize", lazyLoad);
+                                window.removeEventListener("orientationchange", lazyLoad);
+                            }
+                        }
+                    });
+                    active = false;
+                }, 200);
+            }
+        };
+        document.addEventListener("scroll", lazyLoad);
+        window.addEventListener("resize", lazyLoad);
+        window.addEventListener("orientationchange", lazyLoad);
+    });
+</script>
 <script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
 @yield('js')
 <script src="{{ asset('asset/js/home.js') }}"></script>
@@ -117,44 +117,8 @@
 </script>
 <script>
     $(document).ready(function () {
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-
-        function delay(callback, ms) {
-            var timer = 0;
-            return function () {
-                var context = this, args = arguments;
-                clearTimeout(timer);
-                timer = setTimeout(function () {
-                    callback.apply(context, args);
-                }, ms || 0);
-            };
-        }
-
-        $("#searchs").keyup(delay(function (e) {
-            var keyword = document.getElementById('searchs').value;
-            $.ajax({
-                url: "{{route('autotypeahead')}}",
-                type: "post",
-                dataType: "json",
-                data: {
-                    data: keyword,
-                },
-                success: function (data) {
-                    var dt = data.html;
-                    $('.ajax-search-result').html('');
-                    let result = dt.replaceAll("src_dt", "src");
-                    $('.ajax-search-result').append(result);
-                },
-            })
-            document.getElementById("ajax-search").style.display = "block";
-        }, 200));
-        $("#select_cat").on("change", function () {
-            location.replace('/san-pham/' + this.value);
-        });
-    });
-</script>
-<script>
-    $(document).ready(function () {
+        var _token = $('meta[name="csrf-token"]').attr('content');
+        //load menu
         $('.menucontent').hover(function () {
             if (($(this).hasClass("loaded") == false)) {
                 $(this).addClass("loaded");
@@ -162,7 +126,8 @@
                 var menu = $(this).find('.ajaxsubmenu').attr('get-menu');
                 var data = {
                     id: id,
-                    menu: menu
+                    menu: menu,
+                    _token: _token
                 };
                 $.ajax({
                     url: "{{route('menucontent')}}",
@@ -170,7 +135,6 @@
                     dataType: "json",
                     async: false,
                     data: data,
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     success: function (data) {
                         var template_menu_lv2_desktop = $('#template_menu_lv2_desktop').html();
                         var template_menu_lv3_desktop = $('#template_menu_lv3_desktop').html();
@@ -205,6 +169,7 @@
                 })
             }
         });
+        //dieu chinh chieu dai menu khi load trang
         let width = window.innerWidth;
         $('.wp-submenu').each(function() {
             if(width>1650)
@@ -214,6 +179,7 @@
                 $(this).css({"width":"calc("+width+"px - 45px - 100%)"});
             }
         });
+        //dieu chinh lai chieu dai menu khi co man hinh lai
         $(window).resize(function () {
             let w = window.innerWidth;
             $('.wp-submenu').each(function() {
@@ -222,6 +188,64 @@
                     $(this).css({"width":"1355px"});
                 }else{
                     $(this).css({"width":"calc("+w+"px - 45px - 100%)"});
+                }
+            });
+        });
+        //ham delay go phim
+        function delay(callback, ms) {
+            var timer = 0;
+            return function () {
+                var context = this, args = arguments;
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    callback.apply(context, args);
+                }, ms || 0);
+            };
+        }
+        //ham tim kiem khi go thanh tim kiem
+        $("#searchs").keyup(delay(function (e) {
+            var keyword = $('#searchs').val();
+            $.ajax({
+                url: "{{route('autotypeahead')}}",
+                type: "post",
+                dataType: "json",
+                data: {
+                    data: keyword,
+                    _token:_token
+                },
+                success: function (data) {
+                    var dt = data.html;
+                    $('.ajax-search-result').html('');
+                    let result = dt.replaceAll("src_dt", "src");
+                    $('.ajax-search-result').append(result);
+                },
+            })
+            document.getElementById("ajax-search").style.display = "block";
+        }, 200));
+        $("#select_cat").on("change", function () {
+            location.replace('/san-pham/' + this.value);
+        });
+        // them san pham vao gio hang
+        $(document).on('click', '.add-cart', function(){
+            var product_id  =  $(this).attr('get-id');
+            var data = {
+                product_id: product_id,
+                status: "plus",
+                _token: _token
+            };
+            $.ajax({
+                url: '{{route('update_shopping_cart')}}',
+                method: 'POST',
+                data: data,
+                dataType: 'json',
+                success: function (data) {
+                    if(data.success){
+                        $('#count-cart').text(data.count);
+                        // $( "#snackbar" ).fadeIn( 300 ).delay( 500 ).fadeOut( 400 );
+                    }
+                    else{
+                        // $( "#snackbar_false" ).fadeIn( 300 ).delay( 500 ).fadeOut( 400 );
+                    }
                 }
             });
         });

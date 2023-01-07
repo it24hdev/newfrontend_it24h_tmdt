@@ -398,19 +398,23 @@
             @foreach($products as $value)
                 <div class="component-product filter_item">
                     <div class="tag_cpn">
+                        @if ($value->brand_img!='no-images.jpg')
+                            <span class="dbrand2 visible_opacity_show" style="background-image: url('{{asset("upload/images/products/thumb/".$value->brand_img)}}');"></span>
+                        @else
+                            <span class="dbrand2"></span>
+                        @endif
                         <div class="tag_p">
-                            @if (!empty($value->year))
-                                <span class="years2">{{$value->year}}</span>
+                            @if ($value->year)
+                                <span class="years2 visible_opacity_show">{{$value->year}}</span>
+                            @else
+                                <span class="years2"></span>
                             @endif
-                            @if (!empty($value->installment))
-                                <span class="payment2">Trả góp 0%</span>
+                            @if ($value->installment)
+                                <span class="payment2 visible_opacity_show">{{$value->installment}}</span>
+                            @else
+                                <span class="payment2"></span>
                             @endif
                         </div>
-
-                        @if (!empty($value->brands->image !="no-images.jpg"))
-                            <span class="dbrand2"
-                                  style="background-image: url('{{asset("upload/images/products/thumb/".$value->brands->image)}}');"></span>
-                        @endif
                     </div>
                     <div class="p-img">
                         <a href="{{ route('detailproduct', $value->slug)}}">
@@ -423,16 +427,16 @@
                             <a href="{{ route('detailproduct', $value->slug)}}" class="p-name">{{$value->name}}</a>
                             @if ($value->price_onsale!=0)
                                 <div class="promotion2">
-                                    <span class="pprice2">{{number_format($value->price,0,',','.')}} đ</span>
-                                    <span class="dpercent2">- {{$value->onsale}}%</span>
+                                    <span class="pprice2 visible_opacity_show">{{number_format($value->price,0,',','.')}} đ</span>
+                                    <span class="dpercent2 visible_opacity_show">- {{$value->onsale}}%</span>
                                 </div>
-                                <span class="p-price">{{number_format($value->price_onsale,0,',','.')}} đ</span>
+                                <span class="p-price visible_opacity_show">{{number_format($value->price_onsale,0,',','.')}} đ</span>
                             @else
                                 <div class="promotion2">
-                                    <span></span>
+                                    <span class="pprice2"></span>
+                                    <span class="dpercent2"></span>
                                 </div>
                                 <span class="p-price">{{number_format($value->price,0,',','.')}} đ</span>
-
                             @endif
                         </div>
                     </div>
@@ -454,8 +458,10 @@
                                     <span><i class="fal fa-star"></i></span>
                                 </div>
                             </div>
-                            @if(!empty($value->sold))
-                                <div class="sold2"><i class="fas fa-badge-check"></i>Đã bán {{$value->sold}}</div>
+                            @if($value->sold>0)
+                                <div class="sold2 visible_opacity_show"><i class="fas fa-badge-check"></i>Đã bán {{$value->sold}}</div>
+                            @else
+                                <div class="sold2"></div>
                             @endif
                         </div>
                     </div>

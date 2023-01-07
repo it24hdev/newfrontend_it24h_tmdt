@@ -30,7 +30,7 @@
                             <a href="{{route('list_cart')}}">
                                 <i class="fal fa-shopping-cart"></i>
                                 <span class="count_c" id="count-cart">
-                                    @if (!empty(Session::get('count_cart')))
+                                    @if (Session::get('count_cart'))
                                         {{Session::get('count_cart')}}
                                     @else
                                         0
@@ -70,7 +70,7 @@
                     <div class="shop col-1 align-items-center d-flex justify-content-end mx-3 position-relative">
                         <a href="{{route('list_cart')}}"> <i class="fal fa-shopping-cart"></i> </a>
                         <span class="count_c_2" id="count-cart2">
-                            @if (!empty(Session::get('count_cart')))
+                            @if (Session::get('count_cart'))
                                 {{Session::get('count_cart')}}
                             @else
                                 0
