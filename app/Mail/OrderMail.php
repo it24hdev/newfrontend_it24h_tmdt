@@ -6,34 +6,34 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Order;
+use App\Models\Order_item;
 
 class OrderMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public $data;
-
     public function __construct($data)
     {
-        $this->data = $data;
-    }
+        $this->id = $data;
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
+        $this->info_cus = Order::find($data);
+        $this->info_cart = Order_item::where('order_id',$data)->get();
+        $this->data = [
+            'info_cus' => $this->info_cus,
+            'info_cart' => $this->info_cart,
+        ];
+    }
     public function build()
     {
-
-        return $this->view('mails.order')
-        ->from(\env('MAIL_USERNAME') , 'IT24H')
-                    ->subject("[IT24H] Thông tin đơn hàng #{$this->data['orders']['code_order']}")
-                    ->with($this->data);
+        return $this->view('mails.order')->from(\env('MAIL_USERNAME') , 'IT24H')->subject("[IT24H] Thông tin đơn hàng #{$this->id}")
+            ->with($this->data);
     }
 }

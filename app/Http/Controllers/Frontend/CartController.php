@@ -5,16 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\laravelmenu\src\Models\MenuItems;
 use App\Mail\ContactMail;
-use App\Models\Category;
+use App\Mail\OrderMail;
 use App\Models\City;
-use App\Models\Customer;
 use App\Models\District;
 use App\Models\Order;
 use App\Models\Order_item;
 use App\Models\Post;
 use App\Models\Products;
 use Exception;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Crypt;
@@ -153,7 +151,6 @@ class CartController extends Controller
         $item_id_list = array_column($cart_data, 'item_id');
         $prod_id_is_there = $prod_id;
         $count = 0;
-        $minutes = 4320;
         if (in_array($prod_id_is_there, $item_id_list)) {
             foreach ($cart_data as $keys => $values) {
                 if ($cart_data[$keys]["item_id"] == $prod_id) {
@@ -260,117 +257,111 @@ class CartController extends Controller
     public function complete_payment(Request $request)
     {
         $info_customer = [
-            'customer_name' => $request->input('customer_name'),
-            'email' => $request->input('email'),
-            'address' => $request->input('address'),
-            'phone_number' => $request->input('phone_number'),
-            'note' => $request->input('note'),
-            'name_company' => $request->input('name_company'),
-            'address_company' => $request->input('address_company'),
-            'tax_code' => $request->input('tax_code'),
-            'email_company' => $request->input('email_company'),
-            'payment_method' => $request->input('payment_method'),
+            'customer_name' => $request->customer_name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone_number' => $request->phone_number,
+            'note' => $request->note,
+            'name_company' => $request->name_company,
+            'address_company' => $request->address_company,
+            'tax_code' => $request->tax_code,
+            'email_company' => $request->email_company,
+            'payment_method' => $request->payment_method,
             'status' => 1
         ];
         try {
             DB::beginTransaction();
             $order = Order::create($info_customer);
-            DB::commit();
             Session::forget('info_customer');
             Session::put('info_customer', Crypt::encryptString($order->id));
+            $cookie_data = stripslashes(Crypt::decryptString(Session::get('shopping_cart')));
+            $cart_data = json_decode($cookie_data, true);
+            $list_success = json_decode(Crypt::decryptString(Session::get('cart_success')));
+            $total_money = $count = 0;
+            foreach ($cart_data as $keys => $item) {
+                if (in_array($item['item_id'], $list_success)) {
+                    if ($item['item_price_onsale'] == 0 || $item['item_price_onsale'] == null) {
+                        $price = $item['item_price'];
+                    } else {
+                        $price = $item['item_price_onsale'];
+                    }
+                    $order_items = [
+                        'order_id' => $order->id,
+                        'product_id' => $item['item_id'],
+                        'product_name' => $item['item_name'],
+                        'product_slug' => $item['item_slug'],
+                        'quantity' => $item['item_quantity'],
+                        'price' => number_format($price, 0, '', ''),
+                    ];
+                    Order_item::create($order_items);
+                    unset($cart_data[$keys]);
+                    $total_money = $total_money + ($item['item_quantity']) * $price;
+                } else {
+                    $count = $count + $item["item_quantity"];
+                }
+            }
+            $item_data = json_encode($cart_data);
+            Session::put('shopping_cart', Crypt::encryptString($item_data));
+            Session::put('count_cart', $count);
+            $updatOder = Order::find($order->id);
+            $updatOder->total = $total_money;
+            $updatOder->save();
+            Session::forget('cart_success');
+            DB::commit();
+            $this->send_email_cart($order->id, $request->email);
+            return response()->json(['success' => true]);
         } catch (Exception $exception) {
             DB::rollBack();
             Session::forget('info_customer');
             return response()->json(['success' => false]);
         }
-        $cookie_data = stripslashes(Crypt::decryptString(Session::get('shopping_cart')));
-        $cart_data = json_decode($cookie_data, true);
-        $list_success = json_decode(Crypt::decryptString(Session::get('cart_success')));
-        $total_money = $count = 0;
-        $array_order_item_error = array();
-        foreach ($cart_data as $keys => $item) {
-            if (in_array($item['item_id'], $list_success)) {
-                if ($item['item_price_onsale'] == 0 || $item['item_price_onsale'] == null) {
-                    $price = $item['item_price'];
-                } else {
-                    $price = $item['item_price_onsale'];
-                }
-                $order_items = [
-                    'order_id' => $order->id,
-                    'product_id' => $item['item_id'],
-                    'product_name' => $item['item_name'],
-                    'product_slug' => $item['item_slug'],
-                    'quantity' => $item['item_quantity'],
-                    'price' => number_format($price, 0, '', ''),
-                ];
-                try {
-                    DB::beginTransaction();
-                    $order_item = Order_item::create($order_items);
-                    DB::commit();
-                } catch (Exception $exception) {
-                    DB::rollBack();
-                    if ($array_order_item_error) {
-                        Order_item::whereIn('id', $array_order_item_error)->delete();
-                    }
-                    Session::forget('info_customer');
-                    return response()->json(['success' => false]);
-                }
-                array_push($array_order_item_error, $order_item->id);
-                unset($cart_data[$keys]);
-                $total_money = $total_money + ($item['item_quantity']) * $price;
-            } else {
-                $count = $count + $item["item_quantity"];
-            }
-        }
-
-        $item_data = json_encode($cart_data);
-        Session::put('shopping_cart', Crypt::encryptString($item_data));
-        Session::put('count_cart', $count);
-        $updatOder = Order::find($order->id);
-        $updatOder->total = $total_money;
-        $updatOder->save();
-        Session::forget('cart_success');
-        return response()->json(['success' => true]);
     }
 
     //Hoan thanh - hien thi thong tin hang da dat
-    public function successorder(Request $request)
+    public function successorder()
     {
         $data_info_customer = Session::get('info_customer');
         $id_customer_order ="";
+        $agent = new Agent();
         if($data_info_customer){
             $id_customer_order = Crypt::decryptString($data_info_customer);
         }
         $customer_order = Order::find($id_customer_order);
         if ($customer_order) {
             $active = 1;
-            return view('frontend.mobile.successorder', ['customer_order' => $customer_order, 'active' => $active]);
+            if($agent->isPhone()){
+                return view('frontend.mobile.successorder', ['customer_order' => $customer_order, 'active' => $active]);
+            }
+            else{
+                $info_order = Order_item::select('order_items.*',DB::raw('products.thumb as thumb'))
+                    ->leftjoin('products','products.id', 'order_items.product_id')
+                    ->where('order_id',$id_customer_order)
+                    ->get();
+                $Sidebars = $this->getmenu('sidebar');
+                $active_menu = "product";
+                return view('frontend.successorder', ['customer_order' => $customer_order, 'Sidebars' => $Sidebars, 'active_menu' => $active_menu,
+                    'info_order' => $info_order, 'active' => $active]);
+            }
+
         } else {
             $active = 0;
-            return view('frontend.mobile.successorder', ['active' => $active]);
+            if($agent->isPhone()){
+                return view('frontend.mobile.successorder', ['active' => $active]);
+            }else{
+                $Sidebars = $this->getmenu('sidebar');
+                $active_menu = "product";
+                return view('frontend.successorder', [ 'Sidebars' => $Sidebars, 'active_menu' => $active_menu, 'active' => $active]);
+            }
         }
     }
 
-    public function thanks()
-    {
-        $agent = new Agent();
-        $ag = "";
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
-        $active_menu = "cart";
-        if (Session::has('order_success')) {
-            $locale = config('app.locale');
-            $Sidebars = $this->getmenu('sidebar');
-            $order_id = Session::get('order_success');
-            $order = Order::find($order_id);
-            $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-            return view('frontend.thankyou', compact('order', 'Sidebars', 'active_menu', 'locale', 'posts_footer'))->with('agent', $ag);
-        } else {
-            return redirect()->route('list_cart');
+    public function send_email_cart($id, $email){
+        $mail_to_admin = "it24h.dev@gmail.com";
+        if($id){
+            Mail::to($email)->send(new OrderMail($id));
+            Mail::to($mail_to_admin)->send(new OrderMail($id));
         }
     }
-
     public function list_wish()
     {
         $agent = new Agent();

@@ -24,74 +24,71 @@
             <div class="row d-none" id="cart-empty" data-target="{{\Illuminate\Support\Facades\Session::get('count_cart')}}">
                 <div class="col-12 col-lg-8">
                     <div class="wp-cart-table">
-                        <form action="{{ route('cart.update') }}" method="POST">
-                            @csrf
-                            <table class="table-cart">
-                                <thead>
-                                <tr>
-                                    <th class="text-center"><input type="checkbox" name="check_all" checked></th>
-                                    <th class="product-thumbnail text-center">Ảnh</th>
-                                    <th class="product-name text-center">Tên sản phẩm</th>
-                                    <th class="product-price text-center">Giá bán</th>
-                                    <th class="product-quantity text-center">Số lượng</th>
-                                    <th class="product-subtotal text-center">Tổng tạm</th>
-                                    <th class="product-remove text-center">Xoá</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @if($cart_data)
-                                    @foreach ($cart_data as $item_cart)
-                                        <tr class="cart-item" id="cart_{{$item_cart['item_id']}}">
-                                            <td class="check_p">
-                                                <input checked id="check_cart_{{$item_cart['item_id']}}" class="check_cart" type="checkbox" name="check_cart" data-target="{{$item_cart['item_id']}}">
-                                            </td>
-                                            <td class="product-thumbnail">
-                                                @if($item_cart["item_image"]!="no-images.jpg")
-                                                    <img width="300" height="300"
-                                                         src="{{asset('upload/images/products/thumb/'.$item_cart["item_image"])}}"
-                                                         alt="">
-                                                @else
-                                                    <img width="300" height="300"
-                                                         src="{{asset('upload/images/common_img/no-images.jpg')}}"
-                                                         alt="">
-                                                @endif
-                                            </td>
-                                            <td class="product-name">
-                                                <a href="{{route('detailproduct',['slug' => $item_cart["item_slug"]])}}">{{$item_cart["item_name"]}}</a>
-                                            </td>
-                                            <td class="product-price">
-                                                @if($item_cart['item_price_onsale'])
-                                                    <span class="w-100 text-nowrap item_price" data-target="{{$item_cart['item_price_onsale']}}">{{ number_format($item_cart['item_price_onsale'], 0, '', '.') }} đ </span>
-                                                @else
-                                                    <span class="w-100 text-nowrap item_price" data-target="{{$item_cart['item_price']}}">{{ number_format($item_cart['item_price'], 0, '', '.') }} đ </span>
-                                                @endif
-                                            </td>
-                                            <td class="product-quantity">
-                                                <div class="quantity">
-                                                    <button type="button" class="change-qty minus_cart" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}"><i class="fas fa-minus"></i></button>
-                                                    <input type="number" class="qty" min="1" max="999" name="qty_cart" value="{{$item_cart['item_quantity']}}" readonly="readonly">
-                                                    <button type="button" class="change-qty plus_cart" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}"><i class="fas fa-plus"></i></button>
-                                                </div>
-                                            </td>
-                                            <td class="product-subtotal">
-                                                <strong><span class="subtotal text-nowrap"></span></strong>
-                                            </td>
-                                            <td class="product-remove">
-                                                <a href="javascript:" class="remove-cart cart_delete"
-                                                   data-target="{{$item_cart['item_id']}}"><i class="fal fa-times"></i></a>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                                </tbody>
-                            </table>
-                            <div class="actions clearfix">
-                                <form class="coupon">
-                                    <input type="text" class="input-text" placeholder="@lang('lang.Couponcode')">
-                                    <button class="btn-submit">@lang('lang.ApplyCoupon')</button>
-                                </form>
-                            </div>
-                        </form>
+                        <table class="table-cart">
+                            <thead>
+                            <tr>
+                                <th class="text-center"><input type="checkbox" name="check_all" checked></th>
+                                <th class="product-thumbnail text-center">Ảnh</th>
+                                <th class="product-name text-center">Tên sản phẩm</th>
+                                <th class="product-price text-center">Giá bán</th>
+                                <th class="product-quantity text-center">Số lượng</th>
+                                <th class="product-subtotal text-center">Tổng tạm</th>
+                                <th class="product-remove text-center">Xoá</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if($cart_data)
+                                @foreach ($cart_data as $item_cart)
+                                    <tr class="cart-item" id="cart_{{$item_cart['item_id']}}">
+                                        <td class="check_p">
+                                            <input checked id="check_cart_{{$item_cart['item_id']}}" class="check_cart" type="checkbox" name="check_cart" data-target="{{$item_cart['item_id']}}">
+                                        </td>
+                                        <td class="product-thumbnail">
+                                            @if($item_cart["item_image"]!="no-images.jpg")
+                                                <img width="300" height="300"
+                                                     src="{{asset('upload/images/products/thumb/'.$item_cart["item_image"])}}"
+                                                     alt="">
+                                            @else
+                                                <img width="300" height="300"
+                                                     src="{{asset('upload/images/common_img/no-images.jpg')}}"
+                                                     alt="">
+                                            @endif
+                                        </td>
+                                        <td class="product-name">
+                                            <a href="{{route('detailproduct',['slug' => $item_cart["item_slug"]])}}">{{$item_cart["item_name"]}}</a>
+                                        </td>
+                                        <td class="product-price">
+                                            @if($item_cart['item_price_onsale'])
+                                                <span class="w-100 text-nowrap item_price" data-target="{{$item_cart['item_price_onsale']}}">{{ number_format($item_cart['item_price_onsale'], 0, '', '.') }} đ </span>
+                                            @else
+                                                <span class="w-100 text-nowrap item_price" data-target="{{$item_cart['item_price']}}">{{ number_format($item_cart['item_price'], 0, '', '.') }} đ </span>
+                                            @endif
+                                        </td>
+                                        <td class="product-quantity">
+                                            <div class="quantity">
+                                                <button type="button" class="change-qty minus_cart" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}"><i class="fas fa-minus"></i></button>
+                                                <input type="number" class="qty" min="1" max="999" name="qty_cart" value="{{$item_cart['item_quantity']}}" readonly="readonly">
+                                                <button type="button" class="change-qty plus_cart" product-id="{{$item_cart['item_id']}}" quantity="{{$item_cart['item_quantity']}}"><i class="fas fa-plus"></i></button>
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <strong><span class="subtotal text-nowrap"></span></strong>
+                                        </td>
+                                        <td class="product-remove">
+                                            <a href="javascript:" class="remove-cart cart_delete"
+                                               data-target="{{$item_cart['item_id']}}"><i class="fal fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                        <div class="actions clearfix">
+                            <form class="coupon">
+                                <input type="text" class="input-text" placeholder="@lang('lang.Couponcode')">
+                                <button class="btn-submit">@lang('lang.ApplyCoupon')</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
@@ -238,10 +235,10 @@
             </div>
             <div class="entry-content w-100 d-none">
                 <p class="cart-empty">
-                    <i class="fad fa-shopping-cart"></i><br>
-                    @lang('lang.Yourcartiscurrentlyempty').
+                    <img src="{{asset('upload/images/common_img/shopping_cart.png')}}">
                 </p>
-                <a href="{{route('user')}}"> @lang('lang.Returntoshop')</a>
+                <p>Không có sản phẩm nào trong giỏ hàng của bạn</p>
+                <a href="/">Tiếp tục mua sắm</a>
             </div>
         </div>
     </div>

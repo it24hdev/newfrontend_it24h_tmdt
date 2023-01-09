@@ -169,14 +169,14 @@ table.table-cart tbody tr td.product-subtotal{
 }
 .entry-content a{
     display: inline-block;
-    padding: 10px 20px;
+    padding: 10px 40px;
     border-radius: 5px;
-    background-color: var(--primary);
+    background-color: #1d94ff;
     color: #fff;
 }
-.entry-content a:hover{
-    background-color: var(--primary_hover);
-}
+/*.entry-content a:hover{*/
+/*    background-color: var(--primary_hover);*/
+/*}*/
 table.table-cart .product-quantity .quantity {
     position: relative;
     display: inline-flex;
@@ -262,7 +262,10 @@ input[type=number] {
     margin-bottom: 30px;
 }
 .actions .btn-update{margin-top: 5px;}
-
+input[type=checkbox]{
+    width: 15px;
+    height: 15px;
+}
 @media (min-width:768px){
     .actions .coupon .input-text{
         display: inline-block;

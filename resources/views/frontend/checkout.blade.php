@@ -18,147 +18,141 @@
         </div>
     </div>
     <div id="content" class="container-page">
-        <div class="wp-my-account" style="color: #222">
-            <div class="row">
-                <div class="col-12">
-                    @if($active==1)
-                    <form>
-                        @csrf
-                        <h3 class="d-block mb-4 mx-3">Thông tin đặt hàng</h3>
-                        <div class="col-12 d-flex">
-                            <div class="col-6">
-                                <div class="wp-form mx-3">
-                                    <div class="form-group mb-1">
-                                        <div class="form-group">
-                                            <div class="input-wrapper">
-                                                <span class="icon-wrapper-payment">
-                                                    <i class="fal fa-user"></i>
-                                                </span>
-                                                <span class="position-relative">
-                                                    <input class="form-control input-info" type="text" name="customer_name" maxlength="50" autocomplete="off" placeholder="Họ và tên (bắt buộc)">
-                                                    <span class="requite_name text-danger mx-2 d-none"><i></i></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-1">
-                                        <div class="form-group">
-                                            <div class="input-wrapper">
-                                                <span class="icon-wrapper-payment">
-                                                    <i class="fal fa-phone-alt"></i>
-                                                </span>
-                                                <span class="position-relative">
-                                                    <input class="form-control input-info" type="number" autocomplete="off" name="phone_number" placeholder="Số điện thoại (bắt buộc)">
-                                                    <span class="requite_numberphone text-danger mx-2 d-none"><i></i></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-1">
-                                        <div class="form-group">
-                                            <div class="input-wrapper">
-                                                <span class="icon-wrapper-payment">
-                                                    <i class="fal fa-envelope"></i>
-                                                </span>
-                                                <span class="position-relative">
-                                                    <input class="form-control input-info"  type="email" placeholder="Email" name="email" maxlength="100" autocomplete="off" placeholder="Email">
-                                                    <span class="requite_email text-danger mx-2 d-none"><i></i></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group mb-1 address-box">
-                                        <div class="d-flex">
-                                            <select name="city" class="ct_info form-select col-sm-1 w-50">
-                                                @foreach($city as $key => $item)
-                                                    <option value="{{$item->matp}}" @if($item->matp == 31) selected @endif>{{$item->name}}</option>
-                                                @endforeach
-                                            </select>
-                                            <select name="district" class="dt_info form-select form-select-sm w-50">
-                                                @foreach($district as $key => $item)
-                                                    @if($item->matp == 31)
-                                                        <option value="{{$item->name}}">{{$item->name}}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <input id="address" name="street" type="text" placeholder="Số nhà, tên đường" class="mt-2" autocomplete="off">
-                                    </div>
-                                    <div class="mt-3 d-flex flex-column">
-                                        <div class="receipt">
-                                            <label for="VAT">
-                                                <input type="checkbox" name="VAT" id="VAT">
-                                                <span>Yêu cầu xuất hóa đơn công ty (Vui lòng điền email để nhận hoá đơn VAT)</span>
-                                            </label><br>
-                                            <a href="#" target="_blank">
-                                                <i class="text-danger">(Với đơn hàng trên 20 triệu vui lòng thanh toán chuyển khoản từ tài
-                                                    khoản công ty khi cần xuất VAT cho công ty)</i>
-                                            </a>
-                                        </div>
-                                        <div class="mb-3 receipt_ip d-none">
-                                            <input name="name_company" type="text" placeholder="Tên công ty (*)" autocomplete="off" class="my-2">
-                                            <span class="requite_name_company text-danger mx-2"><i></i></span>
-                                            <input name="address_company" type="text" placeholder="Địa chỉ công ty (*)" autocomplete="off" class="my-2">
-                                            <span class="requite_address_company text-danger mx-2"><i></i></span>
-                                            <input name="tax_code" type="text" placeholder="Mã số thuế (*)" autocomplete="off" class="my-2">
-                                            <span class="requite_tax_code text-danger mx-2"><i></i></span>
-                                            <input name="email_company" type="text" placeholder="Email công ty (*)" autocomplete="off" class="my-2">
-                                            <span class="requite_email_company text-danger mx-2"><i></i></span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <i>
-                                            <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
-                                            <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
-                                        </i>
+        <div class="col-12 cpn_box">
+            @if($active==1)
+                <h3 class="d-block mb-4 mx-3">Thông tin đặt hàng</h3>
+                <div class="col-12 d-flex">
+                    <div class="col-6">
+                        <div class="wp-form mx-3">
+                            <div class="form-group mb-1">
+                                <div class="form-group">
+                                    <div class="input-wrapper">
+                                        <span class="icon-wrapper-payment">
+                                            <i class="fal fa-user"></i>
+                                        </span>
+                                        <span class="position-relative">
+                                            <input class="form-control input-info" type="text" name="customer_name" maxlength="50" autocomplete="off" placeholder="Họ và tên (bắt buộc)">
+                                            <span class="requite_name text-danger mx-2 d-none"><i></i></span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6">
-                                <div class="order-review mb-5 mx-3">
-                                    <h3>@lang('lang.Yourorder')</h3>
-                                    <div class="checkout-review-order">
-                                        <table class="checkout-review-order-table">
-                                            <tfoot>
-                                                <tr class="order-total">
-                                                    <th>@lang('lang.Total') </th>
-                                                    <td>
-                                                        <strong>
-                                                            <span class="amount mx-1">{{ number_format($total_money, 0, '', '.') }}<span> @lang('lang.Currencyunit')</span></span>
-                                                        </strong>
-                                                    </td>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                        <div class="payment mt-2">
-                                            <div class="form-group pt-3">
-                                                <input type="radio" id="transfer" name="payment_method" value="Chuyển khoản"  class="form-check-input me-2 payment-check" checked>
-                                                <label for="payment_method_bacs" class="payment-check"><strong>@lang('lang.Directbanktransfer')</strong></label>
-                                                <div class="payment-box">
-                                                    <p>@lang('lang.Makeyourpayment')
-                                                    .</p>
-                                                </div>
-                                            </div>
-                                            <div class="form-group pt-3">
-                                                <input  type="radio" id="cash_on_shop" name="payment_method" value="Thanh toán tại cửa hàng" class="form-check-input me-2 payment-check">
-                                                <label for="payment_method_cod" class="payment-check"><strong>@lang('lang.Cashondelivery')</strong></label>
-                                                <div class="payment-box payment-box-none">
-                                                    <p>@lang('lang.Paywithcashupondelivery').</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="place-order mt-4">
-                                            <p>@lang('lang.Yourpersonaldata').</p>
-                                            <button type="button" class="btn-order btn-complte-payment">@lang('lang.PlaceOrder')</button>
-                                        </div>
+                            <div class="form-group mb-1">
+                                <div class="form-group">
+                                    <div class="input-wrapper">
+                                        <span class="icon-wrapper-payment">
+                                            <i class="fal fa-phone-alt"></i>
+                                        </span>
+                                        <span class="position-relative">
+                                            <input class="form-control input-info" type="number" autocomplete="off" name="phone_number" placeholder="Số điện thoại (bắt buộc)">
+                                            <span class="requite_numberphone text-danger mx-2 d-none"><i></i></span>
+                                        </span>
                                     </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-1">
+                                <div class="form-group">
+                                    <div class="input-wrapper">
+                                        <span class="icon-wrapper-payment">
+                                            <i class="fal fa-envelope"></i>
+                                        </span>
+                                        <span class="position-relative">
+                                            <input class="form-control input-info"  type="email" placeholder="Email" name="customer_email" maxlength="100" autocomplete="off" placeholder="Email">
+                                            <span class="requite_email text-danger mx-2 d-none"><i></i></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-1 address-box">
+                                <div class="d-flex">
+                                    <select name="city" class="ct_info form-select col-sm-1 w-50">
+                                        @foreach($city as $key => $item)
+                                            <option value="{{$item->matp}}" @if($item->matp == 31) selected @endif>{{$item->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <select name="district" class="dt_info form-select form-select-sm w-50">
+                                        @foreach($district as $key => $item)
+                                            @if($item->matp == 31)
+                                                <option value="{{$item->name}}">{{$item->name}}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <input id="address" name="street" type="text" placeholder="Số nhà, tên đường" class="mt-2" autocomplete="off">
+                            </div>
+                            <div class="mt-3 d-flex flex-column">
+                                <div class="receipt">
+                                    <label for="VAT">
+                                        <input type="checkbox" name="VAT" id="VAT">
+                                        <span>Yêu cầu xuất hóa đơn công ty (Vui lòng điền email để nhận hoá đơn VAT)</span>
+                                    </label><br>
+                                    <a href="#" target="_blank">
+                                        <i class="text-danger">(Với đơn hàng trên 20 triệu vui lòng thanh toán chuyển khoản từ tài
+                                            khoản công ty khi cần xuất VAT cho công ty)</i>
+                                    </a>
+                                </div>
+                                <div class="mb-3 receipt_ip d-none">
+                                    <input name="name_company" type="text" placeholder="Tên công ty (*)" autocomplete="off" class="my-2">
+                                    <span class="requite_name_company text-danger mx-2"><i></i></span>
+                                    <input name="address_company" type="text" placeholder="Địa chỉ công ty (*)" autocomplete="off" class="my-2">
+                                    <span class="requite_address_company text-danger mx-2"><i></i></span>
+                                    <input name="tax_code" type="text" placeholder="Mã số thuế (*)" autocomplete="off" class="my-2">
+                                    <span class="requite_tax_code text-danger mx-2"><i></i></span>
+                                    <input name="email_company" type="text" placeholder="Email công ty (*)" autocomplete="off" class="my-2">
+                                    <span class="requite_email_company text-danger mx-2"><i></i></span>
+                                </div>
+                            </div>
+                            <div>
+                                <i>
+                                    <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
+                                    <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
+                                </i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="order-review mb-5 mx-3">
+                            <h3>@lang('lang.Yourorder')</h3>
+                            <div class="checkout-review-order">
+                                <table class="checkout-review-order-table">
+                                    <tfoot>
+                                        <tr class="order-total">
+                                            <th>@lang('lang.Total') </th>
+                                            <td>
+                                                <strong>
+                                                    <span class="amount mx-1">{{ number_format($total_money, 0, '', '.') }}<span> @lang('lang.Currencyunit')</span></span>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="payment mt-2">
+                                    <div class="form-group pt-3">
+                                        <input type="radio" id="transfer" name="payment_method" value="Chuyển khoản"  class="form-check-input me-2 payment-check" checked>
+                                        <label for="transfer" class="payment-check"><strong>@lang('lang.Directbanktransfer')</strong></label>
+                                    </div>
+                                    <div class="form-group pt-3">
+                                        <input  type="radio" id="cash_on_shop" name="payment_method" value="Thanh toán tại cửa hàng" class="form-check-input me-2 payment-check">
+                                        <label for="cash_on_shop" class="payment-check"><strong>@lang('lang.Cashondelivery')</strong></label>
+                                    </div>
+                                </div>
+                                <div class="place-order mt-4">
+                                    <p>@lang('lang.Yourpersonaldata').</p>
+                                    <button type="button" class="btn-order btn-complte-payment">@lang('lang.PlaceOrder')</button>
                                 </div>
                             </div>
                         </div>
-                    </form>
-                    @endif
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="entry-content w-100">
+                    <p class="cart-empty">
+                        <img src="{{asset('upload/images/common_img/shopping_cart.png')}}">
+                    </p>
+                    <p>Không có sản phẩm nào trong giỏ hàng của bạn</p>
+                    <a href="/">Tiếp tục mua sắm</a>
+                </div>
+            @endif
         </div>
     </div>
 @endsection
@@ -214,7 +208,7 @@
                 var customer_name = $('input[name="customer_name"]').val();
                 var phone_number = $('input[name="phone_number"]').val();
                 var mailformat = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
-                var email = $('input[name="email"]').val();
+                var email = $('input[name="customer_email"]').val();
                 var address = $('select[name="district"]').val() +" - "+ $('select[name="city"] option:selected').text();
                 if($('input[name="street"]').val()){
                     address = $('input[name="street"]').val() + " - " + address;
@@ -229,6 +223,7 @@
                 var address_company = $('input[name="address_company"]').val();
                 var tax_code = $('input[name="tax_code"]').val();
                 var email_company = $('input[name="email_company"]').val();
+                console.log(email);
                 var data = {
                     customer_name: customer_name,
                     email: email,
@@ -287,7 +282,7 @@
                             $('.requite_email').removeClass('d-none');
                         }
                         $('.requite_email i').html('Địa chỉ email không hợp lệ, vui lòng nhập lại.');
-                        $('input[name="email"]').focus();
+                        $('input[name="customer_email"]').focus();
                         break;
                     }
                     case(vat.is(":checked")):{
@@ -336,8 +331,11 @@
                                     dataType: 'json',
                                     success: function (data) {
                                         if(data.success){
-                                            $('.btn-complte-payment').attr('disabled',true);
+                                            // $('.btn-complte-payment').attr('disabled',true);
                                             window.location = '{{route('successorder')}}';
+                                        }
+                                        else{
+                                            alert('Đã có lỗi xảy ra. vui lòng thử lại sau.');
                                         }
                                     }
                                 });
@@ -353,8 +351,11 @@
                             dataType: 'json',
                             success: function (data) {
                                 if(data.success==true){
-                                    $('.btn-complte-payment').attr('disabled',true);
+                                    // $('.btn-complte-payment').attr('disabled',true);
                                     window.location = '{{route('successorder')}}';
+                                }
+                                else{
+                                   alert('Đã có lỗi xảy ra. vui lòng thử lại sau.');
                                 }
                             }
                         });

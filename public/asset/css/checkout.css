@@ -74,7 +74,7 @@ table.checkout-review-order-table tfoot tr td{
 }
 table.checkout-review-order-table tfoot tr.order-total td .amount{
     font-size: 24px;
-    color: var(--primary);
+    color: #1d94ff;
     font-weight: 600;
 }
 .order-review .payment label{
@@ -99,6 +99,10 @@ table.checkout-review-order-table tfoot tr.order-total td .amount{
     font-size: 14px;
     color: var(--text);
 }
+input[type=checkbox]{
+    width: 15px;
+    height: 15px;
+}
 .order-review .place-order button{
     width: 100%;
     font-size: 14px;
@@ -106,9 +110,26 @@ table.checkout-review-order-table tfoot tr.order-total td .amount{
     font-weight: 700;
     border-radius: 5px;
     color: #fff;
-    background-color: var(--primary);
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
     border: none;
 }
-.order-review .place-order button:hover{
-    background-color: var(--accent);
+.entry-content{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+.entry-content p.cart-empty {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+}
+.entry-content a {
+    display: inline-block;
+    padding: 10px 40px;
+    border-radius: 5px;
+    background-color: #1d94ff;
+    color: #fff;
+}
+.cpn_box{
+    color: #222;
 }
