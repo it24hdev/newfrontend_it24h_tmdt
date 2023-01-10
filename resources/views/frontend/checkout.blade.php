@@ -207,7 +207,8 @@
             $(document).on('click', '.btn-complte-payment', function(){
                 var customer_name = $('input[name="customer_name"]').val();
                 var phone_number = $('input[name="phone_number"]').val();
-                var mailformat = /^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!\.)){0,61}[a-zA-Z0-9]?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-](?!$)){0,61}[a-zA-Z0-9]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/;
+                var mailformat = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                var nameformat = /[^a-zA-Z0-9]{1,3}/gm;
                 var email = $('input[name="customer_email"]').val();
                 var address = $('select[name="district"]').val() +" - "+ $('select[name="city"] option:selected').text();
                 if($('input[name="street"]').val()){
@@ -223,7 +224,6 @@
                 var address_company = $('input[name="address_company"]').val();
                 var tax_code = $('input[name="tax_code"]').val();
                 var email_company = $('input[name="email_company"]').val();
-                console.log(email);
                 var data = {
                     customer_name: customer_name,
                     email: email,
@@ -261,7 +261,7 @@
                         $('input[name="customer_name"]').focus();
                         break;
                     }
-                    case (customer_name.split(" ").join("").length<2) : {
+                    case (customer_name.split(" ").join("").length<2 || !nameformat.test(customer_name)) : {
                         if($('.requite_name').hasClass('d-none')){
                             $('.requite_name').removeClass('d-none');
                         }
@@ -277,7 +277,7 @@
                         $('input[name="phone_number"]').focus();
                         break;
                     }
-                    case(email.split(" ").join("").length>0 && !email.match(mailformat)):{
+                    case(email.split(" ").join("").length>0 && !mailformat.test(email)):{
                         if($('.requite_email').hasClass('d-none')){
                             $('.requite_email').removeClass('d-none');
                         }
@@ -295,7 +295,7 @@
                                 $('.requite_name_company i').html('Tên công ty không được phép bỏ trống.');
                                 break;
                             }
-                            case (name_company.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(name_company)) : {
+                            case (name_company.split(" ").join("").length<2 || !nameformat.test(name_company)) : {
                                 $('.requite_name_company i').html('Tên công ty không hợp lệ, vui lòng nhập lại.');
                                 break;
                             }
@@ -303,7 +303,7 @@
                                 $('.requite_address_company i').html('Địa chỉ công ty không được phép bỏ trống.');
                                 break;
                             }
-                            case (address_company.split(" ").join("").length<2 || !/^[A-Za-z ]+$/.test(address_company)) : {
+                            case (address_company.split(" ").join("").length<2 || !nameformat.test(address_company)) : {
                                 $('.requite_address_company i').html('Địa chỉ công ty không hợp lệ, vui lòng nhập lại.');
                                 break;
                             }
@@ -319,7 +319,7 @@
                                 $('.requite_email_company i').html('Email công ty không được phép bỏ trống, vui lòng nhập lại');
                                 break;
                             }
-                            case (!email_company.match(mailformat)) : {
+                            case (!mailformat.test(email_company)) : {
                                 $('.requite_email_company i').html('Email công ty không hợp lệ, vui lòng nhập lại.');
                                 break;
                             }
@@ -335,7 +335,7 @@
                                             window.location = '{{route('successorder')}}';
                                         }
                                         else{
-                                            alert('Đã có lỗi xảy ra. vui lòng thử lại sau.');
+                                            window.location = '{{route('checkout')}}';
                                         }
                                     }
                                 });
@@ -355,7 +355,7 @@
                                     window.location = '{{route('successorder')}}';
                                 }
                                 else{
-                                   alert('Đã có lỗi xảy ra. vui lòng thử lại sau.');
+                                    window.location = '{{route('checkout')}}';
                                 }
                             }
                         });
