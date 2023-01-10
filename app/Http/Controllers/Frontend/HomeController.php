@@ -54,14 +54,7 @@ class HomeController extends Controller
 
         //phan biet mobile / desktop
         $agent = new Agent();
-
         if ($agent->isPhone()) {
-            $isMobile = "phone";
-        }
-        else{
-            $isMobile = "";
-        }
-        if ($isMobile) {
             //lay sp deal
             $get_hot_sale_mobile = Products::select(DB::raw('deals.name_deal '),DB::raw('deals.price_deal ') ,DB::raw('products.*'))
                 ->leftjoin('deals', 'products.id', 'deals.product_id')
@@ -118,11 +111,8 @@ class HomeController extends Controller
                 'list_cat' => $list_cat,
                 'locale' => $locale,
                 'recentactivity' => $recentactivity,
-                'isMobile' => $isMobile,
             ]);
         }
-
-
     }
     // lay memu sidebar
     public function getmenu($location)

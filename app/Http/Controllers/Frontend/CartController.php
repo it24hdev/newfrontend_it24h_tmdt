@@ -30,7 +30,7 @@ use function view;
 
 class CartController extends Controller
 {
-
+    //hien thi gio hang
     public function index()
     {
         try {
@@ -48,7 +48,7 @@ class CartController extends Controller
             } else {
                 $Sidebars = $this->getmenu('sidebar');
                 $active_menu = "product";
-                return view('frontend.cart', compact('cart_data', 'locale','Sidebars','active_menu'));
+                return view('frontend.cart', compact('cart_data', 'locale', 'Sidebars', 'active_menu'));
             }
         } catch (Exception $exception) {
             abort(404);
@@ -73,7 +73,7 @@ class CartController extends Controller
     //update gio hang
     public function update_shopping_cart(Request $request)
     {
-        $prod_id = $request->input('product_id');
+        $prod_id = $request->product_id;
         $shopping_cart = Session::get('shopping_cart');
         if ($shopping_cart) {
             $cookie_data = stripslashes(Crypt::decryptString(Session::get('shopping_cart')));
@@ -89,16 +89,19 @@ class CartController extends Controller
         if (in_array($prod_id_is_there, $item_id_list)) {
             foreach ($cart_data as $keys => $values) {
                 if ($cart_data[$keys]["item_id"] == $prod_id) {
-                    if ($request->input('quantity')) {
-                        if ($request->input('status') && $request->input('status') == 'plus') {
-                            $cart_data[$keys]["item_quantity"] = $request->input('quantity') + 1;
+                    if ($request->quantity) {
+                        if ($request->status == 'plus') {
+                            $cart_data[$keys]["item_quantity"] = $request->quantity + 1;
                             $quantity = $cart_data[$keys]["item_quantity"];
                         } else {
-
-                            $cart_data[$keys]["item_quantity"] = $request->input('quantity') - 1;
+                            $cart_data[$keys]["item_quantity"] = $request->quantity - 1;
                             $quantity = $cart_data[$keys]["item_quantity"];
                         }
-                    } else {
+                    }
+                    else if ($request->quantitys) {
+                        $cart_data[$keys]["item_quantity"] = $request->quantitys + $cart_data[$keys]["item_quantity"];
+                        $quantity = $cart_data[$keys]["item_quantity"];
+                    }else {
                         $cart_data[$keys]["item_quantity"] = $cart_data[$keys]["item_quantity"] + 1;
                         $quantity = $cart_data[$keys]["item_quantity"];
                     }
@@ -142,10 +145,11 @@ class CartController extends Controller
             }
         }
     }
+
     //xoa san pham khoi gio hang
     public function remove_cart_data(Request $request)
     {
-        $prod_id = $request->input('product_id');
+        $prod_id = $request->product_id;
         $cookie_data = stripslashes(Crypt::decryptString(Session::get('shopping_cart')));
         $cart_data = json_decode($cookie_data, true);
         $item_id_list = array_column($cart_data, 'item_id');
@@ -167,10 +171,11 @@ class CartController extends Controller
             return response()->json(['success' => false]);
         }
     }
+
     //ham luu thong tin mat hang duoc chon dat hang -  chuyen sang form nhap thong tin khach hang
     public function order_processing(Request $request)
     {
-        $list_cart_success = $request->input('list_cart_success');
+        $list_cart_success = $request->list_cart_success;
         Session::forget('cart_success');
         if ($list_cart_success) {
             $list_item = json_encode($list_cart_success);
@@ -188,8 +193,8 @@ class CartController extends Controller
         $city = City::get();
         $district = District::where('matp', 31)->get();
         $data_cart_succes = Session::get('cart_success');
-        $cart_success="";
-        if($data_cart_succes){
+        $cart_success = "";
+        if ($data_cart_succes) {
             $cart_success = json_decode(Crypt::decryptString($data_cart_succes));
         }
         $shopping_cart = Session::get('shopping_cart');
@@ -215,30 +220,27 @@ class CartController extends Controller
                 $active = 1;
                 if ($agent->isMobile()) {
                     return view('frontend.mobile.orderinfomobile', ['total_money' => $total_money, 'active' => $active, 'city' => $city, 'district' => $district]);
-                }
-                else{
+                } else {
                     $Sidebars = $this->getmenu('sidebar');
-                    return view('frontend.checkout',['total_money' => $total_money, 'active' => $active, 'city' => $city, 'district' => $district,
-                       'active_menu' => $active_menu,'Sidebars' => $Sidebars,'locale' => $locale]);
+                    return view('frontend.checkout', ['total_money' => $total_money, 'active' => $active, 'city' => $city, 'district' => $district,
+                        'active_menu' => $active_menu, 'Sidebars' => $Sidebars, 'locale' => $locale]);
                 }
             } else {
                 $active = 0;
                 if ($agent->isMobile()) {
                     return view('frontend.mobile.orderinfomobile', ['active' => $active]);
-                }
-                else{
+                } else {
                     $Sidebars = $this->getmenu('sidebar');
-                    return view('frontend.checkout',['active' => $active, 'active_menu' => $active_menu,'Sidebars' => $Sidebars,'locale' => $locale]);
+                    return view('frontend.checkout', ['active' => $active, 'active_menu' => $active_menu, 'Sidebars' => $Sidebars, 'locale' => $locale]);
                 }
             }
         } else {
             $active = 0;
             if ($agent->isMobile()) {
                 return view('frontend.mobile.orderinfomobile', ['active' => $active]);
-            }
-            else{
+            } else {
                 $Sidebars = $this->getmenu('sidebar');
-                return view('frontend.checkout',['active' => $active, 'active_menu' => $active_menu,'Sidebars' => $Sidebars,'locale' => $locale]);
+                return view('frontend.checkout', ['active' => $active, 'active_menu' => $active_menu, 'Sidebars' => $Sidebars, 'locale' => $locale]);
             }
         }
     }
@@ -321,21 +323,20 @@ class CartController extends Controller
     public function successorder()
     {
         $data_info_customer = Session::get('info_customer');
-        $id_customer_order ="";
+        $id_customer_order = "";
         $agent = new Agent();
-        if($data_info_customer){
+        if ($data_info_customer) {
             $id_customer_order = Crypt::decryptString($data_info_customer);
         }
         $customer_order = Order::find($id_customer_order);
         if ($customer_order) {
             $active = 1;
-            if($agent->isPhone()){
+            if ($agent->isPhone()) {
                 return view('frontend.mobile.successorder', ['customer_order' => $customer_order, 'active' => $active]);
-            }
-            else{
-                $info_order = Order_item::select('order_items.*',DB::raw('products.thumb as thumb'))
-                    ->leftjoin('products','products.id', 'order_items.product_id')
-                    ->where('order_id',$id_customer_order)
+            } else {
+                $info_order = Order_item::select('order_items.*', DB::raw('products.thumb as thumb'))
+                    ->leftjoin('products', 'products.id', 'order_items.product_id')
+                    ->where('order_id', $id_customer_order)
                     ->get();
                 $Sidebars = $this->getmenu('sidebar');
                 $active_menu = "product";
@@ -345,23 +346,26 @@ class CartController extends Controller
 
         } else {
             $active = 0;
-            if($agent->isPhone()){
+            if ($agent->isPhone()) {
                 return view('frontend.mobile.successorder', ['active' => $active]);
-            }else{
+            } else {
                 $Sidebars = $this->getmenu('sidebar');
                 $active_menu = "product";
-                return view('frontend.successorder', [ 'Sidebars' => $Sidebars, 'active_menu' => $active_menu, 'active' => $active]);
+                return view('frontend.successorder', ['Sidebars' => $Sidebars, 'active_menu' => $active_menu, 'active' => $active]);
             }
         }
     }
 
-    public function send_email_cart($id, $email){
+    //gui email don hang da dat
+    public function send_email_cart($id, $email)
+    {
         $mail_to_admin = "it24h.dev@gmail.com";
-        if($id){
+        if ($id) {
             Mail::to($email)->send(new OrderMail($id));
             Mail::to($mail_to_admin)->send(new OrderMail($id));
         }
     }
+
     public function list_wish()
     {
         $agent = new Agent();
@@ -447,6 +451,4 @@ class CartController extends Controller
         Mail::to(env('MAIL_ADMIN'))->send(new ContactMail($data));
         return redirect()->route('contact')->with('success', 'Thông tin liên hệ phải hồi của quý khách đã được gửi thành công!');
     }
-
-
 }

@@ -10,10 +10,10 @@
 .footer-top{
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 .footer-top .box-content{
-    width: 100%;
-    padding: 30px 10px 30px 0px;
+    padding: 30px 10px 30px 10px;
     text-align: center;
 }
 .footer-top .box-content:last-child{

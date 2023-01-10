@@ -73,10 +73,9 @@ table.table-cart tbody tr td.product-subtotal{
     float: left;
 }
 .actions .coupon .input-text{
-    min-width: 220px;
     margin-right: 10px !important;
-    padding: 0.93em 1.25em;
-    background-color: var(--background);
+    padding: 5px;
+    background-color: #fff;
     border-width: 1px;
     border-style: solid;
     border-color: var(--border);
@@ -85,9 +84,6 @@ table.table-cart tbody tr td.product-subtotal{
     outline: 0;
     transition: all ease-in-out .3s;
     font-size: 14px;
-}
-.actions .coupon .input-text:focus{
-    border-color: var(--primary);
 }
 .actions button {
     display: inline-block;
@@ -239,11 +235,10 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 .actions .input-text {
-    margin-bottom: 30px;
     min-width: 220px;
     margin-right: 10px;
     padding: 0.93em 1.25em;
-    background-color: var(--background);
+    background-color: #fff;
     border-width: 1px;
     border-style: solid;
     border-color: var(--border);
@@ -254,13 +249,10 @@ input[type=number] {
     outline: none;
     transition: all ease-in-out .3s;
 }
-.actions .input-text:focus{
-    outline: 1px solid var(--global-color-primary);
-    border: 1px solid var(--global-color-primary);
-}
-.actions .btn-submit{
-    margin-bottom: 30px;
-}
+/*.actions .input-text:focus{*/
+/*    outline: 1px solid var(--global-color-primary);*/
+/*    border: 1px solid var(--global-color-primary);*/
+/*}*/
 .actions .btn-update{margin-top: 5px;}
 input[type=checkbox]{
     width: 15px;
@@ -277,9 +269,6 @@ input[type=checkbox]{
     }
     table.table-cart .product-subtotal{
         text-align: center;
-    }
-    .actions .coupon{
-        width: 60%;
     }
 }
 @media (max-width: 567px){

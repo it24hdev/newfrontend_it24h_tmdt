@@ -23,20 +23,19 @@ class DetailproductController extends Controller
 
     public function index($slug)
     {
-        $agent = new Agent();
-        if($agent->isMobile()){
-            $ag = "mobile";
-        }
-        else $ag = "desktop";
         try{
             $active_menu = "product";
             $Sidebars           = $this->getmenu('sidebar');
             $getcategoryblog    = $this->getcategoryblog();
-            $product           = Products::where('slug',$slug)->first();
+            $product            = Products::select('products.*', DB::raw("brands.image as img_brands"),
+            DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
+            ->leftjoin('brands', 'products.brand', 'brands.id')
+            ->leftjoin('votes','products.id','votes.product_id')
+            ->where('products.status',1)
+            ->where('slug',$slug)->first();
             $imgs        = json_decode($product->image);
             $locale             = config('app.locale');
             $posts = Post::where('status', 1)->orderBy('id', 'DESC')->limit(5)->get();
-            $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
             $products_id= array();
             foreach($product->category as $k){
                 foreach($k->product as $pro){
@@ -59,11 +58,8 @@ class DetailproductController extends Controller
             Session::put('list_watched', $list_watched);
             $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
             $comments = Vote::where('product_id',$product->id)->where('status', 1)->orderby('created_at','desc')->orderby('level', 'asc')->paginate(10);
-            $isphone ="";
+            $agent = new Agent();
             if($agent->isMobile()){
-                $isphone = "phone";
-            }
-            if($isphone){
                 return view('frontend.mobile.detailproductmobile',[
                     'product'        => $product,
                     'imgs'           => $imgs,
@@ -82,8 +78,6 @@ class DetailproductController extends Controller
                     'posts'           => $posts,
                     'product_watched' => $product_watched,
                     'active_menu'     => $active_menu,
-                    'posts_footer'    => $posts_footer,
-                    'agent'           => $ag,
                 ]);
             }
         }
@@ -103,28 +97,28 @@ class DetailproductController extends Controller
             'last_page' => $last_page
         ]);
     }
-    public function xulychuoi_thongsosanpham($String){
-        //loaibo space va enter
-        if($String !=null){
-        $String =  preg_replace("/[\n\r]/", "", $String);
-        //loai bo ky tu ; cuoi cung
-        if(mb_substr($String,-1) == ";")
-        $String = mb_substr($String, 0,-1);
-        //tach chuoi chan le
-        $key    = array_chunk(preg_split('/(:|;)/', $String), 20);
-        foreach ($key as $value) {
-            foreach($value as $k=> $v){if($k%2==0){$arr1[] = $v;}
-            }
-        }
-        foreach ($key as $value) {
-            foreach($value as $k=> $v){if($k%2!=0){$arr2[] = $v;}
-            }
-        }
-        //ghep chuoi
-        $property   = array_combine($arr1 , $arr2);
-        return $property;
-        }
-    }
+//    public function xulychuoi_thongsosanpham($String){
+//        //loaibo space va enter
+//        if($String !=null){
+//        $String =  preg_replace("/[\n\r]/", "", $String);
+//        //loai bo ky tu ; cuoi cung
+//        if(mb_substr($String,-1) == ";")
+//        $String = mb_substr($String, 0,-1);
+//        //tach chuoi chan le
+//        $key    = array_chunk(preg_split('/(:|;)/', $String), 20);
+//        foreach ($key as $value) {
+//            foreach($value as $k=> $v){if($k%2==0){$arr1[] = $v;}
+//            }
+//        }
+//        foreach ($key as $value) {
+//            foreach($value as $k=> $v){if($k%2!=0){$arr2[] = $v;}
+//            }
+//        }
+//        //ghep chuoi
+//        $property   = array_combine($arr1 , $arr2);
+//        return $property;
+//        }
+//    }
     //xu ly lay danh muc cho blog
     public function getcategoryblog(){
         $categoryblog = Category::select('*')
@@ -135,18 +129,19 @@ class DetailproductController extends Controller
         return $categoryblog;
     }
     // xu ly lay menu
-    public function getmenu($location){
-       if($location == 'sidebar')  {$location = "sidebar_location"; }
-        if($location == 'menu')  {$location = "menu_location"; }
-        if($location == 'footer')  {$location = "footer_location"; }
-        $getmenu = MenuItems::select('admin_menu_items.*')
-        ->leftJoin('locationmenus', 'locationmenus.'.$location, '=', 'admin_menu_items.menu')
-        ->where('locationmenus.'.$location,'<>','0')
-        ->where('locationmenus.'.$location,'<>',null)
-        ->get();
+    public function getmenu($location)
+    {
+        if ($location == 'sidebar') {
+            $location = "sidebar_location";
+        }
+        $getmenu = MenuItems::select('admin_menu_items.*', DB::raw('categories.thumb as thumb'))
+            ->leftJoin('locationmenus', 'locationmenus.' . $location, '=', 'admin_menu_items.menu')
+            ->leftJoin('categories', 'categories.id', 'admin_menu_items.category_id')
+            ->where('locationmenus.' . $location, '<>', '0')
+            ->where('admin_menu_items.status', 1)
+            ->where('admin_menu_items.depth', 0)->get();
         return $getmenu;
     }
-
     // xy ly lay comment chi tiet san pham
     public function commentProduct(Request $request){
         $data = $request->all();
@@ -175,7 +170,6 @@ class DetailproductController extends Controller
 
         }
     }
-
     //lay san pham da xem mobile ajax
     public  function get_product_watched(Request $request){
         $get_cookie = Session::get('list_watched');
@@ -216,7 +210,6 @@ class DetailproductController extends Controller
             'data_product_mobile' => $product_related,
         ]);
     }
-
     public  function product_views(Request $request){
         $product = Products::find($request->id);
         $data = [

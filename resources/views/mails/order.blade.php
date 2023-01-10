@@ -68,7 +68,7 @@
             </th>
             <th
                 style="border:1px solid #e6e6e6;text-align:center;color:#ffffff;font-size:14px;font-weight:500;text-transform:uppercase;height:32px;width:20%;background:none 0% 0% repeat scroll #1d94ff">
-                Thành tiền
+                Tổng
             </th>
         </tr>
         </thead>
@@ -98,7 +98,7 @@
         <tr>
             <td colspan="5"
                 style="width:100%;font-weight:bold;text-align:right;background-color:#ededed;padding:10px 0;border: 1px solid #ebebeb;">
-                <span style="line-height:1.42857;width:200px;display:inline-block">Tổng giá trị đơn hàng: </span>
+                <span style="line-height:1.42857;width:200px;display:inline-block">Thành tiền: </span>
                 <span style="line-height:1.42857;width:150px;display:inline-block;margin-right:10px">{{number_format($info_cus['total'], 0, '', '.')}} VNĐ</span>
             </td>
         </tr>

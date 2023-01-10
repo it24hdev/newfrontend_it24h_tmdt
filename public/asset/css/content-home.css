@@ -810,8 +810,8 @@ ul.sub_cat_title_slider li{
     display: none;
 }
 .product-content .block-title .nav-pills .nav-link.active{
-    color: #fff;
-    background: linear-gradient(to left, #6cc9ed,#169fd8);
+    color: #fff!important;
+    background: linear-gradient(300.63deg,#74cdff 0%,#1D94FF 99.26%);
 }
 @media (min-width: 375px){
     .detail .sold{

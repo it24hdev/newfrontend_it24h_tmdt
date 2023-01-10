@@ -32,8 +32,8 @@
                                 <th class="product-name text-center">Tên sản phẩm</th>
                                 <th class="product-price text-center">Giá bán</th>
                                 <th class="product-quantity text-center">Số lượng</th>
-                                <th class="product-subtotal text-center">Tổng tạm</th>
-                                <th class="product-remove text-center">Xoá</th>
+                                <th class="product-subtotal text-center">Tổng</th>
+                                <th class="product-remove text-center"><i class="fal fa-trash-alt"></i></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -76,24 +76,24 @@
                                         </td>
                                         <td class="product-remove">
                                             <a href="javascript:" class="remove-cart cart_delete"
-                                               data-target="{{$item_cart['item_id']}}"><i class="fal fa-times"></i></a>
+                                               data-target="{{$item_cart['item_id']}}"><i class="fal fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 @endforeach
                             @endif
                             </tbody>
                         </table>
-                        <div class="actions clearfix">
-                            <form class="coupon">
-                                <input type="text" class="input-text" placeholder="@lang('lang.Couponcode')">
-                                <button class="btn-submit">@lang('lang.ApplyCoupon')</button>
-                            </form>
-                        </div>
                     </div>
                 </div>
                 <div class="col-12 col-lg-4">
                     <div class="cart-collaterals">
                         <div class="cart-total">
+                            <div class="actions clearfix">
+                                <div class="coupon">
+                                    <input type="text" class="input-text" placeholder="@lang('lang.Couponcode')">
+                                    <button class="btn-submit">@lang('lang.ApplyCoupon')</button>
+                                </div>
+                            </div>
                             <div class="total">
                                 <span>@lang('lang.Subtotal')</span>
                                 <span class="count-total"><span></span> <strong>@lang('lang.Currencyunit')</strong></span>
@@ -101,136 +101,6 @@
                             <a class="checkout text-center btn-sm-cart">@lang('lang.Proceedtocheckout')</a>
                         </div>
                     </div>
-                </div>
-                <div class="col-12 mb-5">
-{{--                        @if ($products)--}}
-{{--                            <div class="cross-sells">--}}
-{{--                                <h2>@lang('lang.Youmaybeinterestedin')</h2>--}}
-{{--                                <div class="wp-list-product">--}}
-{{--                                    <div--}}
-{{--                                        class="list-product owl-carousel owl-theme owl-loaded owl-drag list-product-recommend-slider"--}}
-{{--                                        id="list-product-group">--}}
-{{--                                        @foreach ($products as $item)--}}
-{{--                                            <!-- product -->--}}
-{{--                                            <div class="product-item mb-3">--}}
-{{--                                                <div class="thumb">--}}
-{{--                                                    <a href="{{ route('detailproduct', $item->slug)}}">--}}
-{{--                                                        <img class="owl-lazy"--}}
-{{--                                                             data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}"--}}
-{{--                                                             alt="">--}}
-{{--                                                        @if (!empty($item->brand))--}}
-{{--                                                            <span class="brand"--}}
-{{--                                                                  style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>--}}
-{{--                                                        @endif--}}
-{{--                                                        <div class="wp-tag">--}}
-{{--                                                            @if (!empty($item->year))--}}
-{{--                                                                <span class="years">{{$item->year}}</span>--}}
-{{--                                                            @endif--}}
-{{--                                                            @if (!empty($item->installment))--}}
-{{--                                                                <span class="payment">Trả góp 0%</span>--}}
-{{--                                                            @endif--}}
-{{--                                                        </div>--}}
-{{--                                                    </a>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="detail">--}}
-{{--                                                    <div class="wp-event">--}}
-{{--                                                        @if (!empty($item->event))--}}
-{{--                                                            <p class="event"--}}
-{{--                                                               style="background: linear-gradient(to right,{{$item->events->color_left}},{{$item->events->color_right}});">--}}
-{{--                                                                <img--}}
-{{--                                                                    src="{{asset('upload/images/products/thumb/'.$item->events->icon)}}"--}}
-{{--                                                                    alt="">--}}
-{{--                                                                <span>{{$item->events->name}}</span>--}}
-{{--                                                            </p>--}}
-{{--                                                        @else--}}
-{{--                                                            <p class="event" style="min-height: 20px;"></p>--}}
-{{--                                                        @endif--}}
-{{--                                                        <p class="code">Mã: {{$item->ma}}</p>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="name">--}}
-{{--                                                        <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>--}}
-{{--                                                    </div>--}}
-{{--                                                    @if (!empty($item->specifications))--}}
-{{--                                                        <ul class="product-attributes">--}}
-{{--                                                            @foreach ($item->get_specifications() as $k)--}}
-{{--                                                                <li>{{$k}}</li>--}}
-{{--                                                            @endforeach--}}
-{{--                                                        </ul>--}}
-{{--                                                    @endif--}}
-{{--                                                    <div class="price-review clearfix">--}}
-{{--                                                        <div class="price">--}}
-{{--                                                            @if (!empty($item->onsale))--}}
-{{--                                                                <span class="onsale">- {{$item->onsale}}%</span>--}}
-{{--                                                                <div--}}
-{{--                                                                    class="price-old">{{number_format($item->price,0,',','.')}}--}}
-{{--                                                                    đ--}}
-{{--                                                                </div>--}}
-{{--                                                                <div--}}
-{{--                                                                    class="price-new">{{number_format($item->price_onsale,0,',','.')}}--}}
-{{--                                                                    đ--}}
-{{--                                                                </div>--}}
-{{--                                                            @else--}}
-{{--                                                                <div--}}
-{{--                                                                    class="price-new">{{number_format($item->price,0,',','.')}}--}}
-{{--                                                                    đ--}}
-{{--                                                                </div>--}}
-{{--                                                            @endif--}}
-{{--                                                        </div>--}}
-{{--                                                        <div class="review">--}}
-{{--                                                            <div class="rating2">--}}
-{{--                                                                <div class="rating-upper"--}}
-{{--                                                                     style="width: {{$item->count_vote()}}%">--}}
-{{--                                                                    <span><i class="fas fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fas fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fas fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fas fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fas fa-star"></i></span>--}}
-{{--                                                                </div>--}}
-{{--                                                                <div class="rating-lower">--}}
-{{--                                                                    <span><i class="fal fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fal fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fal fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fal fa-star"></i></span>--}}
-{{--                                                                    <span><i class="fal fa-star"></i></span>--}}
-{{--                                                                </div>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="count-review">({{$item->votes->count()}})</div>--}}
-{{--                                                            @if (!empty($item->sold))--}}
-{{--                                                                <div class="sold"><i class="fas fa-badge-check"></i>Đã--}}
-{{--                                                                    bán {{$item->sold}}</div>--}}
-{{--                                                            @endif--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="detail-bottom">--}}
-{{--                                                        @if (($item->quantity - $item->sold > 0))--}}
-{{--                                                            <div class="qty"--}}
-{{--                                                                 style="color: #01aa42; background-color: #dbf8e1;">Còn--}}
-{{--                                                                hàng--}}
-{{--                                                            </div>--}}
-{{--                                                        @else--}}
-{{--                                                            <div class="qty"--}}
-{{--                                                                 style="color: #ffffff; background-color: #fb0000;">Liên--}}
-{{--                                                                hệ--}}
-{{--                                                            </div>--}}
-{{--                                                        @endif--}}
-{{--                                                        <div class="action">--}}
-{{--                                                            <a href="javascript:;" class="repeat" title="So sánh"><i--}}
-{{--                                                                    class="far fa-repeat"></i></a>--}}
-{{--                                                            <a href="javascript:;" class="heart add-wish"--}}
-{{--                                                               title="Lưu sản phẩm" get-id="{{$item->id}}"><i--}}
-{{--                                                                    class="far fa-heart"></i></a>--}}
-{{--                                                            <a href="javascript:;" class="add-cart"--}}
-{{--                                                               title="Thêm vào giỏ hàng" get-id="{{$item->id}}"><i--}}
-{{--                                                                    class="far fa-shopping-cart"></i></a>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        @endforeach--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        @endif--}}
                 </div>
             </div>
             <div class="entry-content w-100 d-none">
@@ -361,11 +231,11 @@
                     if($(this).find('input[name="check_cart"]').is(":checked")) {
                         total = total + (price * qty_cart);
                     }
-                    this_total = price * qty_cart;
-                    $(this).find('.subtotal').html(this_total + " đ");
+                    this_total = new Intl.NumberFormat().format(price * qty_cart);
+                    $(this).find('.subtotal').html(this_total);
                 });
                 var total_cart = new Intl.NumberFormat().format(total);
-                $('.count-total').html(total_cart+" đ");
+                $('.count-total').html(total_cart+" VNĐ");
             }
             //tich chon san pham
             $(document).on('change', '.check_cart', function() {

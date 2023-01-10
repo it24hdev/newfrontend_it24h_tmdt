@@ -4,6 +4,7 @@
 @endsection
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/checkout.css')}}">
+    <link rel="stylesheet" href="{{asset('asset/css/loading.css')}}">
 @endsection
 @section('header-home')
     @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
@@ -102,12 +103,6 @@
                                     <span class="requite_email_company text-danger mx-2"><i></i></span>
                                 </div>
                             </div>
-                            <div>
-                                <i>
-                                    <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
-                                    <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
-                                </i>
-                            </div>
                         </div>
                     </div>
                     <div class="col-6">
@@ -136,6 +131,12 @@
                                         <label for="cash_on_shop" class="payment-check"><strong>@lang('lang.Cashondelivery')</strong></label>
                                     </div>
                                 </div>
+                                <div class="my-3">
+                                    <i>
+                                        <input type="checkbox" class="check_rules" checked="checked" name="check_rules">
+                                        <a href="" target="_blank" class="text-danger font-rules">Bằng cách đặt hàng, bạn đồng ý với Điều khoản sử dụng của IT24H.</a>
+                                    </i>
+                                </div>
                                 <div class="place-order mt-4">
                                     <p>@lang('lang.Yourpersonaldata').</p>
                                     <button type="button" class="btn-order btn-complte-payment">@lang('lang.PlaceOrder')</button>
@@ -154,6 +155,14 @@
                 </div>
             @endif
         </div>
+    </div>
+    <div class="wrapper_loading">
+        <div class="container">
+            <div class="button-loading"></div>
+        </div>
+    </div>
+    <div class="background_loading">
+        <div class="bgl_color"></div>
     </div>
 @endsection
 
@@ -324,6 +333,7 @@
                                 break;
                             }
                             default:{
+                                $('.wrapper_loading, .background_loading').css({'visibility': 'visible','opacity': 1});
                                 $.ajax({
                                     url: '{{route('complete_payment')}}',
                                     method: 'POST',
@@ -331,10 +341,11 @@
                                     dataType: 'json',
                                     success: function (data) {
                                         if(data.success){
-                                            // $('.btn-complte-payment').attr('disabled',true);
+                                            $('.wrapper_loading, .background_loading').css({'visibility': 'hidden','opacity': 0});
                                             window.location = '{{route('successorder')}}';
                                         }
                                         else{
+                                            $('.wrapper_loading, .background_loading').css({'visibility': 'hidden','opacity': 0});
                                             window.location = '{{route('checkout')}}';
                                         }
                                     }
@@ -344,6 +355,7 @@
                         break;
                     }
                     default:{
+                        $('.wrapper_loading, .background_loading').css({'visibility': 'visible','opacity': 1});
                         $.ajax({
                             url: '{{route('complete_payment')}}',
                             method: 'POST',
@@ -351,10 +363,11 @@
                             dataType: 'json',
                             success: function (data) {
                                 if(data.success==true){
-                                    // $('.btn-complte-payment').attr('disabled',true);
+                                    $('.wrapper_loading, .background_loading').css({'visibility': 'hidden','opacity': 0});
                                     window.location = '{{route('successorder')}}';
                                 }
                                 else{
+                                    $('.wrapper_loading, .background_loading').css({'visibility': 'hidden','opacity': 0});
                                     window.location = '{{route('checkout')}}';
                                 }
                             }
