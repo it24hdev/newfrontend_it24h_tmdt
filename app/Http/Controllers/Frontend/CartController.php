@@ -359,7 +359,7 @@ class CartController extends Controller
     //gui email don hang da dat
     public function send_email_cart($id, $email)
     {
-        $mail_to_admin = "it24h.dev@gmail.com";
+        $mail_to_admin = "contact@it24h.vn";
         if ($id) {
             Mail::to($email)->send(new OrderMail($id));
             Mail::to($mail_to_admin)->send(new OrderMail($id));

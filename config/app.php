@@ -190,6 +190,7 @@ return [
         /*
          * Application Service Providers...
          */
+        Webklex\IMAP\Providers\LaravelServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
@@ -216,13 +217,12 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'ExampleClass' => App\Example\ExampleClass::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
-        // 'Cart' => Darryldecode\Cart\Facades\CartFacade::class
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Agent' => Jenssegers\Agent\Facades\Agent::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Client' => Webklex\IMAP\Facades\Client::class,
     ])->toArray(),
 
 ];

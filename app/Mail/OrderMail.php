@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Order;
 use App\Models\Order_item;
+use Webklex\IMAP\Client;
 
 class OrderMail extends Mailable
 {

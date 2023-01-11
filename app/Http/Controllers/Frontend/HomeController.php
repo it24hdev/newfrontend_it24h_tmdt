@@ -187,6 +187,7 @@ class HomeController extends Controller
             ->where('products.status', 1)
             ->where('category_relationships.cat_id', $title->pluck('id')->first())
             ->groupby('products.id')
+            ->orderby('products.created_at','desc')
             ->limit(10)->get();
         return response()->json([
             'title' => $title,
@@ -199,9 +200,8 @@ class HomeController extends Controller
         $product_promotion = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
             'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
             'products.installment as installment', 'products.event as event', 'products.specifications as specifications',
-            DB::raw('deals.name_deal'),DB::raw('deals.price_deal') , DB::raw("brands.image as img_brands"),
-            DB::raw("tag_events.color_left as event_color_left"), DB::raw("tag_events.color_right as event_color_right"),
-            DB::raw("tag_events.icon as event_icon"),DB::raw("tag_events.name as event_name"),DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
+            'deals.name_deal','deals.price_deal' , 'brands.image as img_brands','tag_events.color_left as event_color_left', 'tag_events.color_right as event_color_right',
+            'tag_events.icon as event_icon','tag_events.name as event_name',DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
             ->leftjoin('brands', 'products.brand', 'brands.id')
             ->leftjoin('tag_events', 'products.event', 'tag_events.id')
             ->leftjoin('deals', 'products.id', 'deals.product_id')
@@ -210,6 +210,7 @@ class HomeController extends Controller
             ->where('products.status', 1)
             ->where('category_relationships.cat_id', $request->id)
             ->groupby('products.id')
+            ->orderby('products.created_at','desc')
             ->limit(10)->get();
         return response()->json([
             'product_promotion' => $product_promotion,
@@ -231,9 +232,6 @@ class HomeController extends Controller
     public function categoryBlogs(Request $request)
     {
         $agent = new Agent();
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $active_menu = "post";
         $locale = config('app.locale');
         if ($request->input('tim-kiem')) {
@@ -243,13 +241,11 @@ class HomeController extends Controller
         }
         $Sidebars = $this->getmenu('sidebar');
         $getcategoryblog = $this->getcategoryblog();
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $arrCategory = DB::table('categories')->where('status', 1)
             ->where('taxonomy', Category::BAI_VIET)
             ->where('parent_id', 0)
             ->whereNull('deleted_at')
             ->get();
-
         $blogs = Post::where('status', 1)
             ->where('title', 'LIKE', "%$search%")
             ->paginate(8)->withQueryString();
@@ -264,9 +260,6 @@ class HomeController extends Controller
             'getcategoryblog' => $getcategoryblog,
             'locale' => $locale,
             'active_menu' => $active_menu,
-            'posts_footer' => $posts_footer,
-            'agent' => $ag,
-
         ]);
     }
 
@@ -341,7 +334,6 @@ class HomeController extends Controller
     public function singlePost(Request $request, $slug)
     {
         $agent = new Agent();
-        $ag = "";
         if ($agent->isMobile()) {
             $ag = "mobile";
         } else $ag = "desktop";
@@ -411,19 +403,14 @@ class HomeController extends Controller
     {
         ///////////////Tham so dau vao//////////////////]
         $requestall = $request->all();
-        $agent = new Agent();
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $price = $brand = $filter_price = "";
         $active_menu = "product";
         $locale = config('app.locale');
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
         $cat = Category::where('slug', $request->slug)->first();
         $sliders = "";
         $list_cat_child = array();
-        $list_cat_childs ="";
+        $list_cat_childs = $attributes = "";
         if (!empty($cat)) {
             $list_cat1 = Category::where('status',1)->where('parent_id',$cat->id)->pluck('id');
             $list_cat2 = Category::where('status',1)->whereIn('parent_id',$list_cat1->all())->pluck('id');
@@ -435,10 +422,7 @@ class HomeController extends Controller
             //slider banner header
             $sliders = json_decode($cat->banner);
             //neu co danh muc thi loc theo danh muc
-            $categories = Category::where('taxonomy', Category::SAN_PHAM)
-                ->where('parent_id', $cat->id)
-                ->where('status', 1)
-                ->get();
+            $categories = Category::where('taxonomy', Category::SAN_PHAM)->where('parent_id', $cat->id)->where('status', 1)->get();
             $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
                 ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
                 ->leftjoin('categories', 'categories.id', 'categoryproperties_manages.category_id')
@@ -564,8 +548,8 @@ class HomeController extends Controller
             if (!empty($request->brand)) {
                 $brand = $request->brand;
             }
-            $orderby = "ASC";
-            $order_name = "products.id";
+            $orderby = "DESC";
+            $order_name = "products.created_at";
             if (!empty($request->order)) {
                 if ($request->order == "gia_cao_den_thap") {
                     $order_name = "NULLIF(products.price_onsale, 0), products.price";
@@ -579,22 +563,24 @@ class HomeController extends Controller
             $products = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
                     'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
                     'products.installment as installment', 'products.event as event', 'products.specifications as specifications', 'detailproperties.ma as matt',
-                    'categories.slug as url','brands.image as brand_img','tag_events.icon as event_icon','tag_events.name as event_name')
+                    'categories.slug as url','brands.image as brand_img','tag_events.icon as event_icon','tag_events.name as event_name',
+                    'tag_events.color_left as event_color_left', 'tag_events.color_right as event_color_right',DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
                 ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
                 ->leftjoin('categories', 'categories.id', 'category_relationships.cat_id')
                 ->leftjoin('propertyproducts', 'propertyproducts.products_id', 'products.id')
                 ->leftJoin('detailproperties', 'detailproperties.id', 'propertyproducts.detailproperties_id')
                 ->leftJoin('brands', 'brands.id', 'products.brand')
                 ->leftJoin('tag_events', 'tag_events.id', 'products.event')
+                ->leftjoin('votes','products.id','votes.product_id')
                 ->whereIn('categories.id', $list_cat_child)
                 ->where(function ($query) use ($property) {
                     foreach ($property as $key => $value) {
-                        if ($key == 'p' || $key == 'brand' || $key == 'order') {
+                        if ($key == 'p' || $key == 'brand' || $key == 'order' || $key == 'page') {
                             unset($property[$key]);
                         }
                     }
                     $properties = [];
-                    foreach ($property as $key => $value) {
+                    foreach ($property as $value) {
                         $explode = explode(',', $value);
                         if (!empty($explode)) {
                             $value = $explode;
@@ -628,40 +614,50 @@ class HomeController extends Controller
                 ->groupBy('products.id')
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
                 ->paginate(20)->withQueryString();
-        } else {
+        }
+        else {
             // Neu khong co danh muc thi lay san pham moi
-            $categories = Category::where('taxonomy', Category::SAN_PHAM)
-                ->where('parent_id', 0)
-                ->where('status', 1)
-                ->get();
+            $categories = Category::where('taxonomy', Category::SAN_PHAM)->where('parent_id', 0)->where('status', 1)->get();
             if (!empty($request->p)) {
                 $price = $request->p;
                 $filter = explode(';', $request->p);
                 $filter_price = "từ " . number_format($filter[0], 0, ',', '.') . " đến " . number_format($filter[1], 0, ',', '.');
             }
-            $orderby = "ASC";
-            $order_name = "id";
+            $orderby = "DESC";
+            $order_name = "products.created_at";
             if (!empty($request->order)) {
                 if ($request->order == "gia_cao_den_thap") {
-                    $order_name = "NULLIF(price_onsale, 0), price";
+                    $order_name = "NULLIF(products.price_onsale, 0), products.price";
                     $orderby = "DESC";
                 }
                 if ($request->order == "gia_thap_den_cao") {
-                    $order_name = "NULLIF(price_onsale, 0), price";
+                    $order_name = "NULLIF(products.price_onsale, 0), products.price";
                     $orderby = "ASC";
                 }
             }
             $promotion = $request->promotion;
             $search = $request->search;
-            $products = Products::where('status', 1)
+            $products = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
+                'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
+                'products.installment as installment', 'products.event as event', 'products.specifications as specifications', 'detailproperties.ma as matt',
+                'categories.slug as url','brands.image as brand_img','tag_events.icon as event_icon','tag_events.name as event_name',
+                'tag_events.color_left as event_color_left', 'tag_events.color_right as event_color_right',DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
+                ->leftjoin('category_relationships', 'category_relationships.product_id', 'products.id')
+                ->leftjoin('categories', 'categories.id', 'category_relationships.cat_id')
+                ->leftjoin('propertyproducts', 'propertyproducts.products_id', 'products.id')
+                ->leftJoin('detailproperties', 'detailproperties.id', 'propertyproducts.detailproperties_id')
+                ->leftJoin('brands', 'brands.id', 'products.brand')
+                ->leftJoin('tag_events', 'tag_events.id', 'products.event')
+                ->leftjoin('votes','products.id','votes.product_id')
+                ->where('products.status', 1)
                 ->where(function ($query) use ($price) {
                     if ($price != "") {
                         $p = explode(';', $price);
                         $min_price = $p[0];
                         $max_price = $p[1];
-                        $query->whereBetween('price_onsale', [$min_price, $max_price]);
+                        $query->whereBetween('products.price_onsale', [$min_price, $max_price]);
                     } else {
-                        $query->where('status', 1);
+                        $query->where('products.status', 1);
                     }
                 })
                 ->where(function ($query) use ($promotion) {
@@ -672,44 +668,40 @@ class HomeController extends Controller
                             foreach ($deal as $value){
                                 $list_deals_id[] = $value->product_id;
                             }
-                            $query->whereIn('id',$list_deals_id);
+                            $query->whereIn('products.id',$list_deals_id);
                         }
                         else{
                             if ($promotion == "san-pham-hot") {
-                                $promotion = 'is_hot';
+                                $promotion = 'products.is_hot';
                             }
                             if ($promotion == "san-pham-moi") {
-                                $promotion = 'is_new';
+                                $promotion = 'products.is_new';
                             }
                             if ($promotion == "san-pham-khuyen-mai") {
-                                $promotion = 'is_promotion';
+                                $promotion = 'products.is_promotion';
                             }
                             $query->where($promotion, 1);
                         }
                     }
                     else {
-                        $query->where('status', 1);
+                        $query->where('products.status', 1);
                     }
                 })
                 ->where(function ($query) use ($search) {
                     if ($search) {
-                        $query->where('name', 'like', '%' . $search . '%');
+                        $query->where('products.name', 'like', '%' . $search . '%');
                     } else {
-                        $query->where('status', 1);
+                        $query->where('products.status', 1);
                     }
                 })
+                ->groupBy('products.id')
                 ->orderByRaw(DB::raw("coalesce($order_name) $orderby"))
                 ->paginate(20)->withQueryString();
-            $attributes = "";
         }
-        $cat_parent = Category::where('taxonomy', Category::SAN_PHAM)
-            ->where('parent_id', 0)
-            ->where('status', 1)
-            ->get();
-
-//        dd($products);
-
+        $cat_parent = Category::where('taxonomy', Category::SAN_PHAM)->where('parent_id', 0)->where('status', 1)->get();
         //////////////Tra ve//////////////////
+        $agent = new Agent();
+        dd($agent->isMobile());
         if ($agent->isMobile()) {
             $bard = Brand::where(function ($query) use ($list_cat_child) {
                 $products_list_brand = Products::where('status', 1)
@@ -725,9 +717,10 @@ class HomeController extends Controller
             })->get();
             return view('frontend.mobile.productmobile',
                 compact('sliders', 'products', 'categories', 'attributes', 'cat', 'filter_price', 'list_cat_childs', 'bard'));
-        } else {
+        }
+        else {
             return view('frontend.product', compact('products', 'categories',
-                'cat', 'Sidebars', 'locale', 'active_menu', 'posts_footer', 'cat_parent', 'attributes'))->with('agent', $ag);
+                'cat', 'Sidebars', 'locale', 'active_menu', 'cat_parent', 'attributes'));
         }
     }
 

@@ -432,8 +432,8 @@
                 $.each(data, function (k, v) {
                     var url = "";
                     var tmp = $(template_product_desktop).clone();
-                    if (v.img_brands != "no-images.jpg") {
-                        $(tmp).find('.brand').css({'visibility': 'visible', 'opacity': '1'});
+                    if (v.img_brands != "no-images.jpg" && v.img_brands) {
+                        $(tmp).find('.brand').addClass('visible_cpn');
                         url = '{{asset("upload/images/products/thumb/img_brand")}}';
                         url = url.replace('img_brand', v.img_brands);
                         img = 'url(' + url + ')';
@@ -460,13 +460,11 @@
                         url = url.replace('img_product', v.thumb);
                         $(tmp).find('.thumb img').attr('data-src', url);
                     }
+                    $(tmp).find('.thumb img').attr('alt', v.name);
                     $(tmp).find('.name span').html(v.name);
                     if (v.event != 0 && v.event_icon) {
-                        $(tmp).find('.event').css({
-                            'background': 'linear-gradient(to right,' + v.event_color_left + ',' + v.event_color_right + ')',
-                            'visibility': 'visible',
-                            'opacity': '1'
-                        });
+                        $(tmp).find('.event').css({'background': 'linear-gradient(to right,' + v.event_color_left + ',' + v.event_color_right + ')'});
+                        $(tmp).find('.event').addClass('visible_cpn');
                         url = '{{asset("upload/images/products/thumb/event_icon")}}';
                         url = url.replace('event_icon', v.event_icon);
                         $(tmp).find('.event img').attr('src', url);
@@ -483,7 +481,7 @@
                         $(tmp).find('.price-old').html((new Intl.NumberFormat().format(v.price)) + ' VNĐ');
                         $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price_onsale)) + ' VNĐ');
                     } else {
-                        $(tmp).find('.price_sale').css('visibility', 'hidden')
+                        $(tmp).find('.price_sale').addClass('hidden_cpn');
                         $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price)) + ' VNĐ');
                     }
                     var votes_sum = 0;
@@ -517,8 +515,8 @@
                 $.each(data, function (k, v) {
                     var tmp = $(template_product_desktop).clone();
                     var url = "";
-                    if (v.img_brands != "no-images.jpg") {
-                        $(tmp).find('.brand').css({'visibility': 'visible', 'opacity': '1'});
+                    if (v.img_brands != "no-images.jpg" && v.img_brands) {
+                        $(tmp).find('.brand').addClass('visible_cpn');
                         url = '{{asset("upload/images/products/thumb/img_brand")}}';
                         url = url.replace('img_brand', v.img_brands);
                         img = 'url(' + url + ')';
@@ -547,11 +545,8 @@
                     }
                     $(tmp).find('.name span').html(v.name);
                     if (v.event != 0 && v.event_icon) {
-                        $(tmp).find('.event').css({
-                            'background': 'linear-gradient(to right,' + v.event_color_left + ',' + v.event_color_right + ')',
-                            'visibility': 'visible',
-                            'opacity': '1'
-                        });
+                        $(tmp).find('.event').css({'background': 'linear-gradient(to right,' + v.event_color_left + ',' + v.event_color_right + ')'});
+                        $(tmp).find('.event').addClass('visible_cpn');
                         url = '{{asset("upload/images/products/thumb/event_icon")}}';
                         url = url.replace('event_icon', v.event_icon);
                         $(tmp).find('.event img').attr('src', url);
@@ -568,7 +563,7 @@
                         $(tmp).find('.price-old').html((new Intl.NumberFormat().format(v.price)) + ' VNĐ');
                         $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price_onsale)) + ' VNĐ');
                     } else {
-                        $(tmp).find('.price_sale').css('visibility', 'hidden')
+                        $(tmp).find('.price_sale').addClass('hidden_cpn');
                         $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price)) + ' VNĐ');
                     }
                     var votes_sum = 0;

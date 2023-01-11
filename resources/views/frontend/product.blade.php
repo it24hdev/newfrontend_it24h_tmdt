@@ -199,106 +199,139 @@
                         <div class="wp-list-product">
                             <div class="body_products">
                                 <div class="products_default">
-                                    <div class="products_border" style="border: none !important;">
+                                    <div class="owl-carousel owl-theme owl-loaded owl-drag" id="list_products">
                                         <ul class="list-product">
                                             @foreach($products as $item)
-                                            <li class="item-pro">
-                                                <div class="product-item mb-3">
-                                                    <div class="thumb">
-                                                        <a href="{{ route('detailproduct', $item->slug)}}">
-                                                            <img class="owl-lazy" src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="">
-                                                            @if ($item->brand_img !="no-images.jpg")
-                                                                <span class="brand" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brand_img)}}');"></span>
-                                                            @endif
-                                                            <div class="wp-tag">
-                                                                @if (!empty($item->year))
-                                                                    <span class="years">{{$item->year}}</span>
-                                                                @endif
-                                                                @if ($item->installment)
-                                                                    <span class="payment">{{$item->installment}}</span>
-                                                                @endif
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                                    <div class="detail">
-                                                        <div class="wp-event">
-                                                            @if ($item->event)
-                                                                <p class="event" style="background: linear-gradient(to right,{{$item->events->color_left}},{{$item->events->color_right}});">
-                                                                    <img src="{{asset('upload/images/products/thumb/'.$item->event_icon)}}" alt="">
-                                                                    <span>{{$item->event_name}}</span>
-                                                                </p>
-                                                            @else
-                                                                <p class="event" style="min-height: 20px;"></p>
-                                                            @endif
-                                                            <p class="code">Mã: {{$item->ma}}</p>
-                                                        </div>
-                                                        <div class="name">
-                                                            <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>
-                                                        </div>
-                                                        @if (!empty($item->specifications))
-                                                            <ul class="product-attributes">
-                                                                @foreach ($item->get_specifications() as $k)
-                                                                    <li>{{$k}}</li>
-                                                                @endforeach
-                                                            </ul>
-                                                        @endif
-                                                        <div class="price-review clearfix">
-                                                            <div class="price">
-                                                                @if (!empty($item->onsale))
-                                                                    <span class="onsale">- {{$item->onsale}}%</span>
-                                                                    <div class="price-old">{{number_format($item->price,0,',','.')}} đ</div>
-                                                                    <div class="price-new">{{number_format($item->price_onsale,0,',','.')}} đ</div>
+                                                <li class="item-pro">
+                                                    <div class="tmp_product">
+                                                    <div class="box_product">
+                                                        <div class="upper_half">
+                                                            <div class="head_p">
+                                                                @if($item->brand_img!="no-images.jpg" && $item->brand_img)
+                                                                <div class="brand visible_cpn">
+                                                                        <div class="brand_img" style="background-image: url('{{asset("upload/images/products/thumb/".$item->brand_img)}}')"></div>
+                                                                </div>
                                                                 @else
-                                                                    <div class="price-new">{{number_format($item->price,0,',','.')}} đ</div>
+                                                                    <div class="brand">
+                                                                        <div class="brand_img"></div>
+                                                                    </div>
                                                                 @endif
-                                                            </div>
-                                                            <div class="review">
-                                                                <div class="rating2">
-                                                                    <div class="rating-upper" style="width: {{$item->count_vote()}}%">
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                        <span><i class="fas fa-star"></i></span>
-                                                                    </div>
-                                                                    <div class="rating-lower">
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                        <span><i class="fal fa-star"></i></span>
-                                                                    </div>
+                                                                <div class="tag_p">
+                                                                    @if($item->year)
+                                                                        <span class="years">{{$item->year}}</span>
+                                                                    @else
+                                                                        <span class="years d-none"></span>
+                                                                    @endif
+                                                                    @if($item->installment)
+                                                                        <span class="payment">{{$item->installment}}</span>
+                                                                    @else
+                                                                        <span class="payment d-none"></span>
+                                                                    @endif
                                                                 </div>
-                                                                <div class="count-review">({{$item->votes->count()}})</div>
-                                                                @if (!empty($item->sold))
-                                                                    <div class="sold"><i class="fas fa-badge-check"></i>Đã bán {{$item->sold}}</div>
-                                                                @endif
+                                                            </div>
+                                                            <div class="thumb">
+                                                                <a class="link_detail" href="{{route('detailproduct', $item->slug)}}">
+                                                                    @if($item->thumb!="no-images.jpg")
+                                                                        <img src="{{asset('upload/images/products/medium/'.$item->thumb)}}" alt="{{$item->name}}">
+                                                                    @else
+                                                                        <img src="{{asset('upload/images/common_img/no-images.jpg')}}" alt="{{$item->name}}">
+                                                                    @endif
+                                                                </a>
                                                             </div>
                                                         </div>
-                                                        <div class="detail-bottom">
-                                                           @if (($item->quantity - $item->sold > 0))
-                                                                <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">Còn hàng
+                                                        <div class="lower_half">
+                                                            <div class="detail">
+                                                                <a class="link_detail" href="{{route('detailproduct', $item->slug)}}">
+                                                                    <div class="event_tag">
+                                                                        @if($item->event != 0 && $item->event_icon)
+                                                                            <p class="event visible_cpn" style="background: linear-gradient(to right, {{$item->event_color_left}},{{$item->event_color_right}})">
+                                                                                <img src="{{asset("upload/images/products/thumb/".$item->event_icon)}}">
+                                                                                <span>{{$item->event_name}}</span>
+                                                                            </p>
+                                                                        @else
+                                                                            <p class="event">
+                                                                                <img >
+                                                                                <span></span>
+                                                                            </p>
+                                                                        @endif
+                                                                        <p class="code"></p>
+                                                                    </div>
+                                                                    <div class="name"><span>{{$item->name}}</span></div>
+                                                                    <div>
+                                                                        @if (!empty($item->specifications))
+                                                                            <ul class="product-attributes">
+                                                                                @foreach ($item->get_specifications() as $k)
+                                                                                    <li>{{$k}}</li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        @else
+                                                                            <ul class="product-attributes"></ul>
+                                                                        @endif
+                                                                    </div>
+                                                                    <div class="price-review clearfix">
+                                                                        <div class="price">
+                                                                            @if($item->price_onsale > 0 && $item->onsale > 0)
+                                                                                <div class="price_sale">
+                                                                                    <div class="price-old">{{number_format($item->price,0,',','.')}} VNĐ</div>
+                                                                                    <div class="onsale">{{$item->onsale}}%</div>
+                                                                                </div>
+                                                                                <div class="price-new">{{number_format($item->price_onsale,0,',','.')}} VNĐ</div>
+                                                                            @else
+                                                                                <div class="price_sale hidden_cpn">
+                                                                                    <div class="price-old"></div>
+                                                                                    <div class="onsale"></div>
+                                                                                </div>
+                                                                                <div class="price-new">{{number_format($item->price,0,',','.')}} VNĐ</div>
+                                                                            @endif
+                                                                        </div>
+                                                                        <div class="review">
+                                                                            <div>
+                                                                                <div class="rating2">
+                                                                                    <div class="rating-upper" style="width: @if($item->votes_count>0) {{$item->votes_sum/$item->votes_count*20}}% @else 0% @endif">
+                                                                                        <span><i class="fas fa-star"></i></span>
+                                                                                        <span><i class="fas fa-star"></i></span>
+                                                                                        <span><i class="fas fa-star"></i></span>
+                                                                                        <span><i class="fas fa-star"></i></span>
+                                                                                        <span><i class="fas fa-star"></i></span>
+                                                                                    </div>
+                                                                                    <div class="rating-lower">
+                                                                                        <span><i class="fal fa-star"></i></span>
+                                                                                        <span><i class="fal fa-star"></i></span>
+                                                                                        <span><i class="fal fa-star"></i></span>
+                                                                                        <span><i class="fal fa-star"></i></span>
+                                                                                        <span><i class="fal fa-star"></i></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="count-review">{{$item->votes_count}}</div>
+                                                                            </div>
+                                                                            <div class="sold"><i class="fas fa-badge-check"></i><span>Đã bán {{$item->sold}}</span></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </a>
+                                                            </div>
+                                                            <div class="detail-bottom">
+                                                                @if($item->quantity>0)
+                                                                    <div class="qty" style="color:#01aa42;background-color:#dbf8e1;">Còn hàng</div>
+                                                                @else
+                                                                    <div class="qty" style="color:#ffffff;background-color:#fb0000;">Liên hệ</div>
+                                                                @endif
+                                                                <div class="action">
+                                                                    <a href="javascript:;" class="heart add-wish" title="Lưu sản phẩm"><i class="far fa-heart"></i></a>
+                                                                    <a href="javascript:;" class="add-cart @if($item->quantity < 0) d-none @endif" get-id="{{$item->id}}" title="Thêm vào giỏ hàng"><i class="far fa-shopping-cart"></i></a>
                                                                 </div>
-                                                            @else
-                                                                 <div class="qty" style="color: #ffffff; background-color: #fb0000;">Hết hàng
-                                                                </div>
-                                                            @endif
-                                                            <div class="action">
-                                                                <a href="javascript:;" class="repeat" title="So sánh"><i class="far fa-repeat"></i></a>
-                                                                <a href="javascript:;" class="heart add-wish" get-id="{{$item->id}}" title="Lưu sản phẩm"><i class="far fa-heart"></i></a>
-                                                                <a href="javascript:;" class="add-cart" get-id="{{$item->id}}" title="Thêm vào giỏ hàng"><i class="far fa-shopping-cart"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </li>
+{{--                                                </li>--}}
                                             @endforeach
-
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                        {!! $products->links('frontend.pagination') !!}
+                            <div class="link_p">
+                                {!! $products->links('frontend.pagination') !!}
+                            </div>
                             <div class="discription_cat my-5">
                                 @if(!empty($cat->content))
                                 {!! $cat->content !!}
@@ -334,6 +367,7 @@
                     @endforeach
                 </ul>
             </div>
+{{--            Bộ lọc giá--}}
             <div class="filter-price-sidebar">
                 <div class="header-sidebar"><span>@lang('lang.Filterbyprice')</span></div>
                 <div class="form-filter">
@@ -345,7 +379,6 @@
                     </div>
                     <div class="slider-labels">
                         <div class="price_label">
-
                             @lang('lang.Price'): <input type="text" value="10000" class="from" id="slider-range-value3" disabled>VNĐ —
                                     <input type="text" value="100000000" class="to" id="slider-range-value4" disabled>VNĐ
                         </div>
@@ -360,7 +393,7 @@
                     </form>
                 </div>
             </div>
-            <div class="filter-color-sidebar">
+            <div class="filter-color-sidebar d-none">
                 <div class="header-sidebar">
                     <span>Màu sắc</span>
                 </div>
@@ -409,7 +442,7 @@
                     </li>
                 </ul>
             </div>
-            <!-- ==== Foreach bộ lọc -->
+{{--            Bộ lọc thuộc tính--}}
             @if(!empty($attributes))
                 @foreach($attributes as $key => $value)
                     @if($value->count_attr>0)
@@ -438,8 +471,7 @@
                     @endif
                 @endforeach
             @endif
-
-            <div class="product-tag-sidebar">
+            <div class="product-tag-sidebar d-none">
                 <div class="header-sidebar">
                     <span>Thẻ tags</span>
                 </div>
@@ -459,7 +491,7 @@
 @endsection
 
 @section('footer')
-    @include('frontend.layouts.footer', [$posts_footer])
+    @include('frontend.layouts.footer')
 @endsection
 
 @section('js')
@@ -505,7 +537,6 @@
                 }
                 window.location = window.location.origin + window.location.pathname + '?' +searchparams.toString();
             });
-
 
             //Add to Cart
             var mess = document.getElementById('message_add_cart').innerHTML;

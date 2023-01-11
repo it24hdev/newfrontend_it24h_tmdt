@@ -32,6 +32,9 @@
             <div class="owl-carousel owl-theme owl-loaded owl-drag" id="slider-deal-supper">
 
             </div>
+            <div class="viewall_deal">
+                <a href="{{route('list_product',['promotion'=>'deal'])}}">Xem tất cả<i class="fal fa-angle-down"></i></a>
+            </div>
         </div>
         </div>
     </div>

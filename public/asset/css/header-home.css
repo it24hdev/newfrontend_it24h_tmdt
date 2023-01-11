@@ -1042,10 +1042,6 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     padding-right: 15px;
 }
 
-.wp-menu-parent {
-    margin: 0 0 10px 0;
-    width: 33.3333333%;
-}
 
 .tmp_lv3 li:hover .submenu-child {
     visibility: visible;
@@ -1092,7 +1088,6 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
 }
 
 .title_child_menu {
-    font-size: 14px;
     font-weight: 600;
 }
 .desktop-menu.clearfix {
@@ -1108,14 +1103,69 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     background-repeat: no-repeat;
     background-position: 100% 100%;
 }
-@media (min-width: 1024px){
+@media (min-width:0px) and (max-width:550px) {
+    .wp-menu-parent {
+        margin: 0 10px 20px 10px;
+        width: calc(100% - 20px);
+    }
+    .wp-menu-parent ul li a{
+        font-size: 12px;
+    }
+    .title_child_menu{
+        font-size: 14px;
+    }
+}
+@media (min-width:550px) and (max-width:700px) {
+    .wp-menu-parent {
+        margin: 0 10px 20px 10px;
+        width: calc(50% - 20px);
+    }
+    .wp-menu-parent ul li a{
+        font-size: 12px;
+    }
+    .title_child_menu{
+        font-size: 14px;
+    }
+}
+@media (min-width:700px) and (max-width:1024px) {
+    .wp-menu-parent {
+        margin: 0 10px 20px 10px;
+        width: calc(25% - 20px);
+    }
+    .wp-menu-parent ul li a{
+        font-size: 12px;
+    }
+    .title_child_menu{
+        font-size: 14px;
+    }
+}
+@media (min-width:1024px) and (max-width:1366px) {
+    .wp-menu-parent {
+        margin: 0 10px 20px 10px;
+        width: calc(20% - 20px);
+    }
+
+    .wp-menu-parent ul li a{
+        font-size: 12px;
+    }
+    .title_child_menu{
+        font-size: 14px;
+    }
+}
+@media (min-width:1367px) {
+    .wp-menu-parent {
+        margin: 0 10px 20px 10px;
+        width: calc(20% - 20px);
+    }
+
     .wp-menu-parent ul li a{
         font-size: 14px;
     }
-    .wp-menu-parent {
-        margin: 0 10px 20px 10px;
-        width: 180px;
+    .title_child_menu{
+        font-size: 16px;
     }
+}
+@media (min-width: 1366px){
     .content-submenu{
         width: 83.33333333% !important;
     }
@@ -1132,9 +1182,6 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     }
     .vertical-menu-content ul.menu-cat li .wp-submenu{
         left: 265px;
-    }
-    .title_child_menu{
-        font-size: 16px;
     }
     .page-header .header-bottom{
         font-size: 14px;

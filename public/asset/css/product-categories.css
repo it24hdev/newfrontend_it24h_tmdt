@@ -73,9 +73,7 @@
     padding-left: 0px;
     margin-bottom: 0;
 }
-.content .wp-list-product ul.list-product li.item-pro{
-    width: 100%;
-}
+
 .wp-content .sidebar, .offcanvas .sidebar{
     margin-bottom: 50px;
 }
@@ -375,6 +373,10 @@ ul.list-color li a.color-type .color-name{
 .discription_cat{
     color: #222;
 }
+.discription_cat img{
+    max-width: 100%;
+    height: auto;
+}
 .pagination .page-numbers li .page-numbers{
     display: inline-block;
     text-align: center;
@@ -403,25 +405,13 @@ ul.list-color li a.color-type .color-name{
 .dropdown-item{
     font-size: 14px;
 }
-@media (min-width: 375px){
-    .content .wp-list-product ul.list-product li.item-pro{
-        width: 50%;
-    }
-}
-@media (min-width: 600px){
-    .content .wp-list-product ul.list-product li.item-pro{
-        width: calc(100% / 3);
-    }
-}
+
 @media (min-width: 768px){
     .content .sorting a.filter-mobile{
         margin-bottom: 0px;
     }
     .content .sorting .ordering{
         margin-bottom: 0px;
-    }
-    .content .wp-list-product ul.list-product li.item-pro{
-        width: 25%;
     }
 }
 @media (min-width: 1024px){
@@ -441,17 +431,40 @@ ul.list-color li a.color-type .color-name{
         float: right;
         width: calc(100% - 330px);
     }
+}
+@media (min-width: 0px) and (max-width: 600px){
     .content .wp-list-product ul.list-product li.item-pro{
-        width: calc(100% / 3);
+        width: calc(50% - 10px);
     }
 }
-@media (min-width: 1290px){
+
+@media (min-width: 600px) and (max-width: 800px){
     .content .wp-list-product ul.list-product li.item-pro{
-        width: calc(100% / 4);
+        width: calc(33.333333% - 10px);
     }
 }
-@media (min-width: 1650px){
+
+@media (min-width: 800px) and (max-width: 1024px){
     .content .wp-list-product ul.list-product li.item-pro{
-        width: calc(100% / 5);
+        width: calc(25% - 10px);
     }
+}
+
+@media (min-width: 1024px) and (max-width: 1100px){
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: calc(33.333333% - 10px);
+    }
+}
+@media (min-width: 1100px) and (max-width: 1366px){
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: calc(25% - 10px);
+    }
+}
+@media (min-width: 1367px){
+    .content .wp-list-product ul.list-product li.item-pro{
+        width: calc(20% - 10px);
+    }
+}
+.content .wp-list-product ul.list-product li.item-pro{
+   margin: 0 5px 20px 5px;
 }
