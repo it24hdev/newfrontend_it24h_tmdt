@@ -2,8 +2,10 @@
         <li>
             <div class="parent_lv3">
                 <a>
-                    <span class="label_menu"></span>
-                    <span class="next-right d-none"><i class="far fa-angle-right"></i></span>
+                    <div class="box_cpn_next_child">
+                        <span class="label_menu"></span>
+                        <span class="next-right d-none"><i class="far fa-angle-right"></i></span>
+                    </div>
                 </a>
                 <div class="submenu-child d-none">
                     <ul>

@@ -100,4 +100,9 @@ class Category extends Model
                 self::get_product_recursive($cat, $list_product);
         }
     }
+
+    public function count_product_in_catgory(){
+        $count = CategoryRelationship::where('cat_id', $this->id)->count();
+        return $count;
+    }
 }

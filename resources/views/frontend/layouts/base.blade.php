@@ -112,6 +112,18 @@
 <script>
     $(document).ready(function () {
         var _token = $('meta[name="csrf-token"]').attr('content');
+        //nut an hien menu
+        $(document).on('click','.title-vertical',function (){
+            var menu = $('.vertical-menu-content');
+            if(menu.hasClass('hide_menu')){
+                menu.removeClass('hide_menu');
+                menu.addClass('show_menu');
+            }
+            else{
+                menu.removeClass('show_menu');
+                menu.addClass('hide_menu');
+            }
+        });
         //load menu
         $('.menucontent').hover(function () {
             if (($(this).hasClass("loaded") == false)) {
@@ -163,28 +175,30 @@
                 })
             }
         });
-        //dieu chinh chieu dai menu khi load trang
-        let width = window.innerWidth;
-        $('.wp-submenu').each(function() {
-            if(width>1650)
-            {
-                $(this).css({"width":"1355px"});
-            }else{
-                $(this).css({"width":"calc("+width+"px - 45px - 100%)"});
-            }
-        });
+        resize_screen();
         //dieu chinh lai chieu dai menu khi co man hinh lai
         $(window).resize(function () {
-            let w = window.innerWidth;
+            resize_screen();
+        });
+
+        $(window).on("orientationchange",function (){
+            resize_screen();
+        });
+        //dieu chinh chieu dai menu
+        function resize_screen(){
+            let size_screen = 0;
+            size_screen = window.screen.availWidth;
             $('.wp-submenu').each(function() {
-                if(w>1650)
+                if(size_screen>1650)
                 {
                     $(this).css({"width":"1355px"});
-                }else{
-                    $(this).css({"width":"calc("+w+"px - 45px - 100%)"});
+                }
+                else{
+                    $(this).css({"width":"calc("+size_screen+"px - 31px - 100%)"});
                 }
             });
-        });
+        }
+
         //ham delay go phim
         function delay(callback, ms) {
             var timer = 0;

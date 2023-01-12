@@ -34,20 +34,18 @@
                             <span>@lang('lang.Productcategories')</span>
                         </div>
                         <ul class="list-categories">
-                            @if (count($categories) > 0)
+                            @if ($categories->count() > 0)
                                 @foreach ($categories as $item)
                                     <li class="cat-item">
-                                        <a href="{{route('product_cat', ['slug' => $item->slug])}}"
-                                           style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
-                                        <span class="count">({{$item->get_product_by_cat()->count()}})</span>
+                                        <a class="list_cat_item" href="{{route('product_cat', ['slug' => $item->slug])}}">{{$item->name}}</a>
+                                        <span class="count">({{$item->count_product_in_catgory()}})</span>
                                     </li>
                                 @endforeach
                             @else
                                 @foreach ($cat_parent as $item)
                                     <li class="cat-item">
-                                        <a href="{{route('product_cat', ['slug' => $item->slug])}}"
-                                           style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
-                                        <span class="count">({{$item->get_product_by_cat()->count()}})</span>
+                                        <a class="list_cat_item" href="{{route('product_cat', ['slug' => $item->slug])}}">{{$item->name}}</a>
+                                        <span class="count">({{$item->count_product_in_catgory()}})</span>
                                     </li>
                                 @endforeach
                             @endif
@@ -84,7 +82,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="filter-color-sidebar">
+                    <div class="filter-color-sidebar d-none">
                         <div class="header-sidebar">
                             <span>Màu sắc</span>
                         </div>
@@ -202,7 +200,7 @@
                         </div>
                         <p class="showing">
                             @lang('lang.Showing') {{$products->firstItem()}}
-                            –{{$products->lastItem()}} @lang('lang.Of') {{$products->total()}} @lang('lang.Results')
+                            – {{$products->lastItem()}} @lang('lang.Of') {{$products->total()}} @lang('lang.Results')
                         </p>
                     </div>
                     <div class="wp-list-product">
@@ -345,7 +343,7 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div
-                                                                                    class="count-review">{{$item->votes_count}}</div>
+                                                                                    class="count-review">({{$item->votes_count}})</div>
                                                                             </div>
                                                                             <div class="sold"><i
                                                                                     class="fas fa-badge-check"></i><span>Đã bán {{$item->sold}}</span>
@@ -409,13 +407,21 @@
                     <span>@lang('lang.Productcategories')</span>
                 </div>
                 <ul class="list-categories">
-                    @foreach ($categories as $item)
-                        <li class="cat-item">
-                            <a href="{{route('product_cat',['slug' =>  $item->slug])}}"
-                               style="font-size: 16px; font-weight:500;">{{$item->name}}</a>
-                            <span class="count">({{$item->get_product_by_cat()->count()}})</span>
-                        </li>
-                    @endforeach
+                    @if ($categories->count() > 0)
+                        @foreach ($categories as $item)
+                            <li class="cat-item">
+                                <a class="list_cat_item" href="{{route('product_cat', ['slug' => $item->slug])}}">{{$item->name}}</a>
+                                <span class="count">({{$item->count_product_in_catgory()}})</span>
+                            </li>
+                        @endforeach
+                    @else
+                        @foreach ($cat_parent as $item)
+                            <li class="cat-item">
+                                <a class="list_cat_item" href="{{route('product_cat', ['slug' => $item->slug])}}">{{$item->name}}</a>
+                                <span class="count">({{$item->count_product_in_catgory()}})</span>
+                            </li>
+                        @endforeach
+                    @endif
                 </ul>
             </div>
             {{--            Bộ lọc giá--}}

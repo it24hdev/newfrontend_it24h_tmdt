@@ -176,6 +176,7 @@ class DetailproductController extends Controller
                 ->whereIn('category_relationships.cat_id', $categories_related_products->all())
                 ->groupby('products.id')
                 ->orderby('products.created_at','desc')
+                ->limit(10)
                 ->get();
             return response()->json([
                 'success' => true,
@@ -205,6 +206,7 @@ class DetailproductController extends Controller
                 ->whereIn('products.id', $list_id_watched_products)
                 ->groupby('products.id')
                 ->orderby('products.created_at','desc')
+                ->limit(10)
                 ->get();
             return response()->json([
                 'success' => true,

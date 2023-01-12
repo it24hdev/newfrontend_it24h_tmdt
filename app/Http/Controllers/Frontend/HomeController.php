@@ -131,18 +131,6 @@ class HomeController extends Controller
         return $getmenu;
     }
 
-    public function arrcategory()
-    {
-        $arrCategory = DB::table('categories')->select('id', 'name', 'name2', 'slug', 'thumb', 'banner')
-            ->where('taxonomy', Category::SAN_PHAM)
-            ->where('parent_id', 0)
-            ->where('status', 1)
-            ->where('show_push_product', '=', 1)
-            ->whereNull('deleted_at')
-            ->get();
-        return $arrCategory;
-    }
-
     //load san pham deal desktop
     public function get_deal(Request $request)
     {
@@ -174,7 +162,7 @@ class HomeController extends Controller
     public function get_categories_promotion()
     {
         //lay danh muc khuyen mai
-        $title = Category::where('status', 1)->where('is_promotion', 1)->limit(10)->get();
+        $categories_promotion = Category::select('id','name')->where('status', 1)->where('is_promotion', 1)->limit(10)->get();
         //lay san pham danh muc khuyen mai
         $product_promotion = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
             'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
@@ -187,12 +175,12 @@ class HomeController extends Controller
             ->leftjoin('votes','products.id','votes.product_id')
             ->leftjoin('category_relationships','products.id','category_relationships.product_id')
             ->where('products.status', 1)
-            ->where('category_relationships.cat_id', $title->pluck('id')->first())
+            ->where('category_relationships.cat_id', $categories_promotion->pluck('id')->first())
             ->groupby('products.id')
             ->orderby('products.created_at','desc')
             ->limit(10)->get();
         return response()->json([
-            'title' => $title,
+            'title' => $categories_promotion,
             'product_promotion' => $product_promotion,
         ]);
     }
@@ -224,7 +212,7 @@ class HomeController extends Controller
         $cat_child = Category::where('status',1)->where('parent_id',$request->id)->get();
         return response()->json($cat_child);
     }
-
+    //load danh sach thuong hieu
     public function load_brand()
     {
         $list_brand = Brand::where('image','<>',"no-images.jpg")->inRandomOrder()->limit(10)->get();
@@ -276,10 +264,8 @@ class HomeController extends Controller
     }
 
     //trang blog chung
-
     public function categoryBlog(Request $request, $slug)
     {
-        $agent = new Agent();
         $active_menu = "post";
         $locale = config('app.locale');
         if ($request->input('tim-kiem')) {
@@ -289,7 +275,6 @@ class HomeController extends Controller
         }
         $Sidebars = $this->getmenu('sidebar');
         $getcategoryblog = $this->getcategoryblog();
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $blog_category = DB::table('categories')->where('slug', $slug)
             ->where('status', 1)->where('taxonomy', Category::BAI_VIET)
             ->first();
@@ -325,13 +310,10 @@ class HomeController extends Controller
     }
 
     // xu ly bai viet duoc tim kiem
-
     public function singlePost(Request $request, $slug)
     {
-        $agent = new Agent();
         $active_menu = "post";
         $locale = config('app.locale');
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $post = Post::where('slug', $slug)
             ->where('status', 1)->whereNull('deleted_at')->first();
         if (!is_null($post)) {
@@ -387,8 +369,6 @@ class HomeController extends Controller
         return abort(404);
     }
 
-    //trang chi tiet bai viet
-
     public function product_cat(Request $request)
     {
         ///////////////Tham so dau vao//////////////////]
@@ -409,10 +389,13 @@ class HomeController extends Controller
             array_push($arr[0], $cat->id);
             $list_cat_child = $arr[0];
             $list_cat_childs = Category::whereIn('id', $list_cat1->all())->where('show_push_product', 1)->get();
-            //slider banner header
             $sliders = json_decode($cat->banner);
-            //neu co danh muc thi loc theo danh muc
-            $categories = Category::where('taxonomy', Category::SAN_PHAM)->where('parent_id', $cat->id)->where('status', 1)->get();
+            $categories_exists_product_parent = $cat->id;
+            $categories_exists_product = CategoryRelationship::where(function ($query) use ($categories_exists_product_parent){
+                $list_id = Category::where('parent_id', $categories_exists_product_parent)->where('status', 1)->get()->pluck('id');
+                $query->whereIn('cat_id', $list_id);
+            })->groupby('cat_id')->get()->pluck('cat_id');
+            $categories = Category::whereIn('id', $categories_exists_product)->get();
             $attributes = Categoryproperty::select('categoryproperties.*', 'categories.slug as slug')
                 ->leftjoin('categoryproperties_manages', 'categoryproperties.id', '=', 'categoryproperties_manages.categoryproperties_id')
                 ->leftjoin('categories', 'categories.id', 'categoryproperties_manages.category_id')
@@ -433,11 +416,11 @@ class HomeController extends Controller
                 $filter_all = array_merge($filter_all, $value);
             }
             $origin_url = $request->url();
-            foreach ($attributes as $key_attr => $attr) {
+            foreach ($attributes as $attr) {
                 $count_attr = 0;
                 $count_attr_active = 0;
                 $detailproperties = Detailproperties::where('categoryproperties_id', $attr->id)->get();
-                foreach ($detailproperties as $key_attr_dt => $attr_detail) {
+                foreach ($detailproperties as $attr_detail) {
                     $Propertyproducts = Propertyproducts::select('propertyproducts.*', 'detailproperties.ma as ma')
                         ->leftjoin('detailproperties', 'detailproperties.id', 'propertyproducts.detailproperties_id')
                         ->leftjoin('products', 'products.id', 'propertyproducts.products_id')
@@ -539,7 +522,7 @@ class HomeController extends Controller
                 $brand = $request->brand;
             }
             $orderby = "DESC";
-            $order_name = "products.created_at";
+            $order_name = "products.view";
             if (!empty($request->order)) {
                 if ($request->order == "gia_cao_den_thap") {
                     $order_name = "NULLIF(products.price_onsale, 0), products.price";
@@ -614,7 +597,7 @@ class HomeController extends Controller
                 $filter_price = "từ " . number_format($filter[0], 0, ',', '.') . " đến " . number_format($filter[1], 0, ',', '.');
             }
             $orderby = "DESC";
-            $order_name = "products.created_at";
+            $order_name = "products.view";
             if (!empty($request->order)) {
                 if ($request->order == "gia_cao_den_thap") {
                     $order_name = "NULLIF(products.price_onsale, 0), products.price";

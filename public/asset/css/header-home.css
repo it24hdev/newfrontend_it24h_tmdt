@@ -295,10 +295,16 @@ ul {
     position: relative;
 }
 
-.vertical-block:hover .vertical-menu-content {
+.show_menu {
     visibility: visible !important;
     transform: translateY(0px) !important;
     opacity: 1 !important;
+}
+
+.hide_menu{
+    visibility: hidden!important;
+    transform: translateY(10px)!important;
+    opacity: 0!important;
 }
 
 .horizontal-block {
@@ -310,6 +316,15 @@ ul {
     margin-right: auto;
 }
 
+.box_cpn_next_child{
+    display: flex;
+    align-items: center;
+}
+.box_cpn_next_child .next-right{
+    width: 30px;
+    display: flex;
+    justify-content: flex-end;
+}
 .vertical-block .title-vertical {
     height: 50px;
     position: relative;
@@ -412,19 +427,36 @@ ul {
     overflow: hidden;
 }
 
-.vertical-menu-content ul.menu-cat > li > a {
+.vertical-menu-content ul.menu-cat > li > div > div > a {
     display: block;
     padding: 7px 0;
-    margin: 0 18px;
     color: #333;
     font-weight: 500;
     font-size: 12px;
     background-color: transparent;
-    border-bottom: 1px solid #eee;
     transition: all ease 0.1s;
     position: relative;
 }
+.box_parent_cpn{
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin: 0 10px;
+    width: calc(100% - 20px);
+}
+.box_link_cpn{
+    width: calc(100% - 40px);
+}
 
+.box_icon_right{
+    display: flex;
+    justify-content: flex-end;
+    width: 30px;
+    margin: 0 5px;
+}
+.box_icon_right .icon-right{
+    align-items: center;
+    display: flex;
+}
 .vertical-menu-content ul.menu-cat li:last-child a {
     border-bottom: none;
 }
@@ -999,6 +1031,7 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     width: 100%;
     flex-wrap: wrap;
     display: flex;
+    margin-bottom: 50px;
 }
 
 @keyframes jump {
@@ -1077,6 +1110,7 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     overflow-x: hidden;
     padding-top: 15px;
     width: 100% !important;
+    -webkit-overflow-scrolling: auto;
 }
 
 .wp-submenu img {
@@ -1104,10 +1138,12 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     background-position: 100% 100%;
 }
 
-.hiden_menu{
-    visibility: hidden!important;
-    transform: translateY(10px)!important;
-    opacity: 0!important;
+
+@media (min-width:1024px){
+    .vertical-menu-content{
+        visibility: visible;
+        opacity: 1;
+    }
 }
 @media (min-width:0px) and (max-width:550px) {
     .wp-menu-parent {
@@ -1212,10 +1248,6 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     }
     .horizontal-menu nav ul li a{
         padding: 0 10px;
-    }
-    .vertical-menu-content{
-        visibility: visible;
-        opacity: 1;
     }
     .horizontal-block {
         width: calc(100% - 270px);

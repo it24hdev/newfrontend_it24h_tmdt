@@ -132,17 +132,25 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content @if($active_menu != "home") hiden_menu @endif">
+                        <div class="vertical-menu-content @if($active_menu != "home") hide_menu @endif">
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
                                     <li class="menucontent">
-                                        <a href="{!! $Sidebar->link !!}"><span class="icon-menu">{!! $Sidebar->class !!}</span>
-                                            {{$Sidebar->label}}
-                                             @if(count($Sidebar->childs))
-                                             <span class="icon-right"><i class="far fa-angle-right"></i></span>
-                                             @endif
-                                        </a>
+                                        <div class="box_parent_cpn">
+                                            <div class="box_link_cpn">
+                                            <a href="{!! $Sidebar->link !!}">
+                                                <span class="icon-menu">{!! $Sidebar->class !!}</span>
+                                                {{$Sidebar->label}}
+                                            </a>
+                                            </div>
+                                            <div class="box_icon_right">
+                                                @if(count($Sidebar->childs))
+                                                    <span class="icon-right"><i class="far fa-angle-right"></i></span>
+                                                @endif
+                                            </div>
+                                        </div>
+
                                         <div class="ajaxsubmenu" get-id="{{$Sidebar->id}}" get-menu="{{$Sidebar->menu}}">
                                             <div class="wp-submenu">
                                                 <div class="cpn_submenu col-12">
