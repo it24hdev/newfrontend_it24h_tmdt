@@ -1,21 +1,16 @@
 @extends('frontend.layouts.base')
-
 @section('title')
     <title>@lang('lang.It24hwishlist')</title>
 @endsection
-
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/cart.css')}}">
 @endsection
-
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
+    @include('frontend.layouts.header-home', [$Sidebars, $active_menu])
 @endsection
-
 @section('header-mobile')
     @include('frontend.layouts.menu-mobile', [$Sidebars])
 @endsection
-
 @section('content')
     <div class="wp-breadcrumb-page">
         <div class="container-page">
@@ -80,11 +75,9 @@
         </div>
     <p id="message_add_cart" style="display:none;">@lang('lang.Productaddedtocartsuccessfully')</p>
 @endsection
-
 @section('footer')
-    @include('frontend.layouts.footer', [$posts_footer])
+    @include('frontend.layouts.footer')
 @endsection
-
 @section('js')
     <script>
         var mess = document.getElementById('message_add_cart').innerHTML;

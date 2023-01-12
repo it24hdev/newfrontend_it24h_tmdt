@@ -1,18 +1,13 @@
 @extends('frontend.layouts.base')
-
 @section('title')
     <title>Gửi đơn hàng</title>
 @endsection
-
 @section('css')
     <link rel="stylesheet" href="asset/css/order-success.css">
 @endsection
-
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
+    @include('frontend.layouts.header-home', [$Sidebars, $active_menu])
 @endsection
-
-
 @section('content')
     <div class="wp-breadcrumb-page">
         <div class="container-page">
@@ -127,7 +122,6 @@
         </div>
     </div>
 @endsection
-
 @section('footer')
     @include('frontend.layouts.footer')
 @endsection

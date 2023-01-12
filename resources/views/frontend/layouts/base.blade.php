@@ -9,8 +9,7 @@
     <link href="{{asset('upload/images/common_img/icon-head.png')}}" rel="shortcut icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
         rel="stylesheet" media='screen and (min-width: 1024px)'>
     <link rel="stylesheet" href="{{asset('asset/lib/bootstrap/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('asset/lib/OwlCarousel/dist/assets/owl.carousel.min.css')}}">
@@ -41,6 +40,7 @@
 <!-- javascript -->
 <script src="{{ asset('lib/jquery360.min.js') }}"></script>
 <script src="{{ asset('asset/lib/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
@@ -76,9 +76,6 @@
         window.addEventListener("orientationchange", lazyLoad);
     });
 </script>
-<script src="{{ asset('asset/lib/OwlCarousel/dist/owl.carousel.min.js') }}"></script>
-@yield('js')
-<script src="{{ asset('asset/js/home.js') }}"></script>
 <script>
     $(document).ready(function () {
         $("#login-ajax").click(function () {
@@ -110,7 +107,6 @@
                 }
             });
         });
-
     });
 </script>
 <script>
@@ -247,8 +243,28 @@
                 }
             });
         });
+        //cuon len dau trang
+        function runOnScroll() {
+            if($(window).scrollTop() >80){
+                $('#scroll_up').show();
+            }
+            else
+            {
+                $('#scroll_up').hide();
+            }
+        }
+        $(window).scroll(runOnScroll);
+        $(document).on("click",'#scroll_up',function(){
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        })
+        //xu ly an hien hop thoai dang nhap header
+        $(document).on('click',".dropdown-login-toggle",function(){
+            $(".dropdown-login").toggleClass("active-form-login");
+        })
     });
 </script>
+@yield('js')
 </body>
 
 </html>

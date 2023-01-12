@@ -43,7 +43,7 @@ class CartController extends Controller
                 $cookie_data = stripslashes($data);
                 $cart_data = json_decode($cookie_data, true);
             }
-            if ($agent->isMobile()) {
+            if ($agent->isPhone()) {
                 return view('frontend.mobile.cartmobile', compact('cart_data', 'locale'));
             } else {
                 $Sidebars = $this->getmenu('sidebar');
@@ -218,7 +218,7 @@ class CartController extends Controller
                     }
                 }
                 $active = 1;
-                if ($agent->isMobile()) {
+                if ($agent->isPhone()) {
                     return view('frontend.mobile.orderinfomobile', ['total_money' => $total_money, 'active' => $active, 'city' => $city, 'district' => $district]);
                 } else {
                     $Sidebars = $this->getmenu('sidebar');
@@ -227,7 +227,7 @@ class CartController extends Controller
                 }
             } else {
                 $active = 0;
-                if ($agent->isMobile()) {
+                if ($agent->isPhone()) {
                     return view('frontend.mobile.orderinfomobile', ['active' => $active]);
                 } else {
                     $Sidebars = $this->getmenu('sidebar');
@@ -236,7 +236,7 @@ class CartController extends Controller
             }
         } else {
             $active = 0;
-            if ($agent->isMobile()) {
+            if ($agent->isPhone()) {
                 return view('frontend.mobile.orderinfomobile', ['active' => $active]);
             } else {
                 $Sidebars = $this->getmenu('sidebar');
@@ -368,22 +368,14 @@ class CartController extends Controller
 
     public function list_wish()
     {
-        $agent = new Agent();
-        $ag = "";
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
-        // Cookie::queue(Cookie::forget('list_wish'));
         $active_menu = "cart";
         $get_cookie = Cookie::get('list_wish');
         $list_id_wish = explode(' ', $get_cookie);
         $products = Products::whereIn('id', $list_id_wish)->where('status', 1)->get();
         Cookie::queue('count_wish', $products->count(), 1051200);
         $Sidebars = $this->getmenu('sidebar');
-        // $Menus = $this->getmenu('menu');
         $locale = config('app.locale');
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
-        return view('frontend.wish-list', compact('Sidebars', 'active_menu', 'locale', 'products', 'posts_footer'))->with('agent', $ag);
+        return view('frontend.wish-list', compact('Sidebars', 'active_menu', 'locale', 'products'));
     }
 
     public function add_wish(Request $request)

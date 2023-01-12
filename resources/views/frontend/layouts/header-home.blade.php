@@ -132,7 +132,7 @@
                         @lang('lang.Productcategory')
                     </div>
                     <div class="vertical-menu">
-                        <div class="vertical-menu-content" >
+                        <div class="vertical-menu-content @if($active_menu != "home") hiden_menu @endif">
                             <nav>
                                 <ul class="menu-cat">
                                     @foreach($Sidebars  as $Sidebar)
@@ -168,10 +168,10 @@
                     <div class="horizontal-menu">
                         <nav>
                             <ul class="menu-header">
-                                <li><a href="{{route('user')}}" class="active"><span><i class="far fa-home"></i></span> @lang('lang.Home')</a></li>
-                                <li><a href="{{route('list_product')}}"><span><i class="fal fa-shopping-bag"></i></span> @lang('lang.Shop')</a></li>
-                                <li><a href="{{route('categoryBlogs')}}"><span><i class="fal fa-newspaper"></i></span> @lang('lang.Blog')</a></li>
-                                <li><a href="{{route('contact')}}"><span><i class="far fa-phone-rotary"></i></span> @lang('lang.Contact')</a></li>
+                                <li><a href="/" class="{{$active_menu == 'home' ? 'active' : ''}}"><span><i class="far fa-home"></i></span> @lang('lang.Home')</a></li>
+                                <li><a href="{{route('list_product')}}" class="{{$active_menu == 'product' ? 'active' : ''}}"><span><i class="fal fa-shopping-bag"></i></span> @lang('lang.Shop')</a></li>
+                                <li><a href="{{route('categoryBlogs')}}" class="{{$active_menu == 'post' ? 'active' : ''}}"><span><i class="fal fa-newspaper"></i></span> @lang('lang.Blog')</a></li>
+                                <li><a href="{{route('contact')}}" class="{{$active_menu == 'contact' ? 'active' : ''}}"><span><i class="far fa-phone-rotary"></i></span> @lang('lang.Contact')</a></li>
                             </ul>
                         </nav>
                     </div>

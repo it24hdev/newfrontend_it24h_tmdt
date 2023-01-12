@@ -1103,6 +1103,12 @@ ul.menu-cat-mobile li .submenu-parent-mobile.active {
     background-repeat: no-repeat;
     background-position: 100% 100%;
 }
+
+.hiden_menu{
+    visibility: hidden!important;
+    transform: translateY(10px)!important;
+    opacity: 0!important;
+}
 @media (min-width:0px) and (max-width:550px) {
     .wp-menu-parent {
         margin: 0 10px 20px 10px;

@@ -1,18 +1,13 @@
 @extends('frontend.layouts.base')
-
 @section('title')
     <title>{{$post->title}}</title>
 @endsection
-
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/single-post.css')}}">
 @endsection
-
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
+    @include('frontend.layouts.header-home', [$Sidebars, $active_menu])
 @endsection
-
-
 @section('content')
     <div class="wp-breadcrumb-page">
         <div class="container-page">
@@ -260,11 +255,9 @@
     </div>
     <div style="clear: both"></div>
 @endsection
-
 @section('footer')
     @include('frontend.layouts.footer')
 @endsection
-
 @section('js')
 <script>
     $(document).ready(function () {

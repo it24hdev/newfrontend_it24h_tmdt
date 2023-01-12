@@ -9,7 +9,7 @@
 @endsection
 
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
+    @include('frontend.layouts.header-home', [$Sidebars, $active_menu])
 @endsection
 
 @section('content')

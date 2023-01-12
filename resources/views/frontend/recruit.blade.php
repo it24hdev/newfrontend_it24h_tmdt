@@ -1,25 +1,17 @@
 @extends('frontend.layouts.base')
-
 @section('title')
     <title>IT24H -  Tuyển dụng</title>
 @endsection
-
 @section('css')
     <link rel="stylesheet" href="asset/css/recruit.css">
 @endsection
-
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars ,$active_menu])
+    @include('frontend.layouts.header-home', [$Sidebars, $active_menu])
 @endsection
-
-@section('header-mobile')
-    @include('frontend.layouts.menu-mobile', [$Sidebars])
-@endsection
-
 @section('content')
 
 <div class="bg-white p-3">
-      
+
 <div class="tuyendung_2021">
 <div class="container-page">
    <div class="row">
@@ -160,16 +152,14 @@
    </div>
 </div>
 <!-- Button trigger modal -->
-   
+
 </div>
 </div>
 
 @endsection
-
 @section('footer')
-    @include('frontend.layouts.footer', [$posts_footer])
+    @include('frontend.layouts.footer')
 @endsection
-
 @section('js')
    <script>
    $(document).ready(function () {

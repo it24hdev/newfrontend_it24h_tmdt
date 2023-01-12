@@ -400,6 +400,9 @@ Route::post('/tuyen-dung', [HomeController::class, 'recruit_register'])->name('r
 Route::get('/chi-tiet-san-pham/{slug}', [DetailproductController::class, 'index'])->name('detailproduct');
 Route::post('/comment-product', [DetailproductController::class, 'commentProduct'])->name('commentProduct');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
+Route::post('/get_related_products', [DetailproductController::class, 'get_related_products'])->name('get_related_products');
+Route::post('/get_watched_products', [DetailproductController::class, 'get_watched_products'])->name('get_watched_products');
+
 
 //mobile
 Route::post('/get_product_mobile', [HomeController::class, 'get_product_mobile'])->name('get_product_mobile');

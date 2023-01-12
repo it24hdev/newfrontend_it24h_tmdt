@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Attribute_product;
+use App\Models\CategoryRelationship;
 use App\Models\Locationmenu;
 use App\Models\Products;
 use App\Models\Vote;
@@ -36,30 +37,10 @@ class DetailproductController extends Controller
             $imgs        = json_decode($product->image);
             $locale             = config('app.locale');
             $posts = Post::where('status', 1)->orderBy('id', 'DESC')->limit(5)->get();
-            $products_id= array();
-            foreach($product->category as $k){
-                foreach($k->product as $pro){
-                    $products_id[]= $pro->id;
-                }
-            }
-            if(empty($products_id)){
-                $product_related = Products::where('status', 1)->limit(10)->get();
-            }else{
-                $product_related = Products::whereIn('id', $products_id)->where('status', 1)->limit(10)->get();
-            }
-            /* XỬ LÝ LƯU SP ĐÃ XEM */
-            $id = $product->id;
-            $get_cookie = Session::get('list_watched');
-            $list_id_watched = explode(' ', $get_cookie);
-            if(!in_array($id, $list_id_watched)){
-                $list_id_watched[] = $id;
-            }
-            $list_watched = \implode(' ', $list_id_watched);
-            Session::put('list_watched', $list_watched);
-            $product_watched = Products::whereIn('id', $list_id_watched)->where('status', 1)->inRandomOrder()->limit(10)->get();
+            Session::push('list_watched', $product->id);
             $comments = Vote::where('product_id',$product->id)->where('status', 1)->orderby('created_at','desc')->orderby('level', 'asc')->paginate(10);
             $agent = new Agent();
-            if($agent->isMobile()){
+            if($agent->isPhone()){
                 return view('frontend.mobile.detailproductmobile',[
                     'product'        => $product,
                     'imgs'           => $imgs,
@@ -72,11 +53,9 @@ class DetailproductController extends Controller
                     'Sidebars'        => $Sidebars,
                     'product'         => $product,
                     'imgs'            => $imgs,
-                    'product_related' => $product_related,
                     'getcategoryblog' => $getcategoryblog,
                     'locale'          => $locale,
                     'posts'           => $posts,
-                    'product_watched' => $product_watched,
                     'active_menu'     => $active_menu,
                 ]);
             }
@@ -97,28 +76,6 @@ class DetailproductController extends Controller
             'last_page' => $last_page
         ]);
     }
-//    public function xulychuoi_thongsosanpham($String){
-//        //loaibo space va enter
-//        if($String !=null){
-//        $String =  preg_replace("/[\n\r]/", "", $String);
-//        //loai bo ky tu ; cuoi cung
-//        if(mb_substr($String,-1) == ";")
-//        $String = mb_substr($String, 0,-1);
-//        //tach chuoi chan le
-//        $key    = array_chunk(preg_split('/(:|;)/', $String), 20);
-//        foreach ($key as $value) {
-//            foreach($value as $k=> $v){if($k%2==0){$arr1[] = $v;}
-//            }
-//        }
-//        foreach ($key as $value) {
-//            foreach($value as $k=> $v){if($k%2!=0){$arr2[] = $v;}
-//            }
-//        }
-//        //ghep chuoi
-//        $property   = array_combine($arr1 , $arr2);
-//        return $property;
-//        }
-//    }
     //xu ly lay danh muc cho blog
     public function getcategoryblog(){
         $categoryblog = Category::select('*')
@@ -160,7 +117,7 @@ class DetailproductController extends Controller
             ];
             $item = Vote::create($input);
             $agent = new Agent();
-            if($agent->isMobile()){
+            if($agent->isPhone()){
                 return \json_encode(array('success'=>true));
             }
             else{
@@ -190,26 +147,8 @@ class DetailproductController extends Controller
             'data_product_mobile' => $product_watched,
         ]);
     }
-    public  function get_product_similar(Request $request){
-        $product = Products::where('slug',$request->slug)->first();
-        $products_id = array();
-        foreach($product->category as $k){
-            foreach($k->product as $pro){
-                $products_id[]= $pro->id;
-            }
-        }
-        if(!empty($products_id)){
-            $product_related = Products::select('products.*', DB::raw("brands.image as img_brands"))
-                ->leftjoin('brands','products.brand','brands.id')
-                ->whereIn('products.id', $products_id)->where('products.status', 1)->limit(6)->get();
-        }
-        else{
-            $product_related = "";
-        }
-        return response()->json([
-            'data_product_mobile' => $product_related,
-        ]);
-    }
+
+    //cap nhat luot xem
     public  function product_views(Request $request){
         $product = Products::find($request->id);
         $data = [
@@ -219,4 +158,61 @@ class DetailproductController extends Controller
         return response()->json(['success' => true]);
     }
 
+    //load san pham lien quan
+    public function get_related_products(Request $request){
+        if($request->id){
+            $categories_related_products = CategoryRelationship::where('product_id', $request->id)->get()->pluck('cat_id');
+            $product = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
+                'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
+                'products.installment as installment', 'products.event as event', 'products.specifications as specifications',
+                'deals.name_deal','deals.price_deal' , 'brands.image as img_brands','tag_events.color_left as event_color_left', 'tag_events.color_right as event_color_right',
+                'tag_events.icon as event_icon','tag_events.name as event_name',DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
+                ->leftjoin('brands', 'products.brand', 'brands.id')
+                ->leftjoin('tag_events', 'products.event', 'tag_events.id')
+                ->leftjoin('deals', 'products.id', 'deals.product_id')
+                ->leftjoin('votes','products.id','votes.product_id')
+                ->leftjoin('category_relationships','products.id','category_relationships.product_id')
+                ->where('products.status', 1)
+                ->whereIn('category_relationships.cat_id', $categories_related_products->all())
+                ->groupby('products.id')
+                ->orderby('products.created_at','desc')
+                ->get();
+            return response()->json([
+                'success' => true,
+                'product' => $product
+            ]);
+        }
+        else{
+            return response()->json();
+        }
+    }
+
+    //load san pham da xem
+    public function get_watched_products(){
+        $list_id_watched_products = Session::get('list_watched');
+        if($list_id_watched_products){
+            $product = Products::select('products.id as id','products.ma as ma', 'products.name as name', 'products.thumb as thumb', 'products.price_onsale as price_onsale',
+                'products.onsale as onsale', 'products.price as price', 'products.sold as sold', 'products.quantity as quantity', 'products.slug as slug', 'products.year as year',
+                'products.installment as installment', 'products.event as event', 'products.specifications as specifications',
+                'deals.name_deal','deals.price_deal' , 'brands.image as img_brands','tag_events.color_left as event_color_left', 'tag_events.color_right as event_color_right',
+                'tag_events.icon as event_icon','tag_events.name as event_name',DB::raw('count(votes.level) as votes_count'),DB::raw('sum(votes.level) as votes_sum'))
+                ->leftjoin('brands', 'products.brand', 'brands.id')
+                ->leftjoin('tag_events', 'products.event', 'tag_events.id')
+                ->leftjoin('deals', 'products.id', 'deals.product_id')
+                ->leftjoin('votes','products.id','votes.product_id')
+                ->leftjoin('category_relationships','products.id','category_relationships.product_id')
+                ->where('products.status', 1)
+                ->whereIn('products.id', $list_id_watched_products)
+                ->groupby('products.id')
+                ->orderby('products.created_at','desc')
+                ->get();
+            return response()->json([
+                'success' => true,
+                'product' => $product
+            ]);
+        }
+        else{
+            return response()->json();
+        }
+    }
 }

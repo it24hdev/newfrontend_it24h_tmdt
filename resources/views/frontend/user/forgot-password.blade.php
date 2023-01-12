@@ -13,10 +13,6 @@
     @include('frontend.layouts.header-page', [$Sidebars])
 @endsection
 
-@section('header-mobile')
-    @include('frontend.layouts.menu-mobile', [$Sidebars])
-@endsection
-
 @section('content')
     <div class="wp-breadcrumb-page">
         <div class="container-page">
@@ -84,6 +80,6 @@
 @endsection
 
 @section('footer')
-    @include('frontend.layouts.footer', [$posts_footer])
+    @include('frontend.layouts.footer')
 @endsection
 

@@ -86,6 +86,7 @@ class HomeController extends Controller
                 'category_promotion' => $category_promotion,
             ]);
         } else {
+            $active_menu = "home";
             $Sidebars = $this->getmenu('sidebar');
             $list_cat_head = Category::where('taxonomy', 0)
                 ->where('parent_id', 0)
@@ -111,6 +112,7 @@ class HomeController extends Controller
                 'list_cat' => $list_cat,
                 'locale' => $locale,
                 'recentactivity' => $recentactivity,
+                'active_menu' => $active_menu
             ]);
         }
     }
@@ -231,7 +233,6 @@ class HomeController extends Controller
 
     public function categoryBlogs(Request $request)
     {
-        $agent = new Agent();
         $active_menu = "post";
         $locale = config('app.locale');
         if ($request->input('tim-kiem')) {
@@ -279,10 +280,6 @@ class HomeController extends Controller
     public function categoryBlog(Request $request, $slug)
     {
         $agent = new Agent();
-        $ag = "";
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $active_menu = "post";
         $locale = config('app.locale');
         if ($request->input('tim-kiem')) {
@@ -322,8 +319,6 @@ class HomeController extends Controller
                 'getcategoryblog' => $getcategoryblog,
                 'locale' => $locale,
                 'active_menu' => $active_menu,
-                'posts_footer' => $posts_footer,
-                'agent' => $ag,
             ]);
         }
         return abort(404);
@@ -334,9 +329,6 @@ class HomeController extends Controller
     public function singlePost(Request $request, $slug)
     {
         $agent = new Agent();
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $active_menu = "post";
         $locale = config('app.locale');
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
@@ -390,8 +382,6 @@ class HomeController extends Controller
                 'getcategoryblog' => $getcategoryblog,
                 'locale' => $locale,
                 'active_menu' => $active_menu,
-                'posts_footer' => $posts_footer,
-                'agent' => $ag,
             ]);
         }
         return abort(404);
@@ -701,8 +691,7 @@ class HomeController extends Controller
         $cat_parent = Category::where('taxonomy', Category::SAN_PHAM)->where('parent_id', 0)->where('status', 1)->get();
         //////////////Tra ve//////////////////
         $agent = new Agent();
-        dd($agent->isMobile());
-        if ($agent->isMobile()) {
+        if ($agent->isPhone()) {
             $bard = Brand::where(function ($query) use ($list_cat_child) {
                 $products_list_brand = Products::where('status', 1)
                     ->leftJoin('category_relationships', 'products.id', 'category_relationships.product_id')
@@ -726,11 +715,8 @@ class HomeController extends Controller
 
     public function is_multi($requestall)
     {
-
         $rv = array_filter($requestall, 'is_array');
-
         if (count($rv) > 0) return true;
-
         return false;
     }
 
@@ -779,11 +765,7 @@ class HomeController extends Controller
     public function autotypeahead(Request $request)
     {
         $agent = new Agent();
-        $isMobile = "";
         if ($agent->isPhone()) {
-            $isMobile = "phone";
-        }
-        if ($isMobile) {
             if ($request->data) {
                 $data = Products::where('name', 'like', '%' . $request->data . '%')->limit(10)->get();
                 return response()->json(['result_search' => $data]);
@@ -810,15 +792,11 @@ class HomeController extends Controller
     public function contact()
     {
         $agent = new Agent();
-        $ag = "";
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $active_menu = "contact";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale = config('app.locale');
         $Sidebars = $this->getmenu('sidebar');
-        return view('frontend.contact', compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        return view('frontend.contact', compact('Sidebars', 'locale', 'active_menu'));
     }
 
     //lien he
@@ -830,30 +808,21 @@ class HomeController extends Controller
     public function recruit()
     {
         $agent = new Agent();
-        $ag = "";
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $list_location = Recruit::where('status', 1)->groupBy('location')->get();
         $list_vacancies = Recruit::where('status', 1)->orderBy('created_at', 'ASC')->get();
         $active_menu = "contact";
-        $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
-        return view('frontend.recruit', compact('Sidebars', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies'))->with('agent', $ag);
+        return view('frontend.recruit', compact('Sidebars', 'active_menu', 'posts_footer', 'list_location', 'list_vacancies'));
     }
 
     public function recruit_register(Request $request)
     {
         $agent = new Agent();
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $list_location = Recruit::where('status', 1)->groupBy('location')->get();
         $list_vacancies = Recruit::where('status', 1)->orderBy('created_at', 'ASC')->get();
         $active_menu = "contact";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $Sidebars = $this->getmenu('sidebar');
-
         if ($request->fileupload == null) {
             $request->fileupload = "";
         }
@@ -877,19 +846,15 @@ class HomeController extends Controller
                 'posts_footer' => $posts_footer,
                 'list_location' => $list_location,
                 'list_vacancies' => $list_vacancies,
-                'agent' => $ag,
             ])->with('error', 'Ứng tuyển thành công!');
         } catch (Exception $exception) {
             DB::rollBack();
             return redirect()->route('recruit', [
                 'Sidebars' => $Sidebars,
-                // 'Menus' => $Menus,
-                // 'Sub_menus' => $Sub_menus,
                 'active_menu' => $active_menu,
                 'posts_footer' => $posts_footer,
                 'list_location' => $list_location,
                 'list_vacancies' => $list_vacancies,
-                'agent' => $ag,
             ])->with('error', 'Đăng kí thất bại!');
         }
     }
@@ -897,20 +862,17 @@ class HomeController extends Controller
     public function about_us()
     {
         $agent = new Agent();
-        if ($agent->isMobile()) {
-            $ag = "mobile";
-        } else $ag = "desktop";
         $active_menu = "about_us";
         $posts_footer = Post::where('status', 1)->orderBy('id', 'DESC')->limit(3)->get();
         $locale = config('app.locale');
         $Sidebars = $this->getmenu('sidebar');
-        return view('frontend.page.about-us', compact('Sidebars', 'locale', 'active_menu', 'posts_footer'))->with('agent', $ag);
+        return view('frontend.page.about-us', compact('Sidebars', 'locale', 'active_menu', 'posts_footer'));
     }
 
     public function menucontent(Request $request)
     {
         $agent = new Agent();
-        if ($agent->isMobile()) {
+        if ($agent->isPhone()) {
             $Sidebars = $this->getmenu('sidebar');
             $view2 = view('frontend.contentmenumobile', ['Sidebars' => $Sidebars])->render();
             return response()->json($view2);

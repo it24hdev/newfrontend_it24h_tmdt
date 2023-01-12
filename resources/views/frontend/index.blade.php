@@ -3,7 +3,7 @@
     <title>IT24H - Trang chủ</title>
 @endsection
 @section('header-home')
-    @include('frontend.layouts.header-home', [$Sidebars])
+    @include('frontend.layouts.header-home', [$Sidebars, $active_menu])
 @endsection
 @section('content')
     <div class="wp-content">
@@ -232,6 +232,49 @@
     <script>
         $(document).ready(function () {
             var _token = $('meta[name="csrf-token"]').attr('content');
+            $('#slider-show').owlCarousel({
+                autoplay: true,
+                autoplayHoverPause: true,
+                loop: true,
+                center: true,
+                margin: 5,
+                stagePadding: true,
+                nav: true,
+                dots: true,
+                mouseDrag: true,
+                touchDrag: true,
+                lazyLoad: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                }
+            });
+            $('#list-cat-slider').owlCarousel({
+                autoplay: true,
+                autoplayHoverPause: true,
+                loop: true,
+                margin: 30,
+                nav: true,
+                dots: false,
+                mouseDrag: true,
+                touchDrag: true,
+                lazyLoad: true,
+                responsive: {
+                    0: {
+                        items:4,
+                    },
+                    700: {
+                        items:5,
+                    },
+                    1350: {
+                        items:6,
+                    },
+                    1600: {
+                        items:7,
+                    },
+                },
+            });
             //ham them san pham yeu thich
             add_wish = function (id) {
                 var _token = $('meta[name="csrf-token"]').attr('content');
@@ -691,6 +734,7 @@
                     },
                 })
             })
+
             //chon danh muc con- hien thi danh sach san pham danh muc con
             $(document).on('click', '.item_categoreis_child', function () {
                 var id = $(this).attr('data-target');
@@ -817,7 +861,6 @@
                     $("#load_brand").addClass("loaded");
                 }
             }
-
             $(window).scroll(runOnScroll);
             //dang ky dich vu
             $(document).on('click', '#registerservice', function () {
@@ -880,6 +923,8 @@
                 $('.register_form').removeClass('d-none');
                 $("textarea[name='customer_request']").val('');
             });
+
+
         });
     </script>
 @endsection

@@ -1,18 +1,14 @@
 @php use App\Helpers\CommonHelper; @endphp
 @extends('frontend.layouts.base')
-
 @section('title')
     <title>{{$product->name}}</title>
 @endsection
-
 @section('css')
     <link rel="stylesheet" href="{{asset('asset/css/detail-product.css')}}">
 @endsection
-
 @section('header-home')
-    @include('frontend.layouts.header-page', [$Sidebars, $active_menu])
+    @include('frontend.layouts.header-home', [$Sidebars, $active_menu])
 @endsection
-
 @section('content')
     <div class="wp-content">
         <div class="wp-breadcrumb-page">
@@ -24,7 +20,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container-page">
             <div class="content-product-detail">
                 <div class="product-title">
@@ -485,272 +480,11 @@
                 </div>
             </div>
             <div class="list-product-bottom">
-                <div class="product-content" style="margin-bottom: 40px;">
-                    <div class="block-title">
-                        <ul class="nav nav-pills list-product-recommend owl-carousel owl-theme owl-loaded owl-drag"
-                            id="pills-tab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-cat1-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-cat1" type="button" role="tab" aria-controls="pills-cat1"
-                                        aria-selected="true">Sản phẩm liên quan
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-cat2-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-cat2" type="button" role="tab" aria-controls="pills-cat2"
-                                        aria-selected="false">Sản phẩm đã xem
-                                </button>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content container-home" id="pills-tabContent">
-                        <div class="tab-pane fade show active" id="pills-cat1" role="tabpanel"
-                             aria-labelledby="pills-cat1-tab">
-                            <div
-                                class="list-product owl-carousel owl-theme owl-loaded owl-drag list-product-recommend-slider"
-                                id="list-product-group">
-                                @foreach ($product_related as $item)
-                                    <!-- product -->
-                                    <div class="product-item mb-3">
-                                        <div class="thumb">
-                                            <a href="{{ route('detailproduct', $item->slug)}}">
-                                                @if($item->thumb!="no-images.jpg")
-                                                <img class="owl-lazy"
-                                                     data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}"
-                                                     alt="">
-                                                @else
-                                                    <img class="owl-lazy"
-                                                         data-src="{{asset('upload/images/common_img/no-images.jpg')}}"
-                                                         alt="">
-                                                @endif
-                                                @if (!empty($item->brands->image))
-                                                    <span class="brand"
-                                                          style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
-                                                @endif
-                                                <div class="wp-tag">
-                                                    @if (!empty($item->year))
-                                                        <span class="years">{{$item->year}}</span>
-                                                    @endif
-                                                    @if (!empty($item->installment))
-                                                        <span class="payment">Trả góp 0%</span>
-                                                    @endif
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="detail">
-                                            <div class="wp-event">
-                                                @if (!empty($item->event))
-                                                    <p class="event"
-                                                       style="background: linear-gradient(to right,{{$item->events->color_left}},{{$item->events->color_right}});">
-                                                        <img
-                                                            src="{{asset('upload/images/products/thumb/'.$item->events->icon)}}"
-                                                            alt="">
-                                                        <span>{{$item->events->name}}</span>
-                                                    </p>
-                                                @else
-                                                    <p class="event" style="min-height: 20px;"></p>
-                                                @endif
-                                                <p class="code">Mã: {{$item->ma}}</p>
-                                            </div>
-                                            <div class="name">
-                                                <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>
-                                            </div>
-                                            @if (!empty($item->specifications))
-                                                <ul class="product-attributes">
-                                                    @foreach ($item->get_specifications() as $k)
-                                                        <li>{{$k}}</li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                            <div class="price-review clearfix">
-                                                <div class="price">
-                                                    @if (!empty($item->onsale))
-                                                        <span class="onsale">- {{$item->onsale}}%</span>
-                                                        <div class="price-old">{{number_format($item->price,0,',','.')}}
-                                                            đ
-                                                        </div>
-                                                        <div
-                                                            class="price-new">{{number_format($item->price_onsale,0,',','.')}}
-                                                            đ
-                                                        </div>
-                                                    @else
-                                                        <div class="price-new">{{number_format($item->price,0,',','.')}}
-                                                            đ
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="review">
-                                                    <div class="rating2">
-                                                        <div class="rating-upper"
-                                                             style="width: {{$item->count_vote()}}%">
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                        </div>
-                                                        <div class="rating-lower">
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="count-review">({{$item->votes->count()}})</div>
-                                                    @if (!empty($item->sold))
-                                                        <div class="sold"><i class="fas fa-badge-check"></i>Đã
-                                                            bán {{$item->sold}}</div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="detail-bottom">
-                                                @if (($item->quantity > 0))
-                                                    <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">
-                                                        Còn hàng
-                                                    </div>
-                                                @else
-                                                    <div class="qty" style="color: #ffffff; background-color: #fb0000;">
-                                                        Liên hệ
-                                                    </div>
-                                                @endif
-                                                <div class="action">
-                                                    <a href="javascript:" class="repeat" title="So sánh"><i
-                                                            class="far fa-repeat"></i></a>
-                                                    <a href="javascript:" class="heart add-wish" title="Lưu sản phẩm"
-                                                       onclick="add_wish({{$item->id}})"><i
-                                                            class="far fa-heart"></i></a>
-                                                    <a href="javascript:" title="Thêm vào giỏ hàng" class="add-cart"
-                                                       onclick="add_cart({{$item->id}})"><i
-                                                            class="far fa-shopping-cart"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="pills-cat2" role="tabpanel" aria-labelledby="pills-cat2-tab">
-                            <div
-                                class="list-product owl-carousel owl-theme owl-loaded owl-drag list-product-recommend-slider"
-                                id="list-product-group">
-                                @foreach ($product_watched as $item)
-                                    <!-- product -->
-                                    <div class="product-item mb-3">
-                                        <div class="thumb">
-                                            <a href="{{ route('detailproduct', $item->slug)}}">
-                                                <img class="owl-lazy"
-                                                     data-src="{{asset('upload/images/products/medium/'.$item->thumb)}}"
-                                                     alt="">
-                                                @if (!empty($item->brand))
-                                                    <span class="brand"
-                                                          style="background-image: url('{{asset("upload/images/products/thumb/".$item->brands->image)}}');"></span>
-                                                @endif
-                                                <div class="wp-tag">
-                                                    @if (!empty($item->year))
-                                                        <span class="years">{{$item->year}}</span>
-                                                    @endif
-                                                    @if (!empty($item->installment))
-                                                        <span class="payment">Trả góp 0%</span>
-                                                    @endif
-                                                </div>
-                                            </a>
-                                        </div>
-                                        <div class="detail">
-                                            <div class="wp-event">
-                                                @if (!empty($item->event))
-                                                    <p class="event"
-                                                       style="background: linear-gradient(to right,{{$item->events->color_left}},{{$item->events->color_right}});">
-                                                        <img
-                                                            src="{{asset('upload/images/products/thumb/'.$item->events->icon)}}"
-                                                            alt="">
-                                                        <span>{{$item->events->name}}</span>
-                                                    </p>
-                                                @else
-                                                    <p class="event" style="min-height: 20px;"></p>
-                                                @endif
-                                                <p class="code">Mã: {{$item->ma}}</p>
-                                            </div>
-                                            <div class="name">
-                                                <a href="{{ route('detailproduct', $item->slug)}}">{{$item->name}}</a>
-                                            </div>
-                                            @if (!empty($item->specifications))
-                                                <ul class="product-attributes">
-                                                    @foreach ($item->get_specifications() as $k)
-                                                        <li>{{$k}}</li>
-                                                    @endforeach
-                                                </ul>
-                                            @endif
-                                            <div class="price-review clearfix">
-                                                <div class="price">
-                                                    @if (!empty($item->onsale))
-                                                        <span class="onsale">- {{$item->onsale}}%</span>
-                                                        <div class="price-old">{{number_format($item->price,0,',','.')}}
-                                                            đ
-                                                        </div>
-                                                        <div
-                                                            class="price-new">{{number_format($item->price_onsale,0,',','.')}}
-                                                            đ
-                                                        </div>
-                                                    @else
-                                                        <div class="price-new">{{number_format($item->price,0,',','.')}}
-                                                            đ
-                                                        </div>
-                                                    @endif
-                                                </div>
-                                                <div class="review">
-                                                    <div class="rating2">
-                                                        <div class="rating-upper"
-                                                             style="width: {{$item->count_vote()}}%">
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                            <span><i class="fas fa-star"></i></span>
-                                                        </div>
-                                                        <div class="rating-lower">
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                            <span><i class="fal fa-star"></i></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="count-review">({{$item->votes->count()}})</div>
-                                                    @if (!empty($item->sold))
-                                                        <div class="sold"><i class="fas fa-badge-check"></i>Đã
-                                                            bán {{$item->sold}}</div>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <div class="detail-bottom">
-                                                @if (($item->quantity - $item->sold > 0))
-                                                    <div class="qty" style="color: #01aa42; background-color: #dbf8e1;">
-                                                        Còn hàng
-                                                    </div>
-                                                @else
-                                                    <div class="qty" style="color: #ffffff; background-color: #fb0000;">
-                                                        Hết hàng
-                                                    </div>
-                                                @endif
-                                                <div class="action">
-                                                    <a href="javascript:" class="repeat" title="So sánh"><i
-                                                            class="far fa-repeat"></i></a>
-                                                    <a href="javascript:" class="heart add-wish" title="Lưu sản phẩm"
-                                                       onclick="add_wish({{$item->id}})"><i
-                                                            class="far fa-heart"></i></a>
-                                                    <a href="javascript:" title="Thêm vào giỏ hàng" class="add-cart"
-                                                       onclick="add_cart({{$item->id}})"><i
-                                                            class="far fa-shopping-cart"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
+                <div class="box_title_cp my-4">
+                    <div class="item_title active related_product">Sản phẩm liên quan</div>
+                    <div class="item_title watched_products">Sản phẩm đã xem</div>
                 </div>
+                <div class="owl-carousel owl-theme owl-loaded owl-drag mb-4" id="ads_products"></div>
             </div>
         </div>
     </div>
@@ -761,16 +495,15 @@
     <p id="Nameisempty" style="display:none;">@lang('lang.Nameisempty')</p>
     <p id="Emailisempty" style="display:none;">@lang('lang.Emailisempty')</p>
 @endsection
-
 @section('footer')
     @include('frontend.layouts.footer')
 @endsection
-
 @section('js')
     <script>
         $(document).ready(function () {
             var _token = $('meta[name="csrf-token"]').attr('content');
             $("table").addClass('table table-bordered table-striped table_boder');
+            //chon anh nho, hien thi anh to
             $(document).on('click', '.thumb-small', function () {
                 let src = $(this).find('img').attr('src');
                 let picture_src = src.replace('{{asset("upload/images/products/thumb/")}}', '');
@@ -779,6 +512,7 @@
                 $(this).addClass('active');
                 return false;
             });
+            // chon anh dang truoc anh to
             $(document).on('click', 'span.next', function () {
                 if ($('ul.list-thumb-detail li:last-child').children('.thumb-small').hasClass('active')) {
                     $('ul.list-thumb-detail li:first-child').children('.thumb-small').click();
@@ -786,6 +520,7 @@
                     $('ul.list-thumb-detail li .thumb-small.active').parent('li').next().children('.thumb-small').click();
                 }
             });
+            // chon anh dang sau anh to
             $(document).on('click', 'span.prev', function () {
                 if ($('ul.list-thumb-detail li:first-child').children('.thumb-small').hasClass('active')) {
                     $('ul.list-thumb-detail li:last-child').children('.thumb-small').click();
@@ -830,18 +565,238 @@
                 })
             });
 
-
+            //neu noi dung nho thi an nut xem them
             $('.box_content').each(function (index){
                 var height = $(this).height();
                 if(height<500){
                     $(this).next().css({'visibility': 'hidden', 'opacity': '0'});
                 }
             })
+
             //xem them
             $(document).on("click", ".viewmore", function () {
                 $(this).css({'visibility': 'hidden', 'opacity': '0'});
                 $(this).prev().css({'max-height': '100%'});
             });
+            //====================template san pham===============//
+            //template product
+            function tmp_product(data, id_append) {
+                var template_product_desktop = $('#template_product_desktop').html();
+                $.each(data, function (k, v) {
+                    var url = "";
+                    var tmp = $(template_product_desktop).clone();
+                    if (v.img_brands != "no-images.jpg" && v.img_brands) {
+                        $(tmp).find('.brand').addClass('visible_cpn');
+                        url = '{{asset("upload/images/products/thumb/img_brand")}}';
+                        url = url.replace('img_brand', v.img_brands);
+                        img = 'url(' + url + ')';
+                        $(tmp).find('.brand_img').css('background-image', img);
+                    }
+                    if (v.year) {
+                        $(tmp).find('.years').removeClass('d-none');
+                        $(tmp).find('.years').html(v.year);
+                    }
+                    if (v.installment) {
+                        $(tmp).find('.payment').removeClass('d-none');
+                        $(tmp).find('.payment').html(v.installment);
+                    }
+                    url = '{{route('detailproduct', "slug_detail")}}';
+                    url = url.replace('slug_detail', v.slug);
+
+                    $(tmp).find('.link_detail').attr('href', url);
+                    if (v.thumb != 'no-images.jpg') {
+                        url = '{{asset('upload/images/products/medium/img_product')}}';
+                        url = url.replace('img_product', v.thumb);
+                        $(tmp).find('.thumb img').attr('data-src', url);
+                    } else {
+                        url = '{{asset('upload/images/common_img/img_product')}}';
+                        url = url.replace('img_product', v.thumb);
+                        $(tmp).find('.thumb img').attr('data-src', url);
+                    }
+                    $(tmp).find('.thumb img').attr('alt', v.name);
+                    $(tmp).find('.name span').html(v.name);
+                    if (v.event != 0 && v.event_icon) {
+                        $(tmp).find('.event').css({'background': 'linear-gradient(to right,' + v.event_color_left + ',' + v.event_color_right + ')'});
+                        $(tmp).find('.event').addClass('visible_cpn');
+                        url = '{{asset("upload/images/products/thumb/event_icon")}}';
+                        url = url.replace('event_icon', v.event_icon);
+                        $(tmp).find('.event img').attr('src', url);
+                        $(tmp).find('.event span').html(v.event_name);
+                    }
+                    // $(tmp).find('.code').html('Mã: '+v.ma);
+                    var list_specifications = $.parseJSON(v.specifications);
+                    $.each(list_specifications, function (k, v) {
+                        if (k <= 6)
+                            $(tmp).find('.product-attributes').append('<li>' + v + '</li>');
+                    });
+                    if (v.price_onsale > 0 && v.onsale > 0) {
+                        $(tmp).find('.onsale').html('-' + v.onsale + '%');
+                        $(tmp).find('.price-old').html((new Intl.NumberFormat().format(v.price)) + ' VNĐ');
+                        $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price_onsale)) + ' VNĐ');
+                    } else {
+                        $(tmp).find('.price_sale').addClass('hidden_cpn');
+                        $(tmp).find('.price-new').html((new Intl.NumberFormat().format(v.price)) + ' VNĐ');
+                    }
+                    var votes_sum = 0;
+                    if (v.votes_count > 0) {
+                        votes_sum = (v.votes_sum / v.votes_count) * 20;
+                    }
+                    $(tmp).find('.rating-upper').css('width', votes_sum + '%');
+                    $(tmp).find('.count-review').html('(' + v.votes_count + ')');
+                    $(tmp).find('.sold span').html('Đã bán ' + v.sold);
+                    if (v.quantity > 0) {
+                        $(tmp).find('.qty').css({'color': '#01aa42', 'background-color': '#dbf8e1'});
+                        $(tmp).find('.qty').html('Còn hàng');
+                    } else {
+                        $(tmp).find('.qty').css({'color': '#ffffff', 'background-color': '#fb0000'});
+                        $(tmp).find('.qty').html('Liên hệ');
+                    }
+                    if (v.quantity < 0) {
+                        $(tmp).find('.qty').addClass('d-none');
+                    }
+                    $(tmp).find('.add-wish').attr('get-id', v.id);
+                    $(tmp).find('.add-cart').attr('get-id', v.id);
+                    $(id_append).append(tmp);
+                });
+            }
+            //load san pham lien quan
+            function get_related_products() {
+                var id = '{{$product->id}}';
+                var data = {
+                    id: id,
+                    _token: _token
+                };
+                $.ajax({
+                    url: "{{route('get_related_products')}}",
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if(data.success){
+                            var append_id = $('#ads_products');
+                            append_id.html('');
+                            tmp_product(data.product, append_id);
+                            append_id.owlCarousel('destroy');
+                            append_id.owlCarousel({
+                                autoplay: false,
+                                autoplayHoverPause: true,
+                                loop: false,
+                                margin: 10,
+                                nav: true,
+                                dots: false,
+                                mouseDrag: true,
+                                touchDrag: true,
+                                lazyLoad: true,
+                                responsive: {
+                                    0: {
+                                        items: 2
+                                    },
+                                    650: {
+                                        items: 3
+                                    },
+                                    870: {
+                                        items: 4
+                                    },
+                                    1000: {
+                                        items: 5
+                                    },
+                                    1600: {
+                                        items: 6
+                                    }
+                                }
+                            });
+                        }
+                    },
+                })
+            }
+            //load san pham da xem
+            function get_watched_products() {
+                var data = {
+                    _token: _token
+                };
+                $.ajax({
+                    url: "{{route('get_watched_products')}}",
+                    type: "post",
+                    dataType: "json",
+                    data: data,
+                    success: function (data) {
+                        if(data.success){
+                            var append_id = $('#ads_products');
+                            append_id.html('');
+                            tmp_product(data.product, append_id);
+                            append_id.owlCarousel('destroy');
+                            append_id.owlCarousel({
+                                autoplay: false,
+                                autoplayHoverPause: true,
+                                loop: false,
+                                margin: 10,
+                                nav: true,
+                                dots: false,
+                                mouseDrag: true,
+                                touchDrag: true,
+                                lazyLoad: true,
+                                responsive: {
+                                    0: {
+                                        items: 2
+                                    },
+                                    650: {
+                                        items: 3
+                                    },
+                                    870: {
+                                        items: 4
+                                    },
+                                    1000: {
+                                        items: 5
+                                    },
+                                    1600: {
+                                        items: 6
+                                    }
+                                }
+                            });
+                        }
+                    },
+                })
+            }
+            //chon lai san pham lien quan - da xem
+            $(document).on("click", ".related_product, .watched_products", function () {
+                if(!$(this).hasClass('active')){
+                    if($(this).className == 'related_product'){
+                        get_related_products();
+                    }
+                    else{
+                        get_watched_products();
+                    }
+                    $('.item_title').removeClass('active');
+                    $(this).addClass('active');
+                }
+            });
+            //ham cai dat load khung hinh
+            function isOnScreen(elem) {
+                if (elem.length == 0) {
+                    return;
+                }
+                var $window = jQuery(window)
+                var viewport_top = $window.scrollTop() //vị trí đang scroll
+                var viewport_height = $window.height()  // chiều cao màn hình
+                var viewport_bottom = viewport_top + viewport_height
+                var $elem = jQuery(elem)
+                var top = $elem.offset().top
+                var height = $elem.height()
+                var bottom = top + height
+
+                return (top >= viewport_top && top < viewport_bottom) ||
+                    (bottom > viewport_top && bottom <= viewport_bottom) ||
+                    (height > viewport_height && top <= viewport_top && bottom >= viewport_bottom)
+            }
+
+            //ham xu ly khi cuon man hinh
+            function runOnScroll() {
+                if (isOnScreen($("#ads_products")) && ($("#ads_products").hasClass("loaded") == false)) {
+                    get_related_products();
+                    $("#ads_products").addClass("loaded");
+                }
+            }
+            $(window).scroll(runOnScroll);
 
             //====================================================//
             var mess2 = document.getElementById('Youhavenotfilledinthecommentsreviews').innerHTML;

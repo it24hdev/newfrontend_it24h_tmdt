@@ -592,7 +592,7 @@ ul.list-thumb-detail li a img{
     color: #fcba05;
 }
 ul.list-comment {
-    padding: 0;
+    padding: 10px 0px;
 }
 ul.list-comment li{
     border-radius: 5px;
@@ -810,7 +810,6 @@ ul.list-post li a .desc{
     border-color: #e1e1e1!important;
 }
 .detail_info_p{
-    padding: 10px 20px;
     position: relative;
 }
 .box_content{
@@ -826,6 +825,9 @@ ul.list-post li a .desc{
     bottom: 0;
     left: 0;
     right: 0;
+    align-items: center;
+    justify-content: center;
+    display: flex;
     width: 100%;
     height: 150px;
     padding-top: 85px;
@@ -835,7 +837,7 @@ ul.list-post li a .desc{
 }
 .viewmore a{
     height: 35px;
-    width: auto;
+    width: 20%;
     display: flex;
     border-radius: 10px;
     padding: calc(0.5em - 1px) 1em;
@@ -848,7 +850,7 @@ ul.list-post li a .desc{
     font-size: 14px;
     border: 1px solid transparent;
     justify-content: center!important;
-    margin: 0.75rem 0.5rem !important;
+    margin: 0.75rem auto!important;
     line-height: 1.5;
     align-items: center;
     grid-gap: 5px;
